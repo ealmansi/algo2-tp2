@@ -1,0 +1,4 @@
+\select@language {spanish}
+\contentsline {section}{\numberline {1}M\'odulo \'ArbolCategor\IeC {\'\i }as}{2}
+\contentsline {section}{\numberline {2}M\'odulo LinkLinkIt}{7}
+\contentsline {section}{\numberline {3}M\'odulo Diccionario Trie($\alpha $)}{17}

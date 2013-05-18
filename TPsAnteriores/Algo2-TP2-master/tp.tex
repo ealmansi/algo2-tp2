@@ -1,0 +1,1617 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[paper=a4paper, hmargin=1.5cm, bottom=2.0cm, top=2.0cm]{geometry}
+\usepackage[latin1]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{xspace}
+\usepackage{xargs}
+\usepackage{ifthen}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{aed2-tad,aed2-symb,aed2-itef}
+\usepackage{enumitem}
+\usepackage{algorithmic}
+\usepackage{scrextend}
+\usepackage{framed}
+
+\setenumerate{noitemsep}
+\setitemize{noitemsep}
+\setitemize{noitemsep}
+
+\newcommand{\moduloNombre}[1]{\textbf{#1}}
+
+\let\NombreFuncion=\textsc
+\let\TipoVariable=\texttt
+\let\ModificadorArgumento=\textbf
+\newcommand{\res}{$res$\xspace}
+\newcommand{\tab}{\hspace*{7mm}}
+
+\newcommandx{\TipoFuncion}[3]{%
+  \NombreFuncion{#1}(#2) \ifx#3\empty\else $\to$ \res\,: \TipoVariable{#3}\fi%
+}
+\newcommand{\In}[2]{\ModificadorArgumento{in} \ensuremath{#1}\,: \TipoVariable{#2}\xspace}
+\newcommand{\Out}[2]{\ModificadorArgumento{out} \ensuremath{#1}\,: \TipoVariable{#2}\xspace}
+\newcommand{\Inout}[2]{\ModificadorArgumento{in/out} \ensuremath{#1}\,: \TipoVariable{#2}\xspace}
+\newcommand{\Aplicar}[2]{\NombreFuncion{#1}(#2)}
+
+\newlength{\IntFuncionLengthA}
+\newlength{\IntFuncionLengthB}
+\newlength{\IntFuncionLengthC}
+%InterfazFuncion(nombre, argumentos, valor retorno, precondicion, postcondicion, complejidad, descripcion, aliasing)
+\newcommandx{\InterfazFuncion}[9][4=true,6,7,8,9]{%
+  \hangindent=\parindent
+  \TipoFuncion{#1}{#2}{#3}\\%
+  \textbf{Pre} $\equiv$ \{#4\}\\%
+  \textbf{Post} $\equiv$ \{#5\}%
+  \ifx#6\empty\else\\\textbf{Complejidad:} #6\fi%
+  \ifx#7\empty\else\\\textbf{Descripción:} #7\fi%
+  \ifx#8\empty\else\\\textbf{Aliasing:} #8\fi%
+  \ifx#9\empty\else\\\textbf{Requiere:} #9\fi%
+}
+
+\newenvironment{Interfaz}{%
+  \parskip=2ex%
+  \noindent\textbf{\Large Interfaz}%
+  \par%
+}{}
+
+\newenvironment{Representacion}{%
+  \vspace*{2ex}%
+  \noindent\textbf{\Large Representación}%
+  \vspace*{2ex}%
+}{}
+
+\newenvironment{Algoritmos}{%
+  \vspace*{2ex}%
+  \noindent\textbf{\Large Algoritmos}%
+  \vspace*{2ex}%
+}{}
+
+
+\newcommand{\Titulo}[1]{
+  \vspace*{1ex}\par\noindent\textbf{\large #1}\par
+}
+
+\newenvironmentx{Estructura}[2][2={estr}]{%
+  \par\vspace*{2ex}%
+  \TipoVariable{#1} \textbf{se representa con} \TipoVariable{#2}%
+  \par\vspace*{1ex}%
+}{%
+  \par\vspace*{2ex}%
+}%
+
+\newboolean{EstructuraHayItems}
+\newlength{\lenTupla}
+\newenvironmentx{Tupla}[1][1={estr}]{%
+    \settowidth{\lenTupla}{\hspace*{3mm}donde \TipoVariable{#1} es \TipoVariable{tupla}$($}%
+    \addtolength{\lenTupla}{\parindent}%
+    \hspace*{3mm}donde \TipoVariable{#1} es \TipoVariable{tupla}$($%
+    \begin{minipage}[t]{\linewidth-\lenTupla}%
+}{%
+    $)$%
+    \end{minipage}
+}
+
+\newcommandx{\tupItem}[2]{\emph{#1}: \TipoVariable{#2}}
+
+\newcommandx{\RepFc}[3][1={estr},2={e}]{%
+  \tadOperacion{Rep}{#1}{bool}{}%
+  \tadAxioma{Rep($#2$)}{#3}%
+}%
+
+\newcommandx{\Rep}[3][1={estr},2={e}]{%
+  \tadOperacion{Rep}{#1}{bool}{}%
+  \tadAxioma{Rep($#2$)}{true \ssi #3}%
+}%
+
+\newcommandx{\Abs}[5][1={estr},3={e}]{%
+  \tadOperacion{Abs}{#1/#3}{#2}{Rep($#3$)}%
+  \settominwidth{\hangindent}{Abs($#3$) \igobs $#4$: #2 $\mid$ \phantom{}}%
+  \addtolength{\hangindent}{\parindent}%
+  Abs($#3$) \igobs $#4$: #2 $\mid$ #5%
+}%
+
+\newcommandx{\AbsFc}[4][1={estr},3={e}]{%
+  \tadOperacion{Abs}{#1/#3}{#2}{Rep($#3$)}%
+  \tadAxioma{Abs($#3$)}{#4}%
+}%
+
+\newcommand{\DRef}{\ensuremath{\rightarrow}}
+
+% Estilo de listas de items
+\renewcommand{\labelitemi}{$\bullet$}
+
+% Fancyhdr
+\pagestyle{fancy}
+\thispagestyle{fancy}
+\lhead{Algoritmos y Estructuras de Datos II: Trabajo Práctico 2}
+\rhead{Grupo 9}
+\renewcommand{\footrulewidth}{0.4pt}
+\cfoot{\thepage /\pageref{LastPage}}
+
+\fancypagestyle{caratula} {
+   \fancyhf{}
+   \cfoot{\thepage /\pageref{LastPage}}
+   \renewcommand{\headrulewidth}{0pt}
+   \renewcommand{\footrulewidth}{0pt}
+}
+
+\begin{document}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Macros nuestros                                                           %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%margen: margen de uso general
+\newcommandx{\margen}{\hspace*{5mm}}
+
+%InterfazFuncion(nombre, argumentos, valor retorno)
+\newcommandx{\InterfazAlgoritmo}[3]{%
+  \hangindent=\parindent
+  \TipoFuncion{#1}{#2}{#3}%
+}
+
+\algsetup{indent=2em, linenodelimiter=.}
+
+%Algoritmo(nombre, argumentos, valor retorno, complejidad, justificacion) { cuerpo }
+\newenvironmentx{Algoritmo}[5]{%
+  \def \complejidad {#4}
+  \def \justificacion {#5}
+
+  \begin{oframed}
+    \InterfazAlgoritmo{#1}{#2}{#3}  
+    \begin{addmargin}[2em]{0em}
+      \begin{algorithmic}
+}
+{
+      \end{algorithmic}
+    \end{addmargin}
+    \vspace*{0.5em}%
+    \hspace*{\parindent}\textbf{Complejidad:} \complejidad%
+    \ifthenelse{\equal{\justificacion}{}}{}{
+      \vspace*{0.5em}%
+      \begin{addmargin}[\parindent + 1em]{0em}
+        \justificacion
+      \end{addmargin}    
+    }
+  \end{oframed}
+}
+
+%CrearTupla(variable donde se almacenará)
+\newlength{\margenTupla}
+\newcommandx{\CrearTupla}[1]{%
+  \settowidth{\margenTupla}{#1 $\leftarrow$ $\langle$}%  
+  #1 $\leftarrow$ $\langle$%  
+}
+
+%MargenTupla
+\newcommandx{\MargenTupla}{\hspace*{\margenTupla}}
+
+%CampoTupla(campo, valor)
+\newcommandx{\CampoTupla}[2]{\TipoVariable{#1}: #2}
+
+%FinTupla
+\newcommandx{\FinTupla}{$\rangle$}
+
+%Alinear comentarios a la derecha en los algoritmos
+\renewcommand{\algorithmiccomment}[1]{\hfill #1 \\}
+
+%Complejidad(complejidad) - Usar al final de cada \STATE.
+%Ejemplo: \STATE $a$ $\leftarrow$ 1 \Complejidad{1}
+\newcommandx{\Complejidad}[1]{\COMMENT{$\Theta$(#1)}}
+
+%ComplejidadGuarda(complejidad)
+%Ejemplo: \IF[ComplejidadGuarda{1}]($a$ $\igobs$ 1)
+\newcommandx{\ComplejidadGuarda}[1]{$\Theta$(#1)}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Carátula                                                                  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\thispagestyle{caratula}
+
+\begin{center}
+
+\vspace*{1cm}
+
+\begin{Huge}
+Algoritmos y Estructuras de Datos II
+\end{Huge}
+
+\vspace{1cm}
+
+\begin{LARGE}
+Trabajo Práctico 2
+\end{LARGE}
+
+\vspace{1cm}
+
+Departamento de Computación,\\
+Facultad de Ciencias Exactas y Naturales,\\
+Universidad de Buenos Aires
+
+\vspace{1cm}
+
+Segundo Cuatrimestre de 2012
+
+\vspace{1cm}
+
+\begin{Large}
+Grupo 9
+\end{Large}
+
+\vspace{0.5cm}
+
+\begin{tabular}{|c|c|c|}
+\hline
+Apellido y Nombre & LU & E-mail\\
+\hline
+María Candela Capra Coarasa & 234/11 & canduh\_27@hotmail.com\\
+Leandro Lovisolo            & 645/11 & leandro@leandro.me\\
+Gastón de Orta              & 244/11 & gaston.deorta@hotmail.com\\
+Lautaro José Petaccio       & 443/11 & lausuper@gmail.com\\
+\hline
+\end{tabular}
+
+\vspace{1cm}
+
+Reservado para la cátedra
+
+\begin{tabular}{|c|c|c|}
+\hline
+Instancia & Docente que corrigió & Calificación\\
+\hline
+Primera Entrega &&\\
+\hline
+Recuperatorio   &&\\
+\hline
+\end{tabular}
+
+\end{center}
+
+\vspace{6cm}
+
+\tableofcontents
+
+\newpage
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Árbol de Categorías                                                       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Módulo ÁrbolCategorías}
+
+\begin{Interfaz}
+
+  \textbf{se explica con}: \tadNombre{ÁrbolCategorías}, \tadNombre{Iterador Unidireccional(Categoría)}.
+
+  \textbf{géneros}: \TipoVariable{acat}, \TipoVariable{itcats}.
+
+  \Titulo{Operaciones básicas de árbol de categorías}
+  
+  \InterfazFuncion{CrearÁrbol}{\In{raiz}{categoria}}{acat}
+  [$¬$vacía?($raiz$)]
+  {$res$ $\igobs$ nuevo($raiz$)}
+  [$\Theta(|raiz|)$]
+  [crea un árbol nuevo cuya categoría raíz es $raiz$.]
+
+  \InterfazFuncion{NombreCategoríaRaíz}{\In{ac}{acat}}{categoria}
+  {$res$ $\igobs$ raíz($ac$)}
+  [$\Theta(1)$]
+  [devuelve el nombre de la categoría raíz de $ac$.]
+  [$res$ no es modificable.]
+
+  \InterfazFuncion{AgregarCategoría}{\In{hija}{categoria}, \In{padre}{categoria}, \Inout{ac}{acat}}{}
+  [$ac$ $\igobs$ $ac_{0}$ $\land$ está?($padre$, $ac$) $\land$ $¬$vacía?($hija$) $\land$ $¬$está?($hija$, $ac$)]
+  {$ac$ $\igobs$ agregar($ac_{0}$, $padre$, $hija$)}
+  [$\Theta(|padre| + |hija|)$]
+  [agrega la categoría $hija$ como hija de la categoría $padre$.]
+  [la categoría $hija$ se agrega por copia.]
+   
+  \InterfazFuncion{IdCategoríaPorNombre}{\In{c}{categoria}, \In{ac}{acat}}{nat}
+  [está?($c$, $ac$)]
+  {$res$ $\igobs$ id($ac$, $c$)}
+  [$\Theta(|c|)$]
+  [devuelve el $id$ de la categoría $c$.]
+
+  \InterfazFuncion{\#Categorías}{\In{ac}{acat}}{nat}
+  {$res$ $\igobs$ \#(categorias($ac$))}
+  [$\Theta(1)$]
+  [devuelve la cantidad de categorías en $ac$.]
+  
+  \Titulo{Operaciones del iterador de categorías}
+
+  \InterfazFuncion{CrearIt}{\In{padre}{categoria}, \In{ac}{acat}}{itcats}
+  [está?($padre$, $ac$)]
+  {$res$ $\igobs$ CrearItUni(tuplasHijos($padre$, $ac$)) $\land$ alias(iteraLosHijos($res$, $padre$, $ac$))}
+  [$\Theta(|padre|)$]
+  [devuelve un iterador unidireccional de las categorías hijas directas de la categoría $padre$.]
+  [Siguientes($res$) podrá cambiar si se agregan nuevas categorías hijas directas a la categoría $padre$.]
+
+  \InterfazFuncion{CrearItRaíz}{\In{ac}{acat}}{itcats}
+  {$res$ $\igobs$ CrearItUni(tuplasHijos(raíz($ac$), $ac$)) $\land$ alias(iteraLosHijos($res$, raíz($ac$), $ac$))}
+  [$\Theta(1)$]
+  [devuelve un iterador unidireccional de las categorías hijas directas de la categoría raíz de $ac$.]
+  [Siguientes($res$) podrá cambiar si se agregan nuevas categorías hijas directas a la categoría raíz.]
+
+  \InterfazFuncion{CrearItHijos}{\In{it}{itcats}, \In{ac}{acat}}{itcats}
+  [HayMás?($it$)]
+  {$res$ $\igobs$ CrearItUni(tuplasHijos($\Pi_1$(Actual($it$)), $ac$)) $\land$ alias(iteraLosHijos($res$, $\Pi_1$(Actual($it$)), $ac$))}
+  [$\Theta(1)$]
+  [devuelve un iterador unidireccional de las categorías hijas directas de la categoría actual del iterador $it$.]
+  [Siguientes($res$) podrá cambiar si se agregan nuevas categorías hijas directas a la categoría actual del iterador $it$.]
+
+  \InterfazFuncion{HayMás?}{\In{it}{itcats}}{bool}
+  {$res$ $\igobs$ HayMás?($it$)}
+  [$\Theta(1)$]
+  [devuelve \textbf{true} si y sólo si en el iterador todavía quedan elementos para avanzar.]
+
+  \InterfazFuncion{CategoríaActual}{\In{it}{itcats}}{categoria}
+  [HayMás?($it$)]
+  {$res$ $\igobs$ $\Pi_1$(Actual($it$))}
+  [$\Theta(1)$]
+  [devuelve el elemento actual del iterador.]
+  [$res$ no es modificable.]
+
+  \InterfazFuncion{IdCategoríaActual}{\In{it}{itcats}}{nat}
+  [HayMás?($it$)]
+  {$res$ $\igobs$ $\Pi_2$(Actual($it$))}
+  [$\Theta(1)$]
+  [devuelve el id del elemento actual del iterador.]
+
+  \InterfazFuncion{Avanzar}{\Inout{it}{itcats}}{}
+  [$it$ $\igobs$ $it_{0}$ $\land$ HayMás?($it_{0}$)]
+  {$it$ $\igobs$ Avanzar($it_{0}$)}
+  [$\Theta(1)$]
+  [avanza el iterador a la posición siguiente.]
+
+  \Titulo{Especificación de las operaciones auxiliares utilizadas en la interfaz}
+  
+  {
+    \offinterlineskip
+    \begin{tad}{\tadNombre{Árbol Extendido}}
+      \tadExtiende{\tadNombre{ÁrbolCategorías}}
+
+      \tadTitulo{otras operaciones (no exportadas)}{}
+
+      \tadAlinearFunciones{categoríasATuplas}{conj(categoría)/cc,acat/ac}
+      \tadOperacion{tuplasHijos}{categoría/c,acat/ac}{secu(tupla(categoría{, }nat))}{está?($c$, $ac$)}
+      \tadAlinearFunciones{categoríasATuplas}{conj(categoría)/cc,acat/ac}
+      \tadOperacion{categoríasATuplas}{conj(categoría)/cc,acat/ac}{secu(tupla(categoría{, }nat))}{$cc$ $\subseteq$ categorías($ac$)}
+      \tadAlinearFunciones{categoríasATuplas}{secu(tupla(categoría{, }nat)), secu(tupla(categoría{, }nat))}
+      \tadOperacion{iteraLosHijos}{itUni(tupla(categoría{, }nat)),categoría/c,acat/ac}{bool}{está?($c$, $ac$)}
+      \tadOperacion{terminanIgual}{secu(tupla(categoría{, }nat)), secu(tupla(categoría{, }nat))}{bool}{}  
+
+      \tadAxiomas[\paratodo{categoría}{c}, \paratodo{acat}{ac}, \paratodo{conj(categoría)}{cc}, \paratodo{secu(categoría)}{sc},\\
+                  \paratodo{secu(tupla(categoría{, }nat))}{st, st'}, \paratodo{itUni(tupla(categoría{, }nat))}{it}]  
+  
+      \tadAlinearAxiomas{aliasingHijos($it$, $c$, $ac$)}
+      \tadAxioma{tuplasHijos($c$, $ac$)}{catsATuplas(hijos($ac$, $c$), $ac$)}      
+      \tadAxioma{catsATuplas($cc$, $ac$)}{\TADIF $\emptyset$?($cc$)
+                                          THEN \secuencia{}
+                                          ELSE \secuencia{$\langle$dameUno($cc$){, }id($ac${, }dameUno($cc$))$\rangle$}
+                                                         [categoríasATuplas(sinUno($cc$), $ac$)]
+                                          FI}
+      \tadAxioma{iteraLosHijos($it$, $c$, $ac$)}{terminanIgual(Siguientes($it$), tuplasHijos($c$, $ac$))}
+      \tadAxioma{terminanIgual($st$, $st'$)}{\TADIF vacía?($st$) $\lor$ vacía($st'$)
+                                             THEN \textbf{true}
+                                             ELSE ult($st$) $\igobs$ ult($st'$) $\land$ terminanIgual(com($st$), com($st'$))
+                                             FI}       
+    \end{tad}
+  }
+  
+\end{Interfaz}
+
+~
+
+\begin{Representacion}
+
+  \Titulo{Representación del árbol de categorías}
+  
+  ~
+  
+  Representamos el árbol de categorías a partir de un diccionario trie de tuplas \TipoVariable{estr\_cat},
+  que contienen toda la información necesaria para representar cada categoría individualmente.  
+  
+  El diccionario nos permite acceder una categoría arbitraria $c$ en $\Theta(|c|)$.
+  
+  Además, guardamos una referencia a la categoría raíz, lo cual nos permite acceder a la misma en $\Theta(1)$.  
+  
+
+  \begin{Estructura}{acat}[estr\_acat]
+    \begin{Tupla}[estr\_acat]
+      \tupItem{raíz}{estr\_cat},\\
+      \tupItem{categorías}{dicctrie(estr\_cat)}%
+    \end{Tupla}
+
+    \begin{Tupla}[estr\_cat]
+      \tupItem{id}{nat},\\
+      \tupItem{nombre}{categoria},\\
+      \tupItem{hijos}{conj(puntero(estr\_cat))}%
+    \end{Tupla}    
+  \end{Estructura}
+ 
+  ~
+
+  \textbf{Invariante de representación:}
+
+  \begin{enumerate}
+    \item La raíz tiene que estar en el diccionario de categorías.
+    \item La raíz tiene que tener id 1.
+    \item Para todas las categorías en el diccionario:
+    \begin{enumerate}
+      \item El nombre de la categoría deber ser igual a su clave en el diccionario.
+      \item El id de la categoría debe estar en rango.      
+      \item Dos categorías no pueden tener el mismo id.
+      \item Para todos los hijos de la categoría:
+      \begin{enumerate}
+        \item El hijo no puede ser nulo.
+        \item El hijo tiene que estar en el diccionario de categorías.
+        \item El hijo no puede estar en el conjunto de hijos de otra categoría.
+        \item El hijo debe tener un id superior al de la categoría padre.
+      \end{enumerate}        
+    \end{enumerate}
+  \end{enumerate}
+
+  \Rep[estr\_acat][e]{ \\
+    def?($e$.raíz.nombre, $e$.categorías) $\land$ \hfill 1. \\
+    $e$.raíz.id $\igobs$ 1 $\land$ \hfill 2. \\
+    ($\forall c$: categoria)(def?($c$, $e$.categorías) $\impluego$ ( \hfill 3. \\
+      \margen $cat$.nombre $\igobs$ $c$ $\land$ \hfill 3. a) \\
+      \margen 1 $\leq$ $cat$.id $\land$ $cat$.id $\leq$ \#(claves($e$.categorías)) $\land$ \hfill 3. b) \\
+      \margen ($\forall c'$: categoria)(def?($c'$, $e$.categorías) $\impluego$ ($cat$.id $\igobs$ $cat'$.id $\ssi$
+                                                                                $c$ $\igobs$ $c'$)) $\land$ \hfill 3. c) \\
+      \margen ($\forall h$: puntero(estr\_cat))($h$ $\in$ $cat$.hijos $\impluego$ ( \hfill 3. d) \\
+        \margen\margen $¬$($h$ $\igobs$ NULL) $\yluego$ \hfill 3. d) 1) \\
+        \margen\margen def?($h$\DRef nombre, $e$.categorías) $\yluego$ $h$ $\igobs$ \&(obtener($h$\DRef nombre, $e$.categorías)) $ \land$ \hfill 3. d) 2) \\
+        \margen\margen ($\forall c'$: categoria)(def?($c'$, $e$.categorías) $\impluego$ ($h$ $\in$ $cat'$.hijos $\ssi$
+                                                                                         $c$ $\igobs$ $c'$)) $\land$ \hfill 3. d) 3) \\
+        \margen\margen $h$\DRef id $>$ $cat$.id \hfill 3. d) 4) \\
+      \margen )) \\
+    )), donde $cat$ es obtener($c$, $e$.categorías) y $cat'$ es obtener($c'$, $e$.categorías).
+  }
+
+  \mbox{}
+
+  ~
+ 
+  \textbf{Función de abstracción:}
+  
+  \begin{enumerate}
+    \item El conjunto de categorías del árbol debe ser igual al conjunto de claves del diccionario de la estructura.
+    \item La raíz del árbol debe ser igual a la raíz de la estructura.
+    \item Para todas las categorías en el árbol:
+    \begin{enumerate}
+      \item El id en el árbol y la estructura deben coincidir.
+      \item Los hijos de la categoría en la estructura deben tener como padre a la categoría en el árbol.
+    \end{enumerate}
+  \end{enumerate}
+
+  \Abs[estr\_acat]{acat}[e]{ac}{%
+    categorias($ac$) $\igobs$ claves($e$.categorías) $\yluego$ \hfill 1. \\
+    raíz($ac$) $\igobs$ $e$.raíz.nombre $\land$ \hfill 2. \\
+    ($\forall c$: categoria)($c$ $\in$ categorías($ac$) $\impluego$ ( \hfill 3. \\
+      \margen id($ac$, $c$) $\igobs$ obtener($c$, $e$.categorías).id $\land$ \hfill 3. a) \\
+      \margen ($\forall h$: puntero(estr\_cat))($h$ $\in$ obtener($c$, $e$.categorías).hijos) $\impluego$ \hfill 3. b) \\
+        \margen\margen padre($ac$, $h$\DRef nombre) $\igobs$ $c$ \\
+      \margen ) \\
+    ))
+  }
+
+  ~
+
+  \Titulo{Representación del iterador}  
+  
+  ~
+  
+  El iterador de categorías permite recorrer el conjunto de hijos directos de una categoría arbitraria.
+  
+  Su representación es simplemente un iterador del conjunto de hijos de la categoría en cuestión,
+  es decir, un iterador del campo \textit{hijos} de su tupla \TipoVariable{estr\_cat}.
+  
+  \begin{Estructura}{itcats}[itConj(puntero(estr\_cat))]
+  \end{Estructura}
+  
+  \textbf{Invariante de representación:}
+
+  \begin{enumerate}
+    \item La secuencia de elementos siguientes del iterador no puede contener punteros nulos.
+  \end{enumerate}
+
+  \Rep[itConj(puntero(estr\_cat))][it]{
+    $¬$(está?(NULL, Siguientes($it$))) \hfill 1.
+  }
+
+  \mbox{}
+
+  \textbf{Función de abstracción:}
+  
+  \begin{enumerate}
+    \item Los elementos siguientes del iterador deben ser las tuplas (categoría, nat) que se correspondan
+          con los elementos siguientes de la instancia de itConj(puntero(estr\_cat)).
+  \end{enumerate}
+
+  \Abs[itConj(puntero(estr\_cat))]{itUni(tupla(categoría, nat))}[itconj]{it}{%
+    Siguientes($it$) $\igobs$ SecuDeTuplas(Siguientes($itconj$)) \hfill 1.
+  }
+
+  ~
+  
+  \tadOperacion{SecuDeTuplas}{secu(puntero(estr\_cat))/sp}{secu(tupla(categoria, nat))}{$¬$(está?(NULL, $sp$)}
+  \tadAxioma{SecuDeTuplas($sp$)}{\TADIF vacía?($sp$)
+                                 THEN \secuencia{}
+                                 ELSE \secuencia{$\langle$prim($sp$)\DRef nombre{, }prim($sp$)\DRef id$\rangle$}
+                                                [SecuDeTuplas(fin($sp$))]
+                                 FI}
+
+  ~
+
+\end{Representacion}
+
+\begin{Algoritmos}
+
+  \begin{Algoritmo}{iCrearÁrbol}{\In{raiz}{categoria}}{estr\_acat}{$\Theta(|raiz|)$}{
+    $\Theta(1) + \Theta(1) + \Theta(1) + \Theta(1) + \Theta(|raiz| + copy(estr\_raiz)) + \Theta(1) =$ \\
+    $5 * \Theta(1) + \Theta(|raiz| + copy(estr\_raiz)) =$ \\
+    $\Theta(|raiz| + copy(estr\_raiz)) =$ \\
+    $\Theta(|raiz|) + \Theta(copy(estr\_raiz)) =$ \\
+    $\Theta(|raiz|) + \Theta(|raiz|) =$ \\
+    $\Theta(|raiz|).$ 
+  }
+    \STATE \CrearTupla{var $estr\_raiz$: \TipoVariable{estr\_cat}}\CampoTupla{id}{1},                                  \Complejidad{1}
+    \STATE \MargenTupla                                           \CampoTupla{nombre}{$raiz$},                         \Complejidad{1}
+    \STATE \MargenTupla                                           \CampoTupla{hijos}{\NombreFuncion{Vacío}()}\FinTupla \Complejidad{1}
+    \STATE var $categorias$: \TipoVariable{dicctrie(estr\_cat)} $\leftarrow$ \NombreFuncion{CrearDiccionario}() \Complejidad{1}
+    \STATE \NombreFuncion{Definir}($raiz$, $estr\_raiz$, $categorias$) \Complejidad{$|raiz| + copy(estr\_raiz)$}
+    \STATE \CrearTupla{$res$}\CampoTupla{raíz}{$estr\_raiz$}, %
+                             \CampoTupla{categorías}{$categorias$}%
+                             \FinTupla \Complejidad{1}  
+  \end{Algoritmo}
+
+  ~  
+   
+  \begin{Algoritmo}{iNombreCategoríaRaíz}{\In{ac}{estr\_acat}}{categoria}{$\Theta(1)$}{}
+  \STATE $res$ $\leftarrow$ $ac$.raíz.nombre \Complejidad{1}
+  \end{Algoritmo}  
+
+  ~
+  
+  \begin{Algoritmo}{iAgregarCategoría}{\In{hija}{categoria}, \In{padre}{categoria}, \Inout{ac}{estr\_acat}}{}{$\Theta(|padre| + |hija|)$}{
+    $\Theta(|padre|) + \Theta(1) + \Theta(1) + \Theta(1) + \Theta(|hija| + copy(estr\_hija)) + \Theta(|hija|) + \Theta(1) =$ \\
+    $\Theta(|padre|) + \Theta(|hija| + copy(estr\_hija)) + \Theta(|hija|) =$ \\
+    $\Theta(|padre|) + \Theta(|hija|) + \Theta(copy(estr\_hija)) + \Theta(|hija|) =$ \\
+    $\Theta(|padre|) + 2 * \Theta(|hija|) + \Theta(copy(estr\_hija)) =$ \\
+    $\Theta(|padre|) + 2 * \Theta(|hija|) + \Theta(|hija|) =$ \\
+    $\Theta(|padre|) + 3 * \Theta(|hija|) =$ \\
+    $\Theta(|padre|) + \Theta(|hija|) =$ \\
+    $\Theta(|padre| + |hija|).$
+  }
+    \STATE var $estr\_padre$: \TipoVariable{estr\_cat} $\leftarrow$ \NombreFuncion{Obtener}($padre$, $ac$.categorías) \Complejidad{$|padre|$}
+    \STATE \CrearTupla{var $estr\_hija$: \TipoVariable{estr\_cat}}\CampoTupla{id}{\NombreFuncion{\#Claves}($ac$.categorías) + 1}, \Complejidad{1}
+    \STATE \MargenTupla                                           \CampoTupla{nombre}{$hija$}, \Complejidad{1}
+    \STATE \MargenTupla                                           \CampoTupla{hijos}{\NombreFuncion{Vacío}()}\FinTupla \Complejidad{1}
+    \STATE \NombreFuncion{Definir}($hija$, $estr\_hija$, $ac$) \Complejidad{$|hija| + copy(estr\_hija)$}     
+    \STATE $estr\_hija$ $\leftarrow$ \NombreFuncion{Obtener}($hija$, $ac$.categorías) \Complejidad{$|hija|$}
+    \STATE \NombreFuncion{AgregarRápido}($estr\_padre$.hijos, \&($estr\_hija$)) \Complejidad{1}
+  \end{Algoritmo}
+
+  ~   
+
+  \begin{Algoritmo}{iIdCategoríaPorNombre}{\In{c}{categoria}, \In{ac}{estr\_acat}}{nat}{$\Theta(|c|)$}{}
+    \STATE $res$ $\leftarrow$ \NombreFuncion{Obtener}($c$, $ac$.categorías).id \Complejidad{|c|}
+  \end{Algoritmo}
+
+  ~
+  
+  \begin{Algoritmo}{i\#Categorías}{\In{ac}{estr\_acat}}{nat}{$\Theta(1)$}{}
+    \STATE $res$ $\leftarrow$ \NombreFuncion{\#Claves}($ac$.categorías) \Complejidad{1}
+  \end{Algoritmo}
+
+  ~
+
+  \begin{Algoritmo}{iCrearIt}{\In{padre}{categoria}, \In{ac}{acat}}{itConj(puntero(estr\_cat))}{$\Theta(|padre|)$}{}
+    \STATE $res$ $\leftarrow$ \NombreFuncion{CrearIt}(\NombreFuncion{Obtener}($padre$, $ac$.categorías).hijos) \Complejidad{|padre|}
+  \end{Algoritmo}
+
+  ~
+
+  \begin{Algoritmo}{iCrearItRaíz}{\In{ac}{acat}}{itConj(puntero(estr\_cat))}{$\Theta(1)$}{}
+    \STATE $res$ $\leftarrow$ \NombreFuncion{CrearIt}($ac$.raíz.hijos) \Complejidad{1}
+  \end{Algoritmo}
+
+  ~
+  
+  \begin{Algoritmo}{iCrearItHijos}{\In{it}{itConj(puntero(estr\_cat))}}{itConj(puntero(estr\_cat))}{$\Theta(1)$}{}
+    \STATE $res$ $\leftarrow$ \NombreFuncion{CrearIt}(\NombreFuncion{Siguiente}(it)\DRef hijos) \Complejidad{1}
+  \end{Algoritmo}  
+
+  ~  
+  
+  \begin{Algoritmo}{iHayMás?}{\In{it}{itConj(puntero(estr\_cat))}}{bool}{$\Theta(1)$}{}
+    \STATE $res$ $\leftarrow$ \NombreFuncion{HaySiguiente}($it$) \Complejidad{1}
+  \end{Algoritmo}
+  
+  ~
+  
+  \begin{Algoritmo}{iCategoríaActual}{\In{it}{itConj(puntero(estr\_cat))}}{categoria}{$\Theta(1)$}{}
+    \STATE $res$ $\leftarrow$ \NombreFuncion{Siguiente}($it$)\DRef nombre \Complejidad{1}
+  \end{Algoritmo}
+
+  ~
+  
+  \begin{Algoritmo}{iIdCategoríaActual}{\In{it}{itConj(puntero(estr\_cat))}}{nat}{$\Theta(1)$}{}
+    \STATE $res$ $\leftarrow$ \NombreFuncion{Siguiente}($it$)\DRef id \Complejidad{1}
+  \end{Algoritmo}  
+  
+  ~
+  
+  \begin{Algoritmo}{iAvanzar}{\Inout{it}{itConj(puntero(estr\_cat))}}{}{$\Theta(1)$}{}
+    \STATE \NombreFuncion{Avanzar}($it$) \Complejidad{1}
+  \end{Algoritmo}
+
+\end{Algoritmos}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LinkLinkIt                                                                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Módulo LinkLinkIt}
+
+\begin{Interfaz}
+  \textbf{se explica con}: \tadNombre{LinkLinkIt}, \tadNombre{Iterador Unidireccional(Link)}.
+
+  \textbf{géneros}: \TipoVariable{sistema}, \TipoVariable{itlinks}.
+
+  \Titulo{Operaciones básicas del sistema}
+  
+  \InterfazFuncion{CrearSistema}{\In{ac}{acat}}{sistema}
+  {$res$ $\igobs$ iniciar($ac$)}
+  [$\Theta$(\#(categorías($ac$)))]
+  [crea un sistema cuyo árbol de categorías es $ac$.]
+  [$res$ podrá invalidarse si se modifica $ac$ luego de ejecutarse esta operación.]
+
+  \InterfazFuncion{AgregarLink}{\In{l}{link}, \In{c}{categoria}, \Inout{s}{sistema}}{}
+  [$s$ $\igobs$ $s_{0}$ $\land$ $¬$($l$ $\in$ links($s$)) $\land$ está?($c$, categorías($s$))]
+  {$s$ $\igobs$ nuevoLink($s_{0}$, $l$, $c$)}
+  [$\Theta$(|$l$| + |$c$| + $h$), donde $h$ representa altura(categorías($s$)).]
+  [agrega al sistema el link $l$ con categoría $c$.]
+  [el link $l$ se agrega por copia.]
+
+  \InterfazFuncion{AccederLink}{\In{l}{link}, \In{f}{fecha}, \Inout{s}{sistema}}{}
+  [$s$ $\igobs$ $s_{0}$ $\land$ $l$ $\in$ links($s$) $\land$ $f$ $\geq$ fechaActual($s$)]
+  {$s$ $\igobs$ acceso($s_{0}$, $l$, $f$)}
+  [$\Theta$(|$l$| + $h$), donde $h$ representa altura(categorías($s$)).]
+  [registra un acceso al link $l$ en la fecha $f$.]
+
+  \InterfazFuncion{\#Links}{\In{c}{categoría}, \In{s}{sistema}}{nat}
+  [está?($c$, categorías($s$))]
+  {$res$ $\igobs$ cantLinks($s$, $c$)}
+  [$\Theta$(|$c$|)]
+  [devuelve la cantidad de links bajo la categoría $c$ y todas sus subcategorías.]
+
+  \Titulo{Operaciones de iterador de links}
+
+  \InterfazFuncion{CrearIt}{\In{c}{categoría}, \In{s}{sistema}}{itlinks}
+  [está?($c$, categorías($s$))]
+  {$res$ $\igobs$ CrearItUni(tuplasLinks($c$, $s$)) $\land$ alias(iteraLinksCorrectos($res$, $c$, $s$))}  
+  [$\Theta$(|$c$| + $n^2$), donde $n$ representa long(linksOrdenadosPorAccesos($s$, $c$)).]
+  [devuelve un iterador unidireccional de los links de la categoría $c$ y todas sus subcategorías ordenados de mayor a menor cantidad de accesos recientes.]
+  [el iterador podrá invalidarse si se agregan links a la categoría $c$ o alguna subcategoría y/o si se registran accesos a links de dichas categorías.]  
+   
+  \InterfazFuncion{HayMás?}{\In{it}{itlinks}}{bool}
+  {$res$ $\igobs$ HayMás?($it$)}
+  [$\Theta(1)$]
+  [devuelve \textbf{true} si y sólo si en el iterador todavía quedan elementos para avanzar.]
+
+  \InterfazFuncion{LinkActual}{\In{it}{itlinks}}{link}
+  [HayMás?($it$)]
+  {$res$ $\igobs$ $\Pi_1$(Actual($it$))}
+  [$\Theta(1)$]
+  [devuelve el link actual del iterador.]
+  [$res$ no es modificable.]
+
+  \InterfazFuncion{CategoríaLinkActual}{\In{it}{itlinks}}{categoria}
+  [HayMás?($it$)]
+  {$res$ $\igobs$ $\Pi_2$(Actual($it$))}
+  [$\Theta(1)$]
+  [devuelve la categoría del link actual del iterador.]
+  [$res$ no es modificable.]
+
+  \InterfazFuncion{AccesosRecientesLinkActual}{\In{it}{itlinks}}{nat}
+  [HayMás?($it$)]
+  {$res$ $\igobs$ $\Pi_3$(Actual($it$))}
+  [$\Theta(1)$]
+  [devuelve la cantidad de accesos del link actual del iterador durante los días de la intersección
+   entre los tres días ``recientes'' del link $l$ y los tres días ``recientes'' del link que tuvo
+   último acceso entre los links de la categoría $c$ con la que se creó este iterador, y los links
+   de todas sus subcategorías.]
+
+  \InterfazFuncion{Avanzar}{\Inout{it}{itlinks}}{}
+  [$it$ $\igobs$ $it_{0}$ $\land$ HayMás?($it$)]
+  {$it$ $\igobs$ Avanzar($it_{0}$)}
+  [$\Theta(1)$]
+  [avanza el iterador a la posición siguiente.]  
+
+  \Titulo{Especificación de las operaciones auxiliares utilizadas en la interfaz}
+  
+  {
+    \offinterlineskip
+    \begin{tad}{\tadNombre{Sistema Extendido}}
+      \tadExtiende{\tadNombre{LinkLinkIt}}
+
+      \tadTitulo{otras operaciones (no exportadas)}{}
+
+      \tadOperacion{tuplasLinks}{categoría/c,lli/s}{secu(tupla(link{, }categoría{, }nat))}{está?($c$, categorías($s$))}
+      \tadOperacion{linksATuplas}{secu(link)/sl,categoría/c,lli/s}{secu(tupla(link{, }categoría{, }nat))}{estánEnSistema?($sl$, $s$) $\land$ está?($c$, categorías($s$))}
+      \tadOperacion{estánEnSistema?}{secu(link),link}{bool}{}
+      \tadOperacion{iteraLinksCorrectos}{itUni(tupla(link{, }categoría{, }nat)),categoría/c,lli/s}{bool}{está?($c$, categorías($s$))}
+      \tadOperacion{terminanIgual}{secu(tupla(link{, }categoría{, }nat)),secu(tupla(link{, }categoría{, }nat))}{bool}{}
+
+      \tadAxiomas[\paratodo{categoría}{c}, \paratodo{lli}{s}, \paratodo{secu(link)}{sl}, \paratodo{itUni(tupla(link, categoría, nat))}{it},\\
+                  \paratodo{secu(tupla(link, categoría, nat))}{st, st'}]  
+  
+      \tadAlinearAxiomas{iteraLinksCorrectos($it$, $c$, $s$)}
+      \tadAxioma{tuplasLinks($c$, $s$)}{linksATuplas(linksOrdenadosPorAccesos($s$, $c$), $c$, $s$)}
+      \tadAxioma{linksATuplas($sl$, $c$, $s$)}{\TADIF vacía?($sl$)
+                                               THEN \secuencia{}
+                                               ELSE \secuencia{$\langle$prim($sl$){, }
+                                                                        categoríaLink($s${, }prim($sl$)){, }
+                                                                        accesosRecientes($s${, }$c${, }prim($sl$))$\rangle$}
+                                                              [linksATuplas(fin($sl$), $c$, $s$)]
+                                               FI}
+      \tadAxioma{estánEnSistema?($sl$, $s$)}{\TADIF vacía($sl$)
+                                             THEN \textbf{true}
+                                             ELSE prim($sl$) $\in$ links($s$) $\land$ estánEnSistema?(fin($sl$), $s$)
+                                             FI}
+    \tadAxioma{iteraLinksCorrectos($it$, $c$, $s$)}{terminanIgual(Siguientes($it$), tuplasLinks($c$, $s$))}
+      \tadAxioma{terminanIgual($st$, $st'$)}{\TADIF vacía?($st$) $\lor$ vacía?($st'$)
+                                             THEN \textbf{true}
+                                             ELSE ult($st$) $\igobs$ ult($st'$) $\land$ terminanIgual(com($st$), com($st'$))
+                                             FI}
+    \end{tad}
+  }
+  
+\end{Interfaz}
+
+~
+
+\begin{Representacion}
+  \Titulo{Representación del sistema}
+  
+  ~
+  
+  Representamos el sistema por medio de la tupla \TipoVariable{estr\_sistema}, en la que se redunda información
+  sobre las categorías para poder cumplir con las complejidades pedidas. La tupla contiene:
+  
+  \begin{itemize}
+    \item una referencia al árbol de categorías recibido al construir el sistema,
+    \item un diccionario trie \textit{links} de tuplas \TipoVariable{estr\_links}, que permite acceder
+          a la información de cualquier link $l$ en $\Theta(|l|)$,
+    \item un arreglo \textit{linksPorCatId} de tuplas \TipoVariable{estr\_linksPorCatId}, de las siguientes características:
+    \begin{itemize}
+      \item tamaño igual a la cantidad de categorías en el sistema,
+      \item la tupla en la posición $i$ se corresponde con la categoría de id $i + 1$,
+      \item cada tupla contiene el nombre de la categoría, el id del padre y una lista de links en ésa categoría y
+            todas sus subcategorías, entre otras cosas;
+    \end{itemize}
+    \item la fecha actual del sistema, que coincide con la fecha en la que se accedió a algún link
+          del sistema por última vez, o vale cero si aún no se registraron accesos.
+  \end{itemize}    
+
+  La tupla \TipoVariable{estr\_link} contiene el link representado, el id de la categoría a la que pertenece,
+  la fecha en la que se accedió por última vez y un arreglo de tres naturales, que contiene la cantidad de accesos
+  en la fecha de último acceso y en los dos días anteriores.
+  
+  La tupla \TipoVariable{estr\_linksPorCatId} contiene la categoría representada, el id de su padre,
+  una lista con los links que pertenecen a esa categoría y todas sus subcategorías, la fecha en la que
+  se accedió a algún link de esa lista por última vez, y un booleano que indica si la lista está ordenada
+  según $linksOrdenadosPorAccesos(s, c)$, donde $c$ es la categoría representada por esta tupla.
+  
+  Las estructuras elegidas nos permiten satisfacer la complejidad de la creación de un iterador de links
+  según $linksOrdenadosPorAccesos(s, c)$ en $\Theta(|c| + n^2)$: primero consultamos el id de $c$ en
+  el árbol del sistema, lo cual tiene costo $\Theta(|c|)$, luego utilizamos el id como índice en
+  el arreglo $s$.linksPorCatId para acceder a la lista de links de $c$ y sus subcategorías con costo $\Theta(1)$;
+  finalmente ordenamos el arreglo según $linksOrdenadosPorAcceso(s, c)$ con costo $\Theta(n^2)$, sólo si no
+  estaba previamente ordenado. El costo total es $\Theta(|c| + n^2)$, o $\Theta(|c|)$ si ya se respetaba el orden.
+  
+  Agregar un link $l$ bajo una categoría $c$ en un sistema $s$ tiene costo $\Theta(|l| + |c| + h)$:
+  primero agregamos el link al diccionario trie $s$.links con costo $\Theta(|l|)$, luego consultamos el id
+  de la categoría $c$ con costo $\Theta(|c|)$, luego usamos el id de la categoría como índice en el arreglo
+  $s$.linksPorCatId para agregar el link a la lista de links de su categoría y obtener el id de la categoría padre
+  en $\Theta(1)$, y finalmente utilizamos el id de la categoría padre como índice en el arreglo $s$.linksPorCatId
+  para agregar el link a su lista de links, repitiendo el proceso hasta llegar a la categoría raíz, con costo
+  $\Theta(h)$. De esta manera logramos que cada categoría conozca sus links, y que todos los ancestros conozcan
+  los links de sus categorías descendientes. Notar que cada vez que se agrega un link a alguna tupla
+  \TipoVariable{estr\_linksPorCatId} se setea en falso el booleano que indica si se cumple el orden.
+  
+  De manera similar, acceder un link se logra con costo $\Theta(|l| + h)$: primero consultamos la tupla
+  \TipoVariable{estr\_link} en el diccionario trie \textit{links} con costo $\Theta(|l|)$, y luego
+  recorremos la jerarquía de estructuras \TipoVariable{estr\_linksPorCatId} para setear el booleano de orden
+  a falso y actualizar la fecha de último acceso de cada categoría de ser necesario, con costo $\Theta(h)$.
+  
+  \begin{Estructura}{sistema}[estr\_sistema]
+    \begin{Tupla}[estr\_sistema]
+      \tupItem{categorías}{acat},\\
+      \tupItem{links}{dicctrie(estr\_link)},\\
+      \tupItem{linksPorCatId}{arreglo\_dimensionable de estr\_linksPorCatId},\\
+      \tupItem{fechaActual}{fecha}%
+    \end{Tupla}
+    
+    \begin{Tupla}[estr\_link]
+      \tupItem{l}{link},\\
+      \tupItem{cid}{nat},\\
+      \tupItem{últimoAcceso}{fecha},\\
+      \tupItem{as}{arreglo\_estático[3] de fecha}%
+    \end{Tupla}
+    
+    \begin{Tupla}[estr\_linksPorCatId]
+      \tupItem{cat}{categoria},\\
+      \tupItem{idPadre}{nat},\\
+      \tupItem{links}{lista(puntero(estr\_link))},\\
+      \tupItem{últimoAcceso}{fecha},\\
+      \tupItem{ordenado?}{bool}%            
+    \end{Tupla}    
+  \end{Estructura}
+  
+  \textbf{Invariante de representación:}
+
+  \begin{enumerate}
+    \item Para todos los links en el diccionario de links:
+    \begin{enumerate}
+      \item El nombre del link debe coincidir con la clave.
+      \item El id de su categoría debe corresponderse con el id de una categoría en el árbol.
+      \item La fecha del último acceso debe ser menor o igual a la fecha actual del sistema.
+    \end{enumerate}
+    \item $linksPorCatId$ debe tener tantos elementos como categorías hayan en el árbol.
+    \item Para cada elemento en $linksPorCatId$:
+    \begin{enumerate}
+      \item La categoría debe estar en el árbol.
+      \item El índice del elemento debe ser igual al id de la categoría en el árbol $-$ $1$.
+      \item $idPadre$ debe ser igual al id del padre de la categoría en el árbol,
+            o cero si la categoría es la raíz.
+      \item La lista de punteros de estr\_link no puede tener elementos repetidos.
+      \item La lista de punteros de estr\_link debe contener punteros a las estructuras estr\_link
+            de todos los links de la categoría del elemento.
+      \item Para cada elemento en la lista de punteros de estr\_link:
+      \begin{enumerate}
+        \item El elemento no puede ser un puntero nulo.
+        \item El elemento tiene que apuntar a un link en el diccionario de links.
+        \item El elemento tiene que estar en la lista de links del elemento en la posición
+              $idPadre - 1$ del arreglo $linksPorCatId$, a menos que $idPadre$ sea cero.
+      \end{enumerate}
+      \item La fecha del último acceso debe ser menor o igual a la fecha actual del sistema.
+    \end{enumerate}
+    \item Al menos un link en el diccionario de links tiene como fecha de último acceso
+          la fecha actual del sistema.
+  \end{enumerate}
+
+  \Rep[estr\_sistema][s]{\\
+    ($\forall l$: link)(def?($l$, $s$.links) $\impluego$ ( \hfill 1. \\
+      \margen $estr\_l$.l $\igobs$ $l$ $\land$ \hfill 1. a) \\
+      \margen ($\exists c$: categoría)(está?($c$, $s$.categorías) $\yluego$ $estr\_l$.cid $\igobs$ id($s$.categorías. $c$)) $\land$ \hfill 1. b) \\
+      \margen $estr\_l$.últimoAcceso $\leq$ $s$.fechaActual \hfill 1. c) \\
+    )) $\yluego$ \\
+    tam($s$.linksPorCatId) $\igobs$ \#(categorias($s$.categorías)) $\land$ \hfill 2. \\
+    ($\forall i$: nat)($i$ $<$ tam($s$.linksPorCatId) $\impluego$ ( \hfill 3. \\
+      \margen está?($estr\_c$.cat, $s$.categorías) $\yluego$ \hfill 3. a) \\
+      \margen $i$ $\igobs$ id($s$.categorías, $estr\_c$.cat) $-$ $1$ $\land$ \hfill 3. b) \\
+      \margen $estr\_c$.idPadre $\igobs$ \hfill 3. c) \\
+        \margen\margen (\textbf{if} $estr\_c$.cat $\igobs$ raíz($s$.categorías) \\
+        \margen\margen \phantom{(}\textbf{then} $0$ \\
+        \margen\margen \phantom{(}\textbf{else} id($s$.categorías, padre($s$.categorías, $estr\_c$.cat)) \\
+        \margen\margen \phantom{(}\textbf{fi}) $\land$ \\
+      \margen SinRepetidos($estr\_c$.links) $\land$ \hfill 3. d) \\
+      \margen ($\forall l$: link)(def?($l$, $s$.links) $\impluego$ (está?($estr\_l$, $s$.linksPorCatId[$estr\_l$.cid - 1].links))) $\land$ \hfill 3. e) \\      
+      \margen ($\forall l$: puntero(estr\_link))(está?($l$, $estr\_c$.links) $\impluego$ ( \hfill 3. f) \\
+        \margen\margen $¬$($l$ $\igobs$ NULL) $\yluego$ \hfill 3. f) 1) \\
+        \margen\margen def?($l$\DRef l, $s$.links) $\yluego$ $l$ $\igobs$ \&(obtener($l$\DRef l, $s$.links)) $\land$ \hfill 3. f) 2) \\
+        \margen\margen $¬$($estr\_c$.idPadre $\igobs$ 0) $\impluego$ está?($l$, $s$.linksPorCatId[$estr\_c$.idPadre $-$ $1$].links) \hfill 3. f) 3) \\
+      \margen )) $\land$ \\
+      \margen $estr\_c$.últimoAcceso $\leq$ $s$.fechaActual \hfill 3. g) \\
+    )) $\land$ \\
+    ($\exists l$: link)(def?($l$, $s$.links) $\yluego$ obtener($l$, $s$.links).últimoAcceso $\igobs$ $s$.fechaActual), \hfill 4. \\
+    donde $estr\_l$ es obtener($l$, $s$.links) y $estr\_c$ es $s$.linksPorCatId[$i$].
+  }
+
+  \mbox{}
+  
+  ~
+  
+  \tadOperacion{SinRepetidos}{secu(puntero(estr\_link))}{bool}{}
+  \tadAxioma{SinRepetidos($sp$)}{\TADIF vacía?($sp$)
+                                 THEN \textbf{true}
+                                 ELSE $¬$(está?(prim($sp$), fin($sp$))) $\land$ SinRepetidos(fin($sp$))
+                                 FI}
+                                 
+  ~
+  
+  \textbf{Función de abstracción:}
+  
+  \begin{enumerate}
+    \item El árbol de categorías del sistema debe ser igual al de la estructura.
+    \item El conjunto de links del sistema debe ser igual al conjunto de clave del diccionario de links de la estructura.
+    \item La fecha actual del sistema debe ser igual a la fecha actual de la estructura.
+    \item Para cada link en el sistema:
+    \begin{enumerate}
+      \item La categoría del link en el sistema debe ser igual a la categoría del link en el diccionario de la estructura.
+      \item La fecha de último acceso del link en el sistema debe ser igual a la fecha de último acceso del link en el diccionario de la estructura.
+      \item Los accesos recientes por día del link en el sistema deben coincidir con los elementos del arreglo de accesos recientes del link
+            en el diccionario de la estructura.
+    \end{enumerate}
+  \end{enumerate}
+
+  \Abs[estr\_sistema]{lli}[e]{s}{%
+    categorias($s$) $\igobs$ $e$.categorías $\land$ \hfill 1. \\
+    links($s$) $\igobs$ claves($e$.links) $\land$ \hfill 2. \\
+    fechaActual($s$) $\igobs$ $e$.fechaActual $\land$ \hfill 3. \\
+    ($\forall l$: link)($l$ $\in$ links($s$) $\impluego$ ( \hfill 4. \\
+      \margen categoriaLink($s$, $l$) $\igobs$ $s$.linksPorCatId[obtener($l$, $e$.links).cid $-$ $1$].cat $\land$ \hfill 4. a) \\
+      \margen fechaUltimoAcceso($s$, $l$) $\igobs$ obtener($l$, $e$.links).últimoAcceso $\land$ \hfill 4. b) \\
+      \margen MismosAccesos($l$, $s$, $e$) \hfill 4. c) \\
+    ))
+  }
+  
+  ~
+  
+  \tadOperacion{MismosAccesos}{link/l,lli/s,estr\_sistema/e}{bool}{$l$ $\in$ links($s$) $\land$ def?($l$, $e$.links)}
+  \tadAxioma{MismosAccesos($l$, $s$, $e$)}{
+    ($\forall n$: nat)(($n$ $\leq$ 2 $\land$ fechaUltimoAcceso($s$, $l$) $\geq$ $n$) $\impluego$ \\
+      \margen accesosRecientesDia($s$, $l$, fechaUltimoAcceso($s$, $l$) $-$ $n$) $\igobs$ \\
+      \margen obtener($l$, $e$.links).as[$n$])
+  }
+  
+  ~
+  
+  ~
+  
+  \Titulo{Representación del iterador}  
+  
+  ~
+  
+  El iterador de links permite recorrer la secuencia de links según $linksOrdenadosPorAccesos(s, c)$, dado un sistema $s$
+  y una categoría $c$. Lo representamos con una tupla que contiene una referencia al sistema, el id de la categoría $c$
+  y un iterador de la lista de links de la estructura \TipoVariable{estr\_linksPorCatId} correspondiente a $c$, la cual
+  se asumirá ordenada según $linksOrdenadosPorAccesos(s, c)$.
+  
+  El id de la categoría nos permitirá proyectar el nombre de la misma y la cantidad de accesos recientes del link actual,
+  utilizando el id como índice en el arreglo $s$.linksPorCatId para obtener en $\Theta(1)$ el nombre y la fecha en la que
+  se accedió por última vez algún link de la categoría, siendo este último un dato necesario para calcular la cantidad
+  de accesos recientes del link actual.
+  
+  \begin{Estructura}{itlinks}[estr\_iter]
+    \begin{Tupla}[estr\_iter]
+      \tupItem{s}{estr\_sistema},
+      \tupItem{cid}{nat},
+      \tupItem{it}{itLista(puntero(estr\_link))}%
+    \end{Tupla}
+  \end{Estructura}
+
+  ~
+
+  \textbf{Invariante de representación:}
+
+  \begin{enumerate}
+    \item $s$ representa un sistema válido.
+    \item $cid$ debe ser el id de una categoría en el sistema.
+    \item La secuencia subyacente del iterador debe ser la secuencia de links en la categoría
+          con id $cid$ y sus subcategorías.
+  \end{enumerate}
+
+  \Rep[estr\_iter][e]{ \\
+    Rep($e$.s) $\land$ \hfill 1. \\
+    1 $\leq$ $e$.cid $\land$ $e$.cid $\leq$ \#(categorias($e$.s.categorías)) $\land$ \hfill 2. \\
+    SecuSuby($e$.it) $\igobs$ $e$.s.linksPorCatId[$e$.cid $-$ $1$].links \hfill 3.
+  }
+
+  \mbox{}
+
+  ~
+
+  \textbf{Función de abstracción:}
+  
+  \begin{enumerate}
+    \item Los elementos siguientes del iterador deben ser las tuplas (link, categoría, nat) que se correspondan
+          con los elementos siguientes del iterador de la estructura.
+  \end{enumerate}
+
+  \Abs[estr\_iter]{itUni(tupla(link, categoría, nat))}[e]{it}{%
+    Siguientes($it$) $\igobs$ SecuDeTuplas( \hfill 1. \\
+      \margen Abs($e$.s), \\
+      \margen $e$.s.linksPorCatId[$e$.cid $-$ 1].cat, \\
+      \margen SecuDeLinks(Siguientes($e$.it)))
+  }
+
+  ~
+  
+  \tadOperacion{SecuDeTuplas}{lli/s,categoria/c,secu(link)/sl}
+               {secu(tupla(link, categoria, nat))}
+               {está?($c$, categorias($s$)) $\land$ EstánEnConj?($sl$, links($s$))}
+  \tadAxioma{SecuDeTuplas($s$, $c$, $sl$)}{\TADIF vacía?($sl$)
+                                           THEN \secuencia{}
+                                           ELSE $\langle$prim($sl$), \\
+                                                         \phantom{$\langle$}categoriaLink($s$, prim($sl$)), \\
+                                                         \phantom{$\langle$}accesosRecientes($s$, $c$, prim($sl$))$\rangle$
+                                                $\bullet$ SecuDeTuplas($s$, $c$, fin($sl$))
+                                           FI}
+  
+  ~
+
+  ~
+    
+  \tadOperacion{EstánEnConj?}{secu(link),conj(link)}{bool}{}
+  \tadAxioma{EstánEnConj?($sl$, $cl$)}{\TADIF vacía?($sl$)
+                                       THEN \textbf{true}
+                                       ELSE prim($sl$) $\in$ $cl$ $\land$ EstánEnConj?(fin($sl$), $cl$)
+                                       FI}
+  
+  ~
+
+  \tadOperacion{SecuDeLinks}{secu(puntero(estr\_link))/sp}{secu(link)}{$¬$(está?(NULL, $sp$))}
+  \tadAxioma{SecuDeLinks($sp$)}{\TADIF vacía?($sp$)
+                                THEN \secuencia{}
+                                ELSE \secuencia{prim($sp$)\DRef l}[SecuDeLinks(fin($sp$))]
+                                FI}
+  
+  ~
+
+\end{Representacion}
+
+\begin{Algoritmos}
+
+  \begin{Algoritmo}{iCrearSistema}{\In{ac}{estr\_acat}}{estr\_sistema}{$\Theta(\#(categorias(ac)))$}{
+    $9 * \Theta(1) + \Theta(\#categorias(ac)) + \Theta(\sum_{i=1}^{i=long(Siguientes(it))}{\#subcategorias(Siguientes(it)_i)}) =$ \\
+    $\Theta(\#categorias(ac)) + \Theta(\sum_{i=1}^{i=long(Siguientes(it))}{\#subcategorias(Siguientes(it)_i)}) =$ \\
+    $\Theta(\#categorias(ac)) + \Theta(\#categorias(ac) - 1) =$ \\
+    $\Theta(\#categorias(ac)).$ \\
+    \\
+    Notar que $\sum_{i=1}^{i=long(Siguientes(it))}{\#subcategorias(Siguientes(it)_i)} = \#categorias(ac) - 1$.
+  }
+    \STATE \CrearTupla{$res$}\CampoTupla{categorías}{$ac$}, \Complejidad{1}
+    \STATE \MargenTupla      \CampoTupla{links}{\NombreFuncion{CrearDiccionario}()}, \Complejidad{1}
+    \STATE \MargenTupla      \CampoTupla{linksPorCatId}{\NombreFuncion{CrearArreglo}(\NombreFuncion{\#Categorías}($ac$))}, \Complejidad{$\#categorias(ac)$}
+    \STATE \MargenTupla      \CampoTupla{fechaActual}{0}\FinTupla \Complejidad{1}
+    \STATE \CrearTupla{$res$.linksPorCatId[0]}\CampoTupla{cat}{\NombreFuncion{NombreCategoríaRaíz}($ac$)}, \Complejidad{1}
+    \STATE \MargenTupla                       \CampoTupla{idPadre}{0}, \Complejidad{1}
+    \STATE \MargenTupla                       \CampoTupla{links}{\NombreFuncion{Vacía}()}, \Complejidad{1}
+    \STATE \MargenTupla                       \CampoTupla{últimoAcceso}{0}, \Complejidad{1}
+    \STATE \MargenTupla                       \CampoTupla{ordenado?}{\textbf{false}}\FinTupla \Complejidad{1}
+    \STATE var $it$: \TipoVariable{itcats} $\leftarrow$ \NombreFuncion{CrearItRaíz}($ac$) \Complejidad{1}
+    \STATE \NombreFuncion{iAgregarALinksPorCatId}($it$, 1, $res$) \Complejidad{$\sum_{i=1}^{i=long(Siguientes(it))}{\#subcategorias(Siguientes(it)_i)}$}
+  \end{Algoritmo}
+  
+  ~  
+  
+  \begin{Algoritmo}{iAgregarALinksPorCatId}{\Inout{it}{itcats}, \In{idPadre}{nat}, \Inout{s}{estr\_sistema}}{}{
+    $\Theta(\sum_{i=1}^{i=long(Siguientes(it))}{\#subcategorias(Siguientes(it)_i)})$, donde:\\
+      \margen$\bullet$ $\#subcategorias(x)$ es la cantidad de nodos del subárbol de categorías en el cual $x$ es el nodo raíz, y \\
+      \margen$\bullet$ $Siguientes(it)_i$ es el $i$-ésimo elemento de la secuencia de elementos siguientes del iterador $it$.
+  }
+  {
+    El algoritmo recibe un iterador de categorías, y para cada una de ellas guarda información en la posición correspondiente
+    en el arreglo $s$.linksPorCatId, y luego crea un iterador de sus categorías hijas que utiliza para llamarse recursivamente.
+  }
+    \WHILE[\ComplejidadGuarda{1}]{\NombreFuncion{HayMás?}($it$)}
+      \STATE \CrearTupla{$s$.linksPorCatId[\NombreFuncion{IdCategoríaActual}($it$) - 1]}%
+                          \CampoTupla{cat}{\NombreFuncion{CategoríaActual}($it$)},  \Complejidad{1}
+      \STATE \MargenTupla \CampoTupla{idPadre}{$idPadre$},  \Complejidad{1}
+      \STATE \MargenTupla \CampoTupla{links}{\NombreFuncion{Vacía}()},  \Complejidad{1}
+      \STATE \MargenTupla \CampoTupla{últimoAcceso}{0},  \Complejidad{1}
+      \STATE \MargenTupla \CampoTupla{ordenado?}{\textbf{false}}\FinTupla  \Complejidad{1}
+      \STATE var $it'$: \TipoVariable{itcats} $\leftarrow$ \NombreFuncion{CrearItHijos}($it$)  \Complejidad{1}
+      \STATE \NombreFuncion{iAgregarALinksPorCatId}(  \Complejidad{$\sum_{i=1}^{i=long(Siguientes(it'))}{\#subcategorias(Siguientes(it')_i)}$}
+      \STATE   \margen$ithijos$, \Complejidad{1}
+      \STATE   \margen\NombreFuncion{IdCategoríaActual}($it$), \Complejidad{1}
+      \STATE   \margen$s$) \Complejidad{1}
+      \STATE \NombreFuncion{Avanzar}($it$) \Complejidad{1}
+    \ENDWHILE
+  \end{Algoritmo}
+    
+  ~  
+  
+  \begin{Algoritmo}{iAgregarLink}{\In{l}{link}, \In{c}{categoria}, \Inout{s}{estr\_sistema}}{}{
+    $\Theta(|c| + |l| + h)$, donde $h$ es la altura del árbol de categorías.
+  }
+  {
+    $\Theta(1) + \Theta(|c|) + \Theta(1) + \Theta(1) + \Theta(|l| + copy(estr\_l)) + \Theta(|l|) + \Theta(1)\ +$ ciclo $=$ \\
+    $4 * \Theta(1) + \Theta(|c|) + \Theta(|l| + copy(estr\_l))\ +$ ciclo $=$ \\
+    $\Theta(|c|) + \Theta(|l| + copy(estr\_l))\ +$ ciclo $=$ \\
+    $\Theta(|c|) + \Theta(|l|) + \Theta(copy(estr\_l))\ +$ ciclo $=$ \\    
+    $\Theta(|c|) + \Theta(|l|) + \Theta(|c|)\ +$ ciclo $=$ \\
+    $2 * \Theta(|c|) + \Theta(|l|)\ +$ ciclo $=$ \\
+    $\Theta(|c|) + \Theta(|l|)\ +$ ciclo $=$ \\
+    $\Theta(|c|) + \Theta(|l|) + h * (\Theta(1) + \Theta(1) + \Theta(1) + \Theta(1) + \Theta(1)) + \Theta(1) =$ \\
+    $\Theta(|c|) + \Theta(|l|) + h * (5 * \Theta(1)) + \Theta(1) =$ \\
+    $\Theta(|c|) + \Theta(|l|) + h * \Theta(1) + \Theta(1) =$ \\
+    $\Theta(|c|) + \Theta(|l|) + h * \Theta(1) =$ \\
+    $\Theta(|c|) + \Theta(|l|) + \Theta(h) =$ \\    
+    $\Theta(|c| + |l| + h).$
+  }
+    \STATE \CrearTupla{var $estr\_l$: \TipoVariable{estr\_link}}%
+                        \CampoTupla{l}{$l$}, \Complejidad{1}
+    \STATE \MargenTupla \CampoTupla{cid}{\NombreFuncion{IdCategoríaPorNombre}($c$, $s$.categorías)}, \Complejidad{$|c|$}
+    \STATE \MargenTupla \CampoTupla{últimoAcceso}{$s$.fechaActual},  \Complejidad{1}
+    \STATE \MargenTupla \CampoTupla{as}{\NombreFuncion{iCrearArregloDe3Nats}(0, 0, 0)}\FinTupla \Complejidad{1}
+    \STATE \NombreFuncion{Definir}($l$, $estr\_l$, $s$.links) \Complejidad{$|l| + copy(estr\_l)$}
+    \STATE $estr\_l$ $\leftarrow$ \NombreFuncion{Obtener}($l$, $s$.links) \Complejidad{$|l|$}
+    \STATE
+    \STATE var $cid$: \TipoVariable{nat} $\leftarrow$ $estr\_l$.cid \Complejidad{1}
+    \WHILE[\ComplejidadGuarda{1}]{$¬$($cid$ $\igobs$ 0)}
+      \STATE \NombreFuncion{AgregarAtrás}($s$.linksPorCatId[$cid$ - 1].links, \&($estr\_l$)) \Complejidad{1}
+      \STATE $s$.linksPorCatId[$cid$ - 1].últimoAcceso $\leftarrow$ $s$.fechaActual \Complejidad{1}
+      \STATE $s$.linksPorCatId[$cid$ - 1].ordenado? $\leftarrow$ \textbf{false} \Complejidad{1}
+      \STATE $cid$ $\leftarrow$ $s$.linksPorCatId[$cid$ - 1].idPadre \Complejidad{1}
+    \ENDWHILE
+  \end{Algoritmo}
+  
+  ~  
+  
+  \begin{Algoritmo}{iAccederLink}{\In{l}{link}, \In{f}{fecha}, \Inout{s}{estr\_sistema}}{}{
+    $\Theta(|l| + h)$, donde $h$ es la altura del árbol de categorías.
+  }
+  {
+    $\Theta(|l|)\ +$ condicionales $ +\ \Theta(1) + \Theta(1)\ +$ ciclo $ =$ \\
+    $\Theta(|l|)\ +$ condicionales $+$ ciclo $ =$ \\
+    $\Theta(|l|) + \Theta(1) + (\Theta(1) $ ó $(\Theta(1) + (\Theta(1) $ ó $(\Theta(1) + (\Theta(1) $ ó $\Theta(1))))))\ + $ ciclo $ =$ \\  
+    $\Theta(|l|) + \Theta(1)\ +$ ciclo $ =$ \\
+    $\Theta(|l|)\ +$ ciclo $ =$ \\
+    $\Theta(|l|)\ + h * (\Theta(1) + \Theta(1) + \Theta(1) + \Theta(1)) + \Theta(1) =$ \\
+    $\Theta(|l|)\ + h * (4 * \Theta(1)) + \Theta(1) =$ \\
+    $\Theta(|l|)\ + h * \Theta(1) + \Theta(1) =$ \\
+    $\Theta(|l|)\ + h * \Theta(1) =$ \\
+    $\Theta(|l|)\ + \Theta(h) =$ \\
+    $\Theta(|l| + h)$.
+  }
+    \STATE var $estr\_l$: \TipoVariable{estr\_link} $\leftarrow$ \NombreFuncion{Obtener}($l$, $s$.links) \Complejidad{$|l|$}
+    \IF[\ComplejidadGuarda{1}]{$f$ $\igobs$ $estr\_l$.últimoAcceso}
+      \STATE $estr\_l$.as[0] $\leftarrow$ $estr\_l$.as[0] + 1 \Complejidad{1}
+    \ELSIF[\ComplejidadGuarda{1}]{$f$ $\igobs$ $estr\_l$.últimoAcceso + 1}
+      \STATE $estr\_l$.as $\leftarrow$ \NombreFuncion{iCrearArregloDe3Nats}(1, $estr\_l$.as[0], $estr\_l$.as[1]) \Complejidad{1}
+    \ELSIF[\ComplejidadGuarda{1}]{$f$ $\igobs$ $estr\_l$.últimoAcceso + 2}
+      \STATE $estr\_l$.as $\leftarrow$ \NombreFuncion{iCrearArregloDe3Nats}(1, 0, $estr\_l$.as[0]) \Complejidad{1}
+    \ELSE
+      \STATE $estr\_l$.as $\leftarrow$ \NombreFuncion{iCrearArregloDe3Nats}(1, 0, 0) \Complejidad{1}
+    \ENDIF
+    \STATE
+    \STATE $s$.fechaActual $\leftarrow$ $f$ \Complejidad{1}
+    \STATE
+    \STATE var $cid$: \TipoVariable{nat} $\leftarrow$ $estr\_l$.cid \Complejidad{1}
+    \WHILE[\ComplejidadGuarda{1}]{$¬$($cid$ $\igobs$ 0)}
+      \STATE $s$.linksPorCatId[$cid$ - 1].últimoAcceso $\leftarrow$ $s$.fechaActual \Complejidad{1}
+      \STATE $s$.linksPorCatId[$cid$ - 1].ordenado? $\leftarrow$ \textbf{false} \Complejidad{1}
+      \STATE $idPadre$ $\leftarrow$ $s$.linksPorCatId[$cid$ - 1].idPadre \Complejidad{1}
+    \ENDWHILE     
+  \end{Algoritmo}
+  
+  ~
+  
+  \begin{Algoritmo}{iCrearArregloDe3Nats}{\In{a}{nat}, \In{b}{nat}, \In{c}{nat}}{arreglo\_estático[3] de nat}{$\Theta(1)$}{}
+    \STATE $\res$ $\leftarrow$ \NombreFuncion{CrearArreglo}() \Complejidad{1}
+    \STATE $\res$[0] $\leftarrow$ $a$ \Complejidad{1}
+    \STATE $\res$[1] $\leftarrow$ $b$ \Complejidad{1}
+    \STATE $\res$[2] $\leftarrow$ $c$ \Complejidad{1}
+  \end{Algoritmo}
+  
+  ~  
+  
+  \begin{Algoritmo}{i\#Links}{\In{c}{categoría}, \In{s}{estr\_sistema}}{nat}{$\Theta(|c|)$}{}
+    \STATE $res$ $\leftarrow$ \NombreFuncion{Longitud}($s$.linksPorCatId[\NombreFuncion{IdCategoríaPorNombre}($c$, $s$.categorías) - 1].links) \Complejidad{|c|}
+  \end{Algoritmo}
+  
+  ~  
+  
+  \begin{Algoritmo}{iCrearIt}{\In{c}{categoría}, \In{s}{estr\_sistema}}{estr\_iter}{
+    $\Theta(|c| + n^2)$ ó $\Theta(|c|)$, donde $n$ es la cantidad de links de $c$ y todas sus subcategorías.
+  }
+  {
+    $\Theta(1) + \Theta(|c|) + \Theta(1) + (\Theta(|estr\_c$.links$|^2)$ ó $0) + \Theta(1) + \Theta(|c|) + \Theta(1) =$ \\
+    $4 * \Theta(1) + \Theta(|c|) + (\Theta(|estr\_c$.links$|^2)$ ó $0) + \Theta(|c|) =$ \\
+    $\Theta(|c|) + (\Theta(|estr\_c$.links$|^2)$ ó $0) + \Theta(|c|) =$ \\
+    $2 * \Theta(|c|) + (\Theta(|estr\_c$.links$|^2)$ ó $0) =$ \\
+    $\Theta(|c|) + (\Theta(|estr\_c$.links$|^2)$ ó $0) =$ \\
+    $\Theta(|c|) + (\Theta(n^2)$ ó $0) =$ \\
+    $(\Theta(|c|) + \Theta(n^2))$ ó $\Theta(|c|) =$ \\    
+    $\Theta(|c| + n^2)$ ó $\Theta(|c|)$. \\
+    \\
+    Notar que $n =\ $estr\_c$.links$.
+  }
+    \STATE var $estr\_c$: \TipoVariable{estr\_linksPorCatId} $\leftarrow$ $s$.linksPorCatId[ \Complejidad{1}
+    \STATE   \margen \NombreFuncion{IdCategoríaPorNombre}($c$, $s$.categorías) - 1] \Complejidad{|c|}
+    \IF[\ComplejidadGuarda{1}]{$¬$($estr\_c$.ordenado?)}
+      \STATE \NombreFuncion{iOrdenarLinks}($estr\_c$) \Complejidad{$|estr\_c$.links$|^2$}
+    \ENDIF
+    \STATE \CrearTupla{$res$}\CampoTupla{s}{$s$}, \Complejidad{1}
+    \STATE \MargenTupla      \CampoTupla{cid}{\NombreFuncion{IdCategoríaPorNombre}($c$, $s$.categorías)}, \Complejidad{$|c|$}
+    \STATE \MargenTupla      \CampoTupla{it}{\NombreFuncion{CrearIt}($estr\_c$.links)}\FinTupla \Complejidad{1}
+  \end{Algoritmo}  
+  
+  ~
+  
+  \begin{Algoritmo}{iOrdenarLinks}{\In{estr\_c}{estr\_linksPorCatId}}{}{
+    $\Theta(n^2)$, donde $n$ es $|estr\_c$.links$|$.
+  }
+  {
+    $\Theta(1) + (\sum_{i=1}^{i=n} \Theta(1) + \sum_{j=i}^{j=n} \Theta(1)) =$ \\
+    $\sum_{i=1}^{i=n} \sum_{j=i}^{j=n} \Theta(1) =$ \\
+    $\Theta(1) * (\sum_{i=1}^{i=n} \sum_{j=i}^{j=n} 1) =$ \\
+    $\Theta(1) * (\sum_{i=1}^{i=n} n - i) =$ \\
+    $\Theta(1) * (n^2 + (\sum_{i=1}^{i=n} - i)) =$ \\
+    $\Theta(1) * (n^2 - (\sum_{i=1}^{i=n} i)) =$ \\
+    $\Theta(1) * (n^2 - \frac{1}{2} * (n * (n - 1))) =$ \\
+    $\Theta(1) * (n^2 - \frac{1}{2} * (n^2 - n)) =$ \\    
+    $\Theta(n^2 - \frac{1}{2} * (n^2 - n)) =$ \\
+    $\Theta(n^2 - \frac{1}{2} * n^2 - \frac{1}{2} * n)) =$ \\    
+    $\Theta(n^2) - \frac{1}{2} * \Theta(n^2) - \frac{1}{2} * \Theta(n) =$ \\
+    $\frac{1}{2} * \Theta(n^2) - \frac{1}{2} * \Theta(n) =$ \\    
+    $\Theta(n^2)$.  
+  }
+    \STATE var $it$: \TipoVariable{itLista(puntero(estr\_link))} $\leftarrow$ \NombreFuncion{CrearIt}($estr\_c$.links) \Complejidad{1}
+    \WHILE[\ComplejidadGuarda{1}]{\NombreFuncion{HaySiguiente}($it$)}
+      \STATE var $it'$: \TipoVariable{itLista(puntero(estr\_link))} $\leftarrow$ \NombreFuncion{Copiar}($it$) \Complejidad{1}
+      \STATE var $itMax$: \TipoVariable{itLista(puntero(estr\_link))} $\leftarrow$ \NombreFuncion{Copiar}($it'$) \Complejidad{1}
+      \WHILE[\ComplejidadGuarda{1}]{\NombreFuncion{HaySiguiente}($it'$)}
+        \STATE var $arActual$: \TipoVariable{nat} $\leftarrow$
+               \NombreFuncion{iAccesosRecientes}(*\NombreFuncion{Siguiente}($it'$), $estr\_c$) \Complejidad{1}
+        \STATE var $arMax$: \TipoVariable{nat} $\leftarrow$
+               \NombreFuncion{iAccesosRecientes}(*\NombreFuncion{Siguiente}($itMax$), $estr\_c$) \Complejidad{1}
+        \IF[\ComplejidadGuarda{1}]{$arActual > arMax$}
+          \STATE $itMax$ $\leftarrow$ \NombreFuncion{Copiar}($it'$) \Complejidad{1}
+        \ENDIF
+    \STATE \NombreFuncion{Avanzar($it'$)} \Complejidad{1}
+    \ENDWHILE
+    \STATE \NombreFuncion{iIntercamabiar}($it$, $itMax$) \Complejidad{1}
+      \STATE \NombreFuncion{Avanzar($it$)} \Complejidad{1}
+    \ENDWHILE
+    \STATE $estr\_c$.ordenado? $\leftarrow$ \textbf{true} \Complejidad{1}
+  \end{Algoritmo}  
+  
+  ~  
+
+  \begin{Algoritmo}{iAccesosRecientes}{\In{estr\_l}{estr\_link}, \In{estr\_c}{estr\_linksPorCatId}}{nat}{$\Theta(1)$}{}
+    \IF[\ComplejidadGuarda{1}]{$estr\_c$.últimoAcceso $\igobs$ $estr\_l$.últimoAcceso}
+      \STATE $res$ $\leftarrow$ $estr\_l$.as[0] + $estr\_l$.as[1] + $estr\_l$.as[2] \Complejidad{1}
+    \ELSIF[\ComplejidadGuarda{1}]{$estr\_c$.últimoAcceso $\igobs$ $estr\_l$.últimoAcceso + 1}
+      \STATE $res$ $\leftarrow$ $estr\_l$.as[0] + $estr\_l$.as[1] \Complejidad{1}
+    \ELSIF[\ComplejidadGuarda{1}]{$estr\_c$.últimoAcceso $\igobs$ $estr\_l$.últimoAcceso + 2}          
+      \STATE $res$ $\leftarrow$ $estr\_l$.as[0] \Complejidad{1}
+    \ELSE
+      \STATE $res$ $\leftarrow$ 0 \Complejidad{1}
+    \ENDIF
+  \end{Algoritmo}
+  
+  ~
+  
+  \begin{Algoritmo}{iIntercambiar}{\Inout{it}{itLista(puntero(estr\_link))}, \Inout{it'}{itLista(puntero(estr\_link))}}{}{$\Theta(1)$}{
+    $\Theta(1) + \Theta(1) + \Theta(copy(Siguiente(it))) + \Theta(1) + \Theta(copy(ptr)) =$ \\
+    $3 * \Theta(1) + \Theta(copy(Siguiente(it))) + \Theta(copy(ptr)) =$ \\
+    $3 * \Theta(1) + \Theta(1) + \Theta(copy(ptr)) =$ \\    
+    $3 * \Theta(1) + \Theta(1) + \Theta(1) =$ \\
+    $5 * \Theta(1) =$ \\ 
+    $\Theta(1)$. \\
+  }
+    \STATE var $ptr$: \TipoVariable{puntero(estr\_link)} $\leftarrow$ \NombreFuncion{Siguiente}($it'$) \Complejidad{1}
+    \STATE \NombreFuncion{EliminarSiguiente}($it'$) \Complejidad{1}
+    \STATE \NombreFuncion{AgregarComoSiguiente}($it'$, \NombreFuncion{Siguiente}($it$)) \Complejidad{$copy(Siguiente(it))$}
+    \STATE \NombreFuncion{EliminarSiguiente}($it$) \Complejidad{1}
+    \STATE \NombreFuncion{AgregarComoSiguiente}($it$, $ptr$) \Complejidad{$copy(ptr)$}
+  \end{Algoritmo}
+  
+  ~  
+  
+  \begin{Algoritmo}{iHayMás?}{\In{it}{estr\_iter}}{bool}{$\Theta(1)$}{}
+    \STATE $res$ $\leftarrow$ \NombreFuncion{HaySiguiente}($it$.it) \Complejidad{1}
+  \end{Algoritmo}
+  
+  ~  
+  
+  \begin{Algoritmo}{iLinkActual}{\In{it}{estr\_iter}}{link}{$\Theta(1)$}{}
+    \STATE $res$ $\leftarrow$ \NombreFuncion{Siguiente}($it$.it)\DRef l \Complejidad{1}
+  \end{Algoritmo}
+  
+  ~  
+  
+  \begin{Algoritmo}{iCategoríaLinkActual}{\In{it}{estr\_iter}}{categoria}{$\Theta(1)$}{}
+    \STATE $res$ $\leftarrow$ $it$.s.linksPorCatId[\NombreFuncion{Siguiente}($it$.it)\DRef cid - 1].cat \Complejidad{1}
+  \end{Algoritmo}
+  
+  ~  
+  
+  \begin{Algoritmo}{iAccesosRecientesLinkActual}{\In{it}{estr\_iter}}{nat}{$\Theta(1)$}{}
+    \STATE $res$ $\leftarrow$ \NombreFuncion{iAccesosRecientes}(*\NombreFuncion{Siguiente}($it$.iter), $it$.s.linksPorCatId[$it$.cid - 1]) \Complejidad{1}
+  \end{Algoritmo}
+  
+  ~  
+  
+  \begin{Algoritmo}{iAvanzar}{\Inout{it}{estr\_iter}}{}{$\Theta(1)$}{}
+    \STATE \NombreFuncion{Avanzar}($it$.it) \Complejidad{1}
+  \end{Algoritmo}
+  
+\end{Algoritmos}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Diccionario Trie                                                          %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Módulo Diccionario Trie($\alpha$)}
+
+\begin{Interfaz}
+  \textbf{parámetros formales}\hangindent=2\parindent\\
+  \parbox{1.7cm}{\textbf{géneros}} $\alpha$\\
+  \parbox[t]{1.7cm}{\textbf{función}}\parbox[t]{\textwidth-2\parindent-1.7cm}{%
+    \InterfazFuncion{Copiar}{\In{a}{$\alpha$}}{$\alpha$}
+    {$res \igobs a$}
+    [$\Theta(copy(a))$]
+    [función de copia de $\alpha$'s]
+  }
+
+  \textbf{se explica con}: \tadNombre{Diccionario(String, $\alpha$)}.
+
+  \textbf{géneros}: \TipoVariable{dicctrie$(\alpha)$}.
+
+  \Titulo{Operaciones básicas de diccionario trie}
+  
+  \InterfazFuncion{CrearDiccionario}{}{dicctrie$(\alpha)$}
+  {$res$ $\igobs$ vacío()}
+  [$\Theta(1)$]
+  [crea un nuevo diccionario vacío.]
+
+  \InterfazFuncion{Definir}{\In{c}{string}, \In{s}{$\alpha$}, \Inout{d}{dicctrie$(\alpha)$}}{}
+  [$d$ $\igobs$ $d_{0}$]
+  {$d$ $\igobs$ definir($d_{0}$, $c$, $s$)}
+  [$\Theta(|c| + copy(s))$]
+  [define la clave $c$ con el significado $s$ en el diccionario.]
+  [el significado $s$ se agrega por copia.]  
+  
+  \InterfazFuncion{Obtener}{\In{c}{string}, \In{d}{dicctrie$(\alpha)$}}{$\alpha$}
+  [def?($c$, $d$)]
+  {$res$ $\igobs$ obtener($c$, $d$)}
+  [$\Theta(|c|)$]
+  [devuelve el significado de la clave $c$ en $d$.]
+  [$res$ es modificable si y sólo si $d$ es modificable.]
+   
+  \InterfazFuncion{\#Claves}{\In{d}{dicctrie$(\alpha)$}}{nat}
+  {$res$ $\igobs$ \#(claves($d$))}
+  [$\Theta(1)$]
+  [devuelve la cantidad de claves del diccionario.]    
+
+\end{Interfaz}
+
+~
+
+\begin{Representacion}
+
+  Representamos cada nodo del árbol con una tupla que contiene un puntero a su significado,
+  que podrá ser NULL si no hay un significado asociado a ese nodo, y un arreglo de 256 punteros
+  a nodos hijos, en el que elemento de índice $i$ representa al nodo hijo correspondiente
+  al Char de valor $ord^{-1}(i)$, el cual será NULL si no se definió ninguna clave
+  que comience con la traza de ese nodo seguida del Char $ord^{-1}(i)$.
+  
+  El diccionario se representa con una tupla que mantiene una referencia al nodo raíz, y un
+  natural que cuenta la cantidad total de claves definidas en el diccionario.
+
+  \begin{Estructura}{dicctrie$(\alpha)$}[estr\_dicctrie]
+    \begin{Tupla}[estr\_dicctrie]
+      \tupItem{raíz}{estr\_nodo},\\
+      \tupItem{\#Claves}{nat}%
+    \end{Tupla}
+   
+    \begin{Tupla}[estr\_nodo]
+      \tupItem{significado}{puntero$(\alpha)$},\\
+      \tupItem{hijos}{arreglo\_estático[256] de puntero(estr\_nodo)}%
+    \end{Tupla}
+  \end{Estructura}
+  
+  \textbf{Invariante de representación:}
+
+  \begin{enumerate}
+    \item El árbol no debe tener ciclos.
+    \item El árbol no debe tener nodos repetidos.
+    \item Los nodos terminales tienen significado no nulo.
+    \item La cantidad de claves debe coincidir con la cantidad de significados.
+  \end{enumerate}
+
+  \Rep[estr\_dicctrie][e]{ \\
+    NoHayCiclos($e$.raíz, $\emptyset$) $\yluego$ \hfill 1. \\
+    SinRepetidos(Aplanar($e$.raíz)) $\land$ \hfill 2. \\
+    NodoTerminalTieneSignificado($e$.raíz) $\land$ \hfill 3. \\
+    $e$.\#Claves $\igobs$ ContarSignificados($e$.raíz) \hfill 4.
+  }
+  
+  \mbox{}
+
+  ~
+  
+  \tadOperacion{NoHayCiclos}{estr\_nodo, conj(estr\_nodo)}{bool}{}
+  \tadAxioma{NoHayCiclos($e$, $ancestros$)}{$¬$($e$ $\in$ $ancestros$) $\yluego$ NoHayCiclosEnLosHijos($e$, Ag($e$, $ancestros$), 0)}
+
+  ~
+
+  \tadOperacion{NoHayCiclosEnLosHijos}{estr\_nodo, conj(estr\_nodo), nat}{bool}{}
+  \tadAxioma{NoHayCiclosEnLosHijos($e$, $ancestros$, $n$)}{
+    ($¬$($e$.hijos[$n$] $\igobs$ NULL) $\impluego$ \\
+      \margen NoHayCiclos(*($e$.hijos[$n$]), $ancestros$)) $\yluego$ \\
+    ($n$ $<$ 255 $\impluego$ NoHayCiclosEnLosHijos($e$, $ancestros$, $n$ $+$ 1))
+  }  
+  
+  ~
+  
+  ~
+  
+  \tadOperacion{Aplanar}{estr\_nodo/e}{secu(estr\_nodo)}{NoHayCiclos($e$, $\emptyset$)}
+  \tadAxioma{Aplanar($e$)}{\secuencia{$e$} \& AplanarHijos($e$, 0)}
+  
+  ~
+
+  \tadOperacion{AplanarHijos}{estr\_nodo/e,nat}{secu(estr\_nodo)}{NoHayCiclos($e$, $\emptyset$)}
+  \tadAxioma{AplanarHijos($e$, $n$)}{
+    (\TADIF e.hijos[$n$] $\igobs$ NULL
+     THEN \secuencia{}
+     ELSE Aplanar(*(e.hijos[$n$]))
+     FI) \& \\
+    (\TADIF $n$ $<$ 255
+     THEN AplanarHijos($e$, $n$ $+$ 1)
+     ELSE \secuencia{}
+     FI)}
+  
+  ~
+
+  ~  
+  
+  \tadOperacion{SinRepetidos}{secu(estr\_nodo)}{bool}{}
+  \tadAxioma{SinRepetidos($sn$)}{\TADIF vacía?($sn$) THEN \textbf{true} ELSE $¬$(está?(prim($sn$), fin($sn$))) $\land$ SinRepetidos(fin($sn$)) FI}
+
+  ~  
+  
+  \tadOperacion{NodoTerminalTieneSignificado}{estr\_nodo/e}{bool}{NoHayCiclos($e$, $\emptyset$)}
+  \tadAxioma{NodoTerminalTieneSignificado($e$)}{\TADIF EsTerminal?($e$, 0)
+                                                THEN $¬$(significado($e$) $\igobs$ NULL)
+                                                ELSE NodoHijoTerminalTieneSignificado($e$, 0)
+                                                FI}
+  
+  ~
+  
+  ~
+  
+  \tadOperacion{EsTerminal?}{estr\_nodo/e,nat}{bool}{}    
+  \tadAxioma{EsTerminal?($e$, $n$)}{$e$.hijos[$n$] $\igobs$ NULL $\yluego$ ($n$ $<$ 255 $\impluego$ EsTerminal?($e$, $n$ $+$ 1))}  
+  
+  ~
+  
+  \tadOperacion{NodoHijoTerminalTieneSignificado}{estr\_nodo/e,nat}{bool}{NoHayCiclos($e$, $\emptyset$)}    
+  \tadAxioma{NodoHijoTerminalTieneSignificado($e$, $n$)}{
+    ($¬$($e$.hijos[$n$] $\igobs$ NULL) $\impluego$ \\
+      \margen NodoTerminalTieneSignificado(*($e$.hijos[$n$]))) $\yluego$ \\
+    ($n$ $<$ 255 $\impluego$ NodoHijoTerminalTieneSignificado($e$, $n$ $+$ 1))  
+  }
+  
+  ~
+  
+  \tadOperacion{ContarSignificados}{estr\_nodo}{nat}{}
+  \tadAxioma{ContarSignificados($e$)}{(\TADIF e.significado $\igobs$ NULL THEN 0 ELSE 1 FI) $+$ ContarSignificadosDeLosHijos($e$, 0)}
+
+  ~
+
+  \tadOperacion{ContarSignificadosDeLosHijos}{estr\_nodo,nat}{nat}{}
+  \tadAxioma{ContarSignificadosDeLosHijos($e$, $n$)}{
+    (\TADIF $e$.hijos[$n$] $\igobs$ NULL
+     THEN 0 \phantom{xxxxxxxx}
+     ELSE ContarSignificados(*($e$.hijos[$n$]))
+     FI) $+$ \\
+    (\TADIF $n$ $<$ 255
+     THEN ContarSignificadosDeLosHijos($e$, $n$ $+$ 1) \phantom{xxxxxxxx}
+     ELSE 0
+     FI)
+  }    
+  
+  ~
+
+  \textbf{Función de abstracción:}
+  
+  \begin{enumerate}
+    \item El diccionario tiene la misma cantidad de claves que la estructura.
+    \item Para cada clave del diccionario:
+    \begin{enumerate}
+      \item La clave está definida en la estructura.
+      \item El significado de la clave en el diccionario es el mismo que en la estructura.
+    \end{enumerate}
+  \end{enumerate}
+
+  \Abs[estr\_dicctrie]{dicc(string, $\alpha$)}[e]{d}{
+    \#(claves($d$)) $\igobs$ $e$.\#Claves $\yluego$ \hfill 1. \\
+    ($\forall c$: string)(def?($c$, $d$) $\impluego$ ( \hfill 2. \\
+      \margen $¬$(ObtenerDeLaEstructura($c$, $e$.raíz) $\igobs$ NULL) $\yluego$ \hfill 2. a) \\
+      \margen obtener($c$, $d$) $\igobs$ *(ObtenerDeLaEstructura($c$, $e$.raíz)) \hfill 2. b) \\
+    ))
+  }
+
+  ~
+  
+  \tadOperacion{ObtenerDeLaEstructura}{string,estr\_nodo}{puntero($\alpha$)}{}
+  \tadAxioma{ObtenerDeLaEstructura($c$, $n$)}{\TADIF vacía?($c$)
+                                              THEN $n$.significado
+                                              ELSE {\TADIF $n$.hijos[Ord(prim($c$))] $\igobs$ NULL
+                                                    THEN NULL
+                                                    ELSE ObtenerDeLaEstructura(fin($c$), $n$.hijos[Ord(prim($c$))])
+                                                    FI}
+                                              FI}
+\end{Representacion}
+
+~
+
+\begin{Algoritmos}
+
+  \begin{Algoritmo}{iCrearDiccionario}{}{estr\_dicctrie}{$\Theta(1)$}{
+    $\Theta(1) + \Theta(1) =$ \\
+    $2 * \Theta(1) =$ \\
+    $\Theta(1)$.   
+  }
+    \STATE \CrearTupla{$res$}\CampoTupla{raíz}{\NombreFuncion{iNuevoNodo}()}, \Complejidad{1}
+    \STATE \MargenTupla      \CampoTupla{\#Claves}{$0$}\FinTupla \Complejidad{1}
+  \end{Algoritmo}
+
+  ~
+
+  \begin{Algoritmo}{iNuevoNodo}{}{estr\_nodo}{$\Theta(1)$}{
+    $\Theta(1) + 256 * \Theta(1) + 256 * (\Theta(1) + \Theta(1)) =$ \\    
+    $\Theta(1) + 256 * \Theta(1) + 256 * \Theta(1) + 256 * \Theta(1) =$ \\
+    $769 * \Theta(1) =$ \\            
+    $\Theta(1)$.
+  }
+    \STATE \CrearTupla{$res$}\CampoTupla{significado}{NULL}, \Complejidad{1}
+    \STATE \MargenTupla      \CampoTupla{hijos}{\NombreFuncion{CrearArreglo}()}\FinTupla \Complejidad{256}
+    \FOR[\ComplejidadGuarda{1}]{var $i$: \TipoVariable{nat} $\leftarrow$ $0$ to $255$}
+      \STATE $res$.hijos[$i$] $\leftarrow$ NULL \Complejidad{1}
+    \ENDFOR 
+  \end{Algoritmo}
+
+  ~
+   
+  \begin{Algoritmo}{iDefinir}{\In{c}{string}, \In{s}{$\alpha$}, \Inout{d}{estr\_dicctrie}}{}{$\Theta(|c| + copy(s))$}{
+    $\Theta(1) + |c| * (\Theta(1) + \Theta(1) + (\Theta(1)$ ó $0) + \Theta(1)) + \Theta(copy(s)) + \Theta(1) =$ \\
+    $\Theta(1) + |c| * \Theta(1) + \Theta(copy(s)) + \Theta(1) =$ \\ 
+    $|c| * \Theta(1) + \Theta(copy(s)) =$ \\
+    $\Theta(|c|) + \Theta(copy(s)) =$ \\
+    $\Theta(|c| + copy(s))$.
+  }
+    \STATE var $actual$: \TipoVariable{puntero(estr\_nodo)} $\leftarrow$ \&($d$.raíz) \Complejidad{1}
+    \FOR[\ComplejidadGuarda{1}]{var $i$: \TipoVariable{nat} $\leftarrow$ $0$ to \NombreFuncion{Longitud}($c$)}
+      \IF[\ComplejidadGuarda{1}]{$actual$\DRef hijos[\NombreFuncion{Ord}($c$[$i$])] $\igobs$ NULL}
+        \STATE $actual$\DRef hijos[\NombreFuncion{Ord}($c$[$i$])] $\leftarrow$ \&(\NombreFuncion{iNuevoNodo}()) \Complejidad{1}
+      \ENDIF
+        \STATE $actual$ $\leftarrow$ $actual$\DRef hijos[\NombreFuncion{Ord}($c$[$i$])] \Complejidad{1}
+    \ENDFOR
+    \STATE $actual$\DRef significado $\leftarrow$ \&(Copiar($s$)) \Complejidad{copy($s$)}
+    \STATE $d$.\#Claves $\leftarrow$ $d$.\#Claves $+$ $1$ \Complejidad{1}
+  \end{Algoritmo}
+  
+  ~
+
+  \begin{Algoritmo}{iObtener}{\In{c}{string}, \In{d}{estr\_dicctrie}}{$\Theta(|c|)$}{$\Theta(|c|)$}{
+    $\Theta(1) + |c| * (\Theta(1) + \Theta(1)) + \Theta(1) =$ \\
+    $|c| * \Theta(1) =$ \\
+    $\Theta(|c|)$.
+  }
+    \STATE var $actual$: \TipoVariable{puntero(estr\_nodo)} $\leftarrow$ \&($d$.raíz) \Complejidad{1} 
+    \FOR[\ComplejidadGuarda{1}]{var $i$: \TipoVariable{nat} $\leftarrow$ $0$ to \NombreFuncion{Longitud}($c$)}
+      \STATE $actual$ $\leftarrow$ $actual$\DRef hijos[\NombreFuncion{Ord}($c$[$i$])] \Complejidad{1}
+    \ENDFOR   
+    \STATE $res$ $\leftarrow$ *($actual$\DRef $significado$) \Complejidad{1}
+  \end{Algoritmo}
+
+  ~
+  
+  \begin{Algoritmo}{i\#Claves}{\In{d}{estr\_dicctrie}}{nat}{$\Theta(1)$}{}
+    \STATE $res$ $\leftarrow$ $d$.\#Claves \Complejidad{1}
+  \end{Algoritmo}
+
+\end{Algoritmos}
+
+\end{document}
