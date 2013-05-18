@@ -1,0 +1,112 @@
+% $Id: algo2symb.tex,v 1.6 2004/08/13 15:09:52 fpscha Exp $
+\documentclass[a4paper]{article}
+\usepackage[a4paper,margin=3.5cm,top=3.0cm,bottom=3.0cm]{geometry}
+\usepackage[spanish,activeacute]{babel}
+\usepackage{algo2symb}
+
+\parskip=1.5ex
+\pagestyle{empty}
+
+\begin{document}
+\RCS $Revision: 1.6 $
+\RCSdate $Date: 2004/08/13 15:09:52 $
+
+\begin{center}{\Large Package \texttt{algo2symb}} \par\medskip Versi'on \version -- \RCSDate\end{center}
+\bigskip
+
+Este paquete provee macros para diversos s'imbolos frecuentemente usados en documentos de la materia Algoritmos y Estructuras de Datos II (FCEyN, UBA). Los docentes de la c'atedra lo utilizamos para componer pr'acticas, apuntes y parciales; desde luego, los alumnos que decidan usar \LaTeX\ durante la cursada tambi'en est'an invitados a aprovecharlo.
+
+Adicionalmente, este paquete carga \texttt{rcs}, \texttt{xspace}, \texttt{amssymb} y \texttt{amsmath}, y redefine el comando \verb|\implies| de estos 'ultimos para que produzca flecha corta $(\Rightarrow)$ en lugar de larga $(\Longrightarrow)$.
+
+\bigskip\bigskip
+
+\noindent \textbf{Listado de comandos provistos}
+\medskip
+
+Conectivos l'ogicos con \emph{luego}:
+
+\begin{tabular}{l@{\hspace{36pt}}c}
+\verb|\true| & \true \\
+\verb|\false| & \false \\
+\verb|\yluego| & \yluego \\
+\verb|\oluego| & \oluego \\
+\verb|\impluego| & \impluego
+\end{tabular}
+\medskip
+
+S'imbolos relacionados con el TAD Secu:
+
+\begin{tabular}{l@{\hspace{36pt}}c}
+\verb|\secuvacia| & \secuvacia \\
+\verb|\puntito| & \puntito \\
+\verb|\circulito| & \circulito
+\end{tabular}
+\medskip
+
+Notaci'on para complejidad (con par'entesis y \emph{math mode} impl'icitos):
+
+\begin{tabular}{l@{\hspace{36pt}}l}
+\verb|\Ode{n \cdot \log n}| & \Ode{n \cdot \log n} \\
+\verb|\ode{n}| & \ode{n} \\
+\verb|\Omegade{n^2}| & \Omegade{n^2} \\
+\verb|\Thetade{n^3}| & \Thetade{n^3}
+\end{tabular}
+\medskip
+
+Operadores con sub'indices en roman (no cursiva):
+
+\begin{tabular}{l@{\hspace{36pt}}l}
+\verb|\igobs| & \igobs\\
+\verb|\igsub{abc}| & \igsub{abc} \\
+\verb|\opsub{<}{xyz}| & \opsub{<}{xyz}
+\end{tabular}
+\medskip
+
+Para indicar la presencia de un argumento en notaci'on infija o sufija ($\argumento \leq \argumento$):
+
+\begin{tabular}{l@{\hspace{36pt}}c}
+\verb|\argumento| & \argumento
+\end{tabular}
+\medskip
+
+Para componer el nombre de un TAD:
+
+\begin{tabular}{l@{\hspace{36pt}}l}
+\verb|\nombretad{Nat}| & \nombretad{Nat} \\
+\verb|\nombretad{Secu($\alpha$)}| & \nombretad{Secu($\alpha$)} \\
+\verb|\nombretad{ColaB'ifida}| & \nombretad{ColaB'ifida}
+\end{tabular}
+\medskip
+
+Otros s'imbolos:
+
+\begin{tabular}{l@{\hspace{36pt}}c}
+\verb|F: nat \en bool| & F: nat \en bool \\
+\verb|\N| & \N \\
+\verb|\cuidado| & \cuidado \\
+\verb|\ax{3}| & \ax{3} \\
+\verb|A \eqpor{\ax{3}} B| & A \eqpor{\ax{3}} B \\
+\verb|$x \asig y+1$| & $x \asig y+1$ \\
+\verb|\ssi| & \ssi \\
+\verb|\sombrerito| & \sombrerito \\
+\end{tabular}
+\medskip
+
+Macros para if\_then\_else\_fi (no es lo mejor, pero es lo que hay por ahora):
+
+\verb|\lif guarda \lthen esto \lelse aquello \lfi| se ve as'i: \lif guarda \lthen esto \lelse aquello \lfi.
+
+Tambi'en podemos recuadrar cosas con \verb|\recuadrar{Lo que sea.}|:
+
+\recuadrar{Lo que sea.}
+
+
+
+\bigskip
+
+Nota: si bien por ahora \verb|\puntito| y \verb|\argumento| producen el mismo s'imbolo, la idea es usar distintos comandos para distinguirlos y que eventualmente pueda cambiarse alguno en el futuro (no es del todo feliz que sean el mismo).
+
+Se intent'o buscar uno m'as peque'no para \verb|\puntito|, sin demasiado 'exito (salvo ``$\cdot$'', que parece \emph{demasiado} chiquitito). Adem'as, es agradable que \puntito\ y \circulito\ sean del mismo tama'no\ldots
+
+\end{document}
+

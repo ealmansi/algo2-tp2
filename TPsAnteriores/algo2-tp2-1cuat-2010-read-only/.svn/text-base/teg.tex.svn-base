@@ -1,0 +1,273 @@
+\section{TEG}
+\subsection{Interfaz}
+
+\begin{interfaz}{TEG}
+
+\textbf{se explica con} Tablero($\mu$)
+
+\generos{tablero($\mu$)}
+
+\textbf{Operaciones}
+
+\operacion{Iniciar}{\param{in}{t}{tablero($\mu$)}, \param{in}{cs}{secu(casilla)}, \param{in}{ms}{secu(mision)}}{TEG}
+{cs \neq \emptyset \wedge long(cs) = long(ms) \wedge (\forall c:casilla)(Esta?(c, cs) \Rightarrow c \in Casillas(t)) \wedge (\forall m:mision)(Esta?(m, ms) \Rightarrow m \in Continentes(t)) \wedge SinRepetidos(cs)}
+{\res = Iniciar(t, cs, ms)}
+{FALTA}
+{FALTA}
+
+\end{interfaz}
+
+\subsection{Representación}
+
+\subsubsection{Estructura de Representación}
+
+tablero($\mu$) se representa con t
+
+donde t es tupla \\
+\hspace*{1em} $<$ \\
+\hspace*{2em} tablero: datosTablero, \\
+\hspace*{2em} paises: dicc(casilla, datosCasilla), \\
+\hspace*{2em} jugadores: dicc(jugador, datosJugador), \\
+\hspace*{2em} jugadoresJugando: conj(jugador), \\
+\hspace*{2em} casillasDisputadas: conj(casilla) \\
+\hspace*{1em} $>$ \\
+
+datosTablero es ad(tupla $<$ conj(tupla $<$ $\mu$, casilla $>$), continente $>$) \\
+
+datosCasilla es tupla \\
+\hspace*{1em} $<$ \\
+\hspace*{2em} disputan: conjA(jugador), \\
+\hspace*{2em} fichas: mconj(jugador), \\
+\hspace*{2em} disputantes: heap(nodo) \\
+\hspace*{1em} $>$ \\
+
+datosJugador es tupla \\
+\hspace*{1em} $<$ \\
+\hspace*{2em} fichasHistoria: nat, \\
+\hspace*{2em} mision: continente, \\
+\hspace*{2em} fichasEnJuego: nat, \\
+\hspace*{2em} porDominar: nat, \\
+\hspace*{2em} dominadas: conj(casilla) \\
+\hspace*{1em} $>$ \\
+
+nodo es tupla \\
+\hspace*{1em} $<$ \\
+\hspace*{2em} rep: nat, \\
+\hspace*{2em} jugador: jugador, \\
+\hspace*{2em} izq: *nodo, \\
+\hspace*{2em} der: *nodo \\
+\hspace*{1em} $>$
+
+\subsubsection{Invariante de Representación}
+
+\tadOperacion{Rep}{t}{bool}{}
+
+\tadAxioma{Rep(t)}{true $\Leftrightarrow$}
+
+\subsubsection{Función de Abstracción}
+
+\tadOperacion{Abs}{t}{TEG}{Rep(t)}
+
+\tadAxioma{Abs(t)}{}
+
+\subsection{Algoritmos}
+
+\begin{algorithm}{iIniciar}{\param{in}{t}{tablero($\mu$)}, \param{in}{cs}{secu(casilla)}, \param{in}{ms}{secu(mision)}}{res: TEG}
+\VAR itCasillas: itSecu \\
+\VAR itMisiones: itSecu \\
+\VAR diccCasillas: dicc(casilla, datosCasilla) \\
+diccCasillas \= Vacio() \comentario{O(1)} \\
+\VAR diccJugadores: dicc(jugador, datosJugador) \\
+diccJugadores \= Vacio() \comentario{O(1)} \\
+\VAR conjJugadoresJugando: conj(jugador) \\
+conjJugadoresJugando \= Vacio() \comentario{O(1)} \\
+\VAR casillaActual: casilla \\
+\VAR datosCasillaActual: datosCasilla \\
+\VAR jugadorActual: jugador \\
+jugadorActual \= 0 \\
+\VAR datosJugadorActual: datosJugador \\
+\VAR disputan: conjA(jugador) \\
+\VAR fichas: mconj(jugador) \\
+\VAR disputantes: heap(nodo) \\
+\VAR nodoActual: nodo \\
+\comentario{copiar tablero (origenes y continente de cada casilla)} \\
+itCasillas \= CrearIt(cs) \comentario{O(1) creo el iterador de conj} \\
+itMisiones \= CrearIt(ms) \comentario{O(1) creo el iterador de conj} \\
+\begin{WHILE}{HaySiguiente(itCasillas)}
+	casillaActual \= Siguiente(itCasillas) \\
+	misionActual \= Siguiente(itMisiones) \\
+	disputan \= Vacio() \comentario{O(long(cs))} \\
+	fichas \= Vacio() \comentario{O(long(cs)) mconj sobre arreglo indexado por jugador, long(cs) = cant. de jugadores} \\
+	AgregarRapido(fichas, jugadorActual) \comentario{O(1)} \\
+	disputantes \= Vacio() \comentario{O(long(cs)) creo heap vacio sobre un arreglo con long. cant. de jugadores} \\
+	datosCasillaActual \= <disputan, fichas, disputantes> \comentario{O(1)} \\
+	DefinirRapido(casillaActual, datosCasillaActual, diccCasillas) \comentario{O(1)} \\
+	\comentario{armo datosJugadorActual}
+	datosJugadorActual \= iCrearDatosJugador(t, jugadorActual, casillaActual, misionActual) \comentario{O(1)} \\
+  DefinirRapido(jugadorActual, datosJugadorActual, diccJugadores) \comentario{O(1)} \\
+  AgregarRapido(conjJugadoresJugando, jugadorActual) \comentario{O(1)} \\
+	jugadorActual \= jugadorActual + 1 \\
+	Avanzar(itCasillas) \\
+	Avanzar(itMisiones) \\
+\end{WHILE} \\
+\res.tablero \= iCopiarTablero(t) \\
+\res.paises \= diccCasillas \comentario{O(1) por referencia} \\
+\res.jugadores \= diccJugadores \comentario{O(1) por referencia} \\
+\res.jugadoresJugando \= conjJugadoresJugando \comentario{O(1) por referencia} \\
+\res.casillasDisputadas \= Vacio() \comentario{O(1)} \\
+return \; \res
+\end{algorithm}
+
+\begin{algorithm}{iCrearDatosJugador}{\param{in}{t}{tablero($\mu$)}, \param{in}{j}{jugador}, \param{in}{c}{casilla}, \param{in}{m}{continente}}{\res:datosJugador}
+\VAR porDominar: nat \\
+porDominar \= iPorDominarTablero(t, j, c, m) \comentario{O(1)} \\
+\VAR cs:conj(casilla) \\
+cs \= AgregarRapido(Vacio(), c) \comentario{O(1)} \\
+\res \= <1, m, 1, porDominar, cs> \comentario{O(1) por referencia} \\
+return \; \res
+\end{algorithm}
+
+\begin{algorithm}{iPorDominarTablero}{\param{in}{t}{tablero($\mu$)}, \param{in}{j}{jugador}, \param{in}{c}{casilla}, \param{in}{m}{continente}}{\res:nat}
+\VAR cantPaisesContinente:nat \\
+cantPaisesContinente \= \#CasillasDe(t, m) \comentario{cardinal de conj. lineal es O(1)} \\
+\res \= cantPaisesContinente \\
+\comentario{Continente es O(1)} \\
+\begin{IF}{Continente(t, c) = m} \\
+  \res \= \res - 1
+\end{IF} \\
+return \; \res \\
+\comentario{complejidad total O(1)}
+\end{algorithm}
+
+\begin{algorithm}{iCopiarTablero}{\param{in}{t}{tablero($\mu$)}}{\res:ad(<conj(<casilla, movimiento>), continente>)}
+\res \= CrearArreglo(\#(Casillas(t))) \comentario{O(\#(Casillas(t)))} \\
+\VAR itCasillas: itConj \\
+\VAR casillaActual: casilla \\
+\VAR itDestinos: itConj \\
+\VAR cm: tupla<casilla,\mu> \\
+\VAR casillaDestino: casilla \\
+\VAR m: \mu \\
+\comentario{defino el continente y defino un conj. vacío en las tuplas <conj(casilla,movimiento),continente> de \res} \\
+itCasillas \= CrearIt(Casillas(t)) \comentario{O(1) creo el iterador de conj} \\
+\begin{WHILE}{HaySiguiente(itCasillas)}
+	casillaActual \= Siguiente(itCasillas) \\
+	\res[casillaActual] \= <Vacio(), Continente(t, casillaActual)>  \comentario{Continente(t,c) tiene comlejidad O(1)} \\
+	Avanzar(itCasillas) \\
+\end{WHILE}
+\comentario{complejidad del ciclo O(\#Casillas(t))} \\
+\comentario{lleno cada posición de \res \, con origenes} \\
+itCasillas \= CrearIt(Casillas(t)) \comentario{O(1) creo el iterador de conj} \\
+\begin{WHILE}{HaySiguiente(itCasillas)}
+	casillaActual \= Siguiente(itCasillas) \\
+	itDestinos \= Destinos(t, casillaActual) \comentario{O(1)} \\
+	\comentario{para cada destino casillaDestino,m de casillaActual, agrego casillaActual,m a origenes de casillaDestino} \\  
+	\begin{WHILE}{HaySiguiente(itDestinos)}
+		cm \= Actual(itDestinos) \\	
+		casillaDestino \= \Pi_1(cm) \\
+		m \= \Pi_2(cm) \\
+		datosCasillaDestino \= \res[casillaDestino] \comentario{O(1) por referencia} \\
+		conjOrigenes \= \Pi_1(datosCasillaDestino) \comentario{O(1) por referencia} \\
+		AgregarRapido(conjOrigenes, <casillaActual, m>) \\
+		Avanzar(itDestinos)
+	\end{WHILE} \\
+	\comentario{complejidad del ciclo O(\#Destinos(t, casillaActual))} \\
+	Avanzar(itCasillas)
+\end{WHILE}
+\comentario{complejidad del ciclo O(\#Casillas(t))} \\
+return \; \res
+\end{algorithm}
+
+\begin{algorithm}{iJugadores}{\param{in}{t}{TEG}}{res: conj(jugador)}
+return \; claves(t.jugadores)
+\end{algorithm}
+
+\begin{algorithm}{iFichas}{\param{in}{t}{TEG}, \param{in}{c}{casilla}}{res: mconj(jugador)}
+return \; (obtener(c, t.paises)).fichas
+\end{algorithm}
+
+\begin{algorithm}{iMision}{\param{in}{t}{TEG}, \param{in}{j}{jugador}}{res: continente}
+return \; (obtener(j, t.jugadores)).mision
+\end{algorithm}
+
+\begin{algorithm}{iFichasAgregadas}{\param{in}{t}{TEG}, \param{in}{j}{jugador}}{res: nat}
+return \; (obtener(j, t.jugadores)).fichasHistoria
+\end{algorithm}
+
+\begin{algorithm}{iDominada?}{\param{in}{t}{TEG}, \param{in}{c}{casilla}}{res: bool}
+return \; ($\#$((obtener(c, t.paises)).disputan) = 1)
+\end{algorithm}
+
+\begin{algorithm}{iVacia?}{\param{in}{t}{TEG}, \param{in}{c}{casilla}}{res: bool}
+return \; ($\#$((obtener(c, t.paises)).disputan) = 0)
+\end{algorithm}
+
+\begin{algorithm}{iDisputada?}{\param{in}{t}{TEG}, \param{in}{c}{casilla}}{res: bool}
+return \; ($\#$((obtener(c, t.paises)).disputan) > 0)
+\end{algorithm}
+
+\begin{algorithm}{iDisputan}{\param{in}{t}{TEG}, \param{in}{c}{casilla}}{res: conj(jugador)}
+return \; (obtener(c, t.paises)).disputan
+\end{algorithm}
+
+\begin{algorithm}{iDominador}{\param{in}{t}{TEG}, \param{in}{c}{casilla}}{res: jugador}
+return \; dameUno((obtener(c, t.paises)).fichas)
+\end{algorithm}
+
+\begin{algorithm}{iDominadas}{\param{in}{t}{TEG}, \param{in}{j}{jugador}}{res: conj(casilla)}
+return \; (obtener(j, t.jugadores)).dominadas
+\end{algorithm}
+
+\begin{algorithm}{iPorDominar}{\param{in}{t}{TEG}, \param{in}{j}{jugador}}{res: nat}
+return \; (obtener(j, t.jugadores)).porDominar
+\end{algorithm}
+
+\begin{algorithm}{iMisionCumplida?}{\param{in}{t}{TEG}, \param{in}{j}{jugador}}{res: bool}
+return \; ((obtener(j, t.jugadores)).porDominar = 0)
+\end{algorithm}
+
+\begin{algorithm}{iTieneFichas?}{\param{in}{t}{TEG}, \param{in}{j}{jugador}}{res: bool}
+return \; ((obtener(j, t.jugadores)).fichasEnJuego > 0)
+\end{algorithm}
+
+\begin{algorithm}{iConFichas}{\param{in}{t}{TEG}}{res: conj(jugador)}
+return \; t.jugadoresJugando
+\end{algorithm}
+
+\begin{algorithm}{iEliminados}{\param{in}{t}{TEG}}{res: conj(jugador)}
+return \; (claves(t.jugadores) \ t.jugadoresJugando)
+\end{algorithm}
+
+\begin{algorithm}{iCumplieronMision}{\param{in}{t}{TEG}}{res: conj(jugador)}
+return \; (claves(t.jugadores) \ t.jugadoresJugando \ eliminados(t))
+\end{algorithm}
+
+\begin{algorithm}{iGanadores}{\param{in}{t}{TEG}}{res: conj(jugador)}
+\VAR res: conj(jugador) \\
+\textbf{if} \; (\#(conFichas(t)) = 1) \\
+\hspace*{1.1em} \textbf{then} \; conFichas(t) \\
+\hspace*{1.1em} \textbf{else} \; cumplieronMision(t) \\
+\textbf{fi} \\
+return \; res
+\end{algorithm}
+
+\begin{algorithm}{iFinalizado?}{\param{in}{t}{TEG}}{res: bool}
+return \; (ganadores(t) \neq \emptyset)
+\end{algorithm}
+
+\begin{algorithm}{iCasillas}{\param{in}{t}{TEG}}{res: conj(casilla)}
+return \; claves(t.paises)
+\end{algorithm}
+
+\begin{algorithm}{iPuedeAgregar?}{\param{in}{t}{TEG}, \param{in}{j}{jugador}, \param{in}{c}{casilla}}{res: bool}
+return \; (\neg Disputada(t, c) \wedge Pertenece(t.jugadoresJugando, j) \wedge \neg Finalizado?(t))
+\end{algorithm}
+
+\begin{algorithm}{iContinentes}{\param{in}{t}{TEG}}{res: conj(continente)}
+\VAR i: int \\
+i \= 0 \\
+\VAR res : conj(continente) \\
+\begin{WHILE}{i < long(tablero)}
+{Ag(res, \Pi_2(tablero[i]))}
+\end{WHILE} \\
+return \; res
+\end{algorithm}

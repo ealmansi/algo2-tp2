@@ -1,0 +1,54 @@
+Tablero se representa con:
+
+tupla	<
+		casillas: dicc(casilla, datosCasilla)
+		continentes: dicc(continente, conj(casilla))
+		>
+
+datosCasilla es
+tupla	<
+		salidas: conj(movimiento),
+		origenes: conj(tupla<casilla, movimiento>), 
+		destinos: conj(tupla<casilla, movimiento>),
+		continente: continente
+		>
+
+dicc sobre vector
+conj sobre secuencia
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/
+
+AE2-TEG se representa con:
+
+tupla	<
+		datosTablero: ad(<conj(<casilla, movimiento>), continente>),
+		paises: dicc(casilla, datosCasilla),
+		jugadores: dicc(jugador, datosJugador),
+		jugadoresJugando: conj(jugador),
+		casillasDisputadas: conj(casilla)
+		>
+
+donde datosCasilla es
+tupla	<
+		disputan: conjA(jugador),
+		fichas: mconj(jugador) implementado sobre ad(nat) /* viene a ser la cantidad de fichas para el jugador en la casilla */,
+		disputantes: heap(nodo)
+		>
+
+donde datosJugador es
+tupla	<
+		fichasHistoria: nat,
+		mision: continente,
+		fichasEnJuego: nat,
+		porDominar: nat,
+		dominadas: conj(casilla)
+		>
+
+donde nodo es
+tupla	<
+		rep: nat,
+		IDJugador: nat,
+		izq: *nodo,
+		der: *nodo
+		>

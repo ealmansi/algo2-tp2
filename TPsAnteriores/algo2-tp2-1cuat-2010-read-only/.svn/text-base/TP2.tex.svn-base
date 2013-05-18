@@ -1,0 +1,81 @@
+\documentclass[a4paper]{article}
+\usepackage[spanish,activeacute]{babel}
+\usepackage[latin1]{inputenc}
+%\usepackage{algo2symb, newalgo}
+%\usepackage{tad}
+\usepackage[left=1cm,top=2cm,right=2cm]{geometry}
+\usepackage{moreverb}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{setspace}
+
+\usepackage{aed2-itef}
+\usepackage{aed2-symb}
+\usepackage{aed2-tad}
+\usepackage{aed2-tokenizer}
+\usepackage{newalgo}
+\usepackage{interfaz}
+
+%%%%MACROS DE LA CATEDRA%%%
+%\usepackage{itef}
+%\usepackage{sty/tad}
+%\usepackage{sty/algo2symb}
+%\usepackage{sty/newalgo}
+%\usepackage{sty/rcs}
+
+\def\funcaux{\tadtit{funciones auxiliares}}
+
+\definecolor{lightskyblue4}{rgb}{0.38,0.48,0.55}
+\definecolor{skyblue4}{rgb}{0.29,0.44,0.55}
+\definecolor{gray31}{rgb}{0.31,0.31,0.31}
+\definecolor{red3}{rgb}{0.8,0,0}
+%defino el caracter coma para que no lo rompa en el dicc()
+\newcommand\coma{\ensuremath{,}\xspace}
+\newcommand\tab{\hspace*{3em}}
+%\newcommand{\com}[1]{\hspace{0.5em}\textcolor{lightskyblue4}{\texttt{//#1}}}
+\newcommand{\nota}[1]{\hspace{0.5em}\textcolor{red3}{\texttt{/* #1 */}}}
+\newcommand\modul{\hspace*{0.5em} mod \hspace*{0.5em}}
+\newcommand\ENDIF{\textbf{end if}}
+\newcommand\ENDWHILE{\textbf{end while}}
+\newcommand{\orden}[2]{\tab \textbf{La funcion} \textit{#1} \textbf{tiene complejidad}
+\textit{O(#2)}}
+
+%\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{} % clear all header fields
+\fancyhead[RO,LE]{\bfseries TP2: Dise\~no - AED2-TEG}
+\fancyhead[LO,CE]{Algoritmos y Estructuras de Datos II}
+\fancyfoot{} % clear all footer fields
+\fancyfoot[LE,RO]{\thepage}
+\fancyfoot[LO,CE]{Grupo 11}
+\fancyfoot[CO,RE]{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+\usepackage{caratula}
+\input{tituloEstandar}
+
+\begin{document}{}
+\lhead{Abásolo, Menéndez, Méndez, Otero}
+
+\maketitle
+\begin{center}
+\begin{Large}
+\textbf{TP2: Dise\~no - AED2-TEG}
+\vskip20pt
+%\textbf{INFORME}
+\end{Large}
+\end{center}
+
+\tableofcontents 
+\newpage
+
+\input{tablero.tex}
+\newpage
+
+\input{teg.tex}
+\newpage
+
+\end{document}

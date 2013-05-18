@@ -1,0 +1,15 @@
+\select@language {spanish}
+\contentsline {section}{\numberline {1}Tablero}{3}
+\contentsline {subsection}{\numberline {1.1}Interfaz}{3}
+\contentsline {subsection}{\numberline {1.2}Representaci\'on}{5}
+\contentsline {subsubsection}{\numberline {1.2.1}Estructura de Representaci\'on}{5}
+\contentsline {subsubsection}{\numberline {1.2.2}Invariante de Representaci\'on}{5}
+\contentsline {subsubsection}{\numberline {1.2.3}Funci\'on de Abstracci\'on}{5}
+\contentsline {subsection}{\numberline {1.3}Algoritmos}{6}
+\contentsline {section}{\numberline {2}TEG}{10}
+\contentsline {subsection}{\numberline {2.1}Interfaz}{10}
+\contentsline {subsection}{\numberline {2.2}Representaci\'on}{10}
+\contentsline {subsubsection}{\numberline {2.2.1}Estructura de Representaci\'on}{10}
+\contentsline {subsubsection}{\numberline {2.2.2}Invariante de Representaci\'on}{11}
+\contentsline {subsubsection}{\numberline {2.2.3}Funci\'on de Abstracci\'on}{11}
+\contentsline {subsection}{\numberline {2.3}Algoritmos}{11}

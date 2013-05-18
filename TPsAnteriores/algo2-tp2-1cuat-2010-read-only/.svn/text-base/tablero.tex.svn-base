@@ -1,0 +1,426 @@
+\section{Tablero}
+\subsection{Interfaz}
+
+\begin{interfaz}{Tablero}
+
+\textbf{parámetros formales}
+
+\generos{$\mu$}
+
+\operacion{Copiar}{\param{in}{m}{$\mu$}}{$\mu$}
+{true}
+{\res \igobs m}
+{copy(m)}
+{}
+
+\textbf{se explica con} Tablero($\mu$)
+
+\generos{tablero($\mu$)}
+
+\textbf{Operaciones}
+
+\operacion{Inicial}{}{tablero}
+{true}
+{\res = Inicial()}
+{1}
+{no hay}
+
+\operacion{Contener}{\param{inout}{t}{tablero($\mu$)}, \param{in}{c}{casilla}, \param{in}{m_i}{$\mu$}, \param{in}{m_v}{$\mu$}}{}
+{t = t_0 \wedge c \in Casillas(t) \wedge m_v \notin Salidas(t, c)}
+{t = Contener(t_0, c, m_i, m_v)}
+{f(ProxCasilla($t_0$)) + copy($m_i$) + copy($m_v$)}
+{no hay}
+
+\operacion{Agregar}{\param{inout}{t}{tablero($\mu$)}, \param{in}{c}{casilla}, \param{in}{m_i}{$\mu$}, \param{in}{m_v}{$\mu$}}{}
+{t = t_0 \wedge c \in Casillas(t) \wedge m_v \notin Salidas(t, c)}
+{t = Agregar(t{_0}, c, m_i, m_v)}
+{f(ProxCasilla(t)) + f(ProxContinente(t)) + copy($m_i$) + copy($m_v$)}
+{no hay}
+
+\operacion{Movilizar}{\param{inout}{t}{tablero($\mu$)}, \param{in}{c_1}{casilla}, \param{in}{c_2}{casilla}, \param{in}{m}{$\mu$}}{}
+{t = t_0 \wedge \{c_1, c_2\} \subseteq Casillas(t) \wedge c_1 \neq c_2 \wedge \neg Conectadas(t, c_1, c_2) \wedge m \notin Salidas(t, c_1)}
+{t = Movilizar(t_0, c_1, c_2, m)}
+{copy(m)}
+{no hay}
+
+\operacion{Conectar}{\param{inout}{t}{tablero($\mu$)}, \param{in}{c_1}{casilla}, \param{in}{c_2}{casilla}, \param{in}{m_i}{$\mu$}, \param{in}{m_v}{$\mu$}}{}
+{t = t_0 \wedge \{c_1, c_2\} \subseteq Casillas(t) \wedge c_1 \neq c_2 \wedge \neg Conectadas(t, c_1, c_2) \wedge m_i \notin Salidas(t, c_1) \wedge m_v \notin Salidas(t, c_2)}
+{t = Conectar(t_0, c_1, c_2, m_i, m_v)}
+{copy($m_i$) + copy($m_v$)}
+{no hay}
+
+\operacion{Casillas}{\param{in}{t}{tablero($\mu$)}}{conj(casilla)}
+{true}
+{\res = Casillas(t)}
+{1}
+{alias(\res, Casillas(t))}
+
+\operacion{Continente}{\param{in}{t}{tablero($\mu$)}, \param{in}{c}{casilla}}{continente}
+{c \in Casillas(t)}
+{\res = Continente(t, c)}
+{1}
+{alias(\res, Continente(t, c))}
+
+\operacion{Origenes}{\param{in}{t}{tablero($\mu$)}, \param{in}{c}{casilla}, \param{in}{m}{$\mu$}}{conj(casilla)}
+{c \in Casillas(t)}
+{\res = Origenes(t, c, m)}
+{\#Origenes(t, c, m)}
+{no hay}
+
+\operacion{Continentes}{\param{in}{t}{tablero($\mu$)}}{conj(continente)}
+{true}
+{\res = Continentes(t)}
+{1}
+{alias(\res, Continentes(t))}
+
+\operacion{Conectadas}{\param{in}{t}{tablero($\mu$)}, \param{in}{c_1}{casilla}, \param{in}{c_2}{casilla}}{bool}
+{\{c_1, c_2\} \subseteq Casillas(t)}
+{\res = Conectadas(t_0, c_1, c_2)}
+{\#Casillas(t)}
+{no hay}
+
+\operacion{Salidas}{\param{in}{t}{tablero($\mu$)}, \param{in}{c}{casilla}}{conj($\mu$)}
+{c \in Casillas(t)}
+{\res = Salidas(t, c)}
+{1}
+{alias(\res, Salidas(t, c))}
+
+\operacion{OrigenesR}{\param{in}{t}{tablero($\mu$)}, \param{in}{c}{casilla}, \param{in}{m}{$\mu$}}{conj(casilla)}
+{c \in Casillas(t)}
+{\res = OrigenesR(t, c, m)}
+{\#Origenes(t, c, m)}
+{no hay}
+
+\operacion{CasillasDe}{\param{in}{t}{tablero($\mu$)}, \param{in}{cc}{continente}}{conj(casilla)}
+{cc \in Continentes(t)}
+{\res = CasillasDe(t, cc)}
+{1}
+{alias(\res, CasillasDe(t, cc))}
+
+\operacion{Destinos}{\param{in}{t}{tablero($\mu$)}, \param{in}{c}{casilla}}{itConj(conj(tupla(casilla, $\mu$))}
+{c \in Casillas(t)}
+{\res = CrearIt(Destinos(t, c))}
+{1}
+{alias(\res, Destinos(t, c))}
+
+\operacion{ProxCasilla}{\param{in}{t}{tablero($\mu$)}}{casilla}
+{true}
+{\res = \#Casillas(t) + 1}
+{1}
+{no hay}
+
+\operacion{ProxContinente}{\param{in}{t}{tablero($\mu$)}}{continente}
+{true}
+{\res = \#Continentes(t) + 1}
+{1}
+{no hay}
+
+\end{interfaz}
+
+
+\subsection{Representación}
+
+\subsubsection{Estructura de Representación}
+
+tablero($\mu$) se representa con \textbf{t}
+
+\vspace{12pt}
+
+donde \textbf{t} es tupla(casillas: dicc(casilla, datosCasilla), continentes: dicc(continente, conj(casilla)))
+
+\vspace{12pt}
+
+donde \textbf{datosCasilla} es tupla(salidas: conj($\mu$), \\
+origenes: conj(tupla(casilla:casilla, movimiento:$\mu$)), \\
+destinos: conj(tupla(casilla:casilla, movimiento:$\mu$)), \\
+continente: continente)
+
+\vspace{12pt}
+
+\subsubsection{Invariante de Representación}
+
+1. Para todo datosCasilla dc en t.datosCasilla, dc.continente está contenido en las claves de t.continentes.
+
+2. Para todo conjunto de casillas cs en t.continentes, cs está incluído en claves de t.casillas.
+
+3. Toda casilla en claves de t.casillas pertenece a uno solo de los conjuntos de casillas en t.continentes.
+
+4. Para todo datosCasilla dc en t.datosCasilla, para toda tupla tup en dc.origenes: tup.casilla pertenece a t.casillas
+
+5. Para todo datosCasilla dc en t.datosCasilla, para toda tupla tup en dc.destinos: tup.casilla pertenece a t.casillas
+
+6. Para todo datosCasilla dc en t.datosCasilla, para toda tupla tupd en dc.destinos, tupd.movimiento pertenece a dc.salidas
+
+7. Para todo datosCasilla dc en t.datosCasilla, Para todo movimiento m en t.salidas, existe una tupla en dc.destinos que tiene a m como segunda componente
+
+8. Cada casilla c2 que aparece en las tuplas de destinos de c1, tiene una tupla en origenes donde la primer componente es c1 y la segunda componente es el mismo movimiento que el de destino de c1
+
+9. Cada casilla c2 que aparece en las tuplas de origenes de c1, tiene una tupla en destinos donde la primer componente es c1 y la segunda componente es el mismo movimiento que el de origen de c1
+
+\vspace{12pt}
+
+\tadOperacion{Rep}{t}{bool}{}
+
+\tadAxioma{Rep(t)}{true $\Leftrightarrow$}
+
+($\forall$ c:casilla)(def?(c, t.casillas) $\Rightarrow$ \\
+\hspace*{20pt}($\forall$ dc:datosCasilla)(dc = Obtener(c, t.casillas) $\Rightarrow$ \\
+	\hspace*{40pt}(dc.continente $\in$ claves(t.continentes)) \textbf{[1]} $\wedge$ \\
+	\hspace*{40pt}(($\forall$ cc:continente)(def?(cc, t.continentes) $\Leftrightarrow$ \\
+		\hspace*{60pt}(($\forall$ cs:conj(casilla))(cs = Obtener(cc, t.continentes) $\Leftrightarrow$ (cs $\in$ claves(t.casillas)) \textbf{[2]} $\wedge$ (($\exists$! cs2:conj(casilla))(cs2 = cs $\wedge$ c $\in$ cs2)) \textbf{[3]})))) $\wedge$ \\
+	\hspace*{40pt}(($\forall$ tup:tupla(casilla, $\mu$))((tup $\in$ dc.origenes $\Rightarrow$ \\
+		\hspace*{60pt}tup.casilla $\in$ claves(t.casillas)) \textbf{[4]} $\wedge$ \\
+		\hspace*{60pt}(tup $\in$ dc.destinos $\Rightarrow$ tup.casilla $\in$ claves(t.casillas) $\wedge$ tup.movimiento $\in$ dc.salidas) \textbf{[5 y 6]})) $\wedge$ \\
+	\hspace*{40pt}(($\forall$ ms:$\mu$)(m $\in$ dc.salidas $\Rightarrow$ (($\exists$ tupd:tupla(casilla,$\mu$))(tupd $\in$ dc.destinos $\wedge$ tupd.movimiento = m)))) \textbf{[7]} $\wedge$ \\
+	\hspace*{40pt}(($\forall$ c2:casilla)(def?(c2, t.casillas) $\wedge$ c2 $\neq$ c $\Rightarrow$ \\
+		\hspace*{60pt}(($\forall$ dc2:datosCasilla)(dc2 = Obtener(c2, t.casillas) $\Rightarrow$ \\
+			\hspace*{80pt}(($\forall$ tup:tupla(casilla, $\mu$))((tup $\in$ dc.destinos $\Rightarrow$ \\
+				\hspace*{100pt}(($\exists$ tupo:tupla(casilla, $\mu$))(tupo $\in$ dc2.origenes $\wedge$ \\
+					\hspace*{120pt}tupo.casilla = c $\wedge$ tupo.movimiento = tup.movimiento))) \textbf{[8]} $\wedge$ \\
+				\hspace*{100pt}(tup $\in$ dc.origenes $\Rightarrow$ \\
+					\hspace*{120pt}(($\exists$ tupd:tupla(casilla, $\mu$))(tupd $\in$ dc2.destinos $\wedge$ \\
+						\hspace*{140pt}tupd.casilla = c $\wedge$ tupd.movimiento = tup.movimiento)) \textbf{[9]} \\
+				\hspace*{100pt}) \\
+			\hspace*{80pt})) \\
+		\hspace*{60pt})) \\
+	\hspace*{40pt})) \\
+\hspace*{20pt}) \\
+)
+
+
+\subsubsection{Función de Abstracción}
+
+\tadOperacion{Abs}{e:t}{tablero($\mu$)}{Rep(e)}
+
+\tadAxioma{Abs(e)}{t:tablero($\mu$) / \\
+Casillas(t) = claves(e.casillas) $\wedge$ \\
+(($\forall$ c:casilla)(c $\in$ Casillas(t) $\Rightarrow$ \\
+\hspace*{20pt}($\exists$ dc:datosCasilla)(dc = (Obtener(c, e.casillas)) $\wedge$ \\
+	\hspace*{40pt}Continente(t, c) = dc.continente $\wedge$ \\
+	\hspace*{40pt}(($\forall$ m:$\mu$)(Origenes(t, c, m) = OrigenesAux(dc.origenes, m)))) \\
+))
+}
+
+\vspace{10pt}
+
+\tadOperacion{OrigenesAux}{conj(tupla$<$casilla,$\mu$$>$) \, os, $\mu$ \, m}{conj(casilla)}{}
+
+\tadAxioma{OrigenesAux(os, m)}{\LIF($\emptyset$?(os)) \LTHEN \\
+							   \hspace*{20pt}$\emptyset$ \\
+							   \LELSE \\
+							   \hspace*{20pt}\LIF ($\Pi_2$(damUno(os)) = m) \LTHEN \\
+							   		\hspace*{40pt}Ag($\Pi_1$(dameUno(os)), OrigenesAux(sinoUno(os), m)) \\
+							   \hspace*{20pt}\LELSE \\
+							   		\hspace*{40pt}OrigenesAux(sinUno(os), m) \\
+							   \hspace*{20pt}\LFI \\
+							   \LFI}
+
+
+\subsection{Algoritmos}
+
+\begin{algorithm}{iInicial}{}{res: tablero}
+\VAR continenteCero : continente \\
+continenteCero \= 0 \\
+\VAR casillaCero : casilla \\
+casillaCero \= 0 \\
+\VAR diccCasillas : dicc(casilla, datosCasilla) \\
+diccCasillas \= Vacio() \comentario{O(1)} \\
+\VAR datosCasilla : datosCasilla \\
+datosCasilla \= <Vacio(), Vacio(), Vacio(), continenteCero> \comentario{O(1)} \\
+DefinirRapido(casillaCero, datosCasilla, diccCasillas) \comentario{O(1)} \\
+\VAR diccContinentes : dicc(continente, conj(casilla)) \\
+diccContinentes \= Vacio() \comentario{O(1)} \\
+\VAR conjCasillas : conj(casilla) \\
+conjCasillas \= Vacio() \comentario{O(1)} \\
+AgregarRapido(conjCasillas, casillaCero) \comentario{O(1)} \\
+DefinirRapido(continenteCero, conjCasillas, diccContinentes) \comentario{O(\#(conjCasillas)), en este caso hay una sola casilla} \\
+res \= <diccCasillas,diccContinentes> \comentario{O(1) por referencia}
+\end{algorithm}
+
+\begin{algorithm}{iContener}{\param{inout}{t}{tablero($\mu$)}, \param{in}{c}{casilla}, \param{in}{m_i}{$\mu$}, \param{in}{m_v}{$\mu$}}{}
+\VAR datosCasillaExistente : datosCasilla \\
+datosCasillaExistente \= Obtener(c, t.casillas) \comentario{O(1) por referencia}\\
+\VAR continente : continente \\
+continente \= datosCasillaExistente.continente \comentario{O(1) por referencia} \\
+\VAR nuevaCasilla : casilla \\
+nuevaCasilla \= iProxCasilla(t) \comentario{O(1)}\\
+\VAR datosNuevaCasilla : datosCasilla \\
+\comentario{armo tupla de datos de la nueva casilla} \\
+datosNuevaCasilla \= <AgregarRapido(\emptyset, copy(m_i)), \comentario{O(copy($m_i$))} \\
+\hspace*{1.1em} AgregarRapido(\emptyset, <c, copy(m_v>)), \comentario{O(copy($m_v$))} \\
+\hspace*{1.1em} AgregarRapido(\emptyset, <c, copy(m_i)>), continente>  \comentario{O(copy($m_i$)} \\
+DefinirRapido(nuevaCasilla, datosNuevaCasilla, t.casillas) \comentario{O(copy(nuevaCasilla) + copy(datosNuevaCasilla))} \\
+\comentario{, en este caso es f(ProxCasilla(t)) por la expansion del vector en caso de que esté completo.}  \\
+\VAR conjCasillasContinente : conj(casilla) \\
+conjCasillasContinente \= Obtener(continente, t.continentes) \comentario{O(1) por referencia} \\
+AgregarRapido(conjCasillasContinente, nuevaCasilla) \comentario{O(1)}
+\comentario{agrego casilla nueva como origen de c,$m_i$} \\
+AgregarRapido(datosCasillaExistente.origenes, <nuevaCasilla, copy(m_i)>) \comentario{O(copy($m_i$))} \\
+\comentario{agrego casilla nueva como destino de c,$m_v$} \\
+AgregarRapido(datosCasillaExistente.destinos, <nuevaCasilla, copy(m_v>)) \comentario{O(copy($m_v$))}
+\end{algorithm}
+
+\begin{algorithm}{iAgregar}{\param{inout}{t}{tablero($\mu$)}, \param{in}{c}{casilla}, \param{in}{m_i}{$\mu$}, \param{in}{m_v}{$\mu$}}{}
+\VAR datosCasillaExistente : datosCasilla \\
+datosCasillaExistente \= Obtener(c, t.casillas) \comentario{O(1) por referencia} \\
+\VAR continente : continente \\
+continente \= datosCasillaExistente.continente \comentario{O(1) por referencia} \\
+\VAR nuevoContinente : continente \\
+nuevoContinente \= iProxContinente(t) \comentario{O(1)} \\
+\VAR nuevaCasilla : casilla \\
+nuevaCasilla \= iProxCasilla(t) \comentario{O(1)} \\
+\VAR datosNuevaCasilla : datosCasilla \\
+\comentario{armo tupla de datos de la nueva casilla} \\
+datosNuevaCasilla \= <AgregarRapido(\emptyset, copy(m_i)), \\
+\hspace*{1.1em} AgregarRapido(\emptyset, <c, copy(m_v)>), \comentario{O(copy($m_v$))} \\
+\hspace*{1.1em} AgregarRapido(\emptyset, <c, copy(m_i)>), nuevoContinente> \comentario{O(copy($m_i$) + copy($m_v$))} \\
+DefinirRapido(nuevaCasilla, datosNuevaCasilla, t.casillas) \comentario{O(copy($m_i$) + copy($m_v$)) + f(ProxCasilla(t))} \\
+\comentario{, en este caso es f(ProxCasilla(t)) por la expansion del vector en caso de que esté completo.}  \\
+\VAR conjCasillasContinente : conj(casilla) \\
+conjCasillasContinente \= AgregarRapido(nuevaCasilla, \emptyset) \comentario{O(1)} \\
+DefinirRapido(nuevoContinente, conjCasillasContinente, t.continentes)\\
+\comentario{O(f(ProxContinente(t)) por la expansion del vector en caso de que esté completo.} \\
+\comentario{agrego casilla nueva como origen de c,$m_i$} \\
+AgregarRapido(datosCasillaExistente.origenes, <nuevaCasilla, copy(m_i)>) \comentario{O(copy($m_i$))}
+\comentario{agrego casilla nueva como destino de c,$m_v$} \\
+AgregarRapido(datosCasillaExistente.destinos, <nuevaCasilla, copy(m_v)>) \comentario{O(copy($m_v$))}
+\end{algorithm}
+
+\begin{algorithm}{iMovilizar}{\param{inout}{t}{tablero($\mu$)}, \param{in}{c_1}{casilla}, \param{in}{c_2}{casilla}, \param{in}{m}{$\mu$}}{}
+\VAR datosCasilla1 : datosCasilla \\
+datosCasilla1 \= Obtener(c_1, t.casillas) \comentario{O(1) por referencia} \\
+AgregarRapido(datosCasilla1.salidas, m) \comentario{O(1)} \\
+AgregarRapido(datosCasilla1.destinos, <c_2, copy(m)>) \comentario{O(copy(m))} \\
+\VAR datosCasilla2 : datosCasilla \\
+datosCasilla2 \= Obtener(c_2, t.casillas) \comentario{O(1) por referencia} \\
+\comentario{agrego casilla nueva como origen de $c_2$,m} \\
+AgregarRapido(datosCasilla2.origenes, <c_1, copy(m)>) \comentario{O(copy(m))}
+\end{algorithm}
+
+\begin{algorithm}{iConectar}{\param{inout}{t}{tablero($\mu$)}, \param{in}{c_1}{casilla}, \param{in}{c_2}{casilla}, \param{in}{m_i}{$\mu$}, \param{in}{m_v}{$\mu$}}{}
+\VAR datosCasilla1 : datosCasilla \\
+datosCasilla1 \= Obtener(c_1, t.casillas) \comentario{O(1) por referencia} \\
+AgregarRapido(datosCasilla1.salidas, m_i) \comentario{O(1)} \\
+\comentario{agrego $c_2$ como origen de $c_1$,$m_v$} \\
+AgregarRapido(datosCasilla1.origenes, <c_2, copy(m_v)>) \comentario{O(copy($m_v$))} \\
+AgregarRapido(datosCasilla1.destinos, <c_2, copy(m_i)>) \comentario{O(copy($m_i$))} \\
+\VAR datosCasilla2 : datosCasilla \\
+datosCasilla2 \= Obtener(c_2, t.casillas) \comentario{O(1) por referencia} \\
+AgregarRapido(datosCasilla2.salidas, copy(m_v)) \comentario{O(1)} \\
+\comentario{agrego casilla nueva como origen de $c_2$,$m_i$} \\
+AgregarRapido(datosCasilla2.origenes, <c_1, copy(m_i)>) \comentario{O(copy($m_i$))} \\
+AgregarRapido(datosCasilla2.destinos, <c_1, copy(m_v)>) \comentario{O(copy($m_v$))}
+\end{algorithm}
+
+\begin{algorithm}{iCasillas}{\param{in}{t}{tablero($\mu$)}}{\res: conj(casilla)}
+\res \= claves(t.casillas) \comentario{O(1) por referencia} \\
+return \, \res
+\end{algorithm}
+
+\begin{algorithm}{iContinente}{\param{in}{t}{tablero($\mu$)}, \param{in}{c}{casilla}}{\res: continente}
+\VAR datosCasilla : datosCasilla \\
+datosCasilla \= Obtener(c, t.casillas) \comentario{O(1) por referencia} \\
+\res \= datosCasilla.continente \comentario{O(1) por referencia} \\
+return \, \res
+\end{algorithm}
+
+\begin{algorithm}{iOrigenes}{\param{in}{t}{tablero($\mu$)}, \param{in}{c}{casilla}, \param{in}{m}{$\mu$}}{\res: conj(casilla)}
+\res \= \emptyset \\
+\VAR datosCasilla : datosCasilla \\
+datosCasilla \= Obtener(c, t.casillas) \comentario{O(1) por referencia} \\
+\VAR it : itConj \\
+it \= CrearIt(datosCasilla.origenes) \comentario {O(1) creo el iterador de conj}\\
+\VAR cm : tupla(casilla:casilla, movimiento:movimiento) \\
+\begin{WHILE}{HaySiguiente(it)}
+	cm \= Siguiente(it) \\
+	\begin{IF}{cm.movimiento = m}
+		AgregarRapido(cm.casilla, \res)\\
+	\end{IF}
+	Avanzar(it)
+\end{WHILE} \\
+return \; res \\
+\comentario {recorro todas los origenes O(\#Origenes(t, c, m))}
+\end{algorithm}
+
+\begin{algorithm}{iContinentes}{\param{in}{t}{tablero($\mu$)}}{\res: conj(continente)}
+\res \= claves(t.continentes) \comentario{O(1) por referencia} \\
+return \, \res
+\end{algorithm}
+
+\begin{algorithm}{iConectadas}{\param{in}{t}{tablero($\mu$)}, \param{in}{c_1}{casilla}, \param{in}{c_2}{casilla}}{\res: bool}
+\comentario{c2 es destino de c1?} \\
+\VAR datosCasilla : datosCasilla \\
+datosCasilla \= Obtener(c1, t.casillas) \comentario{O(1) por referencia} \\
+\VAR it : itConj \\
+it \= CrearIt(datosCasilla.destinos) \comentario {O(1) creo el iterador de conj}\\
+\VAR cm : tupla(casilla:casilla, movimiento:movimiento) \\
+res \= true \\
+\begin{WHILE}{\res \wedge HaySiguiente(it)}
+	cm \= Siguiente(it) \\
+	\res \= (cm.casilla = c2) \\
+	Avanzar(it)\\
+\end{WHILE}
+\comentario{recorro todos los destinos de c1 O(\#Casillas(t))} \\
+\comentario{si c2 no es destino de c1, c1 es destino de c2?} \\
+\begin{IF}{\neg \res}
+	datosCasilla \= Obtener(c2, t.casillas) \comentario{O(1) por referencia} \\
+	it \= CrearIt(datosCasilla.destinos) \comentario {O(1) creo el iterador de conj}\\
+	res \= true \\
+	\begin{WHILE}{\res \wedge HaySiguiente(it)}
+		cm \= Siguiente(it) \\
+		\res \= cm.casilla = c1 \\
+		Avanzar(it)
+	\end{WHILE}
+	\comentario {recorro todos los destinos de c2 O(\#Casillas(t))}
+\end{IF} \\
+return \; res \\
+\comentario{complejidad total: O(\#Casillas(t))}
+\end{algorithm}
+
+\begin{algorithm}{iSalidas}{\param{in}{t}{tablero(movimiento)}, \param{in}{c}{casilla}}{\res: conj(movimiento)}
+\VAR datosCasilla : datosCasilla \\
+datosCasilla \= Obtener(c, t.casillas) \comentario{O(1) por referencia} \\
+\res \= datosCasilla.salidas \comentario{O(1) por referencia}  \\
+return \, \res
+\end{algorithm}
+
+\begin{algorithm}{iOrigenesR}{\param{in}{t}{tablero($\mu$)}, \param{in}{c}{casilla}, \param{in}{m}{$\mu$}}{\res: conj(casilla)}
+\res \= Vacio() \comentario{O(1)} \\
+\VAR it : itConj(conj(casilla)) \\
+it \= crearIt(iOrigenes(t, c, m)) \\
+\VAR c' : casilla \\
+\begin{WHILE}{HaySiguiente(it)}
+	c' \= Siguiente(it) \\
+	AgregarRapido(\res, c') \\
+	Avanzar(it)\\
+\end{WHILE}
+\comentario{O(\#Origenes(t, c, m))} \\
+\begin{IF}{EsVacio?(\res)}
+	AgregarRapido(\res, c)
+\end{IF} \\
+return \; res \\
+\end{algorithm}
+
+\begin{algorithm}{iCasillasDe}{\param{in}{t}{tablero($\mu$)}, \param{in}{cc}{continente}}{\res: conj(casilla)}
+\res \= Obtener(cc, t.continentes) \comentario{O(1) por referencia}
+return \, \res
+\end{algorithm}
+
+\begin{algorithm}{iDestinos}{\param{in}{t}{tablero($\mu$)}, \param{in}{c}{casilla}}{\res: itConj(conj(tupla(casilla, movimiento)))}
+\VAR datosCasilla : datosCasilla \\
+datosCasilla \= Obtener(c, t.casillas) \\
+\VAR destinos : conj(tupla(casilla, movimiento)) \\
+destinos \= datosCasilla.destinos \\
+\res \= crearIt(destinos) \comentario{O(1) por referencia al primer elemento} \\
+return \, \res
+\end{algorithm}
+
+\begin{algorithm}{iProxCasilla}{\param{in}{t}{tablero(movimiento)}}{\res: casilla}
+\res \= \#iCasillas(t) \comentario{O(1) tamaño del conj.}\\
+return \, \res
+\end{algorithm}
+
+\begin{algorithm}{iProxContinente}{\param{in}{t}{tablero(movimiento)}}{\res: continente}
+\res \= \#iContinentes(t) \comentario{O(1) tamaño del conj.}  \\
+return \, \res
+\end{algorithm}

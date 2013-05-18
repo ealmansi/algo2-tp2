@@ -1,0 +1,468 @@
+\newpage
+
+\section{M'odulo Conjunto Acotado de Naturales}
+
+\subsection{Aspectos de la interfaz}
+
+\subsubsection{Servicios exportados}
+Las operaciones exportadas tienen los siguientes 'ordenes de complejidad:
+\newline
+
+\orden{$\emptyset$(lower, upper)}{upper-lower}
+\begin{itemize}
+\item{Aliasing: }No se genera. 
+\end{itemize}
+
+\orden{Ag(a, ca)}{1}
+\begin{itemize}
+\item{Aliasing: }No se genera. 
+\end{itemize}
+
+\orden{$\emptyset?$}{1}
+\begin{itemize}
+\item{Aliasing: }No se genera. 
+\end{itemize}
+
+\orden{$\#$}{1}
+\begin{itemize}
+\item{Aliasing: }No se genera. 
+\end{itemize}
+
+\orden{\puntito -- \{ \puntito \}}{1}
+\begin{itemize}
+\item{Aliasing: }No se genera. 
+\end{itemize}
+
+%\orden{ca $\bigcup$ cb }{$\#$(ca) + $\#$(cb)}
+%\begin{itemize}
+%\item{Aliasing: }No se genera. 
+%\end{itemize}
+
+%\orden{ca $\bigcap$ cb}{min($\#$(ca), $\#$(cb))}
+%\begin{itemize}
+%\item{Aliasing: }No se genera. 
+%\end{itemize}
+
+\subsubsection{Interfaz}
+
+\begin{interfaz}{ConjA}{\tadtitskip=4pt}
+
+\usa{Bool, Nat, Conj($\alpha$), Arreglo\_dimensionable, Tupla}
+
+\seexplicacon{ConjA}
+
+\generos{conjA}
+
+\exporta {generadores, observadores}
+
+\vskip12pt
+
+\operaciones
+\newline
+%$\emptyset$(lower, upper)
+%Ag(a, ca)
+%$\emptyset?$
+%$\#$
+%\puntito -- \{ \puntito \}
+
+\textit{$\emptyset$} (in $lower$: nat, in $upper$: nat ) \en $res$: mapa
+\\\tab \{$true$\}
+\\\tab \{$res = Mapa(j)$\}
+\newline
+
+\textit{HabitacionFinal} (in $j$: juego) \en $res$: id
+\\\tab \{$true$\}
+\\\tab \{$res = HabitacionFinal(j)$\}
+\newline
+
+\end{interfaz}
+
+\newpage
+
+\subsection{Pautas de implementaci'on}
+
+\subsubsection{Estructura de representaci'on}
+
+\textbf{juego} se representa con \textbf{jugStruc}
+\\\hspace*{1.1em} donde \textbf{jugStruc} es tupla
+\\\tab $<$
+\\\tab \textit{cardinal}: nat,
+\\\tab \textit{estanBool}: ad(bool),
+\\\tab \textit{conjunto}: conj(nat)
+\\\tab $>$
+
+\subsubsection{Invariante de representaci'on}
+\begin{enumerate}
+	\item{La segunda componente de cada elemento de infoJugador es una habitaci'on del tablero.}
+\newline
+\tab ($\forall$ c $\in$ [0 .. tam(e.infoJugador)) $\Pi_2$(e.infoJugador[c]) $\leq$ tam(e.quienEsta)
+	\item{Cada habitación distinta de la inicial tiene a lo sumo un jugador.}
+\newline
+\tab ($\forall$ c $\in$ [0 .. tam(e.quienEsta)) \#(e.quienEsta[c]) $\leq$ 1
+	\item{Si un jugador j esta en la habitacion h, j pertenece al conjunto de jugadores correspondiente a la habitaci'on h en el arreglo quienEsta.}
+\newline
+\tab ($\forall$ j $\in$ [0 .. tam(e.infoJugador)) j == dameUno(e.quienEsta[$\Pi_2$(e.infoJugador[j]))
+	\item{Toda llave que aparece en infoJugador, esta definida en llavesJugador.}
+\newline
+\tab	($\forall$ j $\in$ [0 .. tam(e.infoJugador)) ($\forall$ i $\in$ [0 .. \#($\Pi_1$(e.infoJugador[j]))) (*e.llavesJugador[k])[i] == 1
+	\item{QuienEsta, Adyacentes, Llaves y Puertas tienen el mismo tamaño, pues estan indexados por habitaci'on.}
+\newline
+\tab (tam(e.quienEsta) == tam(e.adyacentes) == tam(e.llaves) == tam(e.puertas))
+	\item{InfoJugador y LlavesJugador tienen el mismo tamaño, pues estan indexados por jugador.}
+\newline
+\tab (tam(e.infoJugador) = tam(e.llavesJugador))
+	\item{Las llaves de un jugador en infoJugador son las mismas llaves de ese jugador en llavesJugador.}
+\newline
+\tab ($\forall$ j $\in$ [0 .. tam(e.infoJugador)))($\Pi_1$(e.infoJugador[j]) \igobs BoolToConj(e.llavesJugador[j]))
+	\item{Cada uno de los arreglos apuntados por cada posición de e.adyacentes está ordenado de manera ascendente.}
+\newline
+\tab ($\forall$ i $\in$ [0 .. tam(e.adyacentes))) ($\forall$ k $\in$ [0 .. tam(*e.adyacentes[i]))) ((*e.adyacentes[i])[k] $<$ (*e.adyacentes[i])[k+1])
+	\item{La habitación final es una habitación del tablero.}
+\newline
+\tab e.habFinal $\in$ [0..tam(e.quienEsta))
+
+
+\end{enumerate}
+
+Rep : juego $\en$ bool
+
+($\forall$ e : juego) Rep(e) $\equiv$
+\newline
+
+$ \hspace*{0.5em}
+(1) \hspace*{1em}
+\wedge \hspace*{1em}
+(2) \hspace*{1em}
+\wedge \hspace*{1em}
+(3) \hspace*{1em}
+\wedge \hspace*{1em}
+(4) \hspace*{1em}
+\wedge \hspace*{1em}
+(5) \hspace*{1em}
+\wedge \hspace*{1em}
+(6) \hspace*{1em}
+\wedge \hspace*{1em}
+(7) \hspace*{1em}
+\wedge \hspace*{1em}
+(8) \hspace*{1em}
+\wedge \hspace*{1em}
+(9)
+$
+ \newline
+ \newline
+Aclaración: Los elementos de e.puertas, e.llaves y e.adyacentes comparten las mismas características análogamente que las puertas, llaves y habitaciones adyacentes de las habitaciones del tablero que usa el juego al momento de crearse, es decir, que las cosas que se piden en el invariante de representación para tablero, se importan para los mismos elementos en la estructura de juego. Redondeando, como se cumple el rep de tablero cuando se pasa como parámetro y es éste es convertido a un ''tablero estático inmodificable'', lo sigue cumpliendo.
+
+\subsubsection{Funci'on de abstracci'on}
+
+Abs : jugStruc e $\en$ tablero (Rep(e))
+
+($\forall$ e : jugStruc) Abs(e) $=$ j : juego /
+\newline
+
+\tab \hspace*{0.7em} mapa(j) = mapa(e)
+
+\tab $\wedge$ habitacionFinal(j) = longitud(e.quienEsta)
+
+\tab $\wedge$ jugadores(j) = armarConjuntoAPartirDeArregloSegunIndices(e.infoJugadores)
+
+\tab $\wedge$ llavesDe(j, jug) = $\Pi_1$(e.infojugador[jug]) $\vee$ BoolToConj(e.llavesDeJugador[jug])
+
+\tab $\wedge$ posicionDe(j, jug) = $\Pi_2$(e.infojugador[jug])
+\newline
+
+\textbf{operaciones auxiliares}
+
+\func{armarConjuntoAPartirDeArregloSegunIndices}{ad($\alpha$)}{conj(nat)}{}
+\axioma{armarConjuntoAPartirDeArregloSegunIndices($a$)}{armoConjunto(longitud(a))}
+\\
+\func{armoConjunto}{nat}{conj(nat)}{}
+\axioma{armoConjunto($0$)}{\{0\}}
+\axioma{armoConjunto($n$)}{Ag(n, armoConjunto(n-1))}
+\\
+\func{BoolToConj}{ad[bool] a}{conj(nat)}{}
+\axioma{BoolToConj(a[0])}{if a[0] == 1 then Ag(0, vacio) else vacio}
+\axioma{BoolToConj(a)}{if a[tam(a)-1] == 1 then Ag((tam(a)-1), BoolToConj(subArreglo(a, 0,tam(a)-1))) else BoolToConj(subArreglo(a, 0, tam(a)-1))}
+
+\newpage
+
+\subsubsection{Algoritmos}
+
+\begin{algorithm}{iMapa}{\param{in}{e}{jugStruc}}{res:tablero}
+\VAR res : tablero \com{O(1)} \\
+\VAR temp : ad(habitacion) \com{O(1)} \\
+\VAR conjTemp : conj(habitacion) \com{O(1)} \\
+res \= crear() \com{O(1)} \\
+for(nat \; i = 0, i < MaxId, i++) \\
+\tab	temp = *e.adyacentes[i] \\
+\tab	for(nat \; k = 0, k < tam(*e.adyacentes[i]), k++) \\
+\tab \tab		\begin{IF}{(k < i)}
+							Ag(k, conjTemp)
+						\end{IF} \\
+\tab AgregarHabitacion(res, llaves[i], puertas[i], temp) \\
+\tab conjTemp \= vacio
+\end{algorithm}
+\com{Complejidad Total: O(maxId * costo\_de\_insercion\_de\_habitacion). Ver módulo tablero.} \\
+
+\begin{algorithm}{iHabitacionFinal}{\param{in}{e}{jugStruc}}{res:id}
+res \= e.habFinal \com{O(1)}
+\end{algorithm}
+\com{Complejidad Total: O(1)} \\
+
+\begin{algorithm}{iJugadores}{\param{in}{e}{jugStruc}}{res:conj(jugador) }
+\VAR i : int  \com{O(1)} \\
+\VAR cj: conj(jugador)  \com{O(1)} \\
+for (i = 0, i < tam(e.infoJugador), i++)  \com{O(tam(e.infoJugador))} \\
+\tab	Ag(i, cj) \\
+res \= cj \com{O(tam(e.infoJugador))}
+\end{algorithm}
+\com{Complejidad Total: O(tam(e.infoJugador))} \\
+
+\begin{algorithm}{iLlavesDe}{\param{in}{e}{jugStruc}, \param{in}{h}{jugador}}{res:conj(llave)}
+res \= \Pi_1(e.infoJugador[h]) \com{O(1)}
+\end{algorithm}
+\com{Complejidad Total: O(1)} \\
+
+\begin{algorithm}{iPosicionDe}{\param{in}{e}{jugStruc}, \param{in}{h}{jugador}}{res:id}
+res \= \Pi_2(e.infoJugador[h]) \com{O(1)}
+\end{algorithm}
+\com{Complejidad Total: O(1)} \\
+
+\begin{algorithm}{iFinalizo?}{\param{in}{e}{jugStruc}}{res:bool}
+\VAR iter : itConj  \\
+iter \= crearItConj(e.quienEsta[HabitacionFinal(e)]) \\
+res \= haySiguiente(iter) \com{O(1)}
+\end{algorithm}
+\com{Complejidad Total: O(1)} \\
+
+\begin{algorithm}{iOcupada?}{\param{in}{e}{jugStruc}, \param{in}{i}{id}}{res:bool}
+\VAR iter : itConj  \\
+iter \= crearItConj(e.quienEsta[h]) \\
+res \= ((haySiguiente(iter) == true)) \com{O(1)}
+\end{algorithm}
+\com{Complejidad Total: O(1)} \\
+
+\begin{algorithm}{iJugadorEn}{\param{in}{e}{jugStruc}, \param{in}{i}{id}}{res:jugador}
+\VAR iter : itConj  \\
+iter \= crearItConj(e.quienEsta[h]) \\
+res \= actual(iter) \com{O(1)}
+\end{algorithm}
+\com{Complejidad Total: O(1)} \\
+
+\begin{algorithm}{iPuedeMoverse}{\param{in}{e}{jugStruc}, \param{in}{j}{jugador}, \param{in}{i}{id}}{res:bool}
+\VAR esta : id  \\
+\VAR esAd : bool  \\
+\VAR puedeAbrir : bool \\
+\VAR tiene : bool  \\
+\VAR iter : itConj  \\
+\VAR buscar : int  \\
+\VAR inf : int  \\
+\VAR sup : int  \\
+\VAR ady : ad[id] \\
+esta \= PosicionDe(e,j) \com{O(1)} \\
+ady \= *e.adyacentes[esta] \com{O(1)} \\
+\com{Puertas, mira si puede abrir todas las puertas de la habitacion} \\
+puedeAbrir \= false \com{O(1)} \\
+tiene \= true \com{O(1)} \\
+\com{la comparación del próximo if es O(1) porque el cardinal se obtiene en O(1), y el acceso a}\\
+\com{tuplas es O(1) también. Luego, sólo comparo por mayor o menor 2 naturales (O(1))}\\
+\begin{IF}{(\#puertas[i] <= \#(\Pi_1(e.infoJugador[h])))}
+	iter \= crearItConj(puertas(e.mapa,i)) \\
+	\begin{WHILE}{(tieneProximo(iter) \wedge tiene)}
+		tiene \= e.llavesJugador[actual(iter)] \com{O(1)}\\
+		avanzarIt(iter)
+	\end{WHILE} \\
+	\com{O(\#(puertas))}
+\ELSE{return \; false}
+\end{IF} \\
+\textbf{fi} \\
+puedeAbrir \= tiene \com{O(1)} \\
+\com{Busqueda Binaria} \\
+esAd \= false \com{O(1)} \\
+inf \= 0 \com{O(1)} \\
+sup \= tam(e.adyacentes)-1 \com{O(1)} \\
+\begin{WHILE}{(inf <= sup)\{}
+	\com{O(log(x)) donde x es tam(e.adyacentes)} \\
+	\com{Se va reduciendo siempre a la mitad el arreglo, o sea disminuye de a potencias de 2} \\
+	buscar \= ((sup - inf) / 2) \com{Divisi'on entera} \\
+	\begin{IF}{(ady[buscar] = h)}
+		res \= true \com{O(1)}
+		\ELSE
+			\begin{IF}{(h < ady[buscar])}
+				sup \= buscar - 1 \com{O(1)}
+				\ELSE inf \= buscar + 1 \com{O(1)}
+			\end{IF} \\
+			\textbf{fi}
+	\end{IF} \\
+	\textbf{fi}
+\end{WHILE} \\
+\} \\
+res \= puedeAbrir \wedge esAd \com{O(1)}
+\end{algorithm} \\
+\com{Complejidad Total: O(log(\#(e.adyacentes[i])) + \#(puertas)) siempre y cuando} \\
+\com{haya a lo sumo misma cantidad de puertas que de llaves. Si hubiera mas puertas} \\
+\com{que llaves, la comparaci'on es O(1) y ya no sigo con el algoritmo} \\
+
+\begin{algorithm}{iMover}{\param{inout}{e}{jugStruc}, \param{in}{j}{jugador}, \param{in}{i}{id}}{}
+\VAR iter : iterConj  \\
+\VAR iterTemp : iterConj  \\
+\VAR cj : conj(jugador)  \\
+\com{Caso hay un jugador en donde se va a mover} \\
+\begin{IF}{(i \neq 0 \yluego ocupada?(j,i))}  \com{no es la inicial y hay alguien, es un yluego} \\
+	iterTemp \= crearIT(e.quienEsta[i]) \com{O(1)} \\
+	\Pi_2(e.infoJugador[actual(iterTemp)]) \= 0 \com{O(1)} \\
+	Ag(actual(iterTemp), e.quienEsta[0]) \com{O(1)} \\
+	iter \= CrearItConj( \Pi_1(e.infoJugador[actual(iterTemp)]) ) \com{O(1)} \\
+	\com{crea un iter de conjuntos sobre las llaves que tiene el jugador que esta en la habitacion.} \\
+	\begin{WHILE}{(tieneProximoItConj(iter))}
+	\com{ag llaves del jugador que estaba en la habitacion} \\
+		Ag(actual(iter), \Pi_1(e.infoJugador[j])) \com{O(cantidad de llaves a copiar)} \\
+		avanzarIt(iter) \com{O(1)}
+	\end{WHILE} \\
+	eliminarSiguiente(iterTemp) \com{SinUno(e.quienEsta[i])}
+\end{IF} \\
+\textbf{fi} \\
+\com{ag llaves de la habitacion} \\
+iter \= CrearItConj(llaves[i]) \com{O(1)} \\
+\begin{WHILE}{(tieneProximoItConj(iter))}
+	\com{O(cantidad de llaves a copiar de la habitaci'on)} \\
+	Ag(actual(iter),\Pi_1(e.infoJugador[h])) \com{O(1)} \\
+	avanzarItConj(iter) \com{O(1)}
+\end{WHILE} \\
+iter \= crearIt(\Pi_1(infoJugador[j])) \\
+\begin{WHILE}{(tieneProximo(iter))}
+	\com{O(cantidad de llaves a copiar de la habitaci'on)} \\
+	llavesJugador[j][actual(iter)] \= true \com{O(1)} \\
+	avanzarIt(iter) \com{O(1)} \\
+\end{WHILE} \\
+\com{saco al jugador de la casilla donde estaba.} \\
+cj \= e.quienEsta[\Pi_2(e.infoJugador[h])] \com{O(1)} \\
+iter \= CrearItConj(cj) \com{O(1)} \\
+\begin{WHILE}{(tieneProximoItConj(iter))}
+	\begin{IF}{(actual(iter) \neq h)}
+		Ag(actual(iter),cj) \com{O(1)} \\
+		avanzarItConj(iter) \com{O(1)} \\
+	\end{IF} \\
+	\textbf{fi}
+\end{WHILE} \\
+e.quienEsta[\Pi_2(e.infoJugador[h])] \= cj \\
+\com{Muevo al jugador (cambio la casilla donde esta y lo posiciono en la casilla destino)} \\
+Ag(h,e.quienEsta[i]) \\
+\Pi_2(e.infoJugador[h]) \= i
+\end{algorithm}
+\com{Complejidad Total: O(\#(Llaves a copiar)) donde las llaves son las de la habitaci'on} \\
+\com{de destino, y pueden o no sumarse las de otro jugador en el caso en en que hubiese otro} \\
+\com{jugador en la habitaci'on de destino.} \\
+
+\begin{algorithm}{iNuevo}{\param{in}{t}{tablero}, \param{in}{pos}{dicc(jugador, posicion)}, \param{in}{q}{id}}{res:jugStruc}
+\VAR qE : ad[conj(jugador)]  \\
+\VAR iJ : ad[tupla$<$conj(llaves),id$>$]  \\
+\VAR aDy : ad[ad[id]]  \\
+\VAR cJJ : conj(jugador)  \\
+\VAR cJl : conj(llave)  \\
+\VAR temp : ad[id]  \\
+\VAR tupla : tupla$<$conj(llaves),id$>$  \\
+\VAR lJ : ad[ad[bool]]  \\
+\VAR keys : ad[bool]  \\
+\VAR iter : iterConj  \\
+\VAR suma : int  \\
+\VAR temp2 : ad[int]  \\
+\VAR contadores : ad[int] \\
+\VAR lt : ad[conj(llave)] \\
+\VAR cp : conj(puerta) \\
+suma \= 0 \\
+\com{Inicializar variables} \\
+\com{inicializar iJ, lJ con tamaño \#claves(pos)} \\
+iJ \= ad[\#claves(pos)] \com{O(\#(claves(pos)))} \\
+lJ \= ad[\#claves(pos)] \com{O(\#(claves(pos)))} \\
+\com{inicializar lt con tamaño MaxId} \\
+lt \= ad[maxId] \com{O(maxId)}\\
+for(nat \; k = 0, k < maxId, k++) \\
+\tab iter \= crearIt(llaves(k, t) \com{k es la habitacion actual, t es el tablero que nos pasan como parametro} \\
+\tab \begin{WHILE}{(tieneProximo(iter))}
+\tab Ag(actual(iter),cj) \\
+\tab proximo(iter) \\
+\tab \com{O($\sum_{k=0}^{k=maxId}{llaves(k, t)}$)}
+\end{WHILE} \\
+\tab lt[k] \= cj \\
+cj \= vacio \\
+\com{inicializar pt con tamaño MaxId} \\
+pt \= ad[maxId] \com{O(maxId)}\\
+for(nat \; k = 0, k < maxId, k++) \\
+\tab iter \= crearIt(puertas(k, t) \com{k es la habitacion actual, t es el tablero que nos pasan como parametro} \\
+\tab \begin{WHILE}{(tieneProximo(iter))}
+\tab Ag(actual(iter),cj) \\
+\tab proximo(iter) \\
+\tab \com{O($\sum_{k=0}^{k=maxId}{puertas(k, t)}$)}
+\end{WHILE} \\
+\tab pt[k] \= cj \\
+\com{inicializar qE con tamaño i+1, donde i es la ultima id de habitacion,} \\
+\com{Tiene que ser uno mas grande el tamaño} \\
+qE \= ad[i+1] \com{O(i)}\\
+\com{inicializar adY con tamaño i+1 donde i es la ultima id de habitacion,} \\
+\com{Tiene que ser uno mas grande el tamaño} \\
+aDy \= ad[i+1] \com{O(i)}\\
+\com{ya inicializamos cJJ, cJl vacios} \\
+\com{cargar posiciones de los jugadores en iJ y en habitaciones (qE)} \\
+for(j = 0, j < tam(iJ)-1, j++) \\
+\tab	\Pi_2(iJ[j]) \= obtener(j,pos) \com{supongo es por copia, obtener es O(1)} \\
+\tab	qE[obtener(j,pos)] \= j \com{O(cantidad de jugadores)} \\
+\com{cargar llaves de jugadores en iJ y en lJ} \\
+\com{inicializar en todas las posiciones de lJ un array de tamaño maxid llaves,} \\
+\com{en false todos los valores de los arrays de adentro} \\
+\com{todo eso es O(max(\#(Llaves))*cantidad de jugadores)} \\
+for(j = 0, j < tam(iJ) - 1, j++ ) \com{lleno los conjuntos} \\
+\tab	\Pi_1(iJ[j]) \= llaves(t,j) \com{por copia} \\
+for(j = 0, j < tam(lJ) - 1, j++ ) \com{lleno el array} \\
+\tab	iter \= crearIt(\Pi_1(iJ[j])) \\
+\tab	\begin{WHILE}{(tieneProximoIt(iter))}
+					lJ[j][actual(iter)] \= true \\
+					avanzarIt(iter)
+			\end{WHILE} \\
+\com{llenar adyacentes} \\
+\com{inicializar arrays, cada uno de tamaño cantidad de adyacentes propias)} \\
+for(j = 0, j < i, j++) \\
+\tab \com{O($\sum_{h=0}^{maxIdHab}{\#(adyacentes(h))}$)} \\
+\tab 	suma \= \#sucesoras(t,j) \com{O(1)} \\
+\tab 	\begin{IF}{(j \neq 0)}
+				suma \= suma + \#predecesoras(t,j) \com{O(1)} \\
+			\end{IF} \\
+\com{inicializar temp con tamaño = suma, y poner el array en la posicion aDy[j]} \\
+	\tab temp \= *ad[suma] \com{O(i)}\\
+	\tab aDy[j] \= temp \\
+\com{llenar los arrays} \\
+contadores \= ad[i] \\
+for(a=0, a<i, a++) \\
+\tab contadores[a] \=0 \com{O(1)} \\
+for( j = 0, j < i, j++) \\
+\tab	\begin{IF}{(j \neq 0)} 
+				iter \= crearItConj(predecesoras(t,j)) \com{O(1)} \\
+				\begin{WHILE}{(tieneProximo(iter))}		
+					\com{O(\#predecesoras(habitaci'on))} \\
+					*aDy[actual(iter)][contadores[actual(iter)]] \= j \com{VER ACLARACION} \\
+					contadores[actual(iter)] \= contadores[actual(iter)] + 1 \com{O(1)} \\
+					avanzar(iter) \com{O(1)}
+				\end{WHILE}
+			\end{IF} \\
+iter \= crearItConj(sucesoras(t,j)) \com{O(1)} \\
+\begin{WHILE}{(tieneProximo(iter))}
+	\com{O(\#sucesoras(habitaci'on))} \\
+	*aDy[actual(iter)][contadores[actual(iter)]] \= j \com{VER ACLARACION} \\
+	contadores[actual(iter)] \= contadores[actual(iter)] + 1 \com{O(1)} \\
+	avanzar(iter) \com{O(1)}
+\end{WHILE} \\ \\
+res.quienEsta \= qE \com{O(1) por referencia} \\
+res.infoJugador \= iJ \com{O(1) por referencia} \\
+res.adyacentes \= aDy \com{O(1) por referencia} \\
+res.llavesJugador \= lJ \com{O(1) por referencia} \\
+res.llaves \= lt \com{O(1) por referencia} \\
+res.puertas \= lp \com{O(1) por referencia} \\
+res.habFinal \= q \com{O(1) por copia por ser tipo básico} \\
+\com{*****ACLARACION, hay que agregarlo en la primera posicion disponible del array,} \\
+\com{en O(1), para eso tengo q guardar un entero con el array que me diga la cantidad de} \\
+\com{elementos q tiene ocupados ya, hay q hacer q el array tenga eso. Otra opcion seria} \\
+\com{crear otro array temporal, que sea ad[ad[int]] que lleve la cuenta de cuantos} \\
+\com{van agreagados ya.} \\
+\end{algorithm}
+\com{Complejidad Total: O(MaxIdHabitaciones(t) + m + max(Llaves(t))*max(claves(pos)))} \\
+\com{con m = $\displaystyle\sum_{h \in H}{(\#(adyacentes(tab, pos)) + \#(LlavesDe(tab, jug)) + \#(Puertas(tab, jug)))}$}
+\section*{Fin M'odulo Juego}
