@@ -1,0 +1,27 @@
+TAD Gremio
+
+.géneros Gremio
+
+.generadores
+
+	nuevo : Empresas es × #Personas n -> Gremio
+
+.observadores básicos
+
+	empresas : Gremio g -> Empresas
+	afiliados : Gremio g -> #Personas
+
+.otras operaciones
+
+	empresas : conj(Gremio) gs -> Empresas
+	afiliados : conj(Gremio) gs -> #Personas
+
+.axiomas
+∀ gs: conj(Gremio),∀ es: Empresas,∀ n: #Personas
+
+	empresas( nuevo( es, n ) ) ≡ es
+	afiliados( nuevo( es, n ) ) ≡ n
+	empresas( gs ) ≡ if ∅ = gs then ∅ else empresas(dameUno(gs)) ∪ empresas(sinUno(gs)) fi
+	afiliados( gs ) ≡ if ∅ = gs then ∅ else afiliados(dameUno(gs)) + afiliados(sinUno(gs)) fi
+
+Fin TAD

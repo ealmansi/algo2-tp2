@@ -1,0 +1,44 @@
+TAD Acuerdo
+
+.generadores
+
+	nuevoAcuerdo : Paritaria p × Porc n × Nat d -> Acuerdo
+
+.observadores básicos
+
+	id : Acuerdo a -> Nat
+	paritaria : Acuerdo a -> Paritaria
+	valor : Acuerdo a -> Porc
+	acuerdosPrevios : Acuerdo a -> Nat
+
+.otras operaciones
+
+	gremio : Acuerdo a -> Gremio
+	mejor : Acuerdo a × Acuerdo b -> bool
+	masDiscutido : conj(Acuerdo) as -> Acuerdo
+	juntar : conj(Acuerdo) ps × Gremio g -> conj( Acuerdo )
+
+.axiomas
+∀ a, b: Acuerdo,∀ as: conj(Acuerdo),∀ p: Paritaria,∀ n: Porc,∀ d: Nat
+
+	paritaria( nuevoAcuerdo( p, n, d ) ) ≡ p
+	valor( nuevoAcuerdo( p, n, d ) ) ≡ n
+	acuerdosPrevios( nuevoAcuerdo( p, n, d ) ) ≡ d
+	gremio( a ) ≡ gremio( paritaria( a ) )
+	mejor( a, b ) ≡ valor(a) < valor(b)
+	masDiscutido( as ) ≡ if acuerdosPrevios(dameUno(as)) > acuerdosPrevios(masDiscutido(sinUno(as))) then
+							{dameUno(as)}
+						else
+							masDiscutido( sinUno( as ) )
+						fi
+	juntar( as, g ) ≡ 	if ∅ = as then
+							∅
+						else
+							if gremio(dameUno(as)) = g ∪ juntar(sinUno(as), g) then
+								{dameUno(as)}
+							else
+								∅
+							fi
+						fi
+
+Fin TAD

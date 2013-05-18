@@ -1,0 +1,42 @@
+TAD Sistema Laboral
+
+.géneros SL
+
+.generadores
+
+	nuevo : conj(Gremio) gs -> SL
+		{ (∀g1 , g2 ∈ gs) g1 = g2 ⇒ empresas(g1 ) ∩ empresas(g2 )}
+	aliar : SL sl × Gremio g1 × Gremio g2 -> SL
+		{g1 ∈ gremios(sl) ∧ g2 ∈ gremios(sl) ∧ g1 = g2 }
+
+.observadores básicos
+
+	gremios : SL sl -> conj(Gremio)
+	aliados : SL sl × Gremio g -> conj(Gremio)
+		{g ∈ gremios(sl)}
+
+.otras operaciones
+
+	aliado? : SL sl × Gremio g × Gremio amigo -> bool
+		{g ∈ gremios(sl)}
+	superaliados : SL sl × Gremio g -> conj( Gremio )
+		{g ∈ gremios(sl)}
+	clausura : SL sl × conj(Gremio) cs × conj(Gremio) gs -> conj( Gremio )
+		{cs ⊆ gremios(sl) ∧ gs ⊆ gremios(sl)}
+
+.axiomas
+∀ g, amigo, g1 , g2 : Gremio,∀ gs, cs: conj(Gremio),∀ sl: SL,∀ n: #Personas
+
+	gremios( nuevo( gs ) ) ≡ gs
+	gremios( aliar( sl, g1 , g2 )) ≡ gremios(sl)
+	aliados( nuevo( gs ), g ) ≡ ∅
+	aliados( aliar( sl, g1 , g2 ), g ) ≡ if g ∈ {g1 , g2 } then {g1 , g2 } − g else ∅ fi ∪ aliados(sl, g)
+	aliado?( sl, g, amigo ) ≡ amigo ∈ superaliados(sl, g)
+	superaliados( sl, g ) ≡ clausura(sl, ∅, aliados(sl, g)) − g
+	clausura( sl, cs, gs ) ≡ if ∅ = gs then
+								cs
+							else
+								clausura( sl, dameU no(gs) • cs, sinU no(gs) ∪ aliados(dameU no(gs)) \ cs )
+							fi
+
+Fin TAD

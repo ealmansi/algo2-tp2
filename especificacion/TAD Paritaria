@@ -1,0 +1,35 @@
+TAD Paritaria
+
+.generadores
+
+	nuevaParitaria : Gremio g × Piso p × Tope t -> Paritaria
+		{p ≤ t}
+
+.observadores básicos
+
+	gremio : Paritaria p -> Gremio
+	piso : Paritaria p -> Piso
+	tope : Paritaria p -> Tope
+
+.otras operaciones
+
+	acepta? : Paritaria p × Porc p -> bool
+	gremiosNegociando : conj(Paritaria) ps -> conj( Gremio )
+	buscar : conj(Paritaria) ps × Gremio g -> Paritaria
+		{g ∈ gremiosNegociando(ps)}
+
+.axiomas
+∀ g : Gremio,∀ ps: conj(Paritaria),∀ p: Paritaria,∀ t: Tope
+
+	gremio( nuevaParitaria( g, p, t ) ) ≡ g
+	piso( nuevaParitaria( g, p, t ) ) ≡ p
+	tope( nuevaParitaria( g, p, t ) ) ≡ t
+	acepta?( p, t ) ≡ piso(p) ≤ t ≤ tope(p)
+	gremiosNegociando( ps ) ≡ 	if ∅ = ps then
+									∅
+								else
+									gremio(dameUno(ps)) • gremiosNegociando(sinUno(ps))
+								fi
+	buscar( ps, g ) ≡ if gremio(dameUno(ps)) = g then dameUno(ps) else buscar(sinUno(ps), g) fi
+	
+Fin TAD

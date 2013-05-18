@@ -1,0 +1,80 @@
+TAD Temporada
+
+.exporta
+
+	iniciar, abrirParitaria, cerrarAcuerdo, reabrir, gremios, enParitarias, gremiosNegociando, empresasNegociando, trabajadoresNegociando, gremioConflictivo
+
+.generadores
+
+	iniciar : SL sl -> Temporada
+	abrir : Temporada t × Paritaria p -> Temporada
+		{¬enParitarias?(t, gremio(p)) ∧ gremio(p) ∈ gremios(t)}
+	acordar : Temporada t × Acuerdo a -> Temporada
+		{enParitarias?(t, gremio(a)) ∧ acepta?(paritaria(t, gremio(a)), valor(a))}
+
+.observadores básicos
+
+	sistema : Temporada t -> SL
+	paritarias : Temporada t -> conj( Paritaria)
+	acuerdos : Temporada t -> conj( Acuerdo )
+
+.otras operaciones
+
+	abrirParitaria : Temporada t × Gremio g × Piso p × Techo te × Empresas es -> Temporada
+		{|es|∗2 > |empresas(g)| ∧ es ⊆ empresas(g) ∧ g ∈ gremios(t) ∧ ¬enParitarias?(t, g) ∧ p ≤ te}
+	cerrarAcuerdo : Temporada t × Gremio g × Porc c -> Temporada
+	reabrir : Temporada t × Gremio g -> Temporada
+		{¬enParitarias?(t, g) ∧ ∅ = juntar(acuerdos(t), g)}
+	gremios : Temporada t -> conj( Gremio )
+	enParitarias? : Temporada t × Gremio g -> bool
+	paritaria : Temporada t × Gremio g -> Paritaria
+		{enParitarias?(t, g)}
+	acuerdo : Temporada t × Gremio g -> Acuerdo
+		{∅ = juntar(acuerdos(t), g)}
+	discusiones : Temporada t × Gremio g -> Nat
+	aReabrir : SL sl × Acuerdo a × conj(Acuerdo) as -> conj(Paritaria)
+		{gremio(a) ∈ gremios(sl)}
+	gremiosNegociando : Temporada t -> conj( Gremio )
+	empresasNegociando : Temporada t -> Empresas )
+	trabajadoresNegociando : Temporada t -> #Persona
+	gremioConflictivo : Temporada t -> Gremio
+
+.axiomas
+∀ sl: SL,∀ t: Temporada,∀ a, na: Acuerdo,∀ sa: conj(Acuerdo),∀ p: Paritaria,∀ es: Empresas, ∀ n: Porc,∀ te: Techo,∀ g : Gremio
+
+	sistema( iniciar( sl ) ) ≡ sl
+	sistema( abrir( t, p ) ) ≡ sistema( t )
+	sistema( acordar( t, a ) ) ≡ sistema( t )
+	paritarias( abrir( t, p ) ) ≡ p • paritarias(t)
+	paritarias( iniciar( sl ) ) ≡ ∅
+	paritarias( acordar( t, a ) ) ≡ (paritarias(t) − paritaria(a)) ∪ aReabrir(sistema(t), a, acuerdos(t))
+	acuerdos( iniciar( sl ) ) ≡ ∅
+	acuerdos( abrir( t, p ) ) ≡ acuerdos( t )
+	acuerdos( acordar( t, a ) ) ≡ a • acuerdos(t) \ juntar(acuerdos(t), gremio(a))
+	abrirParitaria( t, g, p, to, es ) ≡ abrir( t, nuevaParitaria( g, p, to ) )
+	cerrarAcuerdo( t, g, n ) ≡ acordar( t, nuevoAcuerdo( paritaria( t, g ), n, discusiones( t, g ) + 1 ) )
+	reabrir( t, g ) ≡ abrir( t, paritaria( acuerdo( t, g ) ) )
+	gremios( t ) ≡ gremios( sistema( t ) )
+	discusiones( t, g ) ≡ 	if ∅ != juntar(acuerdos(t), g) then
+								acuerdosPrevios( acuerdo( t, g ) )
+							else
+								0
+							fi
+	paritaria( t, g ) ≡ buscar(paritarias(t), g)
+	acuerdo( t, g ) ≡ dameUno(juntar(acuerdos(t), g))
+	enParitarias?( t, g ) ≡ g ∈ gremiosNegociando(paritarias(t))
+	aReabrir( sl, a, as ) ≡ if ∅ = as then
+								∅
+							else
+								if aliado?(sl, gremio(a), gremio(dameUno(as))) ∧ mejor(a, dameUno(as)) then
+									{paritaria(dameUno(as))}
+								else
+									∅
+								fi ∪ aReabrir(sl, a, sinU no(as))
+							fi
+	gremiosNegociando( t ) ≡ gremiosNegociando( paritarias( t )
+	empresasNegociando( t ) ≡ empresas( gremiosNegociando( paritarias( t ) )
+	trabajadoresNegociando( t ) ≡ afiliados( gremiosNegociando( paritarias( t ) )
+	gremioConflictivo( t ) ≡ gremio( masDiscutido( acuerdos( t ) ) )
+
+Fin TAD
