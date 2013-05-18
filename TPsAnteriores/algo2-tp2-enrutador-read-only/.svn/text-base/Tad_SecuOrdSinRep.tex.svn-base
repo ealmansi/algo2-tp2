@@ -1,0 +1,65 @@
+\section*{}
+
+\begin{tad}{\nombretad{(SecuOrdSinRep($\alpha$),$<_\alpha$,$=_\alpha$)}}
+
+\vspace*{11pt}
+
+\extiende{Secu($\alpha$)}
+
+\generos{secuOrdSinRep($\alpha$)}
+
+\exporta{genero, generadores, observadores b\'asicos}
+	
+\alinearfuncs{agregarOrdenado}{\hspace{5cm}}	
+	
+\generadores
+	\func{agregarOrdenado}{$\alpha$/a, secuOrdSinRep($\alpha$)/s}{secuOrdSinRep($\alpha$)}{($\neg$esta?(a,s))}
+
+\vspace*{11pt}
+
+\otrasops
+	\func{ordenada}{secuOrdSinRep($\alpha$)}{bool}{}
+	\func{posicionRelativa}{secuOrdSinRep($\alpha$),$\alpha$}{nat}{}
+	\func{com}{secuOrdSinRep($\alpha$)/s}{secuOrdSinRep($\alpha$)}{$\neg$vacia?(s)}
+
+	
+
+
+\vspace*{11pt}
+
+\alinearaxiomas{ordenada(agregarOrdenado(a, s))}{\hspace{3cm}}
+\axiomas{($\forall$ s: secu($\alpha$))($\forall$ a: $\alpha$)}
+
+		\axioma{vacia?(agregarOrdenado(a, s))}{\false}
+		
+		\vspace{11pt}
+		
+		\axioma{prim(agregarOrdenado(a, s))}{\lif (vacia?(s)) \lthen a \lelse min(a,prim(s))}
+		
+		\vspace{11pt}
+
+		\axioma{fin(agregarOrdenado(a, s))}{\lif (vacia?(s)) \oluego\ a $<_\alpha$ prim(s)) \lthen s \\ \lelse agregarOrdenado(a, fin(s)))}
+
+		\vspace{11pt}		
+		
+	
+
+
+		\axioma{ordenada($<>$)}{true}
+		\axioma{ordenada(agregarOrdenado(a,s))}{(a $<_\alpha$ prim(s))) $\wedge$ ordenada(s))}
+		
+		\vspace{11pt}		
+		
+	
+
+
+		\axioma{com(s)}{\lif (vacia?(fin(s))) \lthen $\<\>$ \\ \lelse agregarOrdenado(prim(s),com(fin(s)))}
+		
+		\vspace{11pt}		
+
+
+		\axioma{posicionRelativa(s,a)}{\lif (vacia?(s) \oluego  a $\leq_\alpha$ prim(s)) \lthen 0 \\ \hspace*{-0.87cm} \lelse 1 + posicionRelativa(fin(s),a)}
+
+
+		
+\end{tad}

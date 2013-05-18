@@ -1,0 +1,333 @@
+\section*{Modulo \nombretad{Router}}
+
+%INTERFAZ	
+\subsection*{Interfaz}
+\textbf{interfaz} \textit{Router}\\
+\textbf{se explica con la especificaci\'on de} \textit{Router}\\
+\textbf{usa interfaces} \nombretad{Bool}, \nombretad{Nat}, \nombretad{Conjunto(versi\'on)}, \nombretad{Secuencia(Evento)}, \nombretad{ReglaDir}, \nombretad{RespuestaDir}, \nombretad{Evento}, \nombretad{versi\'on}, \nombretad{Interfaz}, \nombretad{DirIp}\\
+\textbf{genero} \textit{router}\\
+
+\textbf{operaciones}\\
+
+nuevo(in n: nat)$\rightarrow$ res: router  \hfill(O(n)) \\
+$\{$true$\}$\\
+$\{\sombreritoWide{res} \igobs$ nuevo($\sombreritoWide{n}$)$\}$\\
+
+agVersi\'on(inout r: router, in v: versi\'on) \hfill(O(v))\\
+$\{$($\sombreritoWide{r} \igobs\ r_0$) $\wedge$ ($\sombreritoWide{v} \notin$ versiones($\sombreritoWide{r}$))$\}$\\
+$\{\sombreritoWide{r} \igobs$ agVersi\'on($r_0$,$\sombreritoWide{v}$)$\}$\\
+
+agRegla(inout r: router, in u: reglaDir) \hfill(O(version(dirIp(u)))) \\
+$\{$($\sombreritoWide{r} \igobs\ r_0$) $\wedge$ (versi\'on(dirIp($\sombreritoWide{u}$)) $\in$ versiones($\sombreritoWide{r}$)) $\wedge$ (inter($\sombreritoWide{u}$) interfaces($\sombreritoWide{r}$))$\}$\\
+$\{\sombreritoWide{r} \igobs$ agRegla($r_0$,$\sombreritoWide{u}$)$\}$\\
+
+agEvento(inout r: router, in e :evento)\hfill(O(a)\footnote{a = longitud(eventos(r,inter(e)) - posicionRelativa(eventos(r,inter(e)), e)}) \\
+$\{$($\sombreritoWide{r} \igobs\ r_0$) $\wedge$ ($\neg \exists$ i: interfaz)(i $<$ interfaces($\sombreritoWide{r}$)) $\wedge_L$ existeTimestamp?(eventos($\sombreritoWide{r}$,i),timestamp($\sombreritoWide{e}$)))$\}$\\
+$\{\sombreritoWide{r}\igobs$ agEvento($r_0$,$\sombreritoWide{e}$)$\}$\\
+
+versiones(in r: router)$\longrightarrow$ res: conj(versi\'on)\hfill(O(1)) \\
+$\{$true$\}$\\
+$\{\sombreritoWide{res}\igobs$ versiones($\sombreritoWide{r}$)$\}$\\
+
+interfaces(in r: router)$\longrightarrow$ res: nat\hfill(O(1)) \\
+$\{$true$\}$\\
+$\{\sombreritoWide{res} \igobs$ interfaces($\sombreritoWide{r}$)$\}$\\
+
+enrutar(in r: router, in d: dirIp)$\longrightarrow$ res: respDir\hfill(O(version(d))) \\
+$\{$true$\}$\\
+$\{\sombreritoWide{res} \igobs$ enrutar($\sombreritoWide{r}$,$\sombreritoWide{d}$)$\}$\\
+
+eventos(in r: router, in i: interfaz)$\longrightarrow$ res: secuOrdSinRep(eventos) \hfill(O(1)) \\
+$\{$true$\}$\\
+$\{\sombreritoWide{res} \igobs$ eventos($\sombreritoWide{r}$,$\sombreritoWide{i}$)$\}$\\
+
+estaCaida?(in r: router, in i: interfaz)$\longrightarrow$ res: bool \hfill(O(1)) \\
+$\{\sombreritoWide{i} <$ interfaces($\sombreritoWide{r}$)$\}$\\
+$\{\sombreritoWide{res} \igobs$ estaCaida($\sombreritoWide{r}$,$\sombreritoWide{i}$)$\}$\\
+
+tiempoCaida(in r: router, in i: interfaz)$\longrightarrow$ res: nat\hfill(O(1)) \\
+$\{\sombreritoWide{i} <$ interfaces($\sombreritoWide{r}$)$\}$\\
+$\{\sombreritoWide{res} \igobs$ tiempocaida($\sombreritoWide{r}$,$\sombreritoWide{i}$)$\}$\\
+
+
+%REPRESENTACION
+\subsection*{Representaci\'on}
+\textit{enrutador} \textbf{se representa con} \textit{estr}\\
+\textbf{donde} \textit{estr} \textbf{es} \textit{tupla $\langle$ versiones: conj(versi\'on)\\
+\hspace*{3.5cm} $\times$  cantInterfaces: nat\\
+\hspace*{3.5cm} $\times$  reglas: secuOrdSinRep(tupla$\langle$version: version, aR: abr$\rangle$)\\ %aca hay que decir como se ordena
+\hspace*{3.5cm} $\times$  status$\_$inter: ad(tupla$\langle$tiempoCaida: nat, eventos: secuOrdSinRep(evento)$\rangle$) $\rangle$}
+\vspace{22pt}
+
+%INVARIANTE DE REPRESENTACION
+\subsection*{Invariante\ de \ Representaci\'on}
+\func{Rep}{estr}{bool}{}
+($\forall$ e:estr)Rep(e) = versionesDeReglasValidas(e.reglas, e.versiones)\\
+\hspace*{3.2cm} $\wedge$ noFaltanVersionesEnReglas(e)\\
+\hspace*{3.2cm} $\yluego$ interfacesDeArbolesValidas(e.reglas, e.cantInterfaces)\\
+\hspace*{3.2cm} $\wedge$ alturaDeArbolesValida(e.reglas)\\
+\hspace*{3.2cm} $\wedge$ longitudDeEventosValida(e.status$\_$inter, e.cantInterfaces)\\ %aca ya se que  se puede hacer de una pero queda mas declarativo asi
+\hspace*{3.2cm} $\yluego$ interfazDeEventosCorrecta(e.status$\_$inter)\\
+\hspace*{3.2cm} $\yluego$ tiempoCaidaValido(e.status$\_$inter)\\
+
+\textbf{funciones auxiliares:} 
+
+\alinearaxiomas{interfacesDeArbolesValidas(s,n)}{\hspace{5cm}}
+\alinearfuncs{interfacesDeArbolesValidas}{\hspace{11.0cm}}
+
+\vspace{11pt}
+
+\func{versionesDeReglasValidas}{secuOrdSinRep(tupla$\langle$version: version, aR: abr$\rangle$),conj(version)}{bool}{}
+\axioma{versionesDeReglasValidas(s,c)}{\lif vacia?(s) \lthen \true\\
+										\hspace*{-0.85cm}\lelse prim(s).version $\in$ c $\wedge$ versionesDeReglasValidas(fin(s),c)}
+
+\vspace{15pt}
+
+\func{noFaltanVersionesEnReglas}{estr}{bool}{}
+\axioma{noFaltanVersionesEnReglas(e)}{($\forall$ v: version)(v $\in$ e.versiones \impluego estaVersionEnTupla(v,e.reglas))}
+
+\vspace{15pt}
+
+\func{interfacesDeArbolesValidas}{secuOrdSinRep(tupla$\langle$version: version, aR: abr$\rangle$),nat}{bool}{}
+\axioma{interfacesDeArbolesValidas(s,n)}{($\forall$ d: dirIp) (estaVersionEnTupla(version(d),s) \impluego \\
+											interValidasAux(s,n,d))}
+
+\vspace{15pt}
+
+\func{estaVersionEnTupla}{version,secuOrdSinRep(tupla$\langle$version: version, aR: abr$\rangle$)}{bool}{}
+\axioma{estaVersionEnTupla(v,s)}{\lif vacia?(s) \lthen \false\\
+								\hspace*{-0.85cm}\lelse prim(s).version $=$ v $\vee$ estaVersionEnTupla(v,fin(s))}
+
+\vspace{15pt}
+
+\func{interValidasAux}{secuOrdSinRep(tupla$\langle$version: version, aR: abr$\rangle$)/s,nat,dirIp/d}{bool}{estaVersionEnTupla(version(d),s)}
+\axioma{interValidasAux(s,n,d)}{\lif prim(s).version $=$ version(d) \\
+								\hspace*{0.6cm}\lthen interfazDeSalida(prim(s).aR,d) $<$ n\\
+								\hspace*{-0.85cm}\lelse interValidasAux(fin(s),n,d)}
+
+\vspace{15pt}
+
+\func{alturaDeArbolesValida}{secuOrdSinRep(tupla$\langle$version: version, aR: abr$\rangle$)}{bool}{}
+\axioma{alturaDeArbolesValida(s)}{\lif vacia?(s) \lthen true\\
+				\hspace*{-0.85cm}\lelse 8 * prim(s).version $\geq$ altura(prim(s).aR)\\
+				\hspace*{3cm}$\wedge$ alturaDeArbolesValida(fin(s))}
+
+
+
+
+\vspace{15pt}
+
+\func{interfazDeEventosCorrecta}{ad(tupla(nat,secuOrdSinRep(evento)))}{bool}{}
+\axioma{interfazDeEventosCorrecta(a)}{($\forall$ i:interfaz) (i $<$ tam(a) \impluego\ 		sonEventosDeLaInterfaz(a[i].eventos,i))}
+
+\vspace{15pt}
+
+\func{sonEventosDeLaInterfaz}{secuOrdSinRep(evento),interfaz}{bool}{}
+\axioma{sonEventosDeLaInterfaz(s,i)}{\lif vacia?(s) \lthen \true \\
+									\hspace*{-0.85cm}\lelse inter(prim(s)) $=$ i $\wedge$ sonEventosDeLaInterfaz(fin(s),i)}
+
+\vspace{15pt}
+
+\func{tiempoCaidaValido}{ad(tupla(nat,secu(evento)))}{bool}{}
+\axioma{tiempoCaidaValido(a)}{($\forall$ i:interfaz) (i $<$ tam(a) \impluego\ a[i].tiempoCaida $=$ sumarCaidas(a[i].eventos)}
+
+\vspace{15pt}
+
+\func{sumarCaidas}{secuOrdSinRep(evento)}{nat}{}
+\axioma{sumarCaidas(s)}{\lif vacia?(s) \oluego vacia?(fin(s)) \lthen 0 \\ 
+						\hspace*{-0.85cm}\lelse \lif caida?(ult(s)) \\
+						\hspace*{1cm}\lthen timestamp(ult(com(s))) - timestamp(ult(s)) + sumarCaidas(com(s)) \\ 
+						\hspace*{-0.85cm}\lelse sumarCaidas(com(s))}
+
+\vspace{15pt}
+
+\func{longitudDeEventosValida}{ad(tupla(nat,secuOrdSinRep(evento))),nat}{bool}{}
+\axioma{longitudDeEventosValida(a,n)}{tam(a) = n}
+\vspace{33pt}
+
+
+%FUNCION DE ABSTRACCION
+\subsection*{Funci\'on\ de\ Abstracci\'on}
+\alinearfuncs{Abs}{\hspace{1cm}}
+\func{Abs}{estr/e}{enrutador}{Rep(e)}
+\vspace{11pt}
+($\forall$ e: estr) Abs(e) = r: router/ \\
+versiones(r) \igobs e.versiones $\wedge$ interfaces(r) \igobs e.cantInterfaces \yluego \\
+($\forall$ i: interfaz)(i $<$ interfaces(r) \impluego eventos(r,i) \igobs (e.status$\_$inter[i]).eventos) $\wedge$ \\
+($\forall$ d: dirIp)(enrutar(r,d) \igobs dameRtaDir(e,d))\\
+
+\vspace{22pt}
+\textbf{funciones auxiliares}
+\alinearfuncs{arbolDeLaVersionLA}{\hspace{8cm}}
+\alinearaxiomas{arbolDeLaVersion(v,s)}
+
+\func{dameRtaDir}{estr/e,dirIp}{respuestaDir}{Rep(e)}
+\axioma{dameRtaDir(e,d)}{\lif version(d) $\notin$ e.versiones \lthen DireccionNoSoportada() \\
+						 \hspace*{-0.85cm}\lelse \lif $\neg$tieneRegla(arbolDeLaVersion(version(d),e.reglas),d) \\
+						 \hspace*{0.6cm}\lthen interfazDeSalidaNoEncontrada() \\
+						 \hspace*{-0.85cm}\lelse \lif estaCaida?(prim((e.status$\_$inter[queInterfaz(e,d)]).eventos)) \\
+						 \hspace*{0.6cm}\lthen interfazDeSalidaCaida(queInterfaz(e,d)) \\
+						 \hspace*{-0.85cm}\lelse SalidaPorInterfaz(queInterfaz(e,d))}
+						 
+\vspace{15pt}
+
+\func{queInterfaz}{estr/e,dirIp}{interfaz}{Rep(e)}				 
+\axioma{queInterfaz(e,d)}{interfazDeSalida(arbolDeLaVersion(version(d),e.reglas),d)}
+
+\vspace{15pt}
+
+\func{arbolDeLaVersion}{version/v,secu(tupla(version,abr))/s}{abr}{}	
+\axioma{arbolDeLaVersion(v,s)}{\lif vacia?(s) then nuevo() \\
+				\hspace*{-0.85cm}\lelse \lif prim(s).version $=$ v then prim(s).aR\\
+							  \hspace*{-0.85cm}\lelse arbolDeLaVersion(v,fin(s))}
+\newpage
+
+
+%ALGORITMOS
+\subsection*{Algoritmos}
+
+\incmargin{1em}
+\linesnumbered
+\restylealgo{boxed}
+%\dontprintsemicolon
+
+\textit{i}nuevo(in n: nat) $\longrightarrow$ res: estr \\
+\SetKw{Orden}{Complejidad:}
+\begin{algorithm}[H]
+\Orden{O(n)}
+\BlankLine
+\textbf{var} inter: arreglo\_dimensionable de tupla$\langle$nat, secuOrdSinRep(evento)$\rangle$ \\
+\BlankLine
+inter $\leftarrow$ CrearArreglo(n)\tcp*{O(n)}
+\BlankLine
+\For{(i: nat $\leftarrow$ 0; i $<$ n;i++) \tcp*{O(n)}}{ 
+inter[i] $\leftarrow$ $\langle$0, $<>\rangle$\tcp*{O(1)}}
+\BlankLine
+res $\leftarrow \langle \emptyset$, n, $<>$, inter$\rangle$\tcp*{O(1)}
+\end{algorithm}
+
+
+\textit{i}agVersion(inout e: estr, in v: version)\\
+\begin{algorithm}[H]
+\Orden{O(v)}
+\BlankLine
+agregar(v, e.versiones)\tcp*{O(v)\footnote{La complejidad es del orden de posicionRelativa(e.versiones, v) como lo indica la interfaz de Conjunto, pero en el peor caso, posicionRelativa(e.versiones, v) = v}}
+insertarOrdenadoDesdeAdelante($\langle$v, $<>\rangle$, e.reglas)\tcp*{O(v)\footnote{La complejidad es del orden de posicionRelativa(e.versiones, v) como lo indica la interfaz de SecuOrdSinRep, pero en el peor caso, posicionRelativa(e.reglas, $\langle$v, $<>\rangle$) = v}}
+\end{algorithm}
+
+
+\textit{i}agRegla(inout e: estr, in u: reglaDir)\\
+\begin{algorithm}[H]
+\Orden{O(version(dirIp(u)))}
+\BlankLine
+\textbf{var} it: itOrd(secuOrdSinRep(tupla $\langle$version, abr$\rangle$))\\
+\textbf{var} v: version\\
+\BlankLine
+it $\leftarrow$ crearIt(e.reglas) \tcp*{O(1)}
+v  $\leftarrow$ u.version \tcp*{O(1)}
+\BlankLine
+\While{(actualAdelante(it).version $\neq$ v) \tcp*{O(version(dirIp(u))))\footnote{El ciclo se ejecuta tantas veces como la cantidad de versiones menores a la de la regla que estoy agregando haya en las tuplas de e.reglas. Por lo tanto, al no haber versiones repetidas, como m\'aximo se va a recorrer version(dirIp(u)) veces la secuencia}}}
+{avanzar(it)}
+agRegla(actualAdelante(it).aR, u) \tcp*{O(cantBits(u))\footnote{Este orden de complejidad temporal se obtiene de la interfaz del M\'odulo ArbolDeReglas}}
+\end{algorithm}
+
+\newpage
+\begin{minipage}[b][14cm][t]{18cm}
+\textit{i}agEvento(inout e: estr, in m: evento)\\
+\begin{algorithm}[H]
+\Orden{O(a)\footnote{a = longitud(e.status$\_$inter[i].eventos) - posicionRelativa(e.status$\_$inter[i].eventos,m)}}
+\BlankLine
+\textbf{var} i: interfaz\\
+\textbf{var} tc: nat\\
+\textbf{var} evento$\_$prev,evento$\_$post: evento\\
+\textbf{var} it: itOrd(secuOrdSinRep(evento)) \\
+\BlankLine
+i $\leftarrow$ m.inter \tcp*{O(1)}
+\BlankLine
+tc $\leftarrow$ (e.status$\_$inter[i]).tiempoCaida \tcp*{O(1)}
+\BlankLine
+insertarOrdenadoDesdeAtras(m, (e.status$\_$inter[i]).eventos) \tcp*{O(a)}
+\BlankLine
+it $\leftarrow$ crearIt((e.status$\_$inter[i]).eventos) \tcp*{O(1)}
+\BlankLine
+\If{(actualAtras(it) $=$ m) $\wedge$ tieneAnterior?(it))\tcp*{O(1)}}
+	{retroceder(it) \tcp*{O(1)}
+	 \If{(actualAtras(it).estaCaida?)\tcp*{O(1)}}{tc $\leftarrow$ tc + (m.timestamp - actualAtras(it).timestamp)\tcp*{O(1)}}}
+\Else{\If{(tieneAnterior(it)?)\tcp*{O(1)}}{\While{(actualAtras(it) $\neq$ m)\tcp*{O(a)\footnote{El ciclo se ejecuta a lo sumo ``a'' veces, dado que la secuencia se recorre de atr\'as hacia adelante. Es decir, que el costo temporal del ciclo es igual a la cantidad de eventos en la secuencia con timestamp mayor que el del evento que quiero agregar}}}
+		{evento$\_$post $\leftarrow$ actualAtras(it) \tcp*{O(1)} retroceder(it)\tcp*{O(1)}}
+	\BlankLine
+	\If{($\neg$tieneAnterior?(it))\tcp*{O(1)}}{\If{(m.estaCaida?)\tcp*{O(1)}}{tc $\leftarrow$ tc + (evento$\_$post.timestamp - m.timestamp)\tcp*{O(1)}}}
+	\Else{retroceder(it)\tcp*{O(1)} 
+		evento$\_$prev $\leftarrow$ actualAtras(it)\tcp*{O(1)}
+		\BlankLine 
+		\If{(m.estaCaida? $\wedge\ \neg$evento$\_$prev.estaCaida?)\tcp*{O(1)}}{tc $\leftarrow$ tc + (evento$\_$post.timestamp - m.timestamp)\tcp*{O(1)}}
+		\BlankLine 
+		\If{($\neg$m.estaCaida? $\wedge$ evento$\_$prev.estaCaida?)\tcp*{O(1)}}{tc $\leftarrow$ tc - (evento$\_$post.timestamp - m.timestamp)\tcp*{O(1)}}}}}
+(e.status$\_$inter[i]).tiempoCaida $\leftarrow$ tc\tcp*{O(1)}
+\end{algorithm}
+\end{minipage}
+
+\newpage
+\textit{i}versiones(in e: estr) $\longrightarrow$ res: conj(version)\\
+\begin{algorithm}[H]
+\Orden{O(1)}
+\BlankLine
+res $\leftarrow$ e.versiones\tcp*{O(1)}
+\end{algorithm}
+
+
+\textit{i}interfaces(in e: estr) $\longrightarrow$ res: nat\\
+\begin{algorithm}[H]
+\Orden{O(1)}
+\BlankLine
+res $\leftarrow$ e.cantInterfaces \tcp*{O(1)}
+\end{algorithm}
+
+
+
+\textit{i}enrutar(inout e: estr, in d: dirIp) $\longrightarrow$ res: RespuestaDir\\
+\begin{algorithm}[H]
+\Orden{O(version(d))}
+\BlankLine
+\eIf{($\neg$ pertenece(version(d),e.versiones))\tcp*{O(posicionRelativa(e.versiones,version(v)))\footnote{Cumple esta complejidad por la informac\'ion que aparece en la interfaz Conjunto}}}{res $\leftarrow$ direccionNoSoportada()\tcp*{O(1)}}{
+\textbf{var} it: itOrd(secuOrdSinRep(tupla$\langle$version, abr$\rangle$))\\ 
+\textbf{var} i: interfaz\\ 
+it $\leftarrow$ crearIt(e.reglas) \tcp*{O(1)}
+\While{(actualAdelante(it).version $\neq$ version(d)) \tcp*{O(version(d))\footnote{La complejidad se da porque avanzamos sobre la secuencia de versiones hasta encontrar las reglas que corresponden con la versi\'on de la dirIp y \'estas est\'an ordenadas}}}{avanzar(it)\tcp*{O(1)}}
+\eIf{($\neg$ tieneRegla(actualAdelante(it).aR,d)) \tcp*{O(version(d))\footnote{Cumple esta complejidad por la informac\'ion que aparece en la interfaz de ArbolDeReglas}}}{res $\leftarrow$ interfazDeSalidaNoEncontrada()\tcp*{O(1)}}{
+i $\leftarrow$ interfazDeSalida(actualAdelante(it).aR,d) \tcp*{O(version(d))\footnote{Cumple esta complejidad por la informac\'ion que aparece en la interfaz de ArbolDeReglas}}
+\eIf{(estaCaida?(e,i))\tcp*{O(1)}}{res $\leftarrow$ interfazDeSalidaCaida(i)\tcp*{O(1)}}{res $\leftarrow$ salidaPorInterfaz(i)\tcp*{O(1)}}
+}}
+\end{algorithm}
+
+
+
+\textit{i}eventos(in e: estr, in i: interfaz) $\longrightarrow$ res: secuOrdSinRep(evento)\\
+\begin{algorithm}[H]
+\Orden{O(1)}
+\BlankLine
+res $\leftarrow$ (e.status$\_$inter[i]).eventos\tcp*{O(1)}
+\end{algorithm}
+
+\newpage
+\textit{i}estaCaida?(in e: estr, in i: interfaz) $\longrightarrow$ res: bool\\
+\begin{algorithm}[H]
+\Orden{O(1)}
+\BlankLine
+res $\leftarrow$ false \tcp*{O(1)}
+\If{($\neg$ vacia?((e.status$\_$inter[i]).eventos))\tcp*{O(1)}}{
+\textbf{var} it: itOrd(secuOrdSinRep(tupla $\langle$nat, evento$\rangle$)) \\
+\BlankLine
+it $\leftarrow$ crearIt((e.status$\_$inter[i]).eventos) \tcp*{O(1)}
+\BlankLine
+res $\rightarrow$ actualAdelante(it).estaCaida? \tcp*{O(1)}}
+\end{algorithm}
+
+
+
+\textit{i}tiempoCaida(in e: estr, in i: interfaz) $\longrightarrow$ res: nat \\
+\begin{algorithm}[H]
+\Orden{O(1)}
+\BlankLine
+res $\leftarrow$ (e.status$\_$inter[i]).tiempoCaida \tcp*{O(1)}
+\end{algorithm}

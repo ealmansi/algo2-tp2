@@ -1,0 +1,1010 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.12.2)  18 MAY 2013 17:20
+entering extended mode
+ %&-line parsing enabled.
+**"TP2 - Diseño.tex"
+(./TP2 - Diseño.tex
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
+yphenation, loaded.
+(/usr/share/texmf-texlive/tex/latex/base/article.cls
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texmf-texlive/tex/latex/base/size11.clo
+File: size11.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/share/texmf-texlive/tex/latex/geometry/geometry.sty
+Package: geometry 2008/12/21 v4.2 Page Geometry
+
+(/usr/share/texmf-texlive/tex/latex/graphics/keyval.sty
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks14
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2009/04/10 v2.0 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in pdf mode detected.
+)
+(/usr/share/texmf-texlive/tex/generic/oberdiek/ifvtex.sty
+Package: ifvtex 2008/11/04 v1.4 Switches for detecting VTeX and its modes (HO)
+Package ifvtex Info: VTeX not detected.
+)
+\Gm@cnth=\count87
+\Gm@cntv=\count88
+\c@Gm@tempcnt=\count89
+\Gm@bindingoffset=\dimen103
+\Gm@wd@mp=\dimen104
+\Gm@odd@mp=\dimen105
+\Gm@even@mp=\dimen106
+\Gm@dimlist=\toks15
+)
+(/usr/share/texmf-texlive/tex/latex/graphics/graphicx.sty
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/graphics.sty
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texmf-texlive/tex/latex/graphics/trig.sty
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+(/etc/texmf/tex/latex/config/graphics.cfg
+File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+(/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2010/03/12 v0.04p Graphics/color for pdfTeX
+\Gread@gobject=\count90
+))
+\Gin@req@height=\dimen107
+\Gin@req@width=\dimen108
+)
+(/usr/share/texmf-texlive/tex/latex/base/inputenc.sty
+Package: inputenc 2008/03/30 v1.1d Input encoding file
+\inpenc@prehook=\toks16
+\inpenc@posthook=\toks17
+
+(/usr/share/texmf-texlive/tex/latex/base/latin1.def
+File: latin1.def 2008/03/30 v1.1d Input encoding file
+))
+(/usr/share/texmf-texlive/tex/generic/babel/babel.sty
+Package: babel 2008/07/06 v3.8l The Babel package
+
+(/usr/share/texmf-texlive/tex/generic/babel/spanish.ldf
+Language: spanish.ldf 2009/01/02 v5.0h Spanish support from the babel system
+
+(/usr/share/texmf-texlive/tex/generic/babel/babel.def
+File: babel.def 2008/07/06 v3.8l Babel common definitions
+\babel@savecnt=\count91
+\U@D=\dimen109
+)
+
+Package babel Warning: No hyphenation patterns were loaded for
+(babel)                the language `Spanish'
+(babel)                I will use the patterns loaded for \language=0 instead.
+
+\l@spanish = a dialect from \language0
+\es@datefmt=\count92
+\es@quottoks=\toks18
+\es@quotdepth=\count93
+Package babel Info: Making " an active character on input line 492.
+Package babel Info: Making . an active character on input line 585.
+Package babel Info: Making < an active character on input line 630.
+Package babel Info: Making > an active character on input line 630.
+)) (./tad.sty
+Package: tad 2002/9/23 v0.33 Para especificar TADs en formato AED2
+
+Cargando package 'tad' v0.33 (19/10/2002)
+\tadmargen=\dimen110
+\tadsubmargen=\dimen111
+\tadmaxenc=\dimen112
+\tadtitskip=\dimen113
+\tadfuncsep=\dimen114
+\tadaxisep=\dimen115
+\funcmaxnom=\dimen116
+\funcmaxari=\dimen117
+\aximaxizq=\dimen118
+) (./algo2symb.sty (/usr/share/texmf-texlive/tex/latex/rcs/rcs.sty
+Package: rcs 2003/02/02 v2.10 typeset info from RCS fields
+\rcsLogIntro=\toks19
+)
+Package: algo2symb 2004/04/17 v1.11Para componer simbolitos frecuentemente usad
+os en AED2
+
+Cargando package 'aed2symb' v1.11, \begingroup \year 2006 \month 09 \day 03 May
+ 18, 2013\endgroup 
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip43
+
+For additional information on amsmath, use the `?' option.
+(/usr/share/texmf-texlive/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01
+
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks20
+\ex@=\dimen119
+))
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen120
+)
+(/usr/share/texmf-texlive/tex/latex/amsmath/amsopn.sty
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count94
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count95
+\leftroot@=\count96
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count97
+\DOTSCASE@=\count98
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen121
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count99
+\c@MaxMatrixCols=\count100
+\dotsspace@=\muskip10
+\c@parentequation=\count101
+\dspbrk@lvl=\count102
+\tag@help=\toks21
+\row@=\count103
+\column@=\count104
+\maxfields@=\count105
+\andhelp@=\toks22
+\eqnshift@=\dimen122
+\alignsep@=\dimen123
+\tagshift@=\dimen124
+\tagwidth@=\dimen125
+\totwidth@=\dimen126
+\lineht@=\dimen127
+\@envbody=\toks23
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks24
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2009/06/22 v3.00
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 96.
+))
+(/usr/share/texmf-texlive/tex/latex/tools/xspace.sty
+Package: xspace 2006/05/08 v1.12 Space after command names (DPC,MH)
+)) (./caratula.sty
+Package: caratula 2003/4/13 v0.1 Para componer caratulas de TPs del DC
+
+Cargando package 'caratula' v0.2 (21/4/2003)
+\intlist=\toks25
+) (./itef.sty
+Package: itef 2004/04/17 v1.4if-then-else-fi.
+
+Cargando package 'itef' v1.4, \begingroup \year 2006 \month 10 \day 12 May 18, 
+2013\endgroup 
+) (./algorithm2e.sty
+Package: algorithm2e 2005/10/04 v3.9 algorithms environments
+\c@AlgoLine=\count106
+ (/usr/share/texmf-texlive/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+********************************************************
+Package `algorithm2e' Release 3.9 -- october 04 2005 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (fiorio@lirmm.fr)
+********************************************************
+\skiptotal=\skip46
+\skiprule=\skip47
+\skiphlne=\skip48
+\skiptext=\skip49
+\skiplength=\skip50
+\algomargin=\skip51
+\skipalgocfslide=\skip52
+\algowidth=\dimen128
+\inoutsize=\dimen129
+\inoutline=\dimen130
+\algocf@inoutbox=\box28
+\algocf@inputbox=\box29
+\AlCapSkip=\skip53
+\AlCapHSkip=\skip54
+\algocf@capbox=\box30
+\c@algocfline=\count107
+\c@algocf=\count108
+\algocf@algoframe=\box31
+\algocf@algobox=\box32
+)
+No file "TP2 - Diseño".aux.
+\openout1 = `"TP2 - Diseño.aux"'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+*geometry auto-detecting driver*
+*geometry detected driver: pdftex*
+-------------------- Geometry parameters
+paper: a4paper
+landscape: --
+twocolumn: --
+twoside: --
+asymmetric: --
+h-parts: 48.36958pt, 500.7687pt, 48.36958pt
+v-parts: 56.9055pt, 731.23584pt, 56.9055pt
+hmarginratio: --
+vmarginratio: --
+lines: --
+heightrounded: --
+bindingoffset: 0.0pt
+truedimen: --
+includehead: --
+includefoot: --
+includemp: --
+driver: pdftex
+-------------------- Page layout dimensions and switches
+\paperwidth  597.50787pt
+\paperheight 845.04684pt
+\textwidth  500.7687pt
+\textheight 731.23584pt
+\oddsidemargin  -23.9004pt
+\evensidemargin -23.9004pt
+\topmargin  -52.36449pt
+\headheight 12.0pt
+\headsep    25.0pt
+\footskip   30.0pt
+\marginparwidth 50.0pt
+\marginparsep   10.0pt
+\columnsep  10.0pt
+\skip\footins  10.0pt plus 4.0pt minus 2.0pt
+\hoffset 0.0pt
+\voffset 0.0pt
+\mag 1000
+
+(1in=72.27pt, 1cm=28.45pt)
+-----------------------
+(/usr/share/texmf-texlive/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count109
+\scratchdimen=\dimen131
+\scratchbox=\box33
+\nofMPsegments=\count110
+\nofMParguments=\count111
+\everyMPshowfont=\toks26
+\MPscratchCnt=\count112
+\MPscratchDim=\dimen132
+\MPnumerator=\count113
+\everyMPtoPDFconversion=\toks27
+) (./caratula.tex
+LaTeX Font Info:    Try loading font information for U+msa on input line 12.
+ (/usr/share/texmf-texlive/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 12.
+
+(/usr/share/texmf-texlive/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2009/06/22 v3.00 AMS symbols B
+) [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]) (./aclaraciones.tex (./al
+iasing_router.tex)
+(./aliasing_secuencia.tex) (./aliasing_conjunto.tex [2]) (./aliasing_arbol.tex)
+) [3] (./modulo_router.tex
+
+LaTeX Font Warning: Font shape `OT1/cmr/bx/sc' undefined
+(Font)              using `OT1/cmr/bx/n' instead on input line 1.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--9
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 10--11
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 12--15
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 16--19
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--23
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 24--27
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 28--31
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 32--35
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 36--39
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 40--43
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 44--47
+
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 48--51
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 65--72
+
+ []
+
+
+Overfull \hbox (18.19478pt too wide) in paragraph at lines 80--80
+[] [] 
+ []
+
+
+Overfull \hbox (1.79459pt too wide) detected at line 86
+\OT1/cmr/m/n/10.95 noFaltanVersionesEnReglas 
+ []
+
+
+Overfull \hbox (1.79459pt too wide) detected at line 86
+\OT1/cmr/m/n/10.95 noFaltanVersionesEnReglas 
+ []
+
+
+Overfull \hbox (18.19478pt too wide) in paragraph at lines 86--86
+[] [] 
+ []
+
+
+Overfull \hbox (18.19478pt too wide) in paragraph at lines 91--91
+[] [] 
+ []
+
+
+Overfull \hbox (18.19478pt too wide) in paragraph at lines 97--97
+[] [] 
+ []
+
+[5]
+Overfull \hbox (9.65349pt too wide) detected at line 103
+[] 
+ []
+
+
+Overfull \hbox (9.65349pt too wide) detected at line 103
+[] 
+ []
+
+
+Overfull \hbox (18.19478pt too wide) in paragraph at lines 103--103
+[] [] 
+ []
+
+
+Overfull \hbox (18.19478pt too wide) in paragraph at lines 110--110
+[] [] 
+ []
+
+
+Overfull \hbox (18.19478pt too wide) in paragraph at lines 120--120
+[] [] 
+ []
+
+
+Overfull \hbox (5.59744pt too wide) in paragraph at lines 121--122
+[] [][]\OT1/cmr/m/n/10.95 ($\OMS/cmsy/m/n/10.95 8$ \OT1/cmr/m/n/10.95 i:interfa
+z) (i $\OML/cmm/m/it/10.95 <$ \OT1/cmr/m/n/10.95 tam(a) $\OMS/cmsy/m/n/10.95 )[
+]$ \OT1/cmr/m/n/10.95 son-Even-tos-De-LaIn-ter-faz(a[i].eventos,i)) 
+ []
+
+
+Overfull \hbox (18.19478pt too wide) in paragraph at lines 125--125
+[] [] 
+ []
+
+
+Overfull \hbox (18.19478pt too wide) in paragraph at lines 131--131
+[] [] 
+ []
+
+
+Overfull \hbox (33.12462pt too wide) in paragraph at lines 132--133
+[] [][]\OT1/cmr/m/n/10.95 ($\OMS/cmsy/m/n/10.95 8$ \OT1/cmr/m/n/10.95 i:interfa
+z) (i $\OML/cmm/m/it/10.95 <$ \OT1/cmr/m/n/10.95 tam(a) $\OMS/cmsy/m/n/10.95 )[
+]$ \OT1/cmr/m/n/10.95 a[i].tiempoCaida $=$ sumar-Caidas(a[i].eventos) 
+ []
+
+
+Overfull \hbox (13.32811pt too wide) in paragraph at lines 136--136
+[] [] 
+ []
+
+
+Overfull \hbox (15.60657pt too wide) in paragraph at lines 140--141
+|  \OT1/cmr/bx/n/10.95 then \OT1/cmr/m/n/10.95 times-tamp(ult(com(s))) - times-
+tamp(ult(s)) + sumar-
+ []
+
+
+Overfull \hbox (18.19478pt too wide) in paragraph at lines 144--144
+[] [] 
+ []
+
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 154--158
+
+ []
+
+[7]
+Underfull \hbox (badness 10000) detected at line 207
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 194--208
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 216
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 210--217
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 232
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 219--233
+
+ []
+
+[8]
+Underfull \hbox (badness 10000) detected at line 267
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 236--268
+
+ []
+
+
+Overfull \hbox (11.38089pt too wide) in paragraph at lines 235--269
+[][] 
+ []
+
+[9]
+Underfull \hbox (badness 10000) detected at line 276
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 271--277
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 284
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 279--285
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 301
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 288--302
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 310
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 305--311
+
+ []
+
+[10]
+Underfull \hbox (badness 10000) detected at line 324
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 313--325
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 333
+[][]
+ []
+
+)
+Underfull \hbox (badness 10000) in paragraph at lines 328--24
+
+ []
+
+[11] (./modulo_secuencia.tex
+Underfull \hbox (badness 10000) in paragraph at lines 5--9
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 10--11
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 12--15
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 16--19
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--23
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 24--27
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 28--31
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 32--35
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 36--39
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 40--43
+
+ []
+
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 45.
+(/usr/share/texmf-texlive/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 45.
+
+Underfull \hbox (badness 10000) in paragraph at lines 44--47
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 48--51
+
+ []
+
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 52--55
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 56--59
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 63--66
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 67--69
+
+ []
+
+[13] [14]
+Underfull \hbox (badness 10000) detected at line 118
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 113--119
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 151
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--152
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 185
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--186
+
+ []
+
+[15]
+Underfull \hbox (badness 10000) detected at line 193
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 188--194
+
+ []
+
+[16]
+Underfull \hbox (badness 10000) detected at line 211
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 197--212
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 218
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 213--219
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 225
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 220--226
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 232
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 227--233
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 239
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 234--240
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 246
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 241--247
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 253
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 248--254
+
+ []
+
+[17]
+Underfull \hbox (badness 10000) detected at line 261
+[][]
+ []
+
+)
+Underfull \hbox (badness 10000) in paragraph at lines 256--26
+
+ []
+
+[18] (./modulo_conjunto.tex
+Underfull \hbox (badness 10000) in paragraph at lines 5--9
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 10--11
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 12--15
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 16--19
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--23
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 26--28
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 55
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 50--56
+
+ []
+
+[19]
+Underfull \hbox (badness 10000) detected at line 63
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 57--64
+
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 70
+[][]
+ []
+
+)
+Underfull \hbox (badness 10000) in paragraph at lines 65--28
+
+ []
+
+[20] (./modulo_arbolDeReglas.tex
+Underfull \hbox (badness 10000) in paragraph at lines 5--9
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 10--11
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 12--15
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 16--19
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 20--23
+
+ []
+
+[21]
+Underfull \hbox (badness 10000) in paragraph at lines 49--57
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 49--57
+
+ []
+
+[22]
+Underfull \hbox (badness 10000) detected at line 96
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 90--97
+
+ []
+
+[23]
+Underfull \hbox (badness 10000) detected at line 133
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 99--134
+
+ []
+
+[24]
+Underfull \hbox (badness 10000) detected at line 163
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 136--164
+
+ []
+
+[25]
+Underfull \hbox (badness 10000) detected at line 198
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 166--199
+
+ []
+
+[26]
+Underfull \hbox (badness 10000) detected at line 228
+[][]
+ []
+
+)
+Underfull \hbox (badness 10000) in paragraph at lines 202--30
+
+ []
+
+[27] (./Tad_SecuOrdSinRep.tex) [28] (./Tad_itOrd.tex) [29]
+(./Tad_arbolDeReglas.tex
+Overfull \hbox (17.6836pt too wide) detected at line 14
+[] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 41--42
+
+ []
+
+
+Overfull \hbox (6.62958pt too wide) in paragraph at lines 46--47
+[] [][]\OT1/cmr/m/n/10.95 If primeros-Bit-sIguales?(dirIp(r),d, cant-Bits(r)) t
+hen true
+ []
+
+
+Overfull \hbox (24.3855pt too wide) in paragraph at lines 51--52
+\OT1/cmr/bx/n/10.95 else \OT1/cmr/m/n/10.95 pasarA8Bits(d[n/8])[n mod 8] = pasa
+rA8Bits(d'[n/8])[n
+ []
+
+) [30] (./Tad_conjunto.tex
+Overfull \hbox (0.82124pt too wide) detected at line 25
+\OT1/cmr/m/n/10.95 posicionRelativa(c,a) 
+ []
+
+) [31] (./TP2 - Diseño.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ ) 
+Here is how much of TeX's memory you used:
+ 4148 strings out of 495061
+ 51068 string characters out of 1182621
+ 148864 words of memory out of 3000000
+ 7230 multiletter control sequences out of 15000+50000
+ 19711 words of font info for 74 fonts, out of 3000000 for 9000
+ 28 hyphenation exceptions out of 8191
+ 34i,25n,32p,596b,585s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/sha
+re/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-te
+xlive/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texmf-texlive/fonts/
+type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texmf-texlive/fonts/type1/publ
+ic/amsfonts/cm/cmex10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
+/cm/cmmi10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.
+pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/sh
+are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-te
+xlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-texlive/fonts/
+type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/public
+/amsfonts/cm/cmr6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/
+cmr8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr9.pfb></us
+r/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/tex
+mf-texlive/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-texlive/f
+onts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-texlive/fonts/type1/p
+ublic/amsfonts/cm/cmti10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfo
+nts/cm/cmti7.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmti8
+.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on "TP2 - Diseño.pdf" (31 pages, 311436 bytes).
+PDF statistics:
+ 186 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

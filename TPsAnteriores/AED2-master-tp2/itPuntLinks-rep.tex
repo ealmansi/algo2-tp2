@@ -1,0 +1,41 @@
+\begin{center}
+\begin{tabular}{|l|} 
+\hline
+\\
+itPuntLinks \textbf{se representa con} estrITPL, donde estrITPL es \tupla{\\
+\hspace*{6em}\param{}{\_itLista}{itLista(Puntero(datosLink))},\\
+\hspace*{6em}\param{}{\_fecha}{Fecha}}\\ \\
+\\
+\hspace*{6em}datosLink es \tupla{\\
+\hspace*{6em}\param{}{link}{Link},\\ 
+\hspace*{6em}\param{}{catDLink}{Categoria},\\ 
+\hspace*{6em}\param{}{accesosRecientes}{Lista(acceso)},\\ 
+\hspace*{6em}\param{}{cantAaccesosRecientes}{nat}}\\ \\
+\\\\
+\hline
+\end{tabular}
+\end{center}
+
+\par itPuntLinks es un iterador de lista común. Sus complejidades nos alcanzan para iterar una Lista(puntero(datosLink)). Ademas Guarda una fecha que es la última fecha de la categoria que esta iterando.
+
+\subsubsection{Invariante de Representaci\'on}
+\paragraph{El Invariante Informalmente}
+\begin{enumerate}
+\item fecha debe ser igual al maximo de todas las fechas de los links recorridos o es 0.
+\end{enumerate}
+
+\paragraph{El Invariante Formalmente}
+\begin{Rep}{estrITPL}{it}
+\repfunc{_fecha == max(todasLasFechas(it)) \vee _fecha == 0}{}
+\end{Rep}
+
+\subsubsection{Funci\'on de Abstracci\'on}
+\begin{ABS}{e}{estrITPL}{it}{itUni(Lista(tupla<Link,Categoria,Nat>))}
+\absfunc{secusuby(e._itLista) \igobs siguientes(it)}{}
+\end{ABS}
+
+\paragraph{Funciones auxiliares}
+\paragraph*{}
+
+\hspace*{1em}\tadOperacion{todasLasFechas}{estrITPL}{Conj(Fecha)}{}
+\tadAxioma{todasLasFechas(it)}{\IF !haySiguiente?(it) THEN 0 ELSE Ag(ultimo(siguiente(it).accesos).dia, todasLasFechas(avanzar(it))) FI}

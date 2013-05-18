@@ -1,0 +1,63 @@
+\begin{interfaz}{Iterador Puntero a DatosLink}
+\begin{iparamformales}{itPuntLinks}
+
+\comment{\funcion{Copiar}{\param{in}{m}{$\alpha$}}{$\alpha$}
+{true}
+{\igres m}
+{copy(m)}
+{}
+}
+
+\textbf{\large se explica con:} Iterador Unidireccional Modificble de tupla<Link,Categoria,Nat>
+
+\end{iparamformales}
+
+\operacion{haysiguiente?}{\param{in}{it}{itPuntLinks}}{bool}
+{true}
+{\igres HayMas?(it)}
+{1}
+{No tiene.}
+
+%\operacion{siguiente}{\param{in}{it}{itPuntLinks}}{puntero(datosLink)}
+%{haySiguiente?(it)}
+%{\igres (siguiente(it))}
+%{1}
+%{Se pasa un puntero a datosLink}
+
+%\operacion{siguiente}{\param{in}{it}{itPuntLinks}}{tupla<\param{}{l}{Link},\param{}{c}{Categoria},%\param{}{cant}{Nat}>}
+%{HayMas?(it)}
+%{\igres Actual(it)}
+%{1}
+%{La tupla contiene referencias al Link y a la Categoria.}
+
+\operacion{siguienteLink}{\param{in}{it}{itPuntLinks}}{Link}
+{HayMas?(it)}
+{\igres \pi_1(Actual(it))}
+{1}
+{El link se pasa por referencia, no debe ser modificado.}
+
+\operacion{siguienteCat}{\param{in}{it}{itPuntLinks}}{Categoria}
+{HayMas?(it)}
+{\igres \pi_2(Actual(it))}
+{1}
+{La categoria se pasa por referencia, no debe ser modificada.}
+
+\operacion{siguienteCantAccesosDelLink}{\param{in}{it}{itPuntLinks}}{nat}
+{HayMas?(it)}
+{\igres \pi_3(Actual(it))}
+{1}
+{No tiene}
+
+\operacion{avanzar}{\param{in/out}{it}{itPuntLinks}}{}
+{it \igobs it_0 \land HayMas?(it)}
+{it \igobs avanzar(it_0)}
+{1}
+{No tiene.}
+
+\operacion{eliminarSiguiente}{\param{in/out}{it}{itPuntLinks}}{}
+{it \igobs it_0 \land HayMas?(it)}
+{it \igobs Eliminar(it_0)}
+{1}
+{No tiene.}
+
+\end{interfaz}

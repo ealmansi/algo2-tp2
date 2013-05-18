@@ -1,0 +1,33 @@
+\begin{interfaz}{Iterador Links}
+\begin{iparamformales}{itLinks}
+
+\comment{\funcion{Copiar}{\param{in}{m}{$\alpha$}}{$\alpha$}
+{true}
+{\igres m}
+{copy(m)}
+{}
+}
+
+\textbf{\large se explica con:} Iterador Unidireccional de Link
+
+\end{iparamformales}
+
+\operacion{haysiguiente?}{\param{in}{it}{itLinks}}{bool}
+{true}
+{\igres HayMas?(it)}
+{1}
+{No tiene.}
+
+\operacion{siguiente}{\param{in}{it}{itLinks}}{Link}
+{HayMas?(it)}
+{\igres Actual(it)}
+{1}
+{El link se pasa por referencia, no debe ser modificado.}
+
+\operacion{avanzar}{\param{in/out}{it}{itLinks}}{}
+{it \igobs it_0 \land HayMas?(it)}
+{it \igobs avanzar(it_0)}
+{1}
+{No tiene.}
+
+\end{interfaz}

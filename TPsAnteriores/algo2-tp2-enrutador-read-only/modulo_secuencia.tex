@@ -1,0 +1,261 @@
+\section*{Modulo \nombretad{SecuenciaOrdSinRep($\alpha$,$<_\alpha$,$=_\alpha$)}}
+
+%INTERFAZ
+\subsection*{Interfaz}
+\textbf{interfaz} \textit{SecuenciaOrdSinRep($\alpha$)}\\
+\textbf{se explica con la especificaci\'on de} \textit{Secuencia($\alpha$) extendido, itOrd($\alpha$)}\\
+\textbf{usa interfaces} \nombretad{Bool}, \nombretad{$\alpha$}, \nombretad{itOrd($\alpha$)}\\
+\textbf{genero} \textit{secuOrdSinRep($\alpha$), itOrd($\alpha$)}\\
+
+\textbf{operaciones}\\
+
+$<>$()$\longrightarrow$ res: secuOrdSinRep($\alpha$) \hfill (O(1))\\
+$\{$true$\}$\\
+$\{\sombreritoWide{res} \igobs <> \}$\\
+
+insertarOrdenadoDesdeAdelante(in a: $\alpha$, inout s: secuOrdSinRep($\alpha$)) \hfill (O(posicionRelativa(s,a)))\\
+$\{\sombreritoWide{s}\ \igobs\ s_0\ \wedge \neg esta?(a,s) \}$\\
+$\{\sombreritoWide{s}\ \igobs$ agregarOrdenado($\sombreritoWide{a}$,$s_0$)$\}$\\
+
+insertarOrdenadoDesdeAtras(in a: $\alpha$, inout s: secuOrdSinRep($\alpha$))  (O(longitud(s) - posicionRelativa(s,a)))\\
+$\{\sombreritoWide{s}\ \igobs\ s_0\ \wedge \neg esta?(a,s) \}$\\
+$\{\sombreritoWide{s}\ \igobs$ agregarOrdenado($\sombreritoWide{a}$,$s_0$)$\}$\\
+
+vacia?(in s: secuOrdSinRep($\alpha$))$\longrightarrow$ res: bool\hfill (O(1))\\
+$\{$true$\}$\\
+$\{\sombreritoWide{res}\ \igobs$ vacia?($\sombreritoWide{a}$,$\sombreritoWide{s}$)$\}$\\
+
+esta?(in a: $\alpha$, in s: secuOrdSinRep($\alpha$))$\longrightarrow$ res: bool\hfill (O(posicionRelativa(s,a)))\\
+$\{$true$\}$\\
+$\{\sombreritoWide{res}\ \igobs$ esta?($\sombreritoWide{a}$,$\sombreritoWide{s}$)$\}$\\
+
+crearIt(in s: secuOrdSinRep($\alpha$))$\longrightarrow$ res: itOrd($\alpha$)\hfill (O(1))\\
+$\{$true$\}$\\
+$\{\sombreritoWide{res}\ \igobs$ crearIt($\sombreritoWide{s}$)$\}$\\
+
+actualAdelante(in it: itOrd($\alpha$))$\longrightarrow$ res: $\alpha$\hfill (O(1))\\
+$\{\neg$vacia?(verSecuSuby(it))$\}$\\
+$\{ $res$ \igobs $prim(verSecuSuby(it))$\}$\\
+
+actualAtras(in it: itOrd($\alpha$))$\longrightarrow$ res: $\alpha$\hfill (O(1))\\
+$\{\neg$vacia?(verSecuSuby(it))$\}$\\
+$\{ $res$ \igobs $ult(verSecuSuby(it))$\}$\\
+
+tieneProximo?(in it: itOrd($\alpha$))$\longrightarrow$ res: bool\hfill (O(1))\\
+\{$\neg$vacia?(verSecuSuby(it))\}\\
+\{$\sombreritoWide{res}$ \igobs $\neg$vacia?(fin(verSecuSuby(it)))\}\\
+
+tieneAnterior?(in it: itOrd($\alpha$))$\longrightarrow$ res: bool\hfill (O(1))\\
+\{$\neg$vacia?(verSecuSuby(it))\}\\
+\{$\sombreritoWide{res}$ \igobs $\neg$vacia?(com(verSecuSuby(it)))\}\\
+
+avanzar(inout it: itOrd($\alpha$))\hfill (O(1))\\
+$\{\sombreritoWide{it}\ \igobs\ it_0\ \wedge$ $\neg$vacia?(fin(verSecuSuby(it)))$\}$\\
+$\{$verSecuSuby(it) $\igobs$ fin(verSecuSuby($it_0$))$\}$\\
+
+retroceder(inout it: itOrd($\alpha$))\hfill (O(1))\\
+$\{\sombreritoWide{it}\ \igobs\ it_0\ \wedge$ $\neg$vacia?(com(verSecuSuby(it)))$\}$\\
+$\{$verSecuSuby(it) $\igobs$ com(verSecuSuby($it_0$))$\}$\\
+
+
+%REPRESENTACION
+\subsection*{Representaci\'on}
+\textit{secuOrdSinRep($\alpha$)} \textbf{se representa con} \textit{estrSecuOrdSinRep}\\
+\textbf{donde} \textit{estrSecuOrdSinRep} \textbf{es} \textit{tupla $\langle$ prim: puntero(nodo), ult: puntero(nodo) $\rangle$}\\
+\textbf{donde} \textit{nodo} \textbf{es} \textit{tupla $\langle$ dato: $\alpha$, proximo: puntero(nodo), anterior: puntero(nodo)$\rangle$}\\
+
+\textit{itOrd($\alpha$)} \textbf{se representa con} \textit{estrIterOrd}\\
+\textbf{donde} \textit{estrIterOrd} \textbf{es} \textit{tupla $\langle$ prim: puntero(nodo), ult: puntero(nodo) $\rangle$}\\
+
+%INVARIANTE DE REPRESENTACION
+\subsection*{Invariante de Representaci\'on}
+\alinearfuncs{Rep}{}
+\func{Rep}{estrSecuOrdSinRep}{bool}{}
+\vspace{11pt}
+($\forall$ e: estrSecuOrdSinRep) Rep(e) = No hay ciclos en la secuencia $\wedge$ La secuencia est\'a ordenada $\wedge$ No hay repetidos en la secuencia $\wedge$ Recorriendo desde el primero de la secuencia se puede llegar al ultimo y viceversa.
+
+\vspace{22pt}
+
+\func{Rep}{estrIterOrd}{bool}{}
+\vspace{11pt}
+($\forall$ e: estrIterOrd) Rep(e) = No hay ciclos en la secuencia $\wedge$ La secuencia est\'a ordenada $\wedge$ No hay repetidos en la secuencia $\wedge$ Recorriendo desde el primero de la secuencia se puede llegar al ultimo y viceversa.
+
+\vspace{33pt}
+
+%FUNCION DE ABSTRACCION
+\subsection*{Funci\'on de Abstracci\'on}
+\alinearfuncs{Abs}{}
+\func{Abs}{estrSecuOrdSinRep/e}{secuOrdSinRep($\alpha$)}{Rep(e)}
+\vspace{11pt}
+($\forall$ e: estrSecuOrdSinRep) Abs(e) = s: secuOrdSinRep($\alpha$)/\\
+(vacia?(s) $\equiv$ (e.prim == NULL)$\wedge$(e.ult == NULL) ) $\yluego$ $\neg$vacia?(s) $\impluego$ ((prim(s) $\equiv$ (e.prim $\rightarrow$ dato)) $\wedge$ (fin(s) $\equiv$ (final(e))) 
+\vspace{22pt}
+
+\textbf{funciones auxiliares}
+\alinearfuncs{final}{\hspace{4cm}}
+\alinearaxiomas{final(e)}
+
+\func{final}{estr}{estr}{}
+\axioma{final(e)}{
+$\langle$(e.prim)$\rightarrow$ proximo, e.ult$\rangle$
+}
+\vspace{22pt}
+
+\func{Abs}{estrIterOrd/e}{itOrd($\alpha$)}{Rep(e)}
+\vspace{11pt}
+($\forall$ e: estrIterOrd) Abs(e) = it: itOrdRef($\alpha$)/ verSecuSuby(it) $\equiv$ $Abs_{estrSecuOrdSinRep}$(e)
+
+\newpage 
+
+%ALGORITMOS
+\subsection*{Algoritmos}
+
+\textit{i}$<>$() $\longrightarrow$ res:estrSecuOrdSinRep\\
+\begin{algorithm}[H]
+\Orden{O(1)}
+\BlankLine
+res $\leftarrow$ $\langle$ NULL, NULL $\rangle$  \tcp*{O(1)}
+\end{algorithm}
+
+\textit{i}insertarOrdenadoDesdeAdelante(in elem: $\alpha$, inout e: estrSecuOrdSinRep)\\
+\begin{algorithm}[H]
+\Orden{O(posicionRelativa(e,elem))}
+\BlankLine
+\textbf{var} n: nodo\\
+\BlankLine
+n.dato $\leftarrow$ elem \tcp*{O(1)}
+\BlankLine
+\eIf{($\neg$ vacia?(e))\tcp*{O(1)}}{
+	\eIf{((*e.prim).dato $\opsub{>}{\alpha}$ elem $\vee$ (*e.ult).dato $\opsub{<}{\alpha}$ elem)\tcp*{O(1)}}{
+		\eIf{((*e.prim).dato $\opsub{>}{\alpha}$ elem)\tcp*{O(1)}}{
+			(*e.prim).anterior $\leftarrow$ $\&$n\tcp*{O(1)}
+			n.anterior $\leftarrow$ NULL\tcp*{O(1)}
+			n.proximo $\leftarrow$ e.prim\tcp*{O(1)}
+			e.prim $\leftarrow$ $\&$n\tcp*{O(1)}}{
+				\If{((*e.prim).dato $\opsub{<}{\alpha}$ elem)\tcp*{O(1)}}{
+					(*e.ult).proximo $\leftarrow$ $\&$n\tcp*{O(1)}
+					n.anterior $\leftarrow$ e.ult\tcp*{O(1)}
+					n.proximo $\leftarrow$ NULL\tcp*{O(1)}
+					e.ult $\leftarrow$ $\&$n\tcp*{O(1)}}}}{
+	\textbf{var} aux: puntero(nodo)\tcp*{O(1)}
+	aux $\leftarrow$ e.prim\tcp*{O(1)}
+	\While{((*(*aux).proximo).dato $\opsub{<}{\alpha}$ elem)\tcp*{O(posicionRelativa(e,elem))\footnote{El ciclo se ejecuta tantas veces como la cantidad de elementos menores al que estoy agregando haya en la secuencia. Por lo tanto, al no haber elementos repetidos, como m\'aximo se va a recorrer posicionRelativa(e,elem) veces}}}{aux $\leftarrow$ (*aux).proximo\tcp*{O(1)}}
+		(*(*aux).proximo).anterior $\leftarrow$ $\&$n\tcp*{O(1)}
+		n.proximo $\leftarrow$ (*aux).proximo\tcp*{O(1)}
+		n.anterior $\leftarrow$ aux\tcp*{O(1)}
+		(*aux).proximo $\leftarrow$ $\&$n\tcp*{O(1)}}}{
+e.prim $\leftarrow$ $\&$n\tcp*{O(1)}
+e.ult $\leftarrow$ $\&$n\tcp*{O(1)}
+n.anterior $\leftarrow$ NULL\tcp*{O(1)}
+n.proximo $\leftarrow$ NULL\tcp*{O(1)}}
+\end{algorithm}
+
+
+\textit{i}insertarOrdenadoDesdeAtras(in elem: $\alpha$, inout e: estrSecuOrdSinRep)\\
+\begin{algorithm}[H]
+\Orden{O(a)\footnote{a = longitud(e) - posicionRelativa(e,elem)}}
+\BlankLine
+\textbf{var} n: nodo\\
+\BlankLine
+n.dato $\leftarrow$ elem \tcp*{O(1)}
+\BlankLine
+\eIf{($\neg$ vacia?(e))\tcp*{O(1)}}{
+	\eIf{((*e.prim).dato $\opsub{>}{\alpha}$ elem $\vee$ (*e.ult).dato $\opsub{<}{\alpha}$ elem)\tcp*{O(1)}}{
+		\eIf{((*e.prim).dato $\opsub{>}{\alpha}$ elem)\tcp*{O(1)}}{
+			(*e.prim).anterior $\leftarrow$ $\&$n\tcp*{O(1)}
+			n.anterior $\leftarrow$ NULL\tcp*{O(1)}
+			n.proximo $\leftarrow$ e.prim\tcp*{O(1)}
+			e.prim $\leftarrow$ $\&$n\tcp*{O(1)}}{
+				\If{((*e.prim).dato $\opsub{<}{\alpha}$ elem)\tcp*{O(1)}}{
+					(*e.ult).proximo $\leftarrow$ $\&$n\tcp*{O(1)}
+					n.anterior $\leftarrow$ e.ult\tcp*{O(1)}
+					n.proximo $\leftarrow$ NULL\tcp*{O(1)}
+					e.ult $\leftarrow$ $\&$n\tcp*{O(1)}}}}{
+	\textbf{var} aux: puntero(nodo)\tcp*{O(1)}
+	aux $\leftarrow$ e.ult\tcp*{O(1)}
+	\While{((*(*aux).anterior).dato $\opsub{>}{\alpha}$ elem)\tcp*{O(a)\footnote{El ciclo se ejecuta tantas veces como la cantidad de elementos mayores al que estoy agregando haya en la secuencia. Por lo tanto, al no haber elementos repetidos, como m\'aximo se va a recorrer longitud(e) - posicionRelativa(e,elem) veces}}}{aux $\leftarrow$ (*aux).anterior\tcp*{O(1)}}
+		(*(*aux).anterior).proximo $\leftarrow$ $\&$n\tcp*{O(1)}
+		n.anterior $\leftarrow$ (*aux).anterior\tcp*{O(1)}
+		n.proximo $\leftarrow$ aux\tcp*{O(1)}
+		(*aux).anterior $\leftarrow$ $\&$n\tcp*{O(1)}}}{
+e.prim $\leftarrow$ $\&$n\tcp*{O(1)}
+e.ult $\leftarrow$ $\&$n\tcp*{O(1)}
+n.anterior $\leftarrow$ NULL\tcp*{O(1)}
+n.proximo $\leftarrow$ NULL\tcp*{O(1)}}
+\end{algorithm}
+
+
+\textit{i}vacia?(in e: estrSecuOrdSinRep) $\longrightarrow$ res: bool\\
+\begin{algorithm}[H]
+\Orden{O(1)}
+\BlankLine
+res $\leftarrow$ (e.prim == NULL)
+\end{algorithm}
+
+\newpage 
+
+\textit{i}esta?(in a: $\alpha$, e: estrSecuOrdSinRep) $\longrightarrow$ res: bool\\
+\begin{algorithm}[H]
+\Orden{O(posicionRelativa(e,a))}
+\BlankLine
+res $\leftarrow$ false \tcp*{O(1)}
+\BlankLine
+\If{($\neg$vacia?(e)) \tcp*{O(1)}}{
+\textbf{var} it: itOrd(secuOrdSinRep($\alpha$))\\
+\BlankLine
+it $\leftarrow$ crearIt(e) \tcp*{O(1)}
+\BlankLine
+\While{(tieneProximo(it)? $\wedge$ actualAdelante(it) $<_\alpha$ a)\tcp*{O(posicionRelativa(e,a))\footnote{La secuencia se recorre hasta que se encuentra al elemento buscado, o se encuentre uno mayor o no queden m\'as elementos por recorrer. Por esto es que la complejidad del peor caso es posicionRelativa(e,a)}}}{avanzar(it)\tcp*{O(1)}}
+\BlankLine
+\If{(a $=_\alpha$ actualAdelante(it))\tcp*{O(1)}}{res $\leftarrow$ true\tcp*{O(1)}}}
+\end{algorithm}
+
+\textit{i}crearIT(in e: estrSecuOrdSinRep) $\longrightarrow$ res: estrIterOrd\\
+\begin{algorithm}[H]
+\Orden{O(1)}
+\BlankLine
+res $\leftarrow$ e
+\end{algorithm}
+
+\textit{i}actualAdelante(in it: estrIterOrd) $\longrightarrow$ res: $\alpha$\\
+\begin{algorithm}[H]
+\Orden{O(1)}
+\BlankLine
+res $\leftarrow$ ((it.prim) $\rightarrow$ dato)
+\end{algorithm}
+
+\textit{i}actualAtras(in it: estrIterOrd) $\longrightarrow$ res: $\alpha$\\
+\begin{algorithm}[H]
+\Orden{O(1)}
+\BlankLine
+res $\leftarrow$ ((it.ult) $\rightarrow$ dato)
+\end{algorithm}
+
+\textit{i}tieneProximo?(in it: estrIterOrd) $\longrightarrow$ res: bool\\
+\begin{algorithm}[H]
+\Orden{O(1)}
+\BlankLine
+res $\leftarrow$ ((it.prim) $\rightarrow$ proximo $\neq$ NULL)
+\end{algorithm}
+
+\textit{i}tieneAnterior?(in it: estrIterOrd) $\longrightarrow$ res: bool\\
+\begin{algorithm}[H]
+\Orden{O(1)}
+\BlankLine
+res $\leftarrow$ ((it.ult) $\rightarrow$ anterior $\neq$ NULL)
+\end{algorithm}
+
+\textit{i}avanzar(inout it: estrIterOrd)\\
+\begin{algorithm}[H]
+\Orden{O(1)}
+\BlankLine
+it.prim $\leftarrow$ ((it.prim) $\rightarrow$ proximo)
+\end{algorithm}
+
+\newpage
+\textit{i}retroceder(inout it: estrIterOrd)\\
+\begin{algorithm}[H]
+\Orden{O(1)}
+\BlankLine
+it.ult $\leftarrow$ ((it.ult) $\rightarrow$ anterior)
+\end{algorithm}

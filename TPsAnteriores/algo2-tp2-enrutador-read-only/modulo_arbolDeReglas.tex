@@ -1,0 +1,228 @@
+\section*{Modulo \nombretad{ArbolDeReglas}}
+
+%INTERFAZ
+\subsection*{Interfaz}
+\textbf{interfaz} \textit{arbolDeReglas}\\
+\textbf{se explica con la especificaci\'on de} \textit{arbolDeReglas}\\
+\textbf{usa interfaces} \nombretad{Bool}, \nombretad{Nat}, \nombretad{dirIp},\nombretad{ReglaDir}\\
+\textbf{genero} \textit{abr}\\
+
+\textbf{operaciones}\\
+
+$Crear$() $\longrightarrow res$: abr \hfill (O(1)) \\
+$\{$true$\}$\\
+$\{\sombreritoWide{res} \igobs nuevo()\}$\\
+
+$agRegla$(inout $a$: abr, in $r$: regla) \hfill (O(version(r))) \\
+$\{\sombreritoWide{a} \igobs\ a_0\}$\\
+$\{\sombreritoWide{a} \igobs\ agRegla(a_0,\sombreritoWide{r})\}$\\
+
+$interfazDeSalida$(in $a$: abr, in $d$: dirIp) $\longrightarrow res$: nat \hfill (O(version(d)))) \\
+$\{tieneRegla?(\sombreritoWide{a},\sombreritoWide{d})\}$\\
+$\{\sombreritoWide{res}\igobs$ $interfazDeSalida(\sombreritoWide{a},\sombreritoWide{d})$\}\\
+
+
+%REPRESENTACION
+\subsection*{Representaci\'on}
+\textit{arbolDeReglas} \textbf{se representa con} \textit{puntero(estr)}\\
+\textbf{donde} \textit{estr} \textbf{es}\\
+\textit{tupla$\langle$ inter: puntero(interfaz)\\
+\hspace*{1.1cm}$\times$ izq: puntero(estr)\\
+\hspace*{1.1cm}$\times$ der: puntero(estr) $\rangle$}
+\vspace{33pt}
+
+
+%INVARIANTE DE REPRESENTACION
+\subsection*{Invariante\ de \ Representaci\'on}
+\alinearfuncs{Rep}{\hspace{3cm}}
+\func{Rep}{puntero(estr)}{boolean}{}
+\vspace{11pt}
+($\forall$ p: puntero(estr)) Rep(p) = true $\Leftrightarrow$ no existen ciclos
+\vspace{33pt}
+
+\newpage
+%FUNCION DE ABSTRACCION
+\subsection*{Funci\'on de Abstracci\'on}
+
+\func{Abs}{puntero(estr)/p}{abr}{Rep(p)}
+\vspace{11pt}
+($\forall$ p: puntero(estr)) Abs(p) = a: abr/ \\
+\\
+($\forall$ d: dirIp) ((tieneRegla(a,d) $=$ existeRegla(p,pasarABits(d),0) $\yluego$\\
+\\
+(tieneRegla(a,d) $\impluego$ (interfazDeSalida(a,d) = dameSalida(p,pasarABits(d),0,null)))))
+\vspace{33pt}
+\alinearfuncs{existeReglala}{\hspace{11.2cm}}
+\alinearaxiomas{dameSalida(p,a,n,pi)}
+\func{existeRegla}{puntero(estr)/p,arregloDeBool, nat}{bool}{Rep(p)}
+\axioma{existeRegla(p,a,n)}{\lif n $=$ tam(a) $\vee$ p $=$ null \lthen \false\\
+			    \hspace*{-0.85cm}\lelse \lif (*p).inter $=$ null \lthen\\
+			    \hspace*{1cm}\lif a[n] $=$ \true \lthen existeRegla((*e).der,a,n+1)\\
+			    \hspace*{1cm}\lelse existeRegla((*e).izq,a,n+1)\\
+			    \hspace*{1cm}\lfi\\
+			    \hspace*{-0.85cm}\lelse \true\\
+			    \hspace*{-0.85cm}\lfi}
+
+\vspace{15pt}
+
+\func{dameSalida}{puntero(estr)/p, arregloDeBool/a, nat, puntero(estr)}{interfaz}{Rep(p) $\yluego$ existeRegla(p,a,0)}
+\axioma{dameSalida(p,a,n,pi)}{\lif n $=$ tam(a) $\vee$ p $=$ null \lthen *pi\\
+			      \hspace*{-0.85cm}\lelse \lif a[n] $=$ true \lthen\\
+			      \hspace*{1cm}\lif pi $\neq$ null \lthen dameSalida((*p).der,a,n+1,pi)\\
+			      \hspace*{1cm}\lelse dameSalida((*p).der,a,n+1,(*p).int)\\
+			      \hspace*{1cm}\lfi\\
+			      \hspace*{-0.85cm}\lelse\\
+			      \hspace*{1cm}\lif pi $\neq$ null \lthen dameSalida((*p).izq,a,n+1,pi)\\
+			      \hspace*{1cm}\lelse dameSalida((*p).izq,a,n+1,(*p).int)\\
+			      \hspace*{1cm}\lfi\\
+			      \hspace*{-0.85cm}\lfi}
+			      
+\textit{Aclaraci\'on: dameSalida funciona dado que asumimos que el \'arbol se poda cada vez que agregamos una regla como lo indica el algor\'itmo}
+
+\newpage
+%ALGORITMOS
+\subsection*{Algoritmos}
+ \incmargin{1em}
+    \linesnumbered
+    \restylealgo{boxed}
+    \dontprintsemicolon
+
+\textit{i}crear()   $\longrightarrow$	$res$ : puntero(estr)\\
+\begin{algorithm}[H]
+\Orden{O(1)}
+\BlankLine
+res $\leftarrow$ NULL \\
+\caption{crear}
+\end{algorithm}
+
+\newpage
+\textit{i}agRegla(inout $p$ : puntero(estr),in $r$ : regla)\\
+\begin{algorithm}[H]
+\Orden{O(version(dirIp(r)))}
+\BlankLine
+\textbf{var} i : int\\
+\textbf{var} pAux : puntero(estr) 	\\
+\textbf{var} a : arreglo\_dimensionable de bool\\
+\textbf{var} x : Interfaz\\
+\BlankLine 
+a $\leftarrow$ CrearArreglo(version(dirIp(r))*8) \tcp*{O(version(dirIp(r)))}
+\BlankLine
+\If {p = NULL \tcp*{O(1)}}{p $\leftarrow$ $\&$ $\langle$NULL,NULL,NULL$\rangle$ \tcp*{O(1)}}
+\BlankLine 
+a $\leftarrow$ pasarABits(dirIP(r)) \tcp*{O(version(dirIp(r)))}
+pAux $\leftarrow$ p \tcp*{O(1)}
+i $\leftarrow$ 0 \tcp*{O(1)}
+\BlankLine 
+\While{i $\neq$ cantBits(r) \tcp*{O(cantBits(r))}}{
+	\eIf {a[i] = true \tcp*{O(1)}}{
+		\If{(*pAux).der = NULL \tcp*{O(1)}}{(*pAux).der $\leftarrow$ $\&$ $\langle$NULL,NULL,NULL$\rangle$ \tcp*{O(1)}}
+			 pAux $\leftarrow$ (*pAux).der \tcp*{O(1)}}{
+				 \If{(*pAux).izq = NULL \tcp*{O(1)}}{(*pAux).izq $\leftarrow$ $\&$ $\langle$NULL,NULL,NULL$\rangle$ \tcp*{O(1)}}				 
+				 pAux $\leftarrow$ (*pAux).izq \tcp*{O(1)}}
+
+		i $\leftarrow$ i + 1 \tcp*{O(1)}
+		}
+\BlankLine 
+\eIf {(*pAux).inter = NULL \tcp*{O(1)}}{
+x $\leftarrow$ inter(r) \tcp*{O(1)}
+(*pAux).inter $\leftarrow$ $\&$x \tcp*{O(1)}}{*((*pAux).inter) $\leftarrow$ inter(r)\tcp*{O(1)}}
+\BlankLine 
+(*pAux).der $\leftarrow$ NULL \tcp*{O(1)}
+(*pAux).izq $\leftarrow$ NULL \tcp*{O(1)\footnote{En estas lineas podamos el arbol sin pensar el la etapa implementativa ya que ser\'ia un desperdicio de memoria. En ese momento se resolvera de alguna manera que emule la poda.}}
+
+\end{algorithm}
+
+\newpage
+\textit{i}InterfazDeSalida(in $p$ : puntero(estr),in $d$ : dirIp)   $\longrightarrow$	$res$ : interfaz\\
+\begin{algorithm}[H]
+\Orden{O(version(d))}
+\BlankLine
+\textbf{var} i : int\\
+\textbf{var} pRes: puntero(interfaz)\\
+\textbf{var} pResProvisorio: puntero(interfaz)\\
+\textbf{var} pAux puntero(estr) 	\\
+\textbf{var} dBits: arreglo dinamico de bool\\
+pRes $\leftarrow$ NULL \tcp*{O(1)}
+dBits $\leftarrow$ pasarABits(d) \tcp*{O(version(d))}
+pResProvisorio $\leftarrow$ NULL \tcp*{O(1)}
+pAux $\leftarrow$ p \tcp*{O(1)}
+i $\leftarrow$ 0 \tcp*{O(1)}
+\BlankLine 
+\While{pRes = NULL \tcp*{O(version(d))\footnote{Esta complejidad se obtiene ya que se recorre el \'arbol hasta como mucho 8*version(d) y esto es O(version(d))}}}{
+	\If{(pAux$\rightarrow$inter) $\neq$ NULL \tcp*{O(1)}}{pResProvisorio $\leftarrow$ (pAux $\rightarrow$ inter) \tcp*{O(1)}}
+	
+	\eIf{dBits[i] = true \tcp*{O(1)}}{
+		\eIf{(pAux$\rightarrow$der) = NULL \tcp*{O(1)}}{pRes $\leftarrow$ pResProvisorio \tcp*{O(1)}}{pAux $\leftarrow$ (pAux$\rightarrow$der) \tcp*{O(1)}}
+	}{
+		\eIf{(pAux$\rightarrow$izq) = NULL \tcp*{O(1)}}{pRes $\leftarrow$ pResProvisorio \tcp*{O(1)}}{pAux $\leftarrow$ (pAux$\rightarrow$der) \tcp*{O(1)}}
+	}
+	i $\leftarrow$  i + 1 \tcp*{O(1)}
+}
+res $\leftarrow$ *(pRes) \tcp*{O(1)}
+\caption{interfazDeSalida}
+\end{algorithm}
+\newpage
+
+\textit{i}tieneRegla(in $p$ : puntero(estr),in $d$ : dirIp)   $\longrightarrow$	$res$ : bool\\
+\begin{algorithm}[H]
+\Orden{O(version(d))}
+\BlankLine	
+\textbf{var} i : int\\
+\textbf{var} pAux : puntero(estr) 	\\
+\textbf{var} sePuedeSeguir : bool	\\
+\textbf{var} dBits: arreglo dinamico de bool\\
+\BlankLine
+pAux $\leftarrow$ p \tcp*{O(1)}
+dBits $\leftarrow$ pasarABits(d) \tcp*{O(version(d))}
+i $\leftarrow$ 0 \tcp*{O(1)}
+sePuedeSeguir $\leftarrow$ true \tcp*{O(1)}
+res $\leftarrow$ false \tcp*{O(1)}
+\BlankLine
+\If {pAux = NULL \tcp*{O(1)}}{
+res $\leftarrow$ false \tcp*{O(1)}
+ sePuedeSeguir $\leftarrow$ false \tcp*{O(1)}}
+\BlankLine
+\BlankLine
+\While{res = false $\wedge$ sePuedeSeguir = true \tcp*{O(version(d))\footnote{Esta complejidad se obtiene ya que se recorre el arbol hasta como mucho 8*version(d) y esto es O(version(d))}}}{
+	\eIf{dBits[i] = true \tcp*{O(1)}}{
+		\eIf{(pAux$\rightarrow$der) = NULL \tcp*{O(1)}}{sePuedeSeguir $\leftarrow$ false \tcp*{O(1)}}{pAux $\leftarrow$ (pAux$\rightarrow$der) \tcp*{O(1)}}
+	}{
+		\eIf{(pAux$\rightarrow$izq) = NULL \tcp*{O(1)}}{sePuedeSeguir $\leftarrow$ false \tcp*{O(1)}}{pAux $\leftarrow$ (pAux$\rightarrow$izq) \tcp*{O(1)}}
+	}
+	
+	i $\leftarrow$  i + 1 \tcp*{O(1)}
+\BlankLine
+\If{(pAux$\rightarrow$inter) $\neq$ NULL \tcp*{O(1)}}{res $\leftarrow$ true \tcp*{O(1)}}
+}
+
+\end{algorithm}
+
+\newpage
+      
+\textit{i}pasarABits(in $d$ : dirIp) $\longrightarrow$ $res$ : arreglo\_dinamico de bool\\
+\begin{algorithm}[H]
+\Orden{O(version(d))}
+\BlankLine	
+\textbf{var} a : arreglo\_dinamico de bool\\
+\textbf{var} i, j, aux : nat	\\
+\BlankLine
+a $\leftarrow$ crearArrego(8*version(d)) \tcp*{O(version(d))}
+i $\leftarrow$ 7 \tcp*{O(1)}
+j $\leftarrow$ 0 \tcp*{O(1)}
+\BlankLine
+\While{(j $<$ version(d)) \tcp*{O(version(d))\footnote{Esto se ejecuta version(d) veces. Esto tambi\'en podr\'ia haberse implementado con un ``for'' en vez de con un ``while''. Por cada iteraci\'on de ``j'' se itera 8 veces con ``i'', por lo que la complejidad total es O(8*version(d)), pero asint\'oticamente es O(version(d))}}}{
+	aux $\leftarrow$ d[j] \tcp*{O(1)}
+	\BlankLine
+	\While{(i $\geq$ 8*j) \tcp*{O(1)\footnote{Esto se ejecuta 8 veces, porque cuando se entra aqu\'i por primera vez vale que i = j+7. Esto tambi\'en podr\'ia haberse implementado con un ``for'' en vez de con un ``while''}}}{
+		\eIf{aux mod 2 = 1 \tcp*{O(1)}}{a[i] $\leftarrow$ true \tcp*{O(1)}}{a[i] $\leftarrow$ false \tcp*{O(1)}}
+		\BlankLine
+		aux $\leftarrow$ aux / 2 \tcp*{O(1)}
+		i $\leftarrow$ i $-$ 1 \tcp*{O(1)}
+	}	
+	\BlankLine
+	i $\leftarrow$ i $+$ 15 \tcp*{O(1)}
+	j $\leftarrow$ j $+$ 1	 \tcp*{O(1)}
+}
+res	$\leftarrow$ a \tcp*{O(1)}
+\caption{pasarABits}
+\end{algorithm}

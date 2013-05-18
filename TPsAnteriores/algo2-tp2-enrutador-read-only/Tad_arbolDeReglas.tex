@@ -1,0 +1,54 @@
+\section*{}
+
+\begin{tad}{ArbolDeReglas}
+
+\vspace*{11pt}
+
+\textbf{Igualdad Observacional}
+\begin{equation*}
+\text{($\forall$ aR ,aR': itOrd($\alpha$))} \left(
+\begin{array}{cc}
+aR $\igobs$ aR' $\ssi$ (\forall d: dirIp)(tieneRegla(aR,d) \igobs tieneRegla(aR',d) \yluego\\
+tieneRegla(aR,d) \impluego interfazDeSalida(aR,d) \igobs interfazDeSalida(aR',d))
+\end{array} \right)
+\end{equation*}
+
+\generos{arbolDeReglas}
+	
+\usa{Bool, Nat, ReglaDir, DirIp}
+
+\exporta{g\'enero, generadores, observadores b\'asicos}
+
+\alinearfuncs{primerosBitsIguales?}{\hspace{5cm}}
+\generadores
+	\func{nuevo}{}{ArbolDeReglas}{}
+	\func{agRegla}{ArbolDeReglas,Regla}{ArbolDeReglas}{}
+
+\vspace*{11pt}
+
+\observadores
+	\func{interfazDeSalida}{ArbolDeReglas/a,dirIp/d}{nat}{tieneRegla(a,d)}
+	\func{tieneRegla}{ArbolDeReglas/a,dirIp/d}{bool}{}
+
+\vspace*{11pt}
+
+\otrasops
+	\func{primerosBitsIguales?}{dirIP/d1, dirIP/d2, nat}{bool}{((version(d1) = (version(d2)) $\wedge$ (version(d1)*8 $\geq$ n))}
+
+\vspace*{11pt}
+
+\alinearaxiomas{existeReglaQueCumple(agRegla(a,r),d)}
+\axiomas{($\forall$ a: arbolDeReglas)($\forall$ r: regla)($\forall$ d,d': dirIp)}\\
+
+	\axioma{interfazDeSalida(agRegla(a,r),d)}{If primerosBitsIguales?(dirIp(r),d,cantBits(r)) then inter(r) else interfazDeSalida(a,d)}
+
+	\axioma{tieneRegla(nuevo(),d)}{false}
+	\axioma{tieneRegla(agRegla(a,r),d)}{If primerosBitsIguales?(dirIp(r),d, cantBits(r)) then true else tieneRegla(a,d)}
+
+
+
+	\axioma{primerosBitsIguales?(d,d',n)}{\lif (n=0) \lthen \true\\ 
+\lelse pasarA8Bits(d[n/8])[n mod 8] = pasarA8Bits(d'[n/8])[n mod 8] $\wedge$ primerosBitsIguales?(d,d',pred(n))}
+
+
+\end{tad}

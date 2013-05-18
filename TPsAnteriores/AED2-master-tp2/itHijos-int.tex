@@ -1,0 +1,33 @@
+\begin{interfaz}{Iterador Hijos}
+\begin{iparamformales}{itHijos}
+
+\comment{\funcion{Copiar}{\param{in}{m}{$\alpha$}}{$\alpha$}
+{true}
+{\igres m}
+{copy(m)}
+{}
+}
+
+\textbf{\large se explica con:} Iterador Unidireccional de Categoria
+
+\end{iparamformales}
+
+\operacion{haysiguiente?}{\param{in}{it}{itHijos}}{bool}
+{true}
+{\igres HayMas?(it)}
+{1}
+{No tiene.}
+
+\operacion{siguiente}{\param{in}{it}{itHijos}}{Categoria}
+{HayMas?(it)}
+{\igres Actual(it)}
+{1}
+{res no es modificable.}
+
+\operacion{avanzar}{\param{in/out}{it}{itHijos}}{}
+{it \igobs it_0 \land HayMas?(it)}
+{it \igobs avanzar(it_0)}
+{1}
+{No tiene.}
+
+\end{interfaz}

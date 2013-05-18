@@ -1,0 +1,40 @@
+\begin{center}
+\begin{tabular}{|l|} 
+\hline
+\\
+itFamilia se representa con puntero(DatosCat)\\\\
+
+\hspace*{6em}datosCat es \tupla{\\
+\hspace*{6em}\param{}{categoria}{Categoria},\\ 
+\hspace*{6em}\param{}{id}{nat},\\ 
+\hspace*{6em}\param{}{altura}{nat},\\ 
+\hspace*{6em}\param{}{hijos}{Conj(puntero(datosCat))},\\
+\hspace*{6em}\param{}{padre}{puntero(datosCat)}}\\ \\ 
+
+
+\hline
+\end{tabular}
+\end{center}
+
+\par itFamilia es un iterador de puntero a datoscat que al hacer siguiente va al puntero datoscat padre. Al manejarse con punteros sus complejidades son O(1).
+
+\subsubsection{Invariante de Representaci\'on}
+%\paragraph{El Invariante Informalmente}
+%\begin{enumerate}
+%\item Lo iterado por el iterador de mensajes recientes es válido.
+%\end{enumerate}
+
+\paragraph{El Invariante Formalmente}
+{\begin{changemargin}{0em}{4em}Rep : estrITF $\rightarrow$ boolean\par \end{changemargin}(\paratodo\param{}{it}{estrITF})} Rep(it) $\equiv$ true
+
+\subsubsection{Funci\'on de Abstracci\'on}
+\begin{ABS}{e}{estrITF}{it}{itUni(Categoria)}
+\absfunc{siguientePadres(e) \igobs siguientes(it)}{}
+\end{ABS}
+
+\paragraph{Funciones auxiliares}
+\paragraph*{}
+
+\hspace*{1em}
+\tadOperacion{siguientePadres}{estrITF e}{secu(tupla<Categoria, nat>)}{}
+\tadAxioma{siguientePadres(e)}{\IF (*e).padre == NULL THEN <(*e).padre.categoria, (*e).padre.id> $\bullet$ $\emptyset$ ELSE <(*e).padre.categoria, (e*).padre.id> $\bullet$ siguientePadres((*e).padre) FI}

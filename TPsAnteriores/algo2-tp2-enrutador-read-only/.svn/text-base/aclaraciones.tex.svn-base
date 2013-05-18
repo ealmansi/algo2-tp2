@@ -1,0 +1,36 @@
+\section*{Aclaraciones}
+
+\subsection*{Extension del Secu($\alpha$)}
+\paragraph{}
+El Tad SecuOrdSinRep($\alpha$) es una extension del Tad Secu($\alpha$) en la cual se agregan algunas operaciones y se reemplaza el generador $\puntito$ por agregarOdenado. En consecuencia, las operaciones hechas sobre el operador puntito pierden validez.
+
+\subsection*{Ordenes de los elementos $\alpha$}
+\paragraph{}
+Durante este trabajo pr\'actico se di\'o por sentado que se ten\'ian los siguientes \'ordenes totales:
+
+\begin{itemize}
+\item En la estructura del enrutador, el campo \textit{reglas} es de tipo secuOrdSinRep. Las tuplas que esta contiene, se ordenan por versi\'on, es decir, se ordenan seg\'un el orden dado por el primer campo de cada tupla.
+\item En las secuencias de eventos, se da por sentado que el orden de los mismos est\'a dado por el timestamp, orden\'andose de forma creciente.
+\end{itemize}
+
+\subsection*{Conjunto de interfaces}
+\paragraph{}
+Como se indica en el enunciado, decidimos reemplazar al conjunto de interfaces por una cantidad m\'axima de interfaces, las cuales van de 0 a cantInterfaces-1.
+
+\input{aliasing_router.tex}
+\input{aliasing_secuencia.tex}
+\input{aliasing_conjunto.tex}
+\input{aliasing_arbol.tex}
+
+\subsection*{Descripcion de funciones utilizadas}
+\paragraph{}
+Las siguientes funciones fueron utilizadas para describir Ordenes de complejidad o funciones de representaci\'on o abstracci\'on. Las mismas est\'an incluidas dentro de los TAD correspondientes, pero no tienen ninguna funci\'on an\'aloga dentro de los m\'odulos presentados para este trab\'ajo pr\'actico. Adem\'as, la funci\'on altura solo se utiliza para la funci\'on de representaci\'on del Enrutador y romper\'ia la igualdad observacional del TAD arbolDeReglas, por lo cual la misma se encuentra axiomatizada en este apartado.
+
+
+\alinearfuncs{posicionRelativa}{\hspace{5cm}}
+	\func{posicionRelativa}{secuOrdSinRep($\alpha$),$\alpha$}{nat}{}
+	\func{posicionRelativa}{conj($\alpha$),$\alpha$}{nat}{}
+	\func{altura}{ArbolDeReglas}{nat}{}
+
+\axioma{altura(nuevo())}{0}
+\axioma{altura(agRegla(a,r))}{max(cantBits(r),altura(r))}
