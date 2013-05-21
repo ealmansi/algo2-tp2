@@ -5,9 +5,9 @@ TAD Sistema Laboral
 .generadores
 
 	nuevo : conj(Gremio) gs -> SL
-		{ (∀g1 , g2 ∈ gs) g1 = g2 ⇒ empresas(g1 ) ∩ empresas(g2 )}
+		{ (∀g1 , g2 ∈ gs) g1 != g2 => empresas(g1 ) ∩ empresas(g2 ) = ∅}
 	aliar : SL sl × Gremio g1 × Gremio g2 -> SL
-		{g1 ∈ gremios(sl) ∧ g2 ∈ gremios(sl) ∧ g1 = g2 }
+		{g1 ∈ gremios(sl) ∧ g2 ∈ gremios(sl) ∧ g1 != g2 }
 
 .observadores básicos
 

@@ -28,7 +28,8 @@ TAD Temporada
 	reabrir : Temporada t × Gremio g -> Temporada
 		{¬enParitarias?(t, g) ∧ ∅ = juntar(acuerdos(t), g)}
 	gremios : Temporada t -> conj( Gremio )
-	enParitarias? O(#paritarias_abiertas): Temporada t × Gremio g -> bool
+	enParitarias? : Temporada t × Gremio g -> bool
+		[O(#paritarias_abiertas)]
 	paritaria : Temporada t × Gremio g -> Paritaria
 		{enParitarias?(t, g)}
 	acuerdo : Temporada t × Gremio g -> Acuerdo

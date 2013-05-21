@@ -22,6 +22,6 @@ TAD Gremio
 	empresas( nuevo( es, n ) ) ≡ es
 	afiliados( nuevo( es, n ) ) ≡ n
 	empresas( gs ) ≡ if ∅ = gs then ∅ else empresas(dameUno(gs)) ∪ empresas(sinUno(gs)) fi
-	afiliados( gs ) ≡ if ∅ = gs then ∅ else afiliados(dameUno(gs)) + afiliados(sinUno(gs)) fi
+	afiliados( gs ) ≡ if ∅ = gs then 0 else afiliados(dameUno(gs)) + afiliados(sinUno(gs)) fi
 
 Fin TAD

@@ -34,11 +34,11 @@ TAD Acuerdo
 	juntar( as, g ) ≡ 	if ∅ = as then
 							∅
 						else
-							if gremio(dameUno(as)) = g ∪ juntar(sinUno(as), g) then
+							if gremio(dameUno(as)) = g then
 								{dameUno(as)}
 							else
 								∅
-							fi
+							fi ∪ juntar(sinUno(as), g)
 						fi
 
 Fin TAD
