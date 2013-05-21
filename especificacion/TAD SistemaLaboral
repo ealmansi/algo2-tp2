@@ -36,7 +36,7 @@ TAD Sistema Laboral
 	clausura( sl, cs, gs ) ≡ if ∅ = gs then
 								cs
 							else
-								clausura( sl, dameU no(gs) • cs, sinU no(gs) ∪ aliados(dameU no(gs)) \ cs )
+								clausura( sl, dameUno(gs) • cs, sinUno(gs) ∪ aliados(dameUno(gs)) \ cs )
 							fi
 
 Fin TAD

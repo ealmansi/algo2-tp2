@@ -21,10 +21,10 @@ TAD Temporada
 .otras operaciones
 
 	abrirParitaria : Temporada t × Gremio g × Piso p × Techo te × Empresas es -> Temporada
-		O(1)
+		[compl. O(1)]
 		{|es|∗2 > |empresas(g)| ∧ es ⊆ empresas(g) ∧ g ∈ gremios(t) ∧ ¬enParitarias?(t, g) ∧ p ≤ te}
 	cerrarAcuerdo : Temporada t × Gremio g × Porc c -> Temporada
-		(promedio) O(log(#acuerdos) +#acuerdos_menores + log(#acuerdos_mayores))
+		[compl. (promedio) O(log(#acuerdos) +#acuerdos_menores + log(#acuerdos_mayores))]
 	reabrir : Temporada t × Gremio g -> Temporada
 		{¬enParitarias?(t, g) ∧ ∅ = juntar(acuerdos(t), g)}
 	gremios : Temporada t -> conj( Gremio )
