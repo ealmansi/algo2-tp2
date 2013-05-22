@@ -1,0 +1,19 @@
+\select@language {spanish}
+\contentsline {section}{\numberline {1}M\IeC {\'o}dulo ArbolCategorias}{3}{section.1}
+\contentsline {subsection}{\numberline {1.1}Interfaz}{3}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Representaci\'on}{5}{subsection.1.2}
+\contentsline {subsubsection}{\numberline {1.2.1}Invariante de Representaci\'on}{5}{subsubsection.1.2.1}
+\contentsline {paragraph}{\numberline {1.2.1.1}El Invariante Informalmente}{5}{paragraph.1.2.1.1}
+\contentsline {paragraph}{\numberline {1.2.1.2}El Invariante Formalmente}{6}{paragraph.1.2.1.2}
+\contentsline {subsubsection}{\numberline {1.2.2}Funci\'on de Abstracci\'on}{7}{subsubsection.1.2.2}
+\contentsline {paragraph}{\numberline {1.2.2.1}Funciones auxiliares}{7}{paragraph.1.2.2.1}
+\contentsline {subsection}{\numberline {1.3}Algoritmos}{7}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Analisis de complejidades}{10}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}Iterador de Categorias}{12}{subsection.1.5}
+\contentsline {subsubsection}{\numberline {1.5.1}Interfaz}{12}{subsubsection.1.5.1}
+\contentsline {subsubsection}{\numberline {1.5.2}Representaci\'on}{13}{subsubsection.1.5.2}
+\contentsline {subsubsection}{\numberline {1.5.3}Invariante de Representaci\'on}{13}{subsubsection.1.5.3}
+\contentsline {paragraph}{\numberline {1.5.3.1}El Invariante Formalmente}{13}{paragraph.1.5.3.1}
+\contentsline {subsubsection}{\numberline {1.5.4}Funci\'on de Abstracci\'on}{13}{subsubsection.1.5.4}
+\contentsline {subsubsection}{\numberline {1.5.5}Algoritmos}{14}{subsubsection.1.5.5}
+\contentsline {subsubsection}{\numberline {1.5.6}Analisis de complejidades}{14}{subsubsection.1.5.6}

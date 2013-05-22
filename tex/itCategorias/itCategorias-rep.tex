@@ -1,0 +1,32 @@
+\begin{center}
+\begin{tabular}{|l|} 
+\hline
+\\
+itCategorias se representa con itLista(datosCat)\\\\
+
+\hspace*{6em}datosCat es \tupla{\\
+\hspace*{6em}\param{}{categoria}{Categoria},\\ 
+\hspace*{6em}\param{}{id}{nat},\\ 
+\hspace*{6em}\param{}{altura}{nat},\\ 
+\hspace*{6em}\param{}{hijos}{Conj(puntero(datosCat))},\\
+\hspace*{6em}\param{}{padre}{puntero(datosCat)}}\\ \\ 
+
+\hline
+\end{tabular}
+\end{center}
+
+\par itCategorias es un iterador de lista común. Sus complejidades nos alcanzan para iterar una Lista(datosCat).
+
+\subsubsection{Invariante de Representaci\'on}
+%\paragraph{El Invariante Informalmente}
+%\begin{enumerate}
+%\item Lo iterado por el iterador de mensajes recientes es válido.
+%\end{enumerate}
+
+\paragraph{El Invariante Formalmente}
+{\begin{changemargin}{0em}{4em}Rep : estrITC $\rightarrow$ boolean\par \end{changemargin}(\paratodo\param{}{it}{estrITC}) Rep(it) $\equiv$ true
+
+\subsubsection{Funci\'on de Abstracci\'on}
+\begin{ABS}{e}{estrITC}{it}{itUni(Categoria)}
+\absfunc{siguientes(e) \igobs siguientes(it)}{}
+\end{ABS}

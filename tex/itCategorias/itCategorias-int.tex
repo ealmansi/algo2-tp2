@@ -1,0 +1,33 @@
+\begin{interfaz}{Iterador Categorias}
+\begin{iparamformales}{itCategorias}
+
+\comment{\funcion{Copiar}{\param{in}{m}{$\alpha$}}{$\alpha$}
+{true}
+{\igres m}
+{copy(m)}
+{}
+}
+
+\textbf{\large se explica con:} Iterador Unidireccional de Categoria
+
+\end{iparamformales}
+
+\operacion{haysiguiente?}{\param{in}{it}{itCategorias}}{bool}
+{true}
+{\igres HayMas?(it)}
+{1}
+{No tiene.}
+
+\operacion{siguiente}{\param{in}{it}{itCategorias}}{Categoria}
+{HayMas?(it)}
+{\igres Actual(it)}
+{1}
+{La categoría se pasa por referencia, no debe ser modificada.}
+
+\operacion{avanzar}{\param{in/out}{it}{itCategorias}}{}
+{it \igobs it_0 \land HayMas?(it)}
+{it \igobs avanzar(it_0)}
+{1}
+{No tiene.}
+
+\end{interfaz}

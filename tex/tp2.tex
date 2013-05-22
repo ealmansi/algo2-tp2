@@ -1,0 +1,65 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[paper=a4paper, left=1.5cm, right=1.5cm, bottom=2cm, top=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{./recursos/aed2-symb}
+\usepackage{./recursos/aed2-itef}
+\usepackage{./recursos/aed2-tad}
+\usepackage{./recursos/aed2-tokenizer}
+\usepackage{./recursos/newalgo}
+\usepackage{./recursos/interfaz}
+\usepackage{./recursos/caratula}
+\newcommand{\comment}[1]{}
+\usepackage{./recursos/algorithm}
+\usepackage{./recursos/algpseudocode}
+\usepackage{./recursos/algorithmicx}
+\usepackage[colorlinks,citecolor=black,filecolor=black,linkcolor=black,    urlcolor=black]{hyperref}
+\setcounter{secnumdepth}{5}
+\setcounter{tocdepth}{5}
+\let\state\State
+\let\while\While
+\let\endwhile\EndWhile
+%\let\if\If
+\let\endif\EndIf
+%\let\else\Else
+\let\elseif\ElsIf
+
+
+\titulo{Trabajo Pr\'actico Diseño}
+\materia{Algoritmos y Estructura de Datos II}
+\grupo{Grupo 1}
+\integrante{Almansi, Emilio}{123/12}{lalala@lalala.com}
+\integrante{Chapresto, Matías}{123/12}{lalala@lalala.com}
+\integrante{Vileriño, Silvio}{123/12}{lalala@lalala.com}
+\integrante{Alguno más si dios quiere}{123/12}{lalala@lalala.com}
+
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Módulo ArbolCategorias} 
+\subsection{Interfaz}
+\input{arbolCategorias/arbolCategorias-int}
+\subsection{Representaci\'on}
+\input{arbolCategorias/arbolCategorias-rep}
+\subsection{Algoritmos}
+\input{arbolCategorias/arbolCategorias-alg}
+\subsection{Analisis de complejidades}
+\input{arbolCategorias/arbolCategorias-com}
+
+\subsection{Iterador de Categorias} 
+\subsubsection{Interfaz}
+\input{itCategorias/itCategorias-int}
+\subsubsection{Representaci\'on}
+\input{itCategorias/itCategorias-rep}
+\subsubsection{Algoritmos}
+\input{itCategorias/itCategorias-alg}
+\subsubsection{Analisis de complejidades}
+\input{itCategorias/itCategorias-com}
+
+\newpage
+\end{document}
