@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.12.2)  21 MAY 2013 22:03
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2012.7.16)  22 MAY 2013 11:36
 entering extended mode
  %&-line parsing enabled.
 **tp2.tex
 (./tp2.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
-yphenation, loaded.
+yphenation, spanish, galician, catalan, loaded.
 (/usr/share/texmf-texlive/tex/latex/base/article.cls
 Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/share/texmf-texlive/tex/latex/base/size12.clo
@@ -46,7 +46,8 @@ Package ifvtex Info: VTeX not detected.
 \Gm@odd@mp=\dimen105
 \Gm@even@mp=\dimen106
 \Gm@dimlist=\toks15
-)
+
+(/usr/share/texmf-texlive/tex/xelatex/xetexconfig/geometry.cfg))
 (/usr/share/texmf-texlive/tex/latex/base/inputenc.sty
 Package: inputenc 2008/03/30 v1.1d Input encoding file
 \inpenc@prehook=\toks16
@@ -282,12 +283,6 @@ File: babel.def 2008/07/06 v3.8l Babel common definitions
 \babel@savecnt=\count90
 \U@D=\dimen107
 )
-
-Package babel Warning: No hyphenation patterns were loaded for
-(babel)                the language `Spanish'
-(babel)                I will use the patterns loaded for \language=0 instead.
-
-\l@spanish = a dialect from \language0
 \es@datefmt=\count91
 \es@quottoks=\toks18
 \es@quotdepth=\count92
@@ -295,7 +290,8 @@ Package babel Info: Making " an active character on input line 492.
 Package babel Info: Making . an active character on input line 585.
 Package babel Info: Making < an active character on input line 630.
 Package babel Info: Making > an active character on input line 630.
-)) (./recursos/aed2-symb.sty
+))
+(./recursos/aed2-symb.sty
 
 LaTeX Warning: You have requested package `./recursos/aed2-symb',
                but the package provides `aed2-symb'.
@@ -744,8 +740,58 @@ File: t1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 \tf@toc=\write4
 \openout4 = `tp2.toc'.
 
- [2]
-(./arbolCategorias/arbolCategorias-int.tex
+ [2] (./temporada/temporada-int.tex
+Overfull \hbox (11.74713pt too wide) in paragraph at lines 16--16
+[]$[]$ 
+ []
+
+
+Overfull \hbox (11.74713pt too wide) in paragraph at lines 18--18
+[]$[]$ 
+ []
+
+
+Overfull \hbox (11.74713pt too wide) in paragraph at lines 20--20
+[]$[]$ 
+ []
+
+
+Overfull \hbox (11.74713pt too wide) in paragraph at lines 22--22
+[]$[]$ 
+ []
+
+
+Overfull \hbox (11.74713pt too wide) in paragraph at lines 24--24
+[]$[]$ 
+ []
+
+
+Overfull \hbox (11.74713pt too wide) in paragraph at lines 26--26
+[]$[]$ 
+ []
+
+
+Overfull \hbox (11.74713pt too wide) in paragraph at lines 28--28
+[]$[]$ 
+ []
+
+[3]
+Overfull \hbox (11.74713pt too wide) in paragraph at lines 30--30
+[]$[]$ 
+ []
+
+
+Overfull \hbox (11.74713pt too wide) in paragraph at lines 32--32
+[]$[]$ 
+ []
+
+
+Overfull \hbox (11.74713pt too wide) in paragraph at lines 34--34
+[]$[]$ 
+ []
+
+) (./temporada/temporada-rep.tex) (./temporada/temporada-alg.tex)
+(./temporada/temporada-com.tex) (./arbolCategorias/arbolCategorias-int.tex
 Overfull \hbox (11.74713pt too wide) in paragraph at lines 19--19
 []$[]$ 
  []
@@ -755,7 +801,7 @@ Overfull \hbox (11.74713pt too wide) in paragraph at lines 25--25
 []$[]$ 
  []
 
-
+[4]
 Overfull \hbox (11.74713pt too wide) in paragraph at lines 31--31
 []$[]$ 
  []
@@ -780,7 +826,7 @@ Overfull \hbox (11.74713pt too wide) in paragraph at lines 55--55
 []$[]$ 
  []
 
-[3]
+
 Overfull \hbox (11.74713pt too wide) in paragraph at lines 61--61
 []$[]$ 
  []
@@ -795,7 +841,7 @@ Overfull \hbox (11.74713pt too wide) in paragraph at lines 73--73
 []$[]$ 
  []
 
-
+[5]
 Overfull \hbox (11.74713pt too wide) in paragraph at lines 79--79
 []$[]$ 
  []
@@ -805,7 +851,7 @@ Overfull \hbox (11.74713pt too wide) in paragraph at lines 85--85
 []$[]$ 
  []
 
-) (./arbolCategorias/arbolCategorias-rep.tex [4] [5] [6]
+) (./arbolCategorias/arbolCategorias-rep.tex [6] [7]
 Overfull \hbox (17.62482pt too wide) in paragraph at lines 65--72
 []$[]$ 
  []
@@ -828,8 +874,8 @@ Overfull \hbox (17.6248pt too wide) in paragraph at lines 86--86
 ) (./arbolCategorias/arbolCategorias-alg.tex
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 68.
- [7] [8]) [9]
-(./arbolCategorias/arbolCategorias-com.tex [10] [11])
+ [8] [9]) [10]
+(./arbolCategorias/arbolCategorias-com.tex [11] [12])
 (./itCategorias/itCategorias-int.tex
 Overfull \hbox (11.74713pt too wide) in paragraph at lines 19--19
 []$[]$ 
@@ -840,53 +886,52 @@ Overfull \hbox (11.74713pt too wide) in paragraph at lines 25--25
 []$[]$ 
  []
 
-[12]
+[13]
 Overfull \hbox (11.74713pt too wide) in paragraph at lines 31--31
 []$[]$ 
  []
 
 ) (./itCategorias/itCategorias-rep.tex)
-Overfull \hbox (17.62482pt too wide) in paragraph at lines 30--59
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 30--69
 []$[]$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 30--59
+Underfull \hbox (badness 10000) in paragraph at lines 30--69
 
  []
 
-(./itCategorias/itCategorias-alg.tex [13]) (./itCategorias/itCategorias-com.tex
-) [14] (./tp2.aux) )
+(./itCategorias/itCategorias-alg.tex [14]) (./itCategorias/itCategorias-com.tex
+) [15] (./tp2.aux) )
 (\end occurred inside a group at level 1)
 
 ### simple group (level 1) entered at line 27 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 7738 strings out of 495061
- 104730 string characters out of 1182621
- 194657 words of memory out of 3000000
- 10621 multiletter control sequences out of 15000+50000
+ 7764 strings out of 494999
+ 105323 string characters out of 1180816
+ 197709 words of memory out of 3000000
+ 10633 multiletter control sequences out of 15000+50000
  23866 words of font info for 59 fonts, out of 3000000 for 9000
- 28 hyphenation exceptions out of 8191
- 38i,13n,38p,1053b,413s stack positions out of 5000i,500n,10000p,200000b,50000s
- </home/emilio/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.
-600pk> </home/emilio/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecti1200.600pk> </h
-ome/emilio/.texmf-var/fonts/pk/ljfour/jknappen/ec/eccc1200.600pk> </home/emilio
-/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/emilio/.texmf-va
-r/fonts/pk/ljfour/jknappen/ec/ectt1200.600pk> </home/emilio/.texmf-var/fonts/pk
-/ljfour/jknappen/ec/ecrm1200.600pk> </home/emilio/.texmf-var/fonts/pk/ljfour/jk
-nappen/ec/ecbx1200.600pk> </home/emilio/.texmf-var/fonts/pk/ljfour/jknappen/ec/
-ecbx1728.600pk> </home/emilio/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1440.6
-00pk> </home/emilio/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx2074.600pk></usr
-/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texm
-f-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texlive/fo
-nts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/pu
-blic/amsfonts/cm/cmr6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts
-/cm/cmr8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.pf
-b>
-Output written on tp2.pdf (14 pages, 229592 bytes).
+ 54 hyphenation exceptions out of 8191
+ 38i,13n,38p,1053b,414s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</us
+r/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/tex
+mf-texlive/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-texlive/f
+onts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-texlive/fonts/type1/p
+ublic/amsfonts/cm/cmr6.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfont
+s/cm/cmr8.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmsy10.p
+fb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf
+/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/
+cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pf
+b></usr/share/texmf/fonts/type1/public/cm-super/sfcc1200.pfb></usr/share/texmf/
+fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/c
+m-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb
+></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/f
+onts/type1/public/cm-super/sftt1200.pfb>
+Output written on tp2.pdf (15 pages, 307193 bytes).
 PDF statistics:
- 634 PDF objects out of 1000 (max. 8388607)
- 96 named destinations out of 1000 (max. 500000)
- 145 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 334 PDF objects out of 1000 (max. 8388607)
+ 102 named destinations out of 1000 (max. 500000)
+ 185 words of extra memory for PDF output out of 10000 (max. 10000000)
 

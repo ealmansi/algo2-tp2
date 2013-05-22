@@ -1,0 +1,67 @@
+abrirParitria	O(1)
+
+
+enParitarias	O(#paritarias_abiertas)
+
+
+cerrarAcuerdo	O(log(#acuerdos) + #acuerdos_menores + log(#acuerdos_mayores))
+
+cerrarAcuerdo:
+				- eliminar paritaria de la temporada		[queremos O(1)]
+				- agregar acuerdo (con la paritaria que eliminamos)		[queremos O(log(#acuerdos))]
+				- reabrir todos los acuerdos de aliados con menor aumento		[queremos O(#acuerdos_menores)]
+																				[ no puede ser O(#acuerdos) ]
+si hacemos
+
+[NO CAMINA]
+paritarias -> lista
+acuerdos -> abb con clave id
+
+abrirParitria	es O(1)
+enParitarias	es O(#paritarias_abiertas)
+cerrarAcuerdo	(suma de lo de abajo)
+eliminar paritaria es O(#paritarias_abiertas)
+agregar acuerdo es O(log(#acuerdos))
+reabrir todos es O(#acuerdos) [para cada acuerdo, pregunto si es aliado y si el aumento fue menor]
+
+---------------------------
+
+paritarias -> trie
+acuerdos -> abb con clave id
+
+abrirParitria	O(1)
+enParitarias	O(1)
+cerrarAcuerdo	...
+	eliminar paritaria es O(1)
+	agregar acuerdo es O(log(#acuerdos))
+	reabrir todos es O(#acuerdos) [para cada acuerdo, pregunto si es aliado y si el aumento fue menor]
+		(rompe la complejidad de cerrarAcuerdo)
+
+---------------------------
+
+paritariasYacuerdos -> trie por nombre de gremio
+relacionEntreAcuerdos -> secu ordenada por valor del aumento
+
+abrirParitria	O(1)
+enParitarias	O(1)
+cerrarAcuerdo	...
+	eliminar paritaria es O(1)
+	agregar acuerdo es O(log(#acuerdos))
+	reabrir todos es O(#acuerdos) [para cada acuerdo, pregunto si es aliado y si el aumento fue menor]
+		(rompe la complejidad de cerrarAcuerdo)
+
+----------------------------
+
+
+PARECIERA CAMINAR
+paritarias -> diccionario(nombreGremio, paritaria)
+				[trie con claves char]
+acuerdos -> diccionario(porc, acuerdo)
+				[trie con claves char usando ord sobre los porcentajes]
+
+abrirParitria	O(1)
+enParitarias	O(1)
+cerrarAcuerdo	...
+	eliminar paritaria es O(1)
+	agregar acuerdo es O(1)
+	reabrir todos es O(#acuerdos_menores) [para cada acuerdo, pregunto si es aliado y si el aumento fue menor]
