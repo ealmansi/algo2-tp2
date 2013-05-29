@@ -1,0 +1,109 @@
+/*	*	*	*	*	*	*	*	*/
+/* modulo Temporada exporta ... */
+/*	*	*	*	*	*	*	*	*/
+
+.iniciar : SL sl -> Temporada
+
+.abrirParitaria : Temporada t × Gremio g × Piso p × Techo te × Empresas es -> Temporada
+
+.cerrarAcuerdo : Temporada t × Gremio g × Porc c -> Temporada
+
+.reabrir : Temporada t × Gremio g -> Temporada
+
+.gremios : Temporada t -> conj( Gremio )
+
+.enParitarias? : Temporada t × Gremio g -> bool
+
+.gremiosNegociando : Temporada t -> conj( Gremio )
+
+.empresasNegociando : Temporada t -> Empresas )
+
+.trabajadoresNegociando : Temporada t -> #Persona
+
+.gremioConflictivo : Temporada t -> Gremio
+
+
+/*	*	*	*	*	*	*	*	*	*	*	*/
+/* géneros que aparecen en las signaturas 	*/
+/*	*	*	*	*	*	*	*	*	*	*	*/
+
+.Temporada
+.SL
+.Gremio
+.conj( Gremio )
+.Empresas
+.Piso
+.Techo
+.Porc
+.#Persona
+
+/*	*	*	*	*	*	*	*	*	*/
+/* complejidades que nos piden... 	*/
+/*	*	*	*	*	*	*	*	*	*/
+
+.abrirParitaria:
+	debe ser O(1)
+
+.enParitarias:
+	debe tener un costo O(#paritarias_abiertas)
+
+.cerrarAcuerdo:
+	debe costar, en caso promedio, "el costo de encontrar y sacar la Paritaria" + O(log(#acuerdos) + #acuerdos_menores * log(#acuerdos_aliados) + log(#acuerdos_mayores))
+
+.sonSuperaliados(g1,g2):
+	recomiendan que sea O(1)
+
+/*	*	*	*	*	*	*	*	*/
+/* algoritmos muy por encima... */
+/*	*	*	*	*	*	*	*	*/
+
+.abrirParitaria:
+	- agrego la paritaria en alguna estructura que permita inserción en O(1) peor caso; esto anula la posibilidad de meterlas en un árbol
+
+.enParitarias:
+	- itero sobre una estructura recorriendo todos sus elementos hasta encontrarla (esta estructura tiene que tener sólo aquellas paritarias abiertas)
+
+.cerrarAcuerdo:
+	- elimino la paritaria del gremio de la estructura de paritarias abiertas
+	- elimino el acuerdo previo del gremio, si es que existe
+	- agrego el nuevo acuerdo
+	- recorro todos los acuerdos peores; para todos los que sean de un aliado reabro la paritaria
+
+.sonSuperaliados(g1,g2):
+	- opc. 1: tengo una estructura que va de tupla(gremio,gremio) a bool de alguna forma, donde pueda obtener el significado de una tupla dada en O(1)
+	- opc. 2: tengo una estructura que va de gremio a conj(gremio), donde pueda obtener el significado en O(1) y preguntar partencia al conjunto en O(1)
+	- opc. 3: guardo un "idDeAlianza" en cada gremio
+
+
+/*	*	*	*	*	*	*	*	*/
+/* se representa con... (????) 	*/
+/*	*	*	*	*	*	*	*	*/
+
+temporada se representa con estrT donde estrT es: tupla<
+	gremios: arreglo_dimensionable de lista(gremio),
+	paritariasAbiertas: lista(paritaria),
+	acuerdosVigentes: arreglo_dimensionable de lista(acuerdo),
+>
+
+sistemaLaboral se representa con estrS donde estrS es: tupla<
+	gremios
+	aliados
+>
+
+acuerdo se representa con estrA donde estrA es: tupla<
+	id
+	paritaria
+	valor
+	acuerdosPrevios
+>
+
+paritaria se representa con estrP donde estrP es: tupla<
+	gremio
+	piso
+	tope
+>
+
+gremio se representa con estrG donde estrG es: tupla<
+	empresas
+	#afiliados
+>

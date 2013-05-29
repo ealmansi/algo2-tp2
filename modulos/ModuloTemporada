@@ -1,0 +1,112 @@
+temporada se representa con estrT
+
+donde estrT es: tupla<
+	sistemaLaboral: arreglo_dimensionable de conj(pgremio),
+	paritariasAbiertas: conj(pparitaria),
+	acuerdosVigentes: arreglo_dimensionable de lista(pacuerdo),
+>
+
+---
+
+Rep:
+
+.
+.
+.
+.
+.
+
+---
+
+Iniciar: in si: sistema -> res: temporada
+iIniciar: in si: sistema -> res: estrT
+	
+	res.sistemaLaboral <- DameSistemaLaboralEstatico(si)
+	res.paritariasAbiertas <- Vacío()
+	res.acuerdosVigentes <- CrearArreglo(CantidadDeAlianzas(si))
+
+	nat indice <- 0
+	while indice < CantidadDeAlianzas(si)
+		res.acuerdosVigentes[indice] <- Vacía()
+
+
+---
+
+AbrirParitaria: in/out tmp: temporada, in pg: pgremio, in p: nat, in t: nat, in es: conj(empresa)
+iAbrirParitaria: in/out tmp: estrT, in pg: pgremio, in p: nat, in t: nat, in es: conj(empresa)
+	
+	Agregar(estrT.paritariasAbiertas, &NuevaParitaria(pg, p, t))
+
+
+---
+
+CerrarAcuerdo: in/out tmp: temporada, in pg : pgremio , in porc:nat 
+iCerrarAcuerdo: in/out tmp: estrT , in pg : pgremio , in porc:nat
+
+	itConj(pparitaria) itp <- CrearIt(estrT.paritariasAbiertas)
+
+	while DameGremio(*Siguiente(itp)) != pg
+		Avanzar(itp)
+
+	pparitaria p <- Siguiente(itp)
+	EliminarSiguiente(itp)
+
+	nat numAlianza <- DameNumeroAlianza(*pg)
+
+	itLista(pacuerdo) ita <- CrearIt(estrT.acuerdosVigentes[numAlianza])
+
+	while HaySiguiente(ita) && DamePorc(*Siguiente(ita)) < porc
+		Avanzar(ita)
+		Agregar(tmp.paritariasAbiertas, DameParitaria(*Anterior(ita)))
+		EliminarAnterior(ita)
+
+	AgregarComoSiguiente(ita,&NuevoAcuerdo(p, porc))
+
+---
+
+Reabrir: in/out tmp: temporada, in pg: pgremio
+iReabrir: in/out tmp: estrT,  in pg: pgremio
+
+	nat numAlianza <- DameNumeroAlianza(*pg)
+
+	itLista(pacuerdo) ita <- CrearIt(estrT.acuerdosVigentes[numAlianza])
+
+	while DameGremio(*Siguiente(ita)) != pg
+		Avanzar(ita)
+
+	pparitaria p <- DameParitaria(*Siguiente(ita))
+
+	EliminarSiguiente(ita)
+
+	Agregar(estrT.paritariasAbiertas, p)
+
+
+---
+
+Gremios: in/out tmp: temporada
+iGremios: in/out tmp: estrT 
+
+---
+
+EnParitarias: in/out tmp: temporada
+iEnParitarias: in/out tmp: estrT 
+
+---
+
+GremiosNegociando: in/out tmp: temporada
+iGremiosNegociando: in/out tmp: estrT 
+
+---
+
+EmpresasNegociando: in/out tmp: temporada
+iEmpresasNegociando: in/out tmp: estrT 
+
+---
+
+TrabajadoresNegociando: in/out tmp: temporada
+iTrabajadoresNegociando: in/out tmp: estrT 
+
+---
+
+GremioConflictivo: in/out tmp: temporada
+iGremioConflictivo: in/out tmp: estrT 

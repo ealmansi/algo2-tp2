@@ -1,0 +1,63 @@
+sistemaLaboral se representa con conj(conj(pgremio))
+
+
+----
+
+AgregarGremio:	in/out si: sistema, in pg: pgremio
+
+iAgregarGremio:	in/out si: conj(conj(pgremio)), in pg: pgremio
+	
+	conj(pgremio) cpg <- Vacío()
+	Agregar(cpg,pg)
+	Agregar(si, cpg)
+
+
+----
+
+AliarGremios: in/out si: sistema, in pg1: pgremio, in pg2: pgremio
+
+iAliarGremios: in/out si: conj(conj(pgremio)), in pg1: pgremio, in pg2: pgremio
+
+	itConj(conj(pgremio)) it1 <- CrearIt(si)
+
+	while ! Pertenece?(Siguiente(it1),pg1)
+		Avanzar(it1)
+
+	conj(pgremio) aliadosG1 <- Copiar(Siguiente(it1))
+
+	EliminarSiguiente(it1)
+
+	itConj(conj(pgremio)) it2 <- CrearIt(si)
+
+	while ! Pertenece?(Siguiente(it2),pg2)
+		Avanzar(it2)
+
+	conj(pgremio) aliadosG2 <- Copiar(Siguiente(it2))
+
+	EliminarSiguiente(it2)
+
+	Agregar(si, Union(aliadosG1,aliadosG2) )
+
+----
+
+DameSistemaLaboralEstatico: in si: sistema -> res: arreglo_dimensionable de conj(pgremio)
+
+iDameSistemaLaboralEstatico: in si: conj(conj(pgremio)) -> res: arreglo_dimensionable de conj(pgremio)
+
+	res <- CrearArreglo(Cardinal(si))
+
+	nat indice <- 0
+
+	itConj(conj(pgremio)) itc <- CrearIt(si)
+	
+	while HaySiguiente(itc)
+
+		res[indice] <- Siguiente(itc)
+
+		itConj(pgremio) itp <- CrearIt(res[indice])
+		while HaySiguiente(itp)
+			GuardarNumeroAlianza(*Siguiente(itp),indice)
+			Avanzar(itp)
+
+		Avanzar(itc)
+		indice <- indice + 1

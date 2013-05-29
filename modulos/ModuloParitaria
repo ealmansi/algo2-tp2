@@ -1,0 +1,37 @@
+paritaria se representa con estrP
+
+donde estrP es: tupla<
+	gremio: pgremio
+	piso: nat
+	tope: nat
+>
+
+---
+
+NuevaParitaria: in pg: pgremio, in ps: nat, in tp: nat -> res: paritaria
+iNuevaParitaria: in pg: pgremio, in ps: nat, in tp: nat -> res: estrP
+
+	res.gremio <- pg
+	res.piso <- ps
+	res.tope <- tp
+
+---
+
+DameGremio: in pa: paritaria -> res: pgremio
+iDameGremio: in pa: estrP -> res: pgremio
+
+	res <- pa.gremio
+
+---
+
+DamePiso: in pa: paritaria -> res: nat
+iDamePiso: in pa: estrP -> res: nat
+
+	res <- pa.piso
+
+---
+
+DameTope: in pa: paritaria -> res: nat
+iDameTope: in pa: estrP -> res: nat
+
+	res <- pa.tope

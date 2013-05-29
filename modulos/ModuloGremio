@@ -1,0 +1,44 @@
+gremio se representa con estrG
+
+donde estrG es: tupla<
+	empresas: conj(empresas)
+	#afiliados: nat
+	numeroAlianza: nat
+>
+
+---
+
+NuevoGremio in es: conj(empresa), af: nat -> res: gremio
+iNuevoGremio in es: conj(empresa), af: nat -> res: estrG
+
+	res.empresas <- es
+	res.#afiliados <- af
+	res.numeroAlianza <- 0
+
+---
+
+DameEmpresas in gr: gremio -> res: conj(empresa) 
+iDameEmpresas in: gr: estrG -> res: conj(empresa) 
+
+	res <- gr.empresas
+
+---
+
+Dame#Afiliados in gr: gremio -> res: nat
+iDame#Afiliados in gr: estrG -> res: nat
+
+	res <- gr.#afiliados
+
+---
+
+DameNumeroAlianza in gr: gremio -> res: nat
+iDameNumeroAlianza in gr: estrG -> res: nat
+
+	res <- gr.numeroAlianza
+
+---
+
+GuardarNumeroAlianza in/out gr: gremio, in numero: nat
+iGuardarNumeroAlianza in/out gr: estrG, in numero: nat
+	
+	estrG.numeroAlianza <- numero
