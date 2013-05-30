@@ -8,11 +8,11 @@ donde estrG es: tupla<
 
 ---
 
-NuevoGremio in es: conj(empresa), af: nat -> res: gremio
-iNuevoGremio in es: conj(empresa), af: nat -> res: estrG
+NuevoGremio in es: conj(empresa), #as: nat -> res: gremio
+iNuevoGremio in es: conj(empresa), #as: nat -> res: estrG
 
 	res.empresas <- es
-	res.#afiliados <- af
+	res.#afiliados <- #as
 	res.numeroAlianza <- 0
 
 ---
@@ -38,7 +38,7 @@ iDameNumeroAlianza in gr: estrG -> res: nat
 
 ---
 
-GuardarNumeroAlianza in/out gr: gremio, in numero: nat
-iGuardarNumeroAlianza in/out gr: estrG, in numero: nat
+GuardarNumeroAlianza in/out gr: gremio, in num: nat
+iGuardarNumeroAlianza in/out gr: estrG, in num: nat
 	
-	estrG.numeroAlianza <- numero
+	estrG.numeroAlianza <- num

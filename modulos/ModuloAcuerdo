@@ -1,0 +1,35 @@
+acuerdo se representa con estrA
+
+donde estrA es: tupla<
+	paritaria: pparitaria
+	porcentaje: nat
+>
+
+---
+
+NuevoAcuerdo: in pa: pparitaria, in porcentaje: nat -> res: acuerdo
+iNuevoAcuerdo: in pa: pparitaria, in porcentaje: nat -> res: estrA
+
+	res.paritaria <- pa
+	res.porcentaje <- porcentaje
+
+---
+
+DameParitaria: in ac: acuerdo -> res: pparitaria
+iDameParitaria: in ac: estrA -> res: pparitaria
+
+	res <- estrA.paritaria
+
+---
+
+DameGremio: in ac: acuerdo -> res: pgremio
+iDameGremio: in ac: estrA -> res: pgremio
+
+	res <- DameGremio(*DameParitaria(ac))
+
+---
+
+DamePorcentaje: in ac: acuerdo -> res: nat
+iDamePorcentaje: in ac: estrA -> res: nat
+
+	res <- estrA.porcentaje

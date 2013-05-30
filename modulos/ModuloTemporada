@@ -1,112 +1,141 @@
 temporada se representa con estrT
 
 donde estrT es: tupla<
-	sistemaLaboral: arreglo_dimensionable de conj(pgremio),
+	#alianzas: nat,
+	gremios: conj(gremios),
 	paritariasAbiertas: conj(pparitaria),
 	acuerdosVigentes: arreglo_dimensionable de lista(pacuerdo),
 >
 
 ---
 
-Rep:
-
-.
-.
-.
-.
-.
-
----
-
-Iniciar: in si: sistema -> res: temporada
-iIniciar: in si: sistema -> res: estrT
+Iniciar: in sl: sistemaLaboral -> res: temporada
+iIniciar: in sl: sistemaLaboral -> res: estrT
 	
-	res.sistemaLaboral <- DameSistemaLaboralEstatico(si)
+	res.#alianzas <- Dame#Alianzas(sl)
+	res.gremios <- DameGremios(sl)
 	res.paritariasAbiertas <- Vacío()
-	res.acuerdosVigentes <- CrearArreglo(CantidadDeAlianzas(si))
+	res.acuerdosVigentes <- CrearArreglo(res.#alianzas)
 
 	nat indice <- 0
-	while indice < CantidadDeAlianzas(si)
+	while indice < res.#alianzas
 		res.acuerdosVigentes[indice] <- Vacía()
+		indice <- indice + 1
 
 
 ---
 
-AbrirParitaria: in/out tmp: temporada, in pg: pgremio, in p: nat, in t: nat, in es: conj(empresa)
-iAbrirParitaria: in/out tmp: estrT, in pg: pgremio, in p: nat, in t: nat, in es: conj(empresa)
+AbrirParitaria: in/out tmp: temporada, in gr: pgremio, in p: nat, in t: nat, in es: conj(empresa)
+iAbrirParitaria: in/out tmp: estrT, in gr: pgremio, in p: nat, in t: nat, in es: conj(empresa)
 	
-	Agregar(estrT.paritariasAbiertas, &NuevaParitaria(pg, p, t))
+	Agregar(estrT.paritariasAbiertas, &NuevaParitaria(gr, p, t))
 
 
 ---
 
-CerrarAcuerdo: in/out tmp: temporada, in pg : pgremio , in porc:nat 
-iCerrarAcuerdo: in/out tmp: estrT , in pg : pgremio , in porc:nat
+CerrarAcuerdo: in/out tmp: temporada, in gr : pgremio , in pcj:nat 
+iCerrarAcuerdo: in/out tmp: estrT, in gr : pgremio , in pcj:nat
 
-	itConj(pparitaria) itp <- CrearIt(estrT.paritariasAbiertas)
+	itConj(pparitaria) itParitarias <- CrearIt(estrT.paritariasAbiertas)
 
-	while DameGremio(*Siguiente(itp)) != pg
-		Avanzar(itp)
+	while DameGremio(*Siguiente(itParitarias)) != gr
+		Avanzar(itParitarias)
 
-	pparitaria p <- Siguiente(itp)
-	EliminarSiguiente(itp)
+	pparitaria p <- Siguiente(itParitarias)
+	EliminarSiguiente(itParitarias)
 
-	nat numAlianza <- DameNumeroAlianza(*pg)
+	nat numeroAlianza <- DameNumeroAlianza(*gr)
 
-	itLista(pacuerdo) ita <- CrearIt(estrT.acuerdosVigentes[numAlianza])
+	itLista(pacuerdo) itAcuerdos <- CrearIt(estrT.acuerdosVigentes[numeroAlianza])
 
-	while HaySiguiente(ita) && DamePorc(*Siguiente(ita)) < porc
-		Avanzar(ita)
-		Agregar(tmp.paritariasAbiertas, DameParitaria(*Anterior(ita)))
-		EliminarAnterior(ita)
+	while HaySiguiente(itAcuerdos) && DamePorcentaje(*Siguiente(itAcuerdos)) < pcj
+		Agregar(tmp.paritariasAbiertas, DameParitaria(*Siguiente(itAcuerdos)))
+		EliminarSiguiente(itAcuerdos)
 
-	AgregarComoSiguiente(ita,&NuevoAcuerdo(p, porc))
+	AgregarComoSiguiente(itAcuerdos,&NuevoAcuerdo(p, porcentaje))
 
 ---
 
-Reabrir: in/out tmp: temporada, in pg: pgremio
-iReabrir: in/out tmp: estrT,  in pg: pgremio
+Reabrir: in/out tmp: temporada, in gr: pgremio
+iReabrir: in/out tmp: estrT,  in gr: pgremio
 
-	nat numAlianza <- DameNumeroAlianza(*pg)
+	nat numAlianza <- DameNumeroAlianza(*gr)
 
-	itLista(pacuerdo) ita <- CrearIt(estrT.acuerdosVigentes[numAlianza])
+	itLista(pacuerdo) itAcuerdos <- CrearIt(estrT.acuerdosVigentes[numAlianza])
 
-	while DameGremio(*Siguiente(ita)) != pg
-		Avanzar(ita)
+	while DameGremio(*Siguiente(itAcuerdos)) != gr
+		Avanzar(itAcuerdos)
 
-	pparitaria p <- DameParitaria(*Siguiente(ita))
+	pparitaria p <- DameParitaria(*Siguiente(itAcuerdos))
 
-	EliminarSiguiente(ita)
+	EliminarSiguiente(itAcuerdos)
 
 	Agregar(estrT.paritariasAbiertas, p)
 
 
 ---
 
-Gremios: in/out tmp: temporada
-iGremios: in/out tmp: estrT 
+Gremios: in/out tmp: temporada -> res: conj(gremio)
+iGremios: in/out tmp: estrT -> res: conj(gremio)
+
+
 
 ---
 
-EnParitarias: in/out tmp: temporada
-iEnParitarias: in/out tmp: estrT 
+EnParitarias: in/out tmp: temporada, in gr: pgremio -> res: bool
+iEnParitarias: in/out tmp: estrT, in gr: pgremio -> res: bool
+
+	itConj(pparitaria) itParitarias <- CrearIt(estrT.paritariasAbiertas)
+
+	while HaySiguiente(itParitarias) && DameGremio(*Siguiente(itParitarias)) != gr
+		Avanzar(itParitarias)
+
+	res <- HaySiguiente(itParitarias)
 
 ---
 
-GremiosNegociando: in/out tmp: temporada
-iGremiosNegociando: in/out tmp: estrT 
+GremiosNegociando: in/out tmp: temporada -> res: conj(pgremio)
+iGremiosNegociando: in/out tmp: estrT -> res: conj(pgremio)
+
+	res <- Vacío()
+
+	itConj(pparitaria) itParitarias <- CrearIt(estrT.paritariasAbiertas)
+
+	while HaySiguiente(itParitarias)
+		Agregar(res,DameGremio(*Siguiente(itParitarias)))
+		Avanzar(itParitarias)
 
 ---
 
-EmpresasNegociando: in/out tmp: temporada
-iEmpresasNegociando: in/out tmp: estrT 
+EmpresasNegociando: in/out tmp: temporada -> res: conj(empresa)
+iEmpresasNegociando: in/out tmp: estrT -> res: conj(empresa)
+
+	res <- Vacío()
+
+	itConj(pparitaria) itParitarias <- CrearIt(estrT.paritariasAbiertas)
+
+	while HaySiguiente(itParitarias)
+		conj(empresa) empresasParitaria <- DameEmpresas(*DameGremio(*Siguiente(itParitarias)))
+		res <- Union(res, empresasParitaria)
+		Avanzar(itParitarias)
 
 ---
 
-TrabajadoresNegociando: in/out tmp: temporada
-iTrabajadoresNegociando: in/out tmp: estrT 
+TrabajadoresNegociando: in/out tmp: temporada -> res: nat
+iTrabajadoresNegociando: in/out tmp: estrT -> res: nat
+
+	res <- 0
+
+	itConj(pparitaria) itParitarias <- CrearIt(estrT.paritariasAbiertas)
+
+	while HaySiguiente(itParitarias)
+		nat #afiliadosParitaria <- Dame#Afiliados(*DameGremio(*Siguiente(itParitarias)))
+		res <- res + #afiliadosParitaria
+		Avanzar(itParitarias)
 
 ---
 
-GremioConflictivo: in/out tmp: temporada
-iGremioConflictivo: in/out tmp: estrT 
+GremioConflictivo: in/out tmp: temporada -> res: pgremio
+iGremioConflictivo: in/out tmp: estrT -> res: pgremio
+
+

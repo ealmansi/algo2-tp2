@@ -80,30 +80,25 @@
 /*	*	*	*	*	*	*	*	*/
 
 temporada se representa con estrT donde estrT es: tupla<
-	gremios: arreglo_dimensionable de lista(gremio),
-	paritariasAbiertas: lista(paritaria),
-	acuerdosVigentes: arreglo_dimensionable de lista(acuerdo),
+	sistemaLaboral: arreglo_dimensionable de conj(pgremio),
+	paritariasAbiertas: conj(pparitaria),
+	acuerdosVigentes: arreglo_dimensionable de lista(pacuerdo),
 >
 
-sistemaLaboral se representa con estrS donde estrS es: tupla<
-	gremios
-	aliados
->
+sistemaLaboral se representa con conj(conj(pgremio))
+
 
 acuerdo se representa con estrA donde estrA es: tupla<
-	id
-	paritaria
-	valor
-	acuerdosPrevios
 >
 
 paritaria se representa con estrP donde estrP es: tupla<
-	gremio
-	piso
-	tope
+	gremio: pgremio
+	piso: nat
+	tope: nat
 >
 
 gremio se representa con estrG donde estrG es: tupla<
-	empresas
-	#afiliados
+	empresas: conj(empresas)
+	#afiliados: nat
+	numeroAlianza: nat
 >

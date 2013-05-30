@@ -8,10 +8,10 @@ donde estrP es: tupla<
 
 ---
 
-NuevaParitaria: in pg: pgremio, in ps: nat, in tp: nat -> res: paritaria
-iNuevaParitaria: in pg: pgremio, in ps: nat, in tp: nat -> res: estrP
+NuevaParitaria: in gr: pgremio, in ps: nat, in tp: nat -> res: paritaria
+iNuevaParitaria: in gr: pgremio, in ps: nat, in tp: nat -> res: estrP
 
-	res.gremio <- pg
+	res.gremio <- gr
 	res.piso <- ps
 	res.tope <- tp
 

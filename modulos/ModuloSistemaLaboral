@@ -1,63 +1,76 @@
-sistemaLaboral se representa con conj(conj(pgremio))
+sistemaLaboral se representa con estrS
+
+donde estrS es: conj(alianza),
+
+	alianza es: conj(pgremio)
 
 
 ----
 
-AgregarGremio:	in/out si: sistema, in pg: pgremio
-
-iAgregarGremio:	in/out si: conj(conj(pgremio)), in pg: pgremio
+AgregarGremio:	in/out sl: sistemaLaboral, in gr: pgremio
+iAgregarGremio:	in/out sl: estrS, in gr: pgremio
 	
-	conj(pgremio) cpg <- Vacío()
-	Agregar(cpg,pg)
-	Agregar(si, cpg)
+	alianza alianzaDelGremio <- Vacío()
+	Agregar(alianzaDelGremio,gr)
+
+	Agregar(sl, alianzaDelGremio)
 
 
 ----
 
-AliarGremios: in/out si: sistema, in pg1: pgremio, in pg2: pgremio
+AliarGremios: in/out sl: sistemaLaboral, in gr1: pgremio, in gr2: pgremio
+iAliarGremios: in/out sl: estrS, in gr1: pgremio, in gr2: pgremio
 
-iAliarGremios: in/out si: conj(conj(pgremio)), in pg1: pgremio, in pg2: pgremio
+	alianza aliadosG1 <- RemoverAlianza(sl,gr1)
+	alianza aliadosG2 <- RemoverAlianza(sl,gr2)
 
-	itConj(conj(pgremio)) it1 <- CrearIt(si)
-
-	while ! Pertenece?(Siguiente(it1),pg1)
-		Avanzar(it1)
-
-	conj(pgremio) aliadosG1 <- Copiar(Siguiente(it1))
-
-	EliminarSiguiente(it1)
-
-	itConj(conj(pgremio)) it2 <- CrearIt(si)
-
-	while ! Pertenece?(Siguiente(it2),pg2)
-		Avanzar(it2)
-
-	conj(pgremio) aliadosG2 <- Copiar(Siguiente(it2))
-
-	EliminarSiguiente(it2)
-
-	Agregar(si, Union(aliadosG1,aliadosG2) )
+	Agregar(sl, Union(aliadosG1,aliadosG2) )
 
 ----
 
-DameSistemaLaboralEstatico: in si: sistema -> res: arreglo_dimensionable de conj(pgremio)
+RemoverAlianza: in sl: sistemaLaboral, in gr: pgremio -> res: alianza
+iRemoverAlianza: in sl: estrS, in gr: pgremio -> res: alianza
 
-iDameSistemaLaboralEstatico: in si: conj(conj(pgremio)) -> res: arreglo_dimensionable de conj(pgremio)
+	itConj(alianza) it <- CrearIt(sl)
 
-	res <- CrearArreglo(Cardinal(si))
+	while ! Pertenece?(Siguiente(it),gr)
+		Avanzar(it)
 
-	nat indice <- 0
+	res <- Copiar(Siguiente(it))
 
-	itConj(conj(pgremio)) itc <- CrearIt(si)
+	EliminarSiguiente(it)
+
+----
+
+Dame#Alianzas: in sl: sistemaLaboral -> res: nat
+iDame#Alianzas: in sl: estrS -> res: nat
+
+---
+
+DameGremios: in sl: sistemaLaboral -> res: conj(pgremio)
+iDameGremios: in sl: estrS -> res: conj(pgremio)
+
+	res <- Vacío()
 	
-	while HaySiguiente(itc)
+	nat numeroAlianza <- 0
 
-		res[indice] <- Siguiente(itc)
+	itConj(alianza) itAlianzas <- CrearIt(sl)
+	while HaySiguiente(itAlianzas)
 
-		itConj(pgremio) itp <- CrearIt(res[indice])
-		while HaySiguiente(itp)
-			GuardarNumeroAlianza(*Siguiente(itp),indice)
-			Avanzar(itp)
+		alianza al <- Siguiente(itAlianzas)
+		GuardarNumeroAlianzaEnGremios(al, numeroAlianza)
+		res <- Union(res, al)
 
-		Avanzar(itc)
-		indice <- indice + 1
+		Avanzar(itAlianza)
+		numeroAlianza <- numeroAlianza + 1
+		
+---
+
+/* no se exporta */
+iGuardarNumeroAlianzaEnGremios: in al: alianza, in numeroAlianza: nat
+
+	itConj(pgremio) itGremios <- CrearIt(al)
+	while HaySiguiente(itGremios)
+
+		GuardarNumeroAlianza(*Siguiente(itGremios),numeroAlianza)
+		Avanzar(itGremios)
