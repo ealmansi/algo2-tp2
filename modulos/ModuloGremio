@@ -1,9 +1,8 @@
 gremio se representa con estrG
 
 donde estrG es: tupla<
-	empresas: conj(empresas)
+	empresas: conj(empresa)
 	#afiliados: nat
-	numeroAlianza: nat
 >
 
 ---
@@ -13,7 +12,6 @@ iNuevoGremio in es: conj(empresa), #as: nat -> res: estrG
 
 	res.empresas <- es
 	res.#afiliados <- #as
-	res.numeroAlianza <- 0
 
 ---
 
@@ -31,14 +29,10 @@ iDame#Afiliados in gr: estrG -> res: nat
 
 ---
 
-DameNumeroAlianza in gr: gremio -> res: nat
-iDameNumeroAlianza in gr: estrG -> res: nat
+DameId in gr: gremio -> res: nat
+iDameId in gr: estrG -> res: nat
 
-	res <- gr.numeroAlianza
+	res <- DamePrimero(gr.empresas)
 
 ---
 
-GuardarNumeroAlianza in/out gr: gremio, in num: nat
-iGuardarNumeroAlianza in/out gr: estrG, in num: nat
-	
-	estrG.numeroAlianza <- num

@@ -1,76 +1,53 @@
 sistemaLaboral se representa con estrS
 
-donde estrS es: conj(alianza),
-
-	alianza es: conj(pgremio)
-
+donde estrS es tupla<
+	gremios: conj(pgremio)
+	grupoAliadosGremio : diccTrie(idGrupoAliados)
+	proximoIdGrupoAliados: nat
+>
 
 ----
 
 AgregarGremio:	in/out sl: sistemaLaboral, in gr: pgremio
 iAgregarGremio:	in/out sl: estrS, in gr: pgremio
 	
-	alianza alianzaDelGremio <- Vacío()
-	Agregar(alianzaDelGremio,gr)
-
-	Agregar(sl, alianzaDelGremio)
-
+	Agregar(sl.gremios, gr)
+	Definir(sl.grupoAliadosGremio, DameNombre(*gr), sl.proximoIdGrupoAliados)
+	sl.proximoIdGrupoAliados <- sl.proximoIdGrupoAliados + 1
 
 ----
 
 AliarGremios: in/out sl: sistemaLaboral, in gr1: pgremio, in gr2: pgremio
 iAliarGremios: in/out sl: estrS, in gr1: pgremio, in gr2: pgremio
 
-	alianza aliadosG1 <- RemoverAlianza(sl,gr1)
-	alianza aliadosG2 <- RemoverAlianza(sl,gr2)
+	idGrupoAliados idGrupoG1 <- DameIdGrupoAliados(sl, gr1)
+	idGrupoAliados idGrupoG2 <- DameIdGrupoAliados(sl, gr2)
 
-	Agregar(sl, Union(aliadosG1,aliadosG2) )
+	itConj(pgremio) itGremios <- sl.gremios
 
-----
+	while HaySiguiente(itGremios)
 
-RemoverAlianza: in sl: sistemaLaboral, in gr: pgremio -> res: alianza
-iRemoverAlianza: in sl: estrS, in gr: pgremio -> res: alianza
+		if DameIdGrupoAliados(sl, Siguente(itGremios)) = idGrupoG1
+			DefinirIdGrupoAliados(sl, Siguente(itGremios), idGrupoG2)
 
-	itConj(alianza) it <- CrearIt(sl)
+		Avanzar(itGrupo)
 
-	while ! Pertenece?(Siguiente(it),gr)
-		Avanzar(it)
+---
 
-	res <- Copiar(Siguiente(it))
+DameIdGrupoAliados: in sl: sistemaLaboral, gr: pgremio -> res: idGrupoAliados
+iDameIdGrupoAliados: in sl: estrS, gr: pgremio -> res: idGrupoAliados
 
-	EliminarSiguiente(it)
-
-----
-
-Dame#Alianzas: in sl: sistemaLaboral -> res: nat
-iDame#Alianzas: in sl: estrS -> res: nat
+	res <- Obtener(sl.grupoAliadosGremio, DameId(*gr))
 
 ---
 
 DameGremios: in sl: sistemaLaboral -> res: conj(pgremio)
 iDameGremios: in sl: estrS -> res: conj(pgremio)
 
-	res <- Vacío()
-	
-	nat numeroAlianza <- 0
+	res <- sl.gremios
 
-	itConj(alianza) itAlianzas <- CrearIt(sl)
-	while HaySiguiente(itAlianzas)
-
-		alianza al <- Siguiente(itAlianzas)
-		GuardarNumeroAlianzaEnGremios(al, numeroAlianza)
-		res <- Union(res, al)
-
-		Avanzar(itAlianza)
-		numeroAlianza <- numeroAlianza + 1
-		
 ---
 
-/* no se exporta */
-iGuardarNumeroAlianzaEnGremios: in al: alianza, in numeroAlianza: nat
+iDefinirIdGrupoAliados: in sl: estrS, in gr: pgremio, in id: idGrupoAliados
 
-	itConj(pgremio) itGremios <- CrearIt(al)
-	while HaySiguiente(itGremios)
-
-		GuardarNumeroAlianza(*Siguiente(itGremios),numeroAlianza)
-		Avanzar(itGremios)
+	Definir(sl.grupoAliadosGremio, DameId(*gr), id)
