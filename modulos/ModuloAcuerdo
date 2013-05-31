@@ -15,21 +15,21 @@ iNuevoAcuerdo: in pa: pparitaria, in porcentaje: nat -> res: estrA
 
 ---
 
-DameParitaria: in ac: acuerdo -> res: pparitaria
-iDameParitaria: in ac: estrA -> res: pparitaria
+ObtenerParitaria: in ac: acuerdo -> res: pparitaria
+iObtenerParitaria: in ac: estrA -> res: pparitaria
 
 	res <- estrA.paritaria
 
 ---
 
-DameGremio: in ac: acuerdo -> res: pgremio
-iDameGremio: in ac: estrA -> res: pgremio
+ObtenerGremio: in ac: acuerdo -> res: pgremio
+iObtenerGremio: in ac: estrA -> res: pgremio
 
-	res <- DameGremio(*DameParitaria(ac))
+	res <- ObtenerGremio(*ObtenerParitaria(ac))
 
 ---
 
-DamePorcentaje: in ac: acuerdo -> res: nat
-iDamePorcentaje: in ac: estrA -> res: nat
+ObtenerPorcentaje: in ac: acuerdo -> res: nat
+iObtenerPorcentaje: in ac: estrA -> res: nat
 
 	res <- estrA.porcentaje

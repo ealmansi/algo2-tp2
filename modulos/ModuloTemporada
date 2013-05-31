@@ -3,8 +3,8 @@ temporada se representa con estrT
 donde estrT es: tupla<
 	sistema : sistemaLaboral, 
 	paritariasAbiertas: conj(pparitaria),
-	acuerdosVigentes: diccTrie(lista(pacuerdo)),
-	#aperturas: diccTrie(nat),
+	acuerdosVigentes: vector(lista(pacuerdo)),
+	#aperturas: vector(nat),
 >
 
 ---
@@ -14,31 +14,34 @@ iIniciar: in sl: sistemaLaboral -> res: estrT
 	
 	res.sistema <- sl
 	res.paritariasAbiertas <- Vacío()
-	res.acuerdosVigentes <- DiccVacío()
-	res.#aperturas <- DiccVacío()
+	res.acuerdosVigentes <- Vacía()
+	res.#aperturas <- Vacía()
+
+	InicializarAcuerdosVigentes(res)
+	InicializarAperturas(res)
 
 ---
 
-AbrirParitaria: in/out tmp: temporada, in gr: pgremio, in p: nat, in t: nat, in es: conj(empresa)
-iAbrirParitaria: in/out tmp: estrT, in gr: pgremio, in p: nat, in t: nat, in es: conj(empresa)
+AbrirParitaria: in/out tmp: temporada, in gr: gremio, in p: nat, in t: nat, in es: conj(empresa)
+iAbrirParitaria: in/out tmp: estrT, in gr: gremio, in p: nat, in t: nat, in es: conj(empresa)
 
-	if Dame#Aperturas(tmp, gr) > 0
-		RemoverAcuerdo(tmp, gr)
+	if Obtener#Aperturas(tmp, &gr) > 0
+		RemoverAcuerdo(tmp, &gr)
 
-	Agregar(tmp.paritariasAbiertas, &NuevaParitaria(gr, p, t))
+	Agregar(tmp.paritariasAbiertas, &NuevaParitaria(&gr, p, t))
 
 ---
 
-CerrarAcuerdo: in/out tmp: temporada, in gr : pgremio , in pcj:nat 
-iCerrarAcuerdo: in/out tmp: estrT, in gr : pgremio , in pcj:nat
+CerrarAcuerdo: in/out tmp: temporada, in gr : gremio , in pcj:nat 
+iCerrarAcuerdo: in/out tmp: estrT, in gr : gremio , in pcj:nat
 
-	RemoverParitaria(tmp, gr)
+	RemoverParitaria(tmp, &gr)
 	
-	itLista(pacuerdo) itAcuerdos <- CrearIt(DameAcuerdosDeAliados(tmp, gr))
+	itLista(pacuerdo) itAcuerdos <- CrearIt(ObtenerAcuerdosDeAliados(tmp, &gr))
 
-	while HaySiguiente(itAcuerdos) && DamePorcentaje(*Siguiente(itAcuerdos)) < pcj
+	while HaySiguiente(itAcuerdos) && ObtenerPorcentaje(*Siguiente(itAcuerdos)) < pcj
 
-		Agregar(tmp.paritariasAbiertas, DameParitaria(*Siguiente(itAcuerdos)))
+		Agregar(tmp.paritariasAbiertas, ObtenerParitaria(*Siguiente(itAcuerdos)))
 
 		EliminarSiguiente(itAcuerdos)
 
@@ -46,10 +49,10 @@ iCerrarAcuerdo: in/out tmp: estrT, in gr : pgremio , in pcj:nat
 
 ---
 
-Reabrir: in/out tmp: temporada, in gr: pgremio
-iReabrir: in/out tmp: estrT,  in gr: pgremio
+Reabrir: in/out tmp: temporada, in gr: gremio
+iReabrir: in/out tmp: estrT,  in gr: gremio
 
-	pparitaria pa <- RemoverAcuerdo(tmp, gr)
+	pparitaria pa <- RemoverAcuerdo(tmp, &gr)
 
 	Agregar(tmp.paritariasAbiertas, pa)
 
@@ -58,7 +61,7 @@ iReabrir: in/out tmp: estrT,  in gr: pgremio
 Gremios: in/out tmp: temporada -> res: conj(gremio)
 iGremios: in/out tmp: estrT -> res: conj(gremio)
 
-	res <- DameGremios(tmp.sistema)
+	res <- ObtenerGremios(tmp.sistema)
 
 ---
 
@@ -67,7 +70,7 @@ iEnParitarias: in/out tmp: estrT, in gr: pgremio -> res: bool
 
 	itConj(pparitaria) itParitarias <- CrearIt(tmp.paritariasAbiertas)
 
-	while HaySiguiente(itParitarias) && DameGremio(*Siguiente(itParitarias)) != gr
+	while HaySiguiente(itParitarias) && ObtenerGremio(*Siguiente(itParitarias)) != gr
 		Avanzar(itParitarias)
 
 	res <- HaySiguiente(itParitarias)
@@ -82,7 +85,7 @@ iGremiosNegociando: in/out tmp: estrT -> res: conj(pgremio)
 	itConj(pparitaria) itParitarias <- CrearIt(tmp.paritariasAbiertas)
 
 	while HaySiguiente(itParitarias)
-		Agregar(res,DameGremio(*Siguiente(itParitarias)))
+		Agregar(res,ObtenerGremio(*Siguiente(itParitarias)))
 		Avanzar(itParitarias)
 
 ---
@@ -95,7 +98,7 @@ iEmpresasNegociando: in/out tmp: estrT -> res: conj(empresa)
 	itConj(pparitaria) itParitarias <- CrearIt(tmp.paritariasAbiertas)
 
 	while HaySiguiente(itParitarias)
-		conj(empresa) empresasParitaria <- DameEmpresas(*DameGremio(*Siguiente(itParitarias)))
+		conj(empresa) empresasParitaria <- ObtenerEmpresas(*ObtenerGremio(*Siguiente(itParitarias)))
 		res <- Union(res, empresasParitaria)
 		Avanzar(itParitarias)
 
@@ -109,7 +112,7 @@ iTrabajadoresNegociando: in/out tmp: estrT -> res: nat
 	itConj(pparitaria) itParitarias <- CrearIt(tmp.paritariasAbiertas)
 
 	while HaySiguiente(itParitarias)
-		nat #afiliadosParitaria <- Dame#Afiliados(*DameGremio(*Siguiente(itParitarias)))
+		nat #afiliadosParitaria <- Obtener#Afiliados(*ObtenerGremio(*Siguiente(itParitarias)))
 		res <- res + #afiliadosParitaria
 		Avanzar(itParitarias)
 
@@ -121,12 +124,12 @@ iGremioConflictivo: in/out tmp: estrT -> res: pgremio
 	itConj(pgremio) itGremios <- Gremios(tmp)
 
 	pgremio gremioConflictivo <- Siguiente(itGremios)
-	nat maxAperturas <- Dame#DeAperturas(tmp, gremioConflictivo)
+	nat maxAperturas <- Obtener#DeAperturas(tmp, gremioConflictivo)
 	Avanzar(itGremios)
 
 	while HaySiguiente(itGremios)
 
-		nat #aperturas <- Dame#DeAperturas(tmp, Siguiente(itGremios))
+		nat #aperturas <- Obtener#DeAperturas(tmp, Siguiente(itGremios))
 
 		if #aperturas > maxAperturas
 
@@ -139,14 +142,36 @@ iGremioConflictivo: in/out tmp: estrT -> res: pgremio
 
 ---
 
-iDameAcuerdosDeAliados: in tmp:estrT, in gr: pgremio -> res: lista(pacuerdo)
+/*
+* inicializo vector de acuerdos vigentes con una lista vacía para cada
+* grupo de aliados
+*/
 
-	res <- Obtener(tmp.acuerdosVigentes, DameIdGrupoAliados(tmp.sistema, gr))
+iInicializarAcuerdosVigentes: in tmp: estrT
+
+	nat indice <- 0
+
+	while indice < Obtener#GruposDeAliados(tmp.sistema)
+
+		tmp.acuerdosVigentes[indice] <- Vacía()
+
+		indice <- indice + 1
+
 ---
 
-iDame#DeAperturas: in tmp: , gr: pgremio -> res: nat
+/*
+* inicializo vector contando cantidad de aperturas para cada gremio
+*/
 
-	res <- Obtener(tmp.#aperturas, DameId(*gr))
+iInicializarAperturas: in tmp: estrT
+
+	nat indice <- 0
+
+	while indice < Cardinal(Gremios(tmp))
+
+		tmp.#aperturas[indice] <- 0
+
+		indice <- indice + 1
 
 ---
 
@@ -154,7 +179,7 @@ iRemoverParitaria: in tmp: , in gr: pgremio -> res: pparitaria
 
 	itConj(pparitaria) itParitarias <- CrearIt(tmp.paritariasAbiertas)
 
-	while DameGremio(*Siguiente(itParitarias)) != gr
+	while ObtenerGremio(*Siguiente(itParitarias)) != gr
 		Avanzar(itParitarias)
 
 	res <- Siguiente(itParitarias)
@@ -165,11 +190,27 @@ iRemoverParitaria: in tmp: , in gr: pgremio -> res: pparitaria
 
 iRemoverAcuerdo: in/out tmp: estrT, in gr: pgremio -> res: pparitaria
 	
-	itLista(pacuerdo) itAcuerdos <- CrearIt(DameAcuerdosDeAliados(tmp, gr))
+	itLista(pacuerdo) itAcuerdos <- CrearIt(ObtenerAcuerdosDeAliados(tmp, gr))
 
-	while DameGremio(*Siguiente(itAcuerdos)) != gr
+	while ObtenerGremio(*Siguiente(itAcuerdos)) != gr
 		Avanzar(itAcuerdos)  
 
-	res <- DameParitaria(*Siguiente(itAcuerdos))
+	res <- ObtenerParitaria(*Siguiente(itAcuerdos))
 
 	EliminarSiguiente(itAcuerdos)
+
+---
+
+iObtenerAcuerdosDeAliados: in tmp:estrT, in gr: pgremio -> res: lista(pacuerdo)
+
+	idGrupoDeAliados idGrupo <- ObtenerIdGrupoAliados(tmp.sistema, gr)
+
+	res <- tmp.acuerdosVigentes[idGrupo]
+
+---
+
+iObtener#DeAperturas: in tmp: , gr: pgremio -> res: nat
+
+	idGremio id <- ObtenerId(*gr)
+
+	res <- tmp.#aperturas[id]

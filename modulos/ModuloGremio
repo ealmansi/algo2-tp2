@@ -3,6 +3,7 @@ gremio se representa con estrG
 donde estrG es: tupla<
 	empresas: conj(empresa)
 	#afiliados: nat
+	id: nat
 >
 
 ---
@@ -12,27 +13,35 @@ iNuevoGremio in es: conj(empresa), #as: nat -> res: estrG
 
 	res.empresas <- es
 	res.#afiliados <- #as
+	res.id <- 0
 
 ---
 
-DameEmpresas in gr: gremio -> res: conj(empresa) 
-iDameEmpresas in: gr: estrG -> res: conj(empresa) 
+ObtenerEmpresas in gr: gremio -> res: conj(empresa) 
+iObtenerEmpresas in: gr: estrG -> res: conj(empresa) 
 
 	res <- gr.empresas
 
 ---
 
-Dame#Afiliados in gr: gremio -> res: nat
-iDame#Afiliados in gr: estrG -> res: nat
+Obtener#Afiliados in gr: gremio -> res: nat
+iObtener#Afiliados in gr: estrG -> res: nat
 
 	res <- gr.#afiliados
 
 ---
 
-DameId in gr: gremio -> res: nat
-iDameId in gr: estrG -> res: nat
+ObtenerId: in gr: gremio -> res: nat
+iObtenerId: in gr: estrG -> res: nat
 
-	res <- DamePrimero(gr.empresas)
+	res <- gr.id
+
+---
+
+GuardarId: in/out gr: gremio, in id: nat
+iGuardarId: in/out gr: estrG, in id: nat
+
+	gr.id <- id
 
 ---
 

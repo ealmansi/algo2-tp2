@@ -17,21 +17,21 @@ iNuevaParitaria: in gr: pgremio, in ps: nat, in tp: nat -> res: estrP
 
 ---
 
-DameGremio: in pa: paritaria -> res: pgremio
-iDameGremio: in pa: estrP -> res: pgremio
+ObtenerGremio: in pa: paritaria -> res: pgremio
+iObtenerGremio: in pa: estrP -> res: pgremio
 
 	res <- pa.gremio
 
 ---
 
-DamePiso: in pa: paritaria -> res: nat
-iDamePiso: in pa: estrP -> res: nat
+ObtenerPiso: in pa: paritaria -> res: nat
+iObtenerPiso: in pa: estrP -> res: nat
 
 	res <- pa.piso
 
 ---
 
-DameTope: in pa: paritaria -> res: nat
-iDameTope: in pa: estrP -> res: nat
+ObtenerTope: in pa: paritaria -> res: nat
+iObtenerTope: in pa: estrP -> res: nat
 
 	res <- pa.tope

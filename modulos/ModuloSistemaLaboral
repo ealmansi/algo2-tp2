@@ -1,53 +1,152 @@
 sistemaLaboral se representa con estrS
 
 donde estrS es tupla<
-	gremios: conj(pgremio)
-	grupoAliadosGremio : diccTrie(idGrupoAliados)
-	proximoIdGrupoAliados: nat
+	gremios: vector(pgremio),
+	grupos: vector(idGrupoDeAliados),
 >
 
 ----
 
-AgregarGremio:	in/out sl: sistemaLaboral, in gr: pgremio
-iAgregarGremio:	in/out sl: estrS, in gr: pgremio
-	
-	Agregar(sl.gremios, gr)
-	Definir(sl.grupoAliadosGremio, DameNombre(*gr), sl.proximoIdGrupoAliados)
-	sl.proximoIdGrupoAliados <- sl.proximoIdGrupoAliados + 1
+NuevoSistemaLaboral -> res: sistemaLaboral
+iNuevoSistemaLaboral -> res: estrS
+
+	gremios <- Vacía()
+	grupos <- Vacía()
 
 ----
 
-AliarGremios: in/out sl: sistemaLaboral, in gr1: pgremio, in gr2: pgremio
-iAliarGremios: in/out sl: estrS, in gr1: pgremio, in gr2: pgremio
+AgregarGremio:	in/out sl: sistemaLaboral, in gr: gremio
+iAgregarGremio:	in/out sl: estrS, in gr: gremio
+	
+	idGremio id <- ObtenerProximoIdGremio(sl)
+	GuardarId(gr,id)
 
-	idGrupoAliados idGrupoG1 <- DameIdGrupoAliados(sl, gr1)
-	idGrupoAliados idGrupoG2 <- DameIdGrupoAliados(sl, gr2)
+	gremios[id] <- &gr
+	grupos[id] <- ObtenerProximoIdGrupoDeAliados(sl)
 
-	itConj(pgremio) itGremios <- sl.gremios
+----
 
-	while HaySiguiente(itGremios)
+AliarGremios: in/out sl: sistemaLaboral, in gr1: gremio, in gr2: gremio
+iAliarGremios: in/out sl: estrS, in gr1: gremio, in gr2: gremio
 
-		if DameIdGrupoAliados(sl, Siguente(itGremios)) = idGrupoG1
-			DefinirIdGrupoAliados(sl, Siguente(itGremios), idGrupoG2)
+	idGrupoAliados idGrupoG1 <- ObtenerIdGrupoAliados(sl, gr1)
+	idGrupoAliados idGrupoG2 <- ObtenerIdGrupoAliados(sl, gr2)
 
-		Avanzar(itGrupo)
+	idGrupoAliados minId <- Min(idGrupoG1, idGrupoG2)
+	idGrupoAliados maxId <- Max(idGrupoG1, idGrupoG2)
+
+	nat indice <- 0
+
+	while indice < Longitud(sl.gremios)
+
+		pgremio gr <- sl.gremios[indice]
+
+		if ObtenerIdGrupoAliados(sl, gr) = maxId
+			GuardarIdGrupoAliados(sl, gr, minId)
+
+		indice <- indice + 1
+
+	AsegurarIdsConsecutivos(sl.grupos, maxId)
 
 ---
 
-DameIdGrupoAliados: in sl: sistemaLaboral, gr: pgremio -> res: idGrupoAliados
-iDameIdGrupoAliados: in sl: estrS, gr: pgremio -> res: idGrupoAliados
+ObtenerGremios: in sl: sistemaLaboral -> res: conj(pgremio)
+iObtenerGremios: in sl: estrS -> res: conj(pgremio)
 
-	res <- Obtener(sl.grupoAliadosGremio, DameId(*gr))
+	res <- Vacío()
+
+	nat indice <- 0
+
+	while indice < Longitud(sl.gremios)
+
+		Agregar(res,sl.gremios[indice])
+
+		indice <- indice + 1
 
 ---
 
-DameGremios: in sl: sistemaLaboral -> res: conj(pgremio)
-iDameGremios: in sl: estrS -> res: conj(pgremio)
+iAsegurarIdsConsecutivos: in/out ids: vector(idGrupoAliados), in idBorrado: nat
 
-	res <- sl.gremios
+	nat indice <- 0
+
+	while indice < Longitud(ids)
+
+		if idBorrado < ids[indice]
+			ids[indice] <- ids[indice] - 1
+
+		indice <- indice + 1
 
 ---
 
-iDefinirIdGrupoAliados: in sl: estrS, in gr: pgremio, in id: idGrupoAliados
+/*
+* Pre: los id's de grupos de aliados son consecutivos (con repetidos)
+* Si está garantizado que los id's que aparecen en 'grupos' son numeros
+* consecutivos, entonces el máximo será la cantidad de grupos de aliados
+*/
 
-	Definir(sl.grupoAliadosGremio, DameId(*gr), id)
+Obtener#GruposDeAliados: in sl: sistemaLaboral -> res: nat
+iObtener#GruposDeAliados: in sl: estrS -> res: nat
+
+	res <- MaximoIdGrupoDeAliados(sl)
+
+---
+
+ObtenerIdGrupoAliados: in sl: sistemaLaboral, in gr: pgremio -> res: idGrupoAliados
+iObtenerIdGrupoAliados: in sl: estrS, in gr: pgremio -> res: idGrupoAliados
+
+	res <- sl.grupos[ObtenerId(*gr)]
+
+---
+
+GuardarIdGrupoAliados: in/out sl: sistemaLaboral, in gr: pgremio, in id: idGrupoAliados
+iGuardarIdGrupoAliados: in/out sl: estrS, in gr: pgremio, in id: idGrupoAliados
+
+	sl.grupos[ObtenerId(*gr)] <- id
+
+---
+
+iObtenerProximoIdGremio: in sl: estrS -> res: idGremio
+	
+	res <- Longitud(sl.gremios)
+
+---
+
+iObtenerProximoIdGrupoDeAliados: in sl: estrS -> res: idGrupoAliados
+
+	res <- MaximoIdGrupoDeAliados(sl)
+
+---
+
+MaximoIdGrupoDeAliados: in sl: sistemaLaboral -> res: nat
+iMaximoIdGrupoDeAliados: in sl: estrS -> res: nat
+
+	nat maxId <- 0
+
+	nat indice <- 0
+
+	while indice < Longitud(sl.grupos)
+
+		if maxId < sl.grupos[indice]
+			maxId <- sl.grupos[indice]
+
+		indice <- indice + 1
+
+	res <- maxId
+
+---
+
+iMin: in id1: idGrupoAliados, in id2: idGrupoAliados -> res: idGrupoAliados
+
+	if id1 < id2
+		res <- id1
+	else
+		res <- id2
+
+---
+
+iMax: in id1: idGrupoAliados, in id2: idGrupoAliados -> res: idGrupoAliados
+
+	if id1 < id2
+		res <- id2
+	else
+		res <- id1
