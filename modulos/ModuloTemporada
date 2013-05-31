@@ -32,8 +32,8 @@ iAbrirParitaria: in/out tmp: estrT, in gr: gremio, in p: nat, in t: nat, in es: 
 
 ---
 
-CerrarAcuerdo: in/out tmp: temporada, in gr : gremio , in pcj:nat 
-iCerrarAcuerdo: in/out tmp: estrT, in gr : gremio , in pcj:nat
+CerrarAcuerdo: in/out tmp: temporada, in gr: gremio , in pcj: nat 
+iCerrarAcuerdo: in/out tmp: estrT, in gr: gremio , in pcj: nat
 
 	RemoverParitaria(tmp, &gr)
 	
@@ -45,7 +45,7 @@ iCerrarAcuerdo: in/out tmp: estrT, in gr : gremio , in pcj:nat
 
 		EliminarSiguiente(itAcuerdos)
 
-	AgregarComoSiguiente(itAcuerdos,&NuevoAcuerdo(pa, pcj))
+	AgregarComoSiguiente(itAcuerdos, &NuevoAcuerdo(pa, pcj))
 
 ---
 
@@ -61,31 +61,37 @@ iReabrir: in/out tmp: estrT,  in gr: gremio
 Gremios: in/out tmp: temporada -> res: conj(gremio)
 iGremios: in/out tmp: estrT -> res: conj(gremio)
 
-	res <- ObtenerGremios(tmp.sistema)
+	res <- Vacío()
+
+	itConj(pgremio) itGremios <- ObtenerGremios(tmp.sistema)
+
+	while HaySiguiente(itGremios)
+		Agregar(res, *Siguiente(itGremios))
+		Avanzar(itGremios)
 
 ---
 
-EnParitarias: in/out tmp: temporada, in gr: pgremio -> res: bool
-iEnParitarias: in/out tmp: estrT, in gr: pgremio -> res: bool
+EnParitarias: in/out tmp: temporada, in gr: gremio -> res: bool
+iEnParitarias: in/out tmp: estrT, in gr: gremio -> res: bool
 
 	itConj(pparitaria) itParitarias <- CrearIt(tmp.paritariasAbiertas)
 
-	while HaySiguiente(itParitarias) && ObtenerGremio(*Siguiente(itParitarias)) != gr
+	while HaySiguiente(itParitarias) && ObtenerGremio(*Siguiente(itParitarias)) != &gr
 		Avanzar(itParitarias)
 
 	res <- HaySiguiente(itParitarias)
 
 ---
 
-GremiosNegociando: in/out tmp: temporada -> res: conj(pgremio)
-iGremiosNegociando: in/out tmp: estrT -> res: conj(pgremio)
+GremiosNegociando: in/out tmp: temporada -> res: conj(gremio)
+iGremiosNegociando: in/out tmp: estrT -> res: conj(gremio)
 
 	res <- Vacío()
 
 	itConj(pparitaria) itParitarias <- CrearIt(tmp.paritariasAbiertas)
 
 	while HaySiguiente(itParitarias)
-		Agregar(res,ObtenerGremio(*Siguiente(itParitarias)))
+		Agregar(res, *ObtenerGremio(*Siguiente(itParitarias)))
 		Avanzar(itParitarias)
 
 ---
@@ -118,8 +124,8 @@ iTrabajadoresNegociando: in/out tmp: estrT -> res: nat
 
 ---
 
-GremioConflictivo: in/out tmp: temporada -> res: pgremio
-iGremioConflictivo: in/out tmp: estrT -> res: pgremio
+GremioConflictivo: in/out tmp: temporada -> res: gremio
+iGremioConflictivo: in/out tmp: estrT -> res: gremio
 
 	itConj(pgremio) itGremios <- Gremios(tmp)
 
@@ -136,9 +142,9 @@ iGremioConflictivo: in/out tmp: estrT -> res: pgremio
 			maxAperturas <- #aperturas
 			gremioConflictivo <- Siguiente(itGremios)
 
-		Avanzar(itGremios) 
+		Avanzar(itGremios)
 
-	res <- gremioConflictivo
+	res <- *gremioConflictivo
 
 ---
 
