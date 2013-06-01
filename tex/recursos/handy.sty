@@ -1,12 +1,14 @@
 \newcommand{\algoritmoI}[5]{
 	\begin{algorithm}[H]
 	\caption{i#1}
+	\vspace{3pt}
 	\begin{algorithmic}
 	\Function{i#1}{#2}{ $\ensuremath{\rightarrow}$ #3}
 	#4
 	\EndFunction 
 	\end{algorithmic}
 	\vspace{3pt}\hrule
+	\vspace{3pt}
 	\complejidad{#5}
 	\end{algorithm}
 }
@@ -14,14 +16,16 @@
 \newcommand{\algoritmoIvoid}[4]{
 	\begin{algorithm}[H]
 	\caption{i#1}
+	\vspace{3pt}
 	\begin{algorithmic}
 	\Function{i#1}{#2}
 	#3
 	\EndFunction 
 	\end{algorithmic}
 	\vspace{3pt}\hrule
+	\vspace{3pt}
 	\complejidad{#4}
 	\end{algorithm}
 }
 
-\newcommand{\asig}{$\gets$}
+\newcommand{\asig}{$\gets$ }
