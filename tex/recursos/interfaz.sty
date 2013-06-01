@@ -72,7 +72,7 @@
 %cambiar lo que rodea a #1 para otro formato del nombre de la funcion
 \newcommand\operacion[7]{
 \begin{minipage}{1\textwidth}
-{\textsc{#1}(#2)\ifblank{#3}\then{}\else{\resultado{#3}}\fi}\ifblank{#4}\then{}\else{\par\hspace*{1em}\pre{#4}}\fi \ifblank{#5}\then{}\else{\par\hspace*{1em}\post{#5}}\fi\ifblank{#6}\then{}\else{\par\hspace*{1em}\complejidad{#6}}\fi\ifblank{#7}\then{}\else{\par\hspace*{1em}\aliasing{#7}}\fi
+{\textsc{#1}(#2)\ifblank{#3}\then{}\else{ \resultado{#3}}\fi}\ifblank{#4}\then{}\else{\par\hspace*{1em}\pre{#4}}\fi \ifblank{#5}\then{}\else{\par\hspace*{1em}\post{#5}}\fi\ifblank{#6}\then{}\else{\par\hspace*{1em}\complejidad{#6}}\fi\ifblank{#7}\then{}\else{\par\hspace*{1em}\aliasing{#7}}\fi
 %{\textsc{#1}(#2)\ifblank{#3}\then{}\else{\resultado{#3}}\fi}\par\hspace*{1em}\pre{#4}\par\hspace*{1em}\post{#5}
 %{\textsc{#1}(#2)\resultado{#3}}\par\hspace*{1em}\pre{#4}\par\hspace*{1em}\post{#5}
 \end{minipage}\vskip 1 em}
