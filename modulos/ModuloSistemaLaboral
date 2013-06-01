@@ -5,7 +5,7 @@ donde estrS es tupla<
 	grupos: vector(idGrupoDeAliados),
 >
 
-----
+---
 
 NuevoSistemaLaboral -> res: sistemaLaboral
 iNuevoSistemaLaboral -> res: estrS
@@ -13,7 +13,7 @@ iNuevoSistemaLaboral -> res: estrS
 	gremios <- Vacía()
 	grupos <- Vacía()
 
-----
+---
 
 AgregarGremio:	in/out sl: sistemaLaboral, in gr: gremio
 iAgregarGremio:	in/out sl: estrS, in gr: gremio
@@ -24,7 +24,7 @@ iAgregarGremio:	in/out sl: estrS, in gr: gremio
 	gremios[id] <- &gr
 	grupos[id] <- ObtenerProximoIdGrupoDeAliados(sl)
 
-----
+---
 
 AliarGremios: in/out sl: sistemaLaboral, in gr1: gremio, in gr2: gremio
 iAliarGremios: in/out sl: estrS, in gr1: gremio, in gr2: gremio

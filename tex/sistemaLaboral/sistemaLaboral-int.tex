@@ -1,0 +1,22 @@
+\begin{interfaz}{SistemaLaboral}
+\begin{iparamformales}{sistemaLaboral}
+
+\comment{\funcion{Copiar}{\param{in}{m}{$\alpha$}}{$\alpha$}
+{true}
+{\igres m}
+{copy(m)}
+{}
+}
+
+\textbf{\large se explica con:} SistemaLaboral
+
+\end{iparamformales}
+
+\operacion{NuevoSistemaLaboral}{}{sistemaLaboral}{3}{4}{5}{6}
+\operacion{AgregarGremio}{\param{in/out}{sl}{sistemaLaboral}, \param{in/out}{gr}{gremio}}{}{3}{4}{5}{6}
+\operacion{AliarGremios}{\param{in/out}{sl}{sistemaLaboral}, \param{in}{gr1}{gremio}, \param{in}{gr2}{gremio}}{}{3}{4}{5}{6}
+\operacion{ObtenerGremios}{\param{in}{sl}{sistemaLaboral}}{conj(puntero(gremio))}{3}{4}{5}{6}
+\operacion{Obtener\#GruposDeAliados}{\param{in}{sl}{sistemaLaboral}}{nat}{3}{4}{5}{6}
+\operacion{ObtenerIdGrupoDeAliados}{\param{in}{sl}{sistemaLaboral}, \param{in}{gr}{puntero(gremio)}}{idGrupoAliados}{3}{4}{5}{6}
+
+\end{interfaz}
