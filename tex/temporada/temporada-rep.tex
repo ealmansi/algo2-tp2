@@ -1,22 +1,17 @@
-% \begin{center}
-% \begin{tabular}{|l|} 
-% \hline
-% \\
-% ArbolCategorias \textbf{se representa con} estrAC, donde estrAC es \tupla{\\
-% \hspace*{6em}\param{}{raiz}{puntero(datosCat)},\\\hspace*{6em}\param{}{cantidad}{nat},\\
-% \hspace*{6em}\param{}{alturaMax}{nat},\\
-% \hspace*{6em}\param{}{familia}{diccTrie(Categoria, puntero(datosCat))},\\
-% \hspace*{6em}\param{}{categorias}{Lista(datosCat)}}\\ \\
-
-% \hspace*{6em}datosCat es \tupla{\\
-% \hspace*{6em}\param{}{categoria}{Categoria},\\ 
-% \hspace*{6em}\param{}{id}{nat},\\ 
-% \hspace*{6em}\param{}{altura}{nat},\\ 
-% \hspace*{6em}\param{}{hijos}{Conj(puntero(datosCat))},\\
-% \hspace*{6em}\param{}{padre}{puntero(datosCat)}}\\ \\ 
-% \hline
-% \end{tabular}
-% \end{center}
+\begin{center}
+\begin{tabular}{|l|} 
+\hline
+\\
+SistemaLaboral \textbf{se representa con} estrS, donde estrS es: \\
+\tupla{\\
+\hspace*{6em}\param{}{sistema}{sistemaLaboral},\\
+\hspace*{6em}\param{}{paritariasAbiertas}{conj(puntero(paritaria))},\\
+\hspace*{6em}\param{}{acuerdosVigentes}{vector(lista(puntero(acuerdo)))},\\
+\hspace*{6em}\param{}{\#aperturas}{vector(nat)} \\\hspace*{2em} } \\
+\\
+\hline
+\end{tabular}
+\end{center}
 
 % \par Arbol de Categorias guarda en su estructura una Lista de datosCat(\textit{categorias}), que cada uno guarda todos los datos de una categoria.
 % \par Guardamos en un diccTrie(\textit{familia}) para cada categoria, un puntero a su datosCat correspondiente de la lista \textit{categorias} para acceder a esos datos en O(longitud de la categoria).
@@ -24,8 +19,8 @@
 % \par \textit{cantidad} es la cantidad de categorias que tiene el arbol y nos permite en O(1) saber cual va a ser el id para una categoría que estemos agregando.
 % \par \textit{alturaMax} es la alutra del arbol de categorias.
 
-% \subsubsection{Invariante de Representaci\'on}
-% \paragraph{El Invariante Informalmente}
+\subsubsection{Invariante de Representaci\'on}
+\paragraph{El Invariante Informalmente}
 % \begin{enumerate}
 % \item Para cada clave de '\textit{familia}' obtener el significado devolvera un puntero(datosCat) donde\\ '\textit{categoria}' es igual a la clave.
 % \item Toda clave de '\textit{familia}' debera ser raiz o pertenecer a algun conjunto de punteros de '\textit{hijos}' de alguna otra clave.
@@ -41,7 +36,7 @@
 
 % \end{enumerate}
 
-% \paragraph{El Invariante Formalmente}
+\paragraph{El Invariante Formalmente}
 % \begin{Rep}{estrAC}{ac}
 % \repfunc{(\forall\param{}{c}{Categoria}) (def?(c,e.familia)) \Leftrightarrow (*obtener(c,e.familia)).categoria = c}{\yluego}
 % \repfunc{(\forall\param{}{c_{1}}{Categoria}) (def?(c_{1},e.familia)) \Leftrightarrow ((c_{1} == e.raiz) \vee \\
@@ -61,7 +56,7 @@
 % \end{Rep}
 % \newpage
 
-% \subsubsection{Funci\'on de Abstracci\'on}
+\subsubsection{Funci\'on de Abstracci\'on}
 % \begin{ABS}{e}{estrAC}{ac}{acat}
 % \absfunc{categorias(ac) \igobs todasLasCategorias(e.categorias)}{\yluego}
 % \absfunc{raiz(ac) \igobs (*e.raiz).categoria}{\yluego}
@@ -70,7 +65,7 @@
 % \absfunc{(\forall\param{}{c}{Categoria})esta?(c,ac) \Rightarrow_{L} id(ac,c) = (*(obtener(c,e.familia))).id}{}
 % \end{ABS}
 
-% \paragraph{Funciones auxiliares}
+\paragraph{Funciones auxiliares}
 % \paragraph*{}
 
 % \hspace*{1em}

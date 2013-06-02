@@ -1,13 +1,126 @@
-% \begin{algorithm}[H]
-% \caption{iCategoriasAC}
-% \begin{algorithmic}[1]
-% \Function{iCategoriasAC}{\param{in}{ac}{estrAC}}{$\ensuremath{\rightarrow}$ \param{}{res}{itCategorias}}
-% \state res $\gets$ crearItCategorias(ac) \hfill //O(1)
-% \EndFunction 
-% \end{algorithmic}
-% \hrule
-% \complejidad{1}
-% \end{algorithm}
+\algoritmoI{Iniciar}{\param{in}{sl}{sistemaLaboral}}{\param{}{res}{estrT}}
+{
+	\state res.sistema \asig sl
+	\state res.paritariasAbiertas \asig Vacío()
+	\state res.acuerdosVigentes \asig Vacía()
+	\state res.\#aperturas \asig Vacía()
+	\state
+
+	\state InicializarAcuerdosVigentes(res)
+	\state InicializarAperturas(res)
+}
+{0}
+
+\algoritmoIvoid{AbrirParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio}, \param{in}{p}{nat}, \param{in}{t}{nat}, \param{in}{es}{conj(empresa)}}
+{
+	\If{0 \menor Obtener\#Aperturas(tmp, \&gr)}
+		\state RemoverAcuerdo(tmp, \&gr)
+	\endif
+	\state
+
+	\state Agregar(tmp.paritariasAbiertas, \&NuevaParitaria(\&gr, p, t))
+}
+{0}
+
+\algoritmoIvoid{CerrarAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio} , \param{in}{pcj}{nat}}
+{
+
+	\state itLista(pacuerdo) itAcuerdos \asig CrearIt(ObtenerAcuerdosDeAliados(tmp, \&gr))
+	\while{HaySiguiente(itAcuerdos) \ly ObtenerPorcentaje(*Siguiente(itAcuerdos)) \menor pcj}
+		\state
+
+		\state Agregar(tmp.paritariasAbiertas, ObtenerParitaria(*Siguiente(itAcuerdos)))
+
+		\state EliminarSiguiente(itAcuerdos)
+
+		\state
+		\state Avanzar(itAcuerdos)
+	\endwhile
+	\state
+
+	\state \var{puntero(paritaria)}{pa} \asig RemoverParitaria(tmp, \&gr)
+	\state AgregarComoSiguiente(itAcuerdos, \&NuevoAcuerdo(pa, pcj))
+}
+{0}
+
+\algoritmoIvoid{Reabrir}{\param{in/out}{ tmp}{estrT},  \param{in}{gr}{gremio}}
+{
+	
+}
+{0}
+
+\algoritmoI{Gremios}{\param{in}{tmp}{estrT}}{\param{}{res}{conj(gremio)}}
+{
+	
+}
+{0}
+
+\algoritmoI{EnParitarias}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{\param{}{res}{bool}}
+{
+	
+}
+{0}
+
+\algoritmoI{GremiosNegociando}{\param{in}{tmp}{estrT}}{\param{}{res}{conj(gremio)}}
+{
+	
+}
+{0}
+
+\algoritmoI{EmpresasNegociando}{\param{in}{tmp}{estrT}}{\param{}{res}{conj(empresa)}}
+{
+	
+}
+{0}
+
+\algoritmoI{TrabajadoresNegociando}{\param{in}{tmp}{estrT}}{\param{}{res}{nat}}
+{
+	
+}
+{0}
+
+\algoritmoI{GremioConflictivo}{\param{in}{tmp}{estrT}}{\param{}{res}{gremio}}
+{
+	
+}
+{0}
+
+\algoritmoIvoid{InicializarAcuerdosVigentes}{\param{in/out}{ tmp}{estrT}}
+{
+	
+}
+{0}
+
+\algoritmoIvoid{InicializarAperturas}{\param{in/out}{ tmp}{estrT}}
+{
+	
+}
+{0}
+
+\algoritmoI{RemoverParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{puntero(paritaria)}}
+{
+	
+}
+{0}
+
+\algoritmoI{RemoverAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{puntero(paritaria)}}
+{
+	
+}
+{0}
+
+\algoritmoI{ObtenerAcuerdosDeAliados}{\param{in}{tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{lista(pacuerdo)}}
+{
+	
+}
+{0}
+
+\algoritmoI{Obtener\#DeAperturas}{\param{in}{tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{nat}}
+{
+	
+}
+{0}
+
 
 % \begin{algorithm}[H]
 % \caption{iRaizAC}
@@ -118,7 +231,7 @@
 % \begin{algorithm}[H]
 % \caption{iAgregarAC}
 % \begin{algorithmic}[1]
-% \Function{iAgregarAC}{\param{in/out}{ac}{estrAC}, \param{in}{c}{Categoria}, \param{in}{h}{Categoria}}{}
+% \Function{iAgregarAC}{\param{in/out}{ ac}{estrAC}, \param{in}{c}{Categoria}, \param{in}{h}{Categoria}}{}
 % \state puntero(datosCat) puntPadre $\gets$ obtener(c,ac.familia) \hfill //O(|c|)
 % \If{(*puntPadre).altura == ac.alturaMax} \hfill //O(1)
 % \state ac.alturaMax++ \hfill //O(1)

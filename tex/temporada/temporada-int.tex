@@ -1,5 +1,5 @@
-\begin{interfaz}{ArbolCategorias}
-\begin{iparamformales}{acat}
+\begin{interfaz}{SistemaLaboral}
+\begin{iparamformales}{sistemaLaboral}
 
 \comment{\funcion{Copiar}{\param{in}{m}{$\alpha$}}{$\alpha$}
 {true}
@@ -7,103 +7,22 @@
 {copy(m)}
 {}
 }
+
+\textbf{\large se explica con:} SistemaLaboral
+
 \end{iparamformales}
 
-\textbf{\large se explica con:} Temporada
 
-\textbf{\large géneros:} temporada
+\operacion{Iniciar}{\param{in}{sl}{sistemaLaboral}}{temporada}{3}{4}{5}{6}
+\operacion{AbrirParitaria}{\param{in/out}{tmp}{temporada}, \param{in}{gr}{gremio}, \param{in}{p}{nat}, \param{in}{t}{nat},\\ \param{in}{es}{conj(empresa)}}{}{3}{4}{5}{6}
+\operacion{CerrarAcuerdo}{\param{in/out}{tmp}{temporada}, \param{in}{gr}{gremio} , \param{in}{pcj}{nat} }{}{3}{4}{5}{6}
+\operacion{Reabrir}{\param{in/out}{tmp}{temporada}, \param{in}{gr}{gremio}}{}{3}{4}{5}{6}
+\operacion{Gremios}{\param{in/out}{tmp}{temporada}}{conj(gremio)}{3}{4}{5}{6}
+\operacion{EnParitarias}{\param{in/out}{tmp}{temporada}, \param{in}{gr}{gremio}}{bool}{3}{4}{5}{6}
+\operacion{GremiosNegociando}{\param{in/out}{tmp}{temporada}}{conj(gremio)}{3}{4}{5}{6}
+\operacion{EmpresasNegociando}{\param{in/out}{tmp}{temporada}}{conj(empresa)}{3}{4}{5}{6}
+\operacion{TrabajadoresNegociando}{\param{in/out}{tmp}{temporada}}{nat}{3}{4}{5}{6}
+\operacion{GremioConflictivo}{\param{in/out}{tmp}{temporada}}{gremio}{3}{4}{5}{6}
 
-\operacion{iniciar}{}{temporada}{true}{posc.}{1}{Aliasing iniciar}
-
-\operacion{abrirParitaria}{}{}{true}{posc.}{1}{Aliasing abrirParitaria}
-
-\operacion{cerrarAcuerdo}{}{}{true}{posc.}{1}{Aliasing cerrarAcuerdo}
-
-\operacion{reabrir}{}{}{true}{posc.}{1}{Aliasing reabrir}
-
-\operacion{gremios}{}{}{true}{posc.}{1}{Aliasing gremios}
-
-\operacion{enParitarias}{}{}{true}{posc.}{1}{Aliasing enParitarias}
-
-\operacion{gremiosNegociando}{}{}{true}{posc.}{1}{Aliasing gremiosNegociando}
-
-\operacion{empresasNegociando}{}{}{true}{posc.}{1}{Aliasing empresasNegociando}
-
-\operacion{trabajadoresNegociando}{}{}{true}{posc.}{1}{Aliasing trabajadoresNegociando}
-
-\operacion{gremioConflictivo}{}{}{true}{posc.}{1}{Aliasing gremioConflictivo}
-
-
-% \operacion{categoriasAC}{\param{in}{ac}{acat}}{itCategorias}
-% {true}
-% {\igres crearItUni(categorias(ac))}
-% {1}
-% {No se debe modificar nada de lo iterado por res.}
-
-% \operacion{raizAC}{\param{in}{ac}{acat}}{Categoria}
-% {true}
-% {\igres raiz(ac)}
-% {1}
-% {El nombre de la categoría raiz se pasa por referencia, no debe ser modificado.}
-
-% \operacion{idAC}{\param{in}{ac}{acat}, \param{in}{c}{Categoria}}{nat}
-% {true}
-% {\igres id(ac,c)}
-% {|c|}
-% {No tiene.}
-
-% \operacion{alturaCatAC}{\param{in}{ac}{acat}, \param{in}{c}{Categoria}}{nat}
-% {esta?(c,ac)}
-% {\igres alturaCategoria(ac,c)}
-% {|c|}
-% {No tiene.}
-
-% \operacion{hijosAC}{\param{in}{ac}{acat}, \param{in}{c}{Categoria}}{itHijos}
-% {esta?(c,ac)}
-% {\igres crearItUni(hijos(ac,c))}
-% {|c|}
-% {No se debe modificar nada de lo iterado por res.}
-
-% \operacion{padreAC}{\param{in}{ac}{acat}, \param{in}{c}{Categoria}}{Categoria}
-% {true}
-% {\igres padre(ac,c)}
-% {|c|}
-% {El nombre de la categoría padre se pasa por referencia, no debe ser modificado.}
-
-% \operacion{alturaAC}{\param{in}{ac}{acat}}{nat}
-% {true}
-% {\igres altura(ac)}
-% {1}
-% {No tiene.}
-
-% \operacion{predecesores}{\param{in}{ac}{acat}, \param{in}{c}{Categoria}}{itFamilia}
-% {true}
-% {\igres crearItUni(predecesores(ac,c))}
-% {|c|}
-% {res itera referencias a las categorias correspondientes.}
-
-% \operacion{nuevoAC}{\param{in}{c}{Categoria}}{acat}
-% {\neg vacia?(c)}
-% {\igres nuevo(c)}
-% {|c|}
-% {No tiene.}
-
-% \operacion{agregarAC}{\param{in/out}{ac}{acat}, \param{in}{c}{categoria}, \param{in}{h}{categoria}}{}
-% {esta?(c,ac) \land \neg esta?(h,ac) \land \neg vacia?(h) \land ac_{0} \igobs ac}
-% {ac \igobs agregar(ac_{0},c,h)}
-% {|c|+|h|}
-% {No hay alias ya que no devuelve nada.}
-
-% \operacion{esta?}{\param{in}{c}{categoria}, \param{in}{ac}{acat}}{bool}
-% {true}
-% {\igres esta?(c,ac)}
-% {|c|}
-% {No tiene.}
-
-% \operacion{esSubCategoria}{\param{in}{ac}{acat}, \param{in}{c}{categoria}, \param{in}{h}{categoria}}{bool}
-% {esta?(c,ac) \land esta?(h,ac)}
-% {\igres esSubCategoria(ac,c,h)}
-% {|h|+|c|+alturaAC(ac)}
-% {No tiene.}
 
 \end{interfaz}
