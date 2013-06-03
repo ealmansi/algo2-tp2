@@ -1,144 +1,144 @@
 \algoritmoI{NuevoSistemaLaboral}{}{\param{}{res}{estrS}}
 {
-	\state res.gremios \asig Vacía()
-	\state res.gruposDeAliados \asig Vacía()
+	\state res.gremios \asig Vacía()					\inlineC{0}
+	\state res.gruposDeAliados \asig Vacía()			\inlineC{0}
 }
 {0}
 
 \algoritmoIvoid{AgregarGremio}{\param{in/out}{sl}{estrS}, \param{in/out}{gr}{gremio}}
 {
-	\state \var{idGremio}{id} \asig ObtenerProximoIdGremio(sl)
+	\state \var{idGremio}{id} \asig ObtenerProximoIdGremio(sl)			\inlineC{0}
 	\state
-	\state GuardarId(gr,id)
-	\state sl.gremios[id] \asig \&gr
-	\state sl.gruposDeAliados[id] \asig ObtenerProximoIdGrupoDeAliados(sl)
+	\state GuardarId(gr,id)												\inlineC{0}
+	\state sl.gremios[id] \asig \&gr									\inlineC{0}
+	\state sl.gruposDeAliados[id] \asig ObtenerProximoIdGrupoDeAliados(sl)			\inlineC{0}
 }
 {0}
 
 \algoritmoIvoid{AliarGremios}{\param{in/out}{sl}{estrS}, \param{in}{gr1}{gremio}, \param{in}{gr2}{gremio}}
 {
-	\state \var{idGrupo}{idGrupoG1} \asig ObtenerIdGrupoDeAliados(sl, \&gr1)
-	\state \var{idGrupo}{idGrupoG2} \asig ObtenerIdGrupoDeAliados(sl, \&gr2)
+	\state \var{idGrupo}{idGrupoG1} \asig ObtenerIdGrupoDeAliados(sl, \&gr1)			\inlineC{0}
+	\state \var{idGrupo}{idGrupoG2} \asig ObtenerIdGrupoDeAliados(sl, \&gr2)			\inlineC{0}
 	\state 
-	\state UnificarGruposDeAliados(sl, idGrupoG1, idGrupoG2)
+	\state UnificarGruposDeAliados(sl, idGrupoG1, idGrupoG2)							\inlineC{0}
 }
 {0}
 
 \algoritmoI{ObtenerGremios}{\param{in}{sl}{estrS}}{\param{}{res}{conj(gremio)}}
 {
-	\state res \asig Vacío()
+	\state res \asig Vacío()								\inlineC{0}
 
 	\state
-	\state \var{nat}{indice} \asig 0
-	\while{indice \menor Longitud(sl.gremios)}
+	\state \var{nat}{indice} \asig 0						\inlineC{0}
+	\while{indice \menor Longitud(sl.gremios)}				\inlineC{0}
 		\state
 
-		\state Agregar(res, *sl.gremios[indice])
+		\state Agregar(res, *sl.gremios[indice])			\inlineC{0}
 
 		\state
-		\state indice \asig indice + 1
+		\state indice \asig indice + 1						\inlineC{0}
 	\endwhile
 }
 {0}
 
 \algoritmoI{Obtener\#GruposDeAliados}{\param{in}{sl}{estrS}}{\param{}{res}{nat}}
 {
-	\state res \asig MaximoIdGrupoDeAliados(sl)
+	\state res \asig MaximoIdGrupoDeAliados(sl)			\inlineC{0}
 }
 {0}
 
 \algoritmoI{ObtenerIdGrupoDeAliados}{\param{in}{sl}{estrS}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{idGrupo}}
 {
-	\state res \asig sl.gruposDeAliados[ObtenerId(*gr)]
+	\state res \asig sl.gruposDeAliados[ObtenerId(*gr)]			\inlineC{0}
 }
 {0}
 
 \algoritmoIvoid{GuardarIdGrupoDeAliados}{\param{in/out}{sl}{estrS}, \param{in}{gr}{puntero(gremio)}, \param{in}{id}{idGrupo}}
 {
-	\state sl.gruposDeAliados[ObtenerId(*gr)] \asig id
+	\state sl.gruposDeAliados[ObtenerId(*gr)] \asig id			\inlineC{0}
 }
 {0}
 
 \algoritmoI{ObtenerProximoIdGremio}{\param{in}{sl}{estrS}}{\param{}{res}{idGremio}}
 {
-	\state res \asig Longitud(sl.gremios)
+	\state res \asig Longitud(sl.gremios)			\inlineC{0}
 }
 {0}
 
 \algoritmoI{ObtenerProximoIdGrupoDeAliados}{\param{in}{sl}{estrS}}{\param{}{res}{idGrupo}}
 {
-	\If{Longitud(sl.gruposDeAliados) \igual 0}
-		\state res \asig 0
+	\If{Longitud(sl.gruposDeAliados) \igual 0}					\inlineC{0}
+		\state res \asig 0										\inlineC{0}
 	\Else
-		\state res \asig MaximoIdGrupoDeAliados(sl) + 1
+		\state res \asig MaximoIdGrupoDeAliados(sl) + 1			\inlineC{0}
 	\endif
 }
 {0}
 
 \algoritmoIvoid{UnificarGruposDeAliados}{\param{in/out}{sl}{estrS}, \param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}
 {
-	\state \var{idGrupo}{idMenor} \asig Min(id1, id2)
-	\state \var{idGrupo}{idMayor} \asig Max(id1, id2)
+	\state \var{idGrupo}{idMenor} \asig Min(id1, id2)						\inlineC{0}
+	\state \var{idGrupo}{idMayor} \asig Max(id1, id2)						\inlineC{0}
 	\state
 
-	\state \var{nat}{indice} \asig 0
+	\state \var{nat}{indice} \asig 0										\inlineC{0}
 
-	\while{indice \menor Longitud(sl.gremios)}
+	\while{indice \menor Longitud(sl.gremios)}								\inlineC{0}
 		\state
 
-		\state \var{puntero(gremio)}{gr} \asig sl.gremios[indice]
-		\state \var{idGrupo}{idG} \asig ObtenerIdGrupoDeAliados(sl, gr)
+		\state \var{puntero(gremio)}{gr} \asig sl.gremios[indice]			\inlineC{0}
+		\state \var{idGrupo}{idG} \asig ObtenerIdGrupoDeAliados(sl, gr)		\inlineC{0}
 		\state
 
-		\If{idMayor \igual idG}
-			\state GuardarIdGrupoDeAliados(sl, gr, idMenor)
-		\Else \If{idMayor \menor idG}
-				\state GuardarIdGrupoDeAliados(sl, gr, idG - 1)
+		\If{idMayor \igual idG}												\inlineC{0}
+			\state GuardarIdGrupoDeAliados(sl, gr, idMenor)					\inlineC{0}
+		\Else \If{idMayor \menor idG}										\inlineC{0}
+				\state GuardarIdGrupoDeAliados(sl, gr, idG - 1)				\inlineC{0}
 			\endif
 		\endif
 		\state
 
-		\state indice \asig indice + 1
+		\state indice \asig indice + 1			\inlineC{0}
 	\endwhile
 }
 {0}
 
 \algoritmoI{MaximoIdGrupoDeAliados}{\param{in}{sl}{estrS}}{\param{}{res}{nat}}
 {
-	\state \var{nat}{maxId} \asig 0
+	\state \var{nat}{maxId} \asig 0									\inlineC{0}
 
 	\state
-	\state \var{nat}{indice} \asig 0
-	\while{indice \menor Longitud(sl.gruposDeAliados)}
+	\state \var{nat}{indice} \asig 0								\inlineC{0}
+	\while{indice \menor Longitud(sl.gruposDeAliados)}				\inlineC{0}
 		\state
 		
-		\state maxId \asig Max(maxId, sl.gruposDeAliados[indice])
+		\state maxId \asig Max(maxId, sl.gruposDeAliados[indice])	\inlineC{0}
 
 		\state
-		\state indice \asig indice + 1
+		\state indice \asig indice + 1								\inlineC{0}
 	\endwhile
 	\state
 
-	\state res \asig maxId
+	\state res \asig maxId											\inlineC{0}
 }
 {0}
 
 \algoritmoI{Min}{\param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{\param{}{res}{idGrupo}}
 {
-	\If{id1 \menor id2}
-		\state res \asig id1
+	\If{id1 \menor id2}					\inlineC{0}
+		\state res \asig id1			\inlineC{0}
 	\Else
-		\state res \asig id2
+		\state res \asig id2			\inlineC{0}
 	\endif
 }
 {0}
 
 \algoritmoI{Max}{\param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{\param{}{res}{idGrupo}}
 {
-	\If{id1 \menor id2}
-		\state res \asig id2
+	\If{id1 \menor id2}					\inlineC{0}
+		\state res \asig id2			\inlineC{0}
 	\Else
-		\state res \asig id1
+		\state res \asig id1			\inlineC{0}
 	\endif
 }
 {0}

@@ -1,166 +1,166 @@
 \algoritmoI{Iniciar}{\param{in}{sl}{sistemaLaboral}}{\param{}{res}{estrT}}
 {
-	\state res.sistema \asig sl
-	\state res.paritariasAbiertas \asig Vacío()
-	\state res.acuerdosVigentes \asig Vacía()
-	\state res.\#aperturas \asig Vacía()
+	\state res.sistema \asig sl						\inlineC{0}
+	\state res.paritariasAbiertas \asig Vacío()		\inlineC{0}
+	\state res.acuerdosVigentes \asig Vacía()		\inlineC{0}
+	\state res.\#aperturas \asig Vacía()			\inlineC{0}
 	\state
 
-	\state InicializarAcuerdosVigentes(res)
-	\state InicializarAperturas(res)
+	\state InicializarAcuerdosVigentes(res)			\inlineC{0}
+	\state InicializarAperturas(res)				\inlineC{0}
 }
 {0}
 
 \algoritmoIvoid{AbrirParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio}, \param{in}{p}{nat}, \param{in}{t}{nat}, \param{in}{es}{conj(empresa)}}
 {
-	\If{0 \menor Obtener\#Aperturas(tmp, \&gr)}
-		\state RemoverAcuerdo(tmp, \&gr)
+	\If{0 \menor Obtener\#Aperturas(tmp, \&gr)}						\inlineC{0}
+		\state RemoverAcuerdo(tmp, \&gr)							\inlineC{0}
 	\endif
 	\state
 
-	\state AgregarParitaria(tmp, \&NuevaParitaria(\&gr, p, t))
+	\state AgregarParitaria(tmp, \&NuevaParitaria(\&gr, p, t))		\inlineC{0}
 }
 {0}
 
 \algoritmoIvoid{CerrarAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio} , \param{in}{pcj}{nat}}
 {
 
-	\state \var{itLista(puntero(acuerdo))}{itAcuerdos} \asig CrearIt(ObtenerAcuerdosDeAliados(tmp, \&gr))
-	\while{HaySiguiente(itAcuerdos) \lyl ObtenerPorcentaje(*Siguiente(itAcuerdos)) \menor pcj}
+	\state \var{itLista(puntero(acuerdo))}{itAcuerdos} \asig CrearIt(ObtenerAcuerdosDeAliados(tmp, \&gr))		\inlineC{0}
+	\while{HaySiguiente(itAcuerdos) \lyl ObtenerPorcentaje(*Siguiente(itAcuerdos)) \menor pcj}		\inlineC{0}
 		\state
 
-		\state AgregarParitaria(tmp, ObtenerParitaria(*Siguiente(itAcuerdos)))
+		\state AgregarParitaria(tmp, ObtenerParitaria(*Siguiente(itAcuerdos)))		\inlineC{0}
 
-		\state EliminarSiguiente(itAcuerdos)
+		\state EliminarSiguiente(itAcuerdos)										\inlineC{0}
 
 		\state
-		\state Avanzar(itAcuerdos)
+		\state Avanzar(itAcuerdos)													\inlineC{0}
 	\endwhile
 	\state
 
-	\state \var{puntero(paritaria)}{pa} \asig RemoverParitaria(tmp, \&gr)
-	\state AgregarComoSiguiente(itAcuerdos, \&NuevoAcuerdo(pa, pcj))
+	\state \var{puntero(paritaria)}{pa} \asig RemoverParitaria(tmp, \&gr)		\inlineC{0}
+	\state AgregarComoSiguiente(itAcuerdos, \&NuevoAcuerdo(pa, pcj))			\inlineC{0}
 }
 {0}
 
 \algoritmoIvoid{Reabrir}{\param{in/out}{ tmp}{estrT},  \param{in}{gr}{gremio}}
 {
-	\state \var{puntero(paritaria)}{pa} \asig RemoverAcuerdo(tmp, \&gr)
+	\state \var{puntero(paritaria)}{pa} \asig RemoverAcuerdo(tmp, \&gr)			\inlineC{0}
 
-	\state AgregarParitaria(tmp, pa)
+	\state AgregarParitaria(tmp, pa)											\inlineC{0}
 }
 {0}
 
 \algoritmoI{Gremios}{\param{in}{tmp}{estrT}}{\param{}{res}{conj(gremio)}}
 {
-	\state res \asig ObtenerGremios(tmp.sl)
+	\state res \asig ObtenerGremios(tmp.sl)		\inlineC{0}
 }
 {0}
 
 \algoritmoI{EnParitarias}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{\param{}{res}{bool}}
 {
-	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)
-	\while{HaySiguiente(itParitarias) \lyl ObtenerGremio(*Siguiente(itParitarias)) \distinto \&gr}
+	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{0}
+	\while{HaySiguiente(itParitarias) \lyl ObtenerGremio(*Siguiente(itParitarias)) \distinto \&gr}		\inlineC{0}
 		\state
-		\state Avanzar(itParitarias)
+		\state Avanzar(itParitarias)				\inlineC{0}
 	\endwhile
 	\state
 
-	\state res \asig HaySiguiente(itParitarias)
+	\state res \asig HaySiguiente(itParitarias)		\inlineC{0}
 }
 {0}
 
 \algoritmoI{GremiosNegociando}{\param{in}{tmp}{estrT}}{\param{}{res}{conj(gremio)}}
 {
-	\state res \asig Vacío()
+	\state res \asig Vacío()		\inlineC{0}
 	\state
 
-	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)
-	\while{HaySiguiente(itParitarias)}
+	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{0}
+	\while{HaySiguiente(itParitarias)}										\inlineC{0}
 		\state
-		\state Agregar(res, *ObtenerGremio(*Siguiente(itParitarias)))
+		\state Agregar(res, *ObtenerGremio(*Siguiente(itParitarias)))		\inlineC{0}
 		
 		\state
-		\state Avanzar(itParitarias)
+		\state Avanzar(itParitarias)										\inlineC{0}
 	\endwhile
 }
 {0}
 
 \algoritmoI{EmpresasNegociando}{\param{in}{tmp}{estrT}}{\param{}{res}{conj(empresa)}}
 {
-	\state res \asig Vacío()
+	\state res \asig Vacío()		\inlineC{0}
 	\state
 
-	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)
-	\while{HaySiguiente(itParitarias)}
+	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{0}
+	\while{HaySiguiente(itParitarias)}						\inlineC{0}
 		\state
-		\state conj(empresa) empresasParitaria \asig ObtenerEmpresas(*ObtenerGremio(*Siguiente(itParitarias)))
-		\state res \asig Union(res, empresasParitaria)
+		\state conj(empresa) empresasParitaria \asig ObtenerEmpresas(*ObtenerGremio(*Siguiente(itParitarias)		\inlineC{0}))
+		\state res \asig Union(res, empresasParitaria)		\inlineC{0}
 
 		\state
-		\state Avanzar(itParitarias)
+		\state Avanzar(itParitarias)						\inlineC{0}
 	\endwhile
 }
 {0}
 
 \algoritmoI{TrabajadoresNegociando}{\param{in}{tmp}{estrT}}{\param{}{res}{nat}}
 {
-	\state res \asig 0
+	\state res \asig 0		\inlineC{0}
 	\state
 
-	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)
-	\while{HaySiguiente(itParitarias)}
+	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{0}
+	\while{HaySiguiente(itParitarias)}					\inlineC{0}
 		\state
 
-		\state \var{nat}{\#afiliadosParitaria} \asig Obtener\#Afiliados(*ObtenerGremio(*Siguiente(itParitarias)))
-		\state res \asig res + \#afiliadosParitaria
+		\state \var{nat}{\#afiliadosParitaria} \asig Obtener\#Afiliados(*ObtenerGremio(*Siguiente(itParitarias)))		\inlineC{0}
+		\state res \asig res + \#afiliadosParitaria		\inlineC{0}
 
 		\state
-		\state Avanzar(itParitarias)
+		\state Avanzar(itParitarias)					\inlineC{0}
 	\endwhile
 }
 {0}
 
 \algoritmoI{GremioConflictivo}{\param{in}{tmp}{estrT}}{\param{}{res}{gremio}}
 {
-	\state \var{itConj(puntero(gremio))}{itGremios} \asig Gremios(tmp)
+	\state \var{itConj(puntero(gremio))}{itGremios} \asig Gremios(tmp)						\inlineC{0}
 	\state
 
-	\state \var{puntero(gremio)}{gremioConflictivo} \asig Siguiente(itGremios)
-	\state \var{nat}{maxAperturas} \asig Obtener\#DeAperturas(tmp, gremioConflictivo)
-	\state Avanzar(itGremios)
+	\state \var{puntero(gremio)}{gremioConflictivo} \asig Siguiente(itGremios)				\inlineC{0}
+	\state \var{nat}{maxAperturas} \asig Obtener\#DeAperturas(tmp, gremioConflictivo)		\inlineC{0}
+	\state Avanzar(itGremios)																\inlineC{0}
 	\state
 
-	\while{HaySiguiente(itGremios)}
+	\while{HaySiguiente(itGremios)}																\inlineC{0}
 		\state
 
-		\state \var{nat}{\#aperturas} \asig Obtener\#DeAperturas(tmp, Siguiente(itGremios))
+		\state \var{nat}{\#aperturas} \asig Obtener\#DeAperturas(tmp, Siguiente(itGremios))		\inlineC{0}
 
-		\If{maxAperturas \menor \#aperturas}
+		\If{maxAperturas \menor \#aperturas}							\inlineC{0}
 
-			\state maxAperturas \asig \#aperturas
-			\state gremioConflictivo \asig Siguiente(itGremios)
+			\state maxAperturas \asig \#aperturas						\inlineC{0}
+			\state gremioConflictivo \asig Siguiente(itGremios)			\inlineC{0}
 		\endif
 
 		\state
-		\state Avanzar(itGremios)
+		\state Avanzar(itGremios)										\inlineC{0}
 	\endwhile
 	\state
 
-	\state res \asig *gremioConflictivo
+	\state res \asig *gremioConflictivo									\inlineC{0}
 }
 {0}
 
 \algoritmoIvoid{InicializarAcuerdosVigentes}{\param{in/out}{ tmp}{estrT}}
 {
-	\state \var{nat}{indice} \asig 0
-	\while{indice \menor Obtener\#GruposDeAliados(tmp.sistema)}
+	\state \var{nat}{indice} \asig 0									\inlineC{0}
+	\while{indice \menor Obtener\#GruposDeAliados(tmp.sistema)}			\inlineC{0}
 		\state
 
-		\state tmp.acuerdosVigentes[indice] \asig Vacía()
+		\state tmp.acuerdosVigentes[indice] \asig Vacía()				\inlineC{0}
 
 		\state
-		\state indice \asig indice + 1
+		\state indice \asig indice + 1									\inlineC{0}
 	\endwhile
 
 }
@@ -168,66 +168,66 @@
 
 \algoritmoIvoid{InicializarAperturas}{\param{in/out}{ tmp}{estrT}}
 {
-	\state \var{nat}{indice} \asig 0
-	\while{indice \menor Cardinal(Gremios(tmp))}
+	\state \var{nat}{indice} \asig 0					\inlineC{0}
+	\while{indice \menor Cardinal(Gremios(tmp))}		\inlineC{0}
 		\state
 
-		\state tmp.\#aperturas[indice] \asig 0
+		\state tmp.\#aperturas[indice] \asig 0			\inlineC{0}
 
 		\state
-		\state indice \asig indice + 1
+		\state indice \asig indice + 1					\inlineC{0}
 	\endwhile
 }
 {0}
 
 \algoritmoIvoid{AgregarParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{pa}{puntero(paritaria)}}
 {
-	\state Agregar(tmp.paritariasAbiertas, pa)
+	\state Agregar(tmp.paritariasAbiertas, pa)		\inlineC{0}
 }
 {0}
 
 \algoritmoI{RemoverParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{puntero(paritaria)}}
 {
-	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)
-	\while{ObtenerGremio(*Siguiente(itParitarias)) != gr}
+	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{0}
+	\while{ObtenerGremio(*Siguiente(itParitarias)) != gr}		\inlineC{0}
 		\state
-		\state Avanzar(itParitarias)
+		\state Avanzar(itParitarias)							\inlineC{0}
 	\endwhile
 	\state
 
-	\state res \asig Siguiente(itParitarias)
+	\state res \asig Siguiente(itParitarias)					\inlineC{0}
 
-	\state EliminarSiguiente(itParitarias)
+	\state EliminarSiguiente(itParitarias)						\inlineC{0}
 }
 {0}
 
 \algoritmoI{RemoverAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{puntero(paritaria)}}
 {
-	\state \var{itLista(puntero(acuerdo))}{itAcuerdos} \asig CrearIt(ObtenerAcuerdosDeAliados(tmp, gr))
-	\while{ObtenerGremio(*Siguiente(itAcuerdos)) != gr}
+	\state \var{itLista(puntero(acuerdo))}{itAcuerdos} \asig CrearIt(ObtenerAcuerdosDeAliados(tmp, gr))		\inlineC{0}
+	\while{ObtenerGremio(*Siguiente(itAcuerdos)) != gr}		\inlineC{0}
 		\state
-		\state Avanzar(itAcuerdos)  
+		\state Avanzar(itAcuerdos)  						\inlineC{0}
 	\endwhile
 	\state
 
-	\state res \asig ObtenerParitaria(*Siguiente(itAcuerdos))
+	\state res \asig ObtenerParitaria(*Siguiente(itAcuerdos))		\inlineC{0}
 
-	\state EliminarSiguiente(itAcuerdos)
+	\state EliminarSiguiente(itAcuerdos)							\inlineC{0}
 }
 {0}
 
 \algoritmoI{ObtenerAcuerdosDeAliados}{\param{in}{tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{lista(puntero(acuerdo))}}
 {
-	\state \var{idGrupo}{id} \asig ObtenerIdGrupoAliados(tmp.sistema, gr)
+	\state \var{idGrupo}{id} \asig ObtenerIdGrupoAliados(tmp.sistema, gr)		\inlineC{0}
 
-	\state res \asig tmp.acuerdosVigentes[id]
+	\state res \asig tmp.acuerdosVigentes[id]									\inlineC{0}
 }
 {0}
 
 \algoritmoI{Obtener\#DeAperturas}{\param{in}{tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{nat}}
 {
-	\state \var{idGremio}{id} \asig ObtenerId(*gr)
+	\state \var{idGremio}{id} \asig ObtenerId(*gr)		\inlineC{0}
 
-	\state res \asig tmp.\#aperturas[id]
+	\state res \asig tmp.\#aperturas[id]				\inlineC{0}
 }
 {0}
