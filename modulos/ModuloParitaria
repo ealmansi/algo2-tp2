@@ -8,6 +8,15 @@ donde estrP es: tupla<
 
 ---
 
+Rep
+.piso <= tope
+.(Rep de gremio??)
+
+Abs
+Abs(e) == nuevaParitaria(*e.gremio, e.piso, e.tope)
+
+---
+
 NuevaParitaria: in gr: pgremio, in ps: nat, in tp: nat -> res: paritaria
 iNuevaParitaria: in gr: pgremio, in ps: nat, in tp: nat -> res: estrP
 

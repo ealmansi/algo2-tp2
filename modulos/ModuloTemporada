@@ -9,6 +9,79 @@ donde estrT es: tupla<
 
 ---
 
+Rep
+
+
+sistema 		sistema
+	.
+	.
+
+sistema 		paritariasAbiertas
+	1.cantidad de gremios >= #paritariasAbiertas				[se deduce de 15.]
+	2.toda paritaria de paritariasAbiertas pertence a algun gremio del sistema
+
+sistema 		acuerdosVigentes
+	3.cantidad de gremios >= #acuerdos 							[se deduce de 15.]
+	4.cantidad de grupos aliados = longitud(acuerdosVigentes)
+	5.los acuerdos en alguna lista de acuerdosVigentes son de algun gremio del sistema
+	6.para todo par de gremios donde ambos tienen acuerdos: ((son aliados) sii (estan en la misma lista de acuerdos))
+
+sistema 		#aperturas
+	7.cantidad de gremios == #aperturas
+	.
+
+paritariasAbiertas		paritariasAbiertas
+	8.no hay paritarias de un mismo gremio
+	.
+
+paritariasAbiertas		acuerdosVigentes
+	9.un mismo gremio no tiene una paritaria y un acuerdo a la vez
+	.
+
+paritariasAbiertas		#aperturas
+	.
+	.
+
+acuerdosVigentes 		acuerdosVigentes
+	10.no hay acuerdos de un mismo gremio
+	11.cada lista de acuerdos está ordenada segun porcentaje
+	12.todo acuerdo tiene un porcentaje que está entre el piso y el techo de su paritaria
+
+acuerdosVigentes 		#aperturas
+	13.para cada acuerdo, acuerdosPrevios = #aperturas del gremio
+	.
+
+#aperturas 			#aperturas
+	.
+	.
+
+#aperturas acuerdosVigentes paritariasAbiertas
+	14.(#aperturas = 0) sii (no tiene paritaria ni acuerdo)
+	15.cantidad de paritariasAbiertas + cantidad de acuerdos + cantidad de gremios sin aperturas = cantidad de gremios total
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
 Iniciar: in sl: sistemaLaboral -> res: temporada
 iIniciar: in sl: sistemaLaboral -> res: estrT
 	

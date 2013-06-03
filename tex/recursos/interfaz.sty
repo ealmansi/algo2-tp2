@@ -118,6 +118,9 @@
 {\end{enumerate}\end{changemargin}}
 \newcommand\repfunc[2]{\item\noindent \ensuremath{#1} #2 \par}
 
+\newenvironment{RepTrue}[2]
+{\begin{changemargin}{0em}{4em}Rep : #1 $\rightarrow$ boolean\par \end{changemargin}(\paratodo\param{}{#2}{#1}) Rep(#2) $\equiv$ true}
+
 %\begin{ABS}{e}{estr}{C}{conj}
 \newenvironment{ABS}[4]
 {\begin{minipage}{1\textwidth}\begin{changemargin}{0em}{4em}Abs : \param{}{#1}{#2} $\rightarrow$ #4 \hfill \{Rep(#1)\} \end{changemargin} (\paratodo\param{}{#1}{#2}) Abs(#1) \igobs #3: #4 | \begin{changemargin}{2em}{4em}\begin {enumerate}}
@@ -131,6 +134,10 @@
 \newenvironment{ABSBW}[4]
 {\begin{minipage}{1\textwidth}\begin{changemargin}{0em}{4em}AbsIterBW : #2 $\rightarrow$ bool \hfill Rep(#1) \end{changemargin} \paratodo{#1}{#2} Abs(#1) \igobs #3: #4 / \begin{changemargin}{2em}{4em}}
 {\end{changemargin}\end{minipage}}
+
+\newenvironment{ABSEXPLICITO}[4]
+{\begin{minipage}{1\textwidth}\begin{changemargin}{0em}{4em}Abs : \param{}{#1}{#2} $\rightarrow$ #4 \hfill \{Rep(#1)\} \end{changemargin} Abs(#1) $\equiv$ #3}
+{\end{minipage}}
 
 
 \newcommand\faux[6]{\func{#1}{#2}{#3}{#4} \axioma{#5}{#6}\vskip 4pt}

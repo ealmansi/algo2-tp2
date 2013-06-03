@@ -7,6 +7,19 @@ donde estrS es tupla<
 
 ---
 
+Rep
+.todos los gremios son distintos (y sus empresas disjuntas)
+.gremios y grupos de igual longitud
+.los valores en el vector grupos son consecutivos
+
+Abs
+.Abs(e) = sl: SL | 	gremios(sl) = armarConjDeGremios(e.gremios) yluego (paratodo g: gremio donde g pertenece gremios(sl)) aliados(g, sl) = armarConjDeAliados(e,g)
+
+armarConjDeAliados:
+	recorre grupos, y para cada entrada que tenga un idGrupo igual al de g, agrega el gremio del mismo índice al resultado
+
+---
+
 NuevoSistemaLaboral -> res: sistemaLaboral
 iNuevoSistemaLaboral -> res: estrS
 

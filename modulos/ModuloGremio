@@ -8,6 +8,13 @@ donde estrG es: tupla<
 
 ---
 
+Rep
+.true
+
+Abs			{Rep(e)}
+.Abs(e) == nuevo(e.empresas,e.#afiliados)
+---
+
 NuevoGremio in es: conj(empresa), #as: nat -> res: gremio
 iNuevoGremio in es: conj(empresa), #as: nat -> res: estrG
 

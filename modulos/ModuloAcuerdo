@@ -3,8 +3,16 @@ acuerdo se representa con estrA
 donde estrA es: tupla<
 	paritaria: pparitaria
 	porcentaje: nat
+	acuerdosPrevios: nat
 >
 
+---
+
+Rep
+.true
+
+Abs
+Abs(e) == nuevoAcuerdo(*e.paritaria,e.porcentaje,e.acuerdosPrevios)
 ---
 
 NuevoAcuerdo: in pa: pparitaria, in porcentaje: nat -> res: acuerdo

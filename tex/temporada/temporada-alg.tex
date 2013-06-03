@@ -18,18 +18,18 @@
 	\endif
 	\state
 
-	\state Agregar(tmp.paritariasAbiertas, \&NuevaParitaria(\&gr, p, t))
+	\state AgregarParitaria(tmp, \&NuevaParitaria(\&gr, p, t))
 }
 {0}
 
 \algoritmoIvoid{CerrarAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio} , \param{in}{pcj}{nat}}
 {
 
-	\state itLista(pacuerdo) itAcuerdos \asig CrearIt(ObtenerAcuerdosDeAliados(tmp, \&gr))
-	\while{HaySiguiente(itAcuerdos) \ly ObtenerPorcentaje(*Siguiente(itAcuerdos)) \menor pcj}
+	\state \var{itLista(puntero(acuerdo))}{itAcuerdos} \asig CrearIt(ObtenerAcuerdosDeAliados(tmp, \&gr))
+	\while{HaySiguiente(itAcuerdos) \lyl ObtenerPorcentaje(*Siguiente(itAcuerdos)) \menor pcj}
 		\state
 
-		\state Agregar(tmp.paritariasAbiertas, ObtenerParitaria(*Siguiente(itAcuerdos)))
+		\state AgregarParitaria(tmp, ObtenerParitaria(*Siguiente(itAcuerdos)))
 
 		\state EliminarSiguiente(itAcuerdos)
 
@@ -45,244 +45,189 @@
 
 \algoritmoIvoid{Reabrir}{\param{in/out}{ tmp}{estrT},  \param{in}{gr}{gremio}}
 {
-	
+	\state \var{puntero(paritaria)}{pa} \asig RemoverAcuerdo(tmp, \&gr)
+
+	\state AgregarParitaria(tmp, pa)
 }
 {0}
 
 \algoritmoI{Gremios}{\param{in}{tmp}{estrT}}{\param{}{res}{conj(gremio)}}
 {
-	
+	\state res \asig ObtenerGremios(tmp.sl)
 }
 {0}
 
 \algoritmoI{EnParitarias}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{\param{}{res}{bool}}
 {
-	
+	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)
+	\while{HaySiguiente(itParitarias) \lyl ObtenerGremio(*Siguiente(itParitarias)) \distinto \&gr}
+		\state
+		\state Avanzar(itParitarias)
+	\endwhile
+	\state
+
+	\state res \asig HaySiguiente(itParitarias)
 }
 {0}
 
 \algoritmoI{GremiosNegociando}{\param{in}{tmp}{estrT}}{\param{}{res}{conj(gremio)}}
 {
-	
+	\state res \asig Vacío()
+	\state
+
+	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)
+	\while{HaySiguiente(itParitarias)}
+		\state
+		\state Agregar(res, *ObtenerGremio(*Siguiente(itParitarias)))
+		
+		\state
+		\state Avanzar(itParitarias)
+	\endwhile
 }
 {0}
 
 \algoritmoI{EmpresasNegociando}{\param{in}{tmp}{estrT}}{\param{}{res}{conj(empresa)}}
 {
-	
+	\state res \asig Vacío()
+	\state
+
+	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)
+	\while{HaySiguiente(itParitarias)}
+		\state
+		\state conj(empresa) empresasParitaria \asig ObtenerEmpresas(*ObtenerGremio(*Siguiente(itParitarias)))
+		\state res \asig Union(res, empresasParitaria)
+
+		\state
+		\state Avanzar(itParitarias)
+	\endwhile
 }
 {0}
 
 \algoritmoI{TrabajadoresNegociando}{\param{in}{tmp}{estrT}}{\param{}{res}{nat}}
 {
-	
+	\state res \asig 0
+	\state
+
+	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)
+	\while{HaySiguiente(itParitarias)}
+		\state
+
+		\state \var{nat}{\#afiliadosParitaria} \asig Obtener\#Afiliados(*ObtenerGremio(*Siguiente(itParitarias)))
+		\state res \asig res + \#afiliadosParitaria
+
+		\state
+		\state Avanzar(itParitarias)
+	\endwhile
 }
 {0}
 
 \algoritmoI{GremioConflictivo}{\param{in}{tmp}{estrT}}{\param{}{res}{gremio}}
 {
-	
+	\state \var{itConj(puntero(gremio))}{itGremios} \asig Gremios(tmp)
+	\state
+
+	\state \var{puntero(gremio)}{gremioConflictivo} \asig Siguiente(itGremios)
+	\state \var{nat}{maxAperturas} \asig Obtener\#DeAperturas(tmp, gremioConflictivo)
+	\state Avanzar(itGremios)
+	\state
+
+	\while{HaySiguiente(itGremios)}
+		\state
+
+		\state \var{nat}{\#aperturas} \asig Obtener\#DeAperturas(tmp, Siguiente(itGremios))
+
+		\If{maxAperturas \menor \#aperturas}
+
+			\state maxAperturas \asig \#aperturas
+			\state gremioConflictivo \asig Siguiente(itGremios)
+		\endif
+
+		\state
+		\state Avanzar(itGremios)
+	\endwhile
+	\state
+
+	\state res \asig *gremioConflictivo
 }
 {0}
 
 \algoritmoIvoid{InicializarAcuerdosVigentes}{\param{in/out}{ tmp}{estrT}}
 {
-	
+	\state \var{nat}{indice} \asig 0
+	\while{indice \menor Obtener\#GruposDeAliados(tmp.sistema)}
+		\state
+
+		\state tmp.acuerdosVigentes[indice] \asig Vacía()
+
+		\state
+		\state indice \asig indice + 1
+	\endwhile
+
 }
 {0}
 
 \algoritmoIvoid{InicializarAperturas}{\param{in/out}{ tmp}{estrT}}
 {
-	
+	\state \var{nat}{indice} \asig 0
+	\while{indice \menor Cardinal(Gremios(tmp))}
+		\state
+
+		\state tmp.\#aperturas[indice] \asig 0
+
+		\state
+		\state indice \asig indice + 1
+	\endwhile
+}
+{0}
+
+\algoritmoIvoid{AgregarParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{pa}{puntero(paritaria)}}
+{
+	\state Agregar(tmp.paritariasAbiertas, pa)
 }
 {0}
 
 \algoritmoI{RemoverParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{puntero(paritaria)}}
 {
-	
+	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)
+	\while{ObtenerGremio(*Siguiente(itParitarias)) != gr}
+		\state
+		\state Avanzar(itParitarias)
+	\endwhile
+	\state
+
+	\state res \asig Siguiente(itParitarias)
+
+	\state EliminarSiguiente(itParitarias)
 }
 {0}
 
 \algoritmoI{RemoverAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{puntero(paritaria)}}
 {
-	
+	\state \var{itLista(puntero(acuerdo))}{itAcuerdos} \asig CrearIt(ObtenerAcuerdosDeAliados(tmp, gr))
+	\while{ObtenerGremio(*Siguiente(itAcuerdos)) != gr}
+		\state
+		\state Avanzar(itAcuerdos)  
+	\endwhile
+	\state
+
+	\state res \asig ObtenerParitaria(*Siguiente(itAcuerdos))
+
+	\state EliminarSiguiente(itAcuerdos)
 }
 {0}
 
-\algoritmoI{ObtenerAcuerdosDeAliados}{\param{in}{tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{lista(pacuerdo)}}
+\algoritmoI{ObtenerAcuerdosDeAliados}{\param{in}{tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{lista(puntero(acuerdo))}}
 {
-	
+	\state \var{idGrupo}{id} \asig ObtenerIdGrupoAliados(tmp.sistema, gr)
+
+	\state res \asig tmp.acuerdosVigentes[id]
 }
 {0}
 
 \algoritmoI{Obtener\#DeAperturas}{\param{in}{tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{nat}}
 {
-	
+	\state \var{idGremio}{id} \asig ObtenerId(*gr)
+
+	\state res \asig tmp.\#aperturas[id]
 }
 {0}
-
-
-% \begin{algorithm}[H]
-% \caption{iRaizAC}
-% \begin{algorithmic}[1]
-% \Function{iRaiz}{\param{in}{ac}{estrAC}}{$\ensuremath{\rightarrow}$ \param{}{res}{Categoria}}
-% \state res $\gets$ (*(ac.raiz)).categoria \hfill //O(1)
-% \EndFunction 
-% \end{algorithmic}
-% \hrule
-% \complejidad{1}
-% \end{algorithm}
-
-% \begin{algorithm}[H]
-% \caption{iDameCantidad}
-% \begin{algorithmic}[1]
-% \Function{iDameCantidad}{\param{in}{ac}{estrAC}}{$\ensuremath{\rightarrow}$ \param{}{res}{nat}}
-% \state res $\gets$ ac.cantidad \hfill //O(1)
-% \EndFunction 
-% \end{algorithmic}
-% \hrule
-% \complejidad{1}
-% \end{algorithm}
-
-% \begin{algorithm}[H]
-% \caption{iIdAC}
-% \begin{algorithmic}[1]
-% \Function{iId}{\param{in}{ac}{estrAC}, \param{in}{c}{Categoria}}{$\ensuremath{\rightarrow}$ \param{}{res}{nat}}
-% \state res $\gets$ ((*obtener(c,ac.familia)).id \hfill //O(|c|)
-% \EndFunction 
-% \end{algorithmic}
-% \hrule
-% \complejidad{|c|}
-% \end{algorithm}
-
-% \begin{algorithm}[H]
-% \caption{iAlturaCatAC}
-% \begin{algorithmic}[1]
-% \Function{iAlturaCatAC}{\param{in}{ac}{estrAC}, \param{in}{c}{Categoria}}{$\ensuremath{\rightarrow}$ \param{}{res}{nat}}
-% \state res $\gets$ (*obtener(c,ac.familia)).altura \hfill //O(|c|)
-% \EndFunction 
-% \end{algorithmic}
-% \hrule
-% \complejidad{|c|}
-% \end{algorithm}
-
-% \begin{algorithm}[H]
-% \caption{iHijosAC}
-% \begin{algorithmic}[1]
-% \Function{iHijosAC}{\param{in}{ac}{estrAC}, \param{in}{c}{Categoria}}{$\ensuremath{\rightarrow}$ \param{}{res}{itHijos}}
-% \state res $\gets$ crearItHijos(ac,c) \hfill //O(|c|)
-% \EndFunction 
-% \end{algorithmic}
-% \hrule
-% \complejidad{|c|}
-% \end{algorithm}
-
-% \begin{algorithm}[H]
-% \caption{iPadreAC}
-% \begin{algorithmic}[1]
-% \Function{iPadreAC}{\param{in}{ac}{estrAC}, \param{in}{c}{Categoria}}{$\ensuremath{\rightarrow}$ \param{}{res}{Categoria}}
-% \state res $\gets$ (*(*obtener(c,ac.familia)).padre).categoria \hfill //O(|c|)
-% \EndFunction 
-% \end{algorithmic}
-% \hrule
-% \complejidad{|c|}
-% \end{algorithm}
-
-% \begin{algorithm}[H]
-% \caption{iAlturaAC}
-% \begin{algorithmic}[1]
-% \Function{iAlturaAC}{\param{in}{ac}{estrAC}}{$\ensuremath{\rightarrow}$ \param{}{res}{nat}}
-% \state res $\gets$ ac.alturaMax \hfill //O(1)
-% \EndFunction 
-% \end{algorithmic}
-% \hrule
-% \complejidad{1}
-% \end{algorithm}
-
-% \begin{algorithm}[H]
-% \caption{iPredecesores}
-% \begin{algorithmic}[1]
-% \Function{iPredecesores}{\param{in}{ac}{estrAC}, \param{in}{c}{Categoria}}{$\ensuremath{\rightarrow}$ \param{}{res}{itFamilia}}
-% \state res $\gets$ crearItFamilia(ac,c) \hfill //O(|c|)
-% \EndFunction 
-% \end{algorithmic}
-% \hrule
-% \complejidad{|c|}
-% \end{algorithm}
-
-% \begin{algorithm}[H]
-% \caption{iNuevoAC}
-% \begin{algorithmic}[1]
-% \Function{iNuevoAC}{\param{in}{c}{Categoria}}{$\ensuremath{\rightarrow}$ \param{}{res}{estrAC}}
-% \state res.cantidad $\gets$ 1 \hfill //O(1)
-% \state datosCat tuplaA \hfill //O(1)
-% \state tuplaA $\gets$ tupla(c,1,1,vacio(),Null) \hfill //O(|c|)
-% \state puntero(datosCat) punt $\gets$ \&tuplaA \hfill //O(1)
-% \state res.raiz $\gets$ punt \hfill //O(1)
-% \state res.alturaMax $\gets$ 1 \hfill //O(1)
-% \state definir(c, punt, res.familia) \hfill //O(|c|)
-% \state agregarAtras(tuplaA, res.categorias) \hfill //O(1)
-% \EndFunction 
-% \end{algorithmic}
-% \hrule
-% \complejidad{|c|}
-% \end{algorithm}
-
-% \begin{algorithm}[H]
-% \caption{iAgregarAC}
-% \begin{algorithmic}[1]
-% \Function{iAgregarAC}{\param{in/out}{ ac}{estrAC}, \param{in}{c}{Categoria}, \param{in}{h}{Categoria}}{}
-% \state puntero(datosCat) puntPadre $\gets$ obtener(c,ac.familia) \hfill //O(|c|)
-% \If{(*puntPadre).altura == ac.alturaMax} \hfill //O(1)
-% \state ac.alturaMax++ \hfill //O(1)
-% \endif
-% \state datosCat tuplaA $\gets$ (h,ac.cantidad+1,(*puntPadre).altura+1,vacio(),puntPadre) \hfill //O(|h|)
-% \state puntero(datosCat) punt $\gets$ \&tuplaA \hfill //O(1)
-% \state Agregar((*puntPadre).hijos,punt) \hfill //O(1)
-% \state definir(h,punt,ac.familia) \hfill //O(|h|)
-% \state ac.cantidad++ \hfill //O(1)
-% \state agregarAtras(tuplaA,ac.categorias) \hfill //O(1)
-% \EndFunction 
-% \end{algorithmic}
-% \hrule
-% \complejidad{|c|+|h|}
-% \end{algorithm}
-
-% \begin{algorithm}[H]
-% \caption{iEsta?}
-% \begin{algorithmic}[1]
-% \Function{iEsta?}{\param{in}{ac}{estrAC}, \param{in}{c}{Categoria}}{$\ensuremath{\rightarrow}$ \param{}{res}{bool}}
-% \state res $\gets$ def?(c,ac.familia) \hfill //O(|c|)
-% \EndFunction 
-% \end{algorithmic}
-% \hrule
-% \complejidad{|c|}
-% \end{algorithm}
-
-% \begin{algorithm}[H]
-% \caption{iEsSubCategoria}
-% \begin{algorithmic}[1]
-% \Function{iEsSubCategoria}{\param{in}{ac}{estrAC}, \param{in}{c}{Categoria}, \param{in}{h}{Categoria}}{$\ensuremath{\rightarrow}$ \param{}{res}{bool}}
-% \state res $\gets$ false \hfill //O(1)
-% \If{h == c} \hfill //O(|h|)
-% \state res $\gets$ true \hfill //O(1)
-% \Else
-% \If{h == raizAC(ac)} \hfill //O(|h|)
-% \state res $\gets$ false \hfill //O(1)
-% \Else
-% \state puntero(datosCat) actual $\gets$ (*obtener(h,ac.familia)).padre \hfill //O(|h|)
-% \state puntero(datosCat) puntC $\gets$ (*obtener(c,ac.familia)) \hfill //O(|c|)
-% \while{res == false $\land$ actual $\neq$ NULL} \hfill //O(alturaAC(ac))
-% \If{puntC.Id == actual.Id} \hfill //O(1)
-% \state res $\gets$ true \hfill //O(1)
-% \Else
-% \state actual $\gets$ (*actual).padre \hfill //O(1)
-% \endif
-% \endwhile
-% \endif
-% \endif
-% \EndFunction 
-% \end{algorithmic}
-% \hrule
-% \complejidad{|h| + |c| + alturaAC(ac)}
-% \end{algorithm}
