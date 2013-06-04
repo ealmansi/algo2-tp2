@@ -11,7 +11,7 @@
 	\state \var{idGremio}{id} \asig ObtenerProximoIdGremio(sl)			\inlineC{0}
 	\state
 	\state GuardarId(gr,id)												\inlineC{0}
-	\state sl.gremios[id] \asig \&gr									\inlineC{0}
+	\state sl.gremios[id] \asig gr									\inlineC{0}
 	\state sl.gruposDeAliados[id] \asig ObtenerProximoIdGrupoDeAliados(sl)			\inlineC{0}
 }
 {0}
@@ -19,15 +19,15 @@
 
 \algoritmoI{AliarGremios}{\param{in/out}{sl}{estrS}, \param{in}{gr1}{gremio}, \param{in}{gr2}{gremio}}{}
 {
-	\state \var{idGrupo}{idGrupoG1} \asig ObtenerIdGrupoDeAliados(sl, \&gr1)			\inlineC{0}
-	\state \var{idGrupo}{idGrupoG2} \asig ObtenerIdGrupoDeAliados(sl, \&gr2)			\inlineC{0}
+	\state \var{idGrupo}{idGrupoG1} \asig ObtenerIdGrupoDeAliados(sl, gr1)			\inlineC{0}
+	\state \var{idGrupo}{idGrupoG2} \asig ObtenerIdGrupoDeAliados(sl, gr2)			\inlineC{0}
 	\state 
 	\state UnificarGruposDeAliados(sl, idGrupoG1, idGrupoG2)							\inlineC{0}
 }
 {0}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
-\algoritmoI{ObtenerGremios}{\param{in}{sl}{estrS}}{conj(puntero(gremio))}
+\algoritmoI{ObtenerGremios}{\param{in}{sl}{estrS}}{conj(gremio)}
 {
 	\state res \asig Vacío()								\inlineC{0}
 
@@ -52,16 +52,16 @@
 {0}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
-\algoritmoI{ObtenerIdGrupoDeAliados}{\param{in}{sl}{estrS}, \param{in}{gr}{puntero(gremio)}}{idGrupo}
+\algoritmoI{ObtenerIdGrupoDeAliados}{\param{in}{sl}{estrS}, \param{in}{gr}{gremio}}{idGrupo}
 {
-	\state res \asig sl.gruposDeAliados[ObtenerId(*gr)]			\inlineC{0}
+	\state res \asig sl.gruposDeAliados[ObtenerId(gr)]			\inlineC{0}
 }
 {0}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
-\algoritmoI{GuardarIdGrupoDeAliados}{\param{in/out}{sl}{estrS}, \param{in}{gr}{puntero(gremio)}, \param{in}{id}{idGrupo}}{}
+\algoritmoI{GuardarIdGrupoDeAliados}{\param{in/out}{sl}{estrS}, \param{in}{gr}{gremio}, \param{in}{id}{idGrupo}}{}
 {
-	\state sl.gruposDeAliados[ObtenerId(*gr)] \asig id			\inlineC{0}
+	\state sl.gruposDeAliados[ObtenerId(gr)] \asig id			\inlineC{0}
 }
 {0}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
@@ -96,7 +96,7 @@
 	\while{indice \menor Longitud(sl.gremios)}								\inlineC{0}
 		\state
 
-		\state \var{puntero(gremio)}{gr} \asig sl.gremios[indice]			\inlineC{0}
+		\state \var{gremio}{gr} \asig sl.gremios[indice]			\inlineC{0}
 		\state \var{idGrupo}{idG} \asig ObtenerIdGrupoDeAliados(sl, gr)		\inlineC{0}
 		\state
 
