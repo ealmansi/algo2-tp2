@@ -1,25 +1,25 @@
 \algoritmoI{NuevaParitaria}
 {\param{in}{gr}{puntero(gremio)}, \param{in}{ps}{nat}, \param{in}{tp}{nat}}{estrP}
 {
-	\state res.gremio \asig gr										\inlineC{0}
-	\state res.piso \asig ps										\inlineC{0}
-	\state res.tope \asig tp										\inlineC{0}
+	\state res.gremio \asig gr										\inlineC{1}
+	\state res.piso \asig ps										\inlineC{1}
+	\state res.tope \asig tp										\inlineC{1}
 }
-{0}
+{1}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{ObtenerGremio}
 {\param{in}{pa}{estrP}}{puntero(gremio)}
 {
-	\state res \asig pa.gremio										\inlineC{0}
+	\state res \asig pa.gremio										\inlineC{1}
 }
-{0}
+{1}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{ObtenerPiso}
 {\param{in}{pa}{estrP}}{nat}
 {
-	\state res \asig pa.piso										\inlineC{0}
+	\state res \asig pa.piso										\inlineC{1}
 }
 {0}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
@@ -27,7 +27,7 @@
 \algoritmoI{ObtenerTope}
 {\param{in}{pa}{estrP}}{nat}
 {
-	\state res \asig pa.tope										\inlineC{0}
+	\state res \asig pa.tope										\inlineC{1}
 }
-{0}
+{1}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
