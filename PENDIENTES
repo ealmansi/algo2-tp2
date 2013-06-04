@@ -1,0 +1,17 @@
+Gremio
+	.decidir qué hacer con id para el TAD
+	.Descripción de los campos (o borrar la sección si no hay nada para decir)
+	.invariante informal
+	.eliminar funciones auxiliares
+	.comentarios donde sea necesario (ir borrando el lipsum donde no lo sea)
+
+Paritaria
+	.eliminar punteros y asteríscos en la interfaz, rep y algoritmos
+	.Descripción de los campos (o borrar la sección si no hay nada para decir)
+	.eliminar funciones auxiliares
+
+Acuerdo
+	.pre/post y aliasing
+	.complejidad
+	.Descripción de los campos (o borrar la sección si no hay nada para decir)
+	.eliminar funciones auxiliares
