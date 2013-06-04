@@ -1,36 +1,41 @@
 \algoritmoI{NuevoGremio}
-{\param{in}{es}{conj(empresa)}, \param{in}{\#as}{nat}}{\param{}{res}{estrG}}
+{\param{in}{es}{conj(empresa)}, \param{in}{\#as}{nat}}{estrG}
 {
-	\state res.empresas \asig es 							\inlineC{0}
-	\state res.\#afiliados \asig \#as 						\inlineC{0}
-	\state res.id \asig 0 									\inlineC{0}
+	\state res.empresas \asig es 							\inlineC{1}
+	\state res.\#afiliados \asig \#as 						\inlineC{1}
+	\state res.id \asig 0 									\inlineC{1}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
 \algoritmoI{ObtenerEmpresas}
-{\param{in}{gr}{estrG}}{\param{}{res}{conj(empresa)}}
+{\param{in}{gr}{estrG}}{conj(empresa)}
 {
 	\state res \asig gr.empresas 							\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
 \algoritmoI{Obtener\#Afiliados}
-{\param{in}{gr}{estrG}}{\param{}{res}{nat}}
+{\param{in}{gr}{estrG}}{nat}
 {
 	\state res \asig gr.\#afiliados 						\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
 \algoritmoI{ObtenerId}
-{\param{in}{gr}{estrG}}{\param{}{res}{nat}}
+{\param{in}{gr}{estrG}}{nat}
 {
 	\state res \asig gr.id 									\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoIvoid{GuardarId}
-{\param{in/out}{gr}{estrG}, \param{in}{id}{nat}}
+\algoritmoI{GuardarId}
+{\param{in/out}{gr}{estrG}, \param{in}{id}{nat}}{}
 {
 	\state gr.id \asig id 									\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}

@@ -1,17 +1,18 @@
-\algoritmoI{Iniciar}{\param{in}{sl}{sistemaLaboral}}{\param{}{res}{estrT}}
+\algoritmoI{Iniciar}{\param{in}{sl}{sistemaLaboral}}{estrT}
 {
 	\state res.sistema \asig sl						\inlineC{0}
 	\state res.paritariasAbiertas \asig Vacío()		\inlineC{0}
 	\state res.acuerdosVigentes \asig Vacía()		\inlineC{0}
-	\state res.\#aperturas \asig Vacía()			\inlineC{0}
+	\state res.acuerdosPrevios \asig Vacía()		\inlineC{0}
 	\state
 
 	\state InicializarAcuerdosVigentes(res)			\inlineC{0}
 	\state InicializarAperturas(res)				\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoIvoid{AbrirParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio}, \param{in}{p}{nat}, \param{in}{t}{nat}, \param{in}{es}{conj(empresa)}}
+\algoritmoI{AbrirParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio}, \param{in}{p}{nat}, \param{in}{t}{nat}, \param{in}{es}{conj(empresa)}}{}
 {
 	\If{0 \menor Obtener\#Aperturas(tmp, \&gr)}						\inlineC{0}
 		\state RemoverAcuerdo(tmp, \&gr)							\inlineC{0}
@@ -21,8 +22,9 @@
 	\state AgregarParitaria(tmp, \&NuevaParitaria(\&gr, p, t))		\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoIvoid{CerrarAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio} , \param{in}{pcj}{nat}}
+\algoritmoI{CerrarAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio} , \param{in}{pcj}{nat}}{}
 {
 
 	\state \var{itLista(puntero(acuerdo))}{itAcuerdos} \asig CrearIt(ObtenerAcuerdosDeAliados(tmp, \&gr))		\inlineC{0}
@@ -42,16 +44,18 @@
 	\state AgregarComoSiguiente(itAcuerdos, \&NuevoAcuerdo(pa, pcj))			\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoIvoid{Reabrir}{\param{in/out}{ tmp}{estrT},  \param{in}{gr}{gremio}}
+\algoritmoI{Reabrir}{\param{in/out}{ tmp}{estrT},  \param{in}{gr}{gremio}}{}
 {
 	\state \var{puntero(paritaria)}{pa} \asig RemoverAcuerdo(tmp, \&gr)			\inlineC{0}
 
 	\state AgregarParitaria(tmp, pa)											\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{Gremios}{\param{in}{tmp}{estrT}}{\param{}{res}{conj(gremio)}}
+\algoritmoI{Gremios}{\param{in}{tmp}{estrT}}{conj(gremio)}
 {
 	\state res \asig Vacío()								\inlineC{0}
 
@@ -66,8 +70,9 @@
 	\endwhile
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{EnParitarias}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{\param{}{res}{bool}}
+\algoritmoI{EnParitarias}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{bool}
 {
 	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{0}
 	\while{HaySiguiente(itParitarias) \lyl ObtenerGremio(*Siguiente(itParitarias)) \distinto \&gr}		\inlineC{0}
@@ -79,8 +84,9 @@
 	\state res \asig HaySiguiente(itParitarias)		\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{GremiosNegociando}{\param{in}{tmp}{estrT}}{\param{}{res}{conj(gremio)}}
+\algoritmoI{GremiosNegociando}{\param{in}{tmp}{estrT}}{conj(gremio)}
 {
 	\state res \asig Vacío()		\inlineC{0}
 	\state
@@ -95,8 +101,9 @@
 	\endwhile
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{EmpresasNegociando}{\param{in}{tmp}{estrT}}{\param{}{res}{conj(empresa)}}
+\algoritmoI{EmpresasNegociando}{\param{in}{tmp}{estrT}}{conj(empresa)}
 {
 	\state res \asig Vacío()		\inlineC{0}
 	\state
@@ -112,8 +119,9 @@
 	\endwhile
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{TrabajadoresNegociando}{\param{in}{tmp}{estrT}}{\param{}{res}{nat}}
+\algoritmoI{TrabajadoresNegociando}{\param{in}{tmp}{estrT}}{nat}
 {
 	\state res \asig 0		\inlineC{0}
 	\state
@@ -130,25 +138,26 @@
 	\endwhile
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{GremioConflictivo}{\param{in}{tmp}{estrT}}{\param{}{res}{gremio}}
+\algoritmoI{GremioConflictivo}{\param{in}{tmp}{estrT}}{gremio}
 {
 	\state \var{itConj(puntero(gremio))}{itGremios} \asig CrearIt(Gremios(tmp))						\inlineC{0}
 	\state
 
 	\state \var{puntero(gremio)}{gremioConflictivo} \asig Siguiente(itGremios)				\inlineC{0}
-	\state \var{nat}{maxAperturas} \asig Obtener\#DeAperturas(tmp, gremioConflictivo)		\inlineC{0}
+	\state \var{nat}{maxAperturas} \asig ObtenerAcuerdosPrevios(tmp, gremioConflictivo)		\inlineC{0}
 	\state Avanzar(itGremios)																\inlineC{0}
 	\state
 
 	\while{HaySiguiente(itGremios)}																\inlineC{0}
 		\state
 
-		\state \var{nat}{\#aperturas} \asig Obtener\#DeAperturas(tmp, Siguiente(itGremios))		\inlineC{0}
+		\state \var{nat}{acuerdosPrevios} \asig ObtenerAcuerdosPrevios(tmp, Siguiente(itGremios))		\inlineC{0}
 
-		\If{maxAperturas \menor \#aperturas}							\inlineC{0}
+		\If{maxAperturas \menor acuerdosPrevios}							\inlineC{0}
 
-			\state maxAperturas \asig \#aperturas						\inlineC{0}
+			\state maxAperturas \asig acuerdosPrevios						\inlineC{0}
 			\state gremioConflictivo \asig Siguiente(itGremios)			\inlineC{0}
 		\endif
 
@@ -160,8 +169,9 @@
 	\state res \asig *gremioConflictivo									\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoIvoid{InicializarAcuerdosVigentes}{\param{in/out}{ tmp}{estrT}}
+\algoritmoI{InicializarAcuerdosVigentes}{\param{in/out}{ tmp}{estrT}}{}
 {
 	\state \var{nat}{indice} \asig 0									\inlineC{0}
 	\while{indice \menor Obtener\#GruposDeAliados(tmp.sistema)}			\inlineC{0}
@@ -175,28 +185,31 @@
 
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoIvoid{InicializarAperturas}{\param{in/out}{ tmp}{estrT}}
+\algoritmoI{InicializarAperturas}{\param{in/out}{ tmp}{estrT}}{}
 {
 	\state \var{nat}{indice} \asig 0					\inlineC{0}
 	\while{indice \menor Cardinal(Gremios(tmp))}		\inlineC{0}
 		\state
 
-		\state tmp.\#aperturas[indice] \asig 0			\inlineC{0}
+		\state tmp.acuerdosPrevios[indice] \asig 0			\inlineC{0}
 
 		\state
 		\state indice \asig indice + 1					\inlineC{0}
 	\endwhile
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoIvoid{AgregarParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{pa}{puntero(paritaria)}}
+\algoritmoI{AgregarParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{pa}{puntero(paritaria)}}{}
 {
 	\state Agregar(tmp.paritariasAbiertas, pa)		\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{RemoverParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{puntero(paritaria)}}
+\algoritmoI{RemoverParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{puntero(paritaria)}
 {
 	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{0}
 	\while{ObtenerGremio(*Siguiente(itParitarias)) != gr}		\inlineC{0}
@@ -210,8 +223,9 @@
 	\state EliminarSiguiente(itParitarias)						\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{RemoverAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{puntero(paritaria)}}
+\algoritmoI{RemoverAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{puntero(paritaria)}
 {
 	\state \var{itLista(puntero(acuerdo))}{itAcuerdos} \asig CrearIt(ObtenerAcuerdosDeAliados(tmp, gr))		\inlineC{0}
 	\while{ObtenerGremio(*Siguiente(itAcuerdos)) != gr}		\inlineC{0}
@@ -225,19 +239,22 @@
 	\state EliminarSiguiente(itAcuerdos)							\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{ObtenerAcuerdosDeAliados}{\param{in}{tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{lista(puntero(acuerdo))}}
+\algoritmoI{ObtenerAcuerdosDeAliados}{\param{in}{tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{lista(puntero(acuerdo))}
 {
 	\state \var{idGrupo}{id} \asig ObtenerIdGrupoAliados(tmp.sistema, gr)		\inlineC{0}
 
 	\state res \asig tmp.acuerdosVigentes[id]									\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{Obtener\#DeAperturas}{\param{in}{tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{nat}}
+\algoritmoI{ObtenerAcuerdosPrevios}{\param{in}{tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{nat}
 {
-	\state \var{idGremio}{id} \asig ObtenerId(*gr)		\inlineC{0}
+	\state \var{idGremio}{id} \asig ObtenerId(*gr)			\inlineC{0}
 
-	\state res \asig tmp.\#aperturas[id]				\inlineC{0}
+	\state res \asig tmp.acuerdosPrevios[id]				\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}

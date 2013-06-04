@@ -1,11 +1,12 @@
-\algoritmoI{NuevoSistemaLaboral}{}{\param{}{res}{estrS}}
+\algoritmoI{NuevoSistemaLaboral}{}{estrS}
 {
 	\state res.gremios \asig Vacía()					\inlineC{0}
 	\state res.gruposDeAliados \asig Vacía()			\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoIvoid{AgregarGremio}{\param{in/out}{sl}{estrS}, \param{in/out}{gr}{gremio}}
+\algoritmoI{AgregarGremio}{\param{in/out}{sl}{estrS}, \param{in/out}{gr}{gremio}}{}
 {
 	\state \var{idGremio}{id} \asig ObtenerProximoIdGremio(sl)			\inlineC{0}
 	\state
@@ -14,8 +15,9 @@
 	\state sl.gruposDeAliados[id] \asig ObtenerProximoIdGrupoDeAliados(sl)			\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoIvoid{AliarGremios}{\param{in/out}{sl}{estrS}, \param{in}{gr1}{gremio}, \param{in}{gr2}{gremio}}
+\algoritmoI{AliarGremios}{\param{in/out}{sl}{estrS}, \param{in}{gr1}{gremio}, \param{in}{gr2}{gremio}}{}
 {
 	\state \var{idGrupo}{idGrupoG1} \asig ObtenerIdGrupoDeAliados(sl, \&gr1)			\inlineC{0}
 	\state \var{idGrupo}{idGrupoG2} \asig ObtenerIdGrupoDeAliados(sl, \&gr2)			\inlineC{0}
@@ -23,8 +25,9 @@
 	\state UnificarGruposDeAliados(sl, idGrupoG1, idGrupoG2)							\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{ObtenerGremios}{\param{in}{sl}{estrS}}{\param{}{res}{conj(puntero(gremio))}}
+\algoritmoI{ObtenerGremios}{\param{in}{sl}{estrS}}{conj(puntero(gremio))}
 {
 	\state res \asig Vacío()								\inlineC{0}
 
@@ -40,32 +43,37 @@
 	\endwhile
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{Obtener\#GruposDeAliados}{\param{in}{sl}{estrS}}{\param{}{res}{nat}}
+\algoritmoI{Obtener\#GruposDeAliados}{\param{in}{sl}{estrS}}{nat}
 {
 	\state res \asig MaximoIdGrupoDeAliados(sl)			\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{ObtenerIdGrupoDeAliados}{\param{in}{sl}{estrS}, \param{in}{gr}{puntero(gremio)}}{\param{}{res}{idGrupo}}
+\algoritmoI{ObtenerIdGrupoDeAliados}{\param{in}{sl}{estrS}, \param{in}{gr}{puntero(gremio)}}{idGrupo}
 {
 	\state res \asig sl.gruposDeAliados[ObtenerId(*gr)]			\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoIvoid{GuardarIdGrupoDeAliados}{\param{in/out}{sl}{estrS}, \param{in}{gr}{puntero(gremio)}, \param{in}{id}{idGrupo}}
+\algoritmoI{GuardarIdGrupoDeAliados}{\param{in/out}{sl}{estrS}, \param{in}{gr}{puntero(gremio)}, \param{in}{id}{idGrupo}}{}
 {
 	\state sl.gruposDeAliados[ObtenerId(*gr)] \asig id			\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{ObtenerProximoIdGremio}{\param{in}{sl}{estrS}}{\param{}{res}{idGremio}}
+\algoritmoI{ObtenerProximoIdGremio}{\param{in}{sl}{estrS}}{idGremio}
 {
 	\state res \asig Longitud(sl.gremios)			\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{ObtenerProximoIdGrupoDeAliados}{\param{in}{sl}{estrS}}{\param{}{res}{idGrupo}}
+\algoritmoI{ObtenerProximoIdGrupoDeAliados}{\param{in}{sl}{estrS}}{idGrupo}
 {
 	\If{Longitud(sl.gruposDeAliados) \igual 0}					\inlineC{0}
 		\state res \asig 0										\inlineC{0}
@@ -74,8 +82,10 @@
 	\endif
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoIvoid{UnificarGruposDeAliados}{\param{in/out}{sl}{estrS}, \param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}
+\algoritmoI{UnificarGruposDeAliados}
+{\param{in/out}{sl}{estrS}, \param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{}
 {
 	\state \var{idGrupo}{idMenor} \asig Min(id1, id2)						\inlineC{0}
 	\state \var{idGrupo}{idMayor} \asig Max(id1, id2)						\inlineC{0}
@@ -102,8 +112,9 @@
 	\endwhile
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{MaximoIdGrupoDeAliados}{\param{in}{sl}{estrS}}{\param{}{res}{nat}}
+\algoritmoI{MaximoIdGrupoDeAliados}{\param{in}{sl}{estrS}}{nat}
 {
 	\state \var{nat}{maxId} \asig 0									\inlineC{0}
 
@@ -122,8 +133,9 @@
 	\state res \asig maxId											\inlineC{0}
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{Min}{\param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{\param{}{res}{idGrupo}}
+\algoritmoI{Min}{\param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{idGrupo}
 {
 	\If{id1 \menor id2}					\inlineC{0}
 		\state res \asig id1			\inlineC{0}
@@ -132,8 +144,9 @@
 	\endif
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
 
-\algoritmoI{Max}{\param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{\param{}{res}{idGrupo}}
+\algoritmoI{Max}{\param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{idGrupo}
 {
 	\If{id1 \menor id2}					\inlineC{0}
 		\state res \asig id2			\inlineC{0}
@@ -142,3 +155,4 @@
 	\endif
 }
 {0}
+{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}

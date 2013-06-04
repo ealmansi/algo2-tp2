@@ -12,13 +12,16 @@ Paritaria \textbf{se representa con} estrP, donde estrP es: \\
 \end{tabular}
 \end{center}
 
+\subsubsection{Descripción de los campos}
+
 \subsubsection{Invariante de Representaci\'on}
-\paragraph{El Invariante Informalmente}
+
+\paragraph{Descripción informal}
 \begin{enumerate}
-\item El piso debe ser menor o igual que el techo.
+	\item El piso debe ser menor o igual que el techo.
 \end{enumerate}
 
-\paragraph{El Invariante Formalmente}
+\paragraph{Expresión formal}
 \begin{Rep}{estrP}{e}
 \repfunc{e.piso \leq e.tope}{}
 \end{Rep}
@@ -27,3 +30,5 @@ Paritaria \textbf{se representa con} estrP, donde estrP es: \\
 \begin{ABSEXPLICITO}{e}{estrP}{nuevaParitaria(*e.gremio, e.piso, e.tope)}{paritaria}
 {}
 \end{ABSEXPLICITO}
+
+\subsubsection{Funciones auxiliares}

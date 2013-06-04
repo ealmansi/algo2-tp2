@@ -1,9 +1,9 @@
-\newcommand{\algoritmoI}[5]{
+\newcommand{\algoritmoI}[6]{
 	\begin{algorithm}[H]
 	\caption{i#1}
 	\vspace{3pt}
 	\begin{algorithmic}
-	\Function{i#1}{#2}{ $\ensuremath{\rightarrow}$ #3}
+	\Function{i#1}{#2}{\ifgiven{#3}\then{ $\ensuremath{\rightarrow}$ \param{}{res}{#3}}\else{}\fi}
 	\vspace{5pt}
 	#4
 	\vspace{7pt}
@@ -12,23 +12,8 @@
 	\vspace{3pt}\hrule
 	\vspace{3pt}
 	\complejidad{#5}
-	\end{algorithm}
-}
-
-\newcommand{\algoritmoIvoid}[4]{
-	\begin{algorithm}[H]
-	\caption{i#1}
-	\vspace{3pt}
-	\begin{algorithmic}
-	\Function{i#1}{#2}
-	\vspace{5pt}
-	#3
-	\vspace{7pt}
-	\EndFunction
-	\end{algorithmic}
-	\vspace{3pt}\hrule
-	\vspace{3pt}
-	\complejidad{#4}
+	\ifblank{#6}\then{}\else{\vspace{3pt}\hrule
+	\vspace{4pt}\textbf{Comentarios:} #6\vspace{3pt}}\fi
 	\end{algorithm}
 }
 
@@ -41,6 +26,7 @@
 \newcommand{\igual}{$==$ }
 
 \newcommand{\ly}{$\land$ }
+
 \newcommand{\lyl}{$\land_L$ }
 
 \newcommand{\distinto}{$\neq$ }
