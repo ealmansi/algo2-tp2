@@ -15,6 +15,14 @@ Temporada \textbf{se representa con} estrT, donde estrT es: \\
 
 \subsubsection{Descripción de los campos}
 
+	El campo sistema agrupa toda la información acerca de los gremios de la temporada, y las relaciones de alianza entre ellos. En particular, permite conocer a qué grupo de aliados (ver Sistema Laboral) pertenece cada gremio en tiempo constante.
+
+	El conjunto lineal paritariasAbiertas contiene aquellas paritarias que se encuentran abiertas (el contexto de uso permite verificar pertenencia en tiempo lineal, por lo que no es necesario mantenerlas ordenadas de ninguna forma).
+
+	Los acuerdos vigentes de la temporada se agrupan por separado para cada grupo de aliados en el vector acuerdosVigentesPorGrupo. Este contiene múltiples listas de acuerdos, una por cada grupo de aliados, donde cada una de ellas se encuentra ordenada de menor a mayor según el porcentaje de los acuerdos que contiene. 
+
+	Como el módulo SistemaLaboral garantiza que los id's de los distintos grupos son consecutivos y comienzan en 0, cada lista se indexa a partir del id de grupo de aliados correspondiente, permitiendo obtener a partir de un gremio la lista ordenada de acuerdos de sus aliados en tiempo constante.
+
 \subsubsection{Invariante de Representaci\'on}
 
 \paragraph{Descripción informal \\ \\}
