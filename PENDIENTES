@@ -1,5 +1,5 @@
 Gremio
-	.decidir qué hacer con id para el TAD
+	.decidir qué hacer con id para el TAD (extender TAD Gremio?)
 	.Descripción de los campos (o borrar la sección si no hay nada para decir)
 	.invariante informal
 	.eliminar funciones auxiliares
@@ -15,3 +15,16 @@ Acuerdo
 	.complejidad
 	.Descripción de los campos (o borrar la sección si no hay nada para decir)
 	.eliminar funciones auxiliares
+	.comentarios donde sea necesario (ir borrando el lipsum donde no lo sea)
+
+SistemaLaboral
+	.pre/post y aliasing
+	.complejidad
+	.completar Rep y Abs
+	.comentarios donde sea necesario (ir borrando el lipsum donde no lo sea)
+
+Temporada
+	.pre/post y aliasing
+	.complejidad
+	.completar Rep y Abs
+	.comentarios donde sea necesario (ir borrando el lipsum donde no lo sea)
