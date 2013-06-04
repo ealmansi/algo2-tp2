@@ -4,7 +4,7 @@
 \\
 Acuerdo \textbf{se representa con} estrA, donde estrA es: \\
 \tupla{\\
-\hspace*{4em}\param{}{paritaria}{puntero(paritaria)},\hspace*{2em} \\
+\hspace*{4em}\param{}{paritaria}{paritaria},\hspace*{2em} \\
 \hspace*{4em}\param{}{porcentaje}{nat},\hspace*{2em} \\
 \hspace*{4em}\param{}{acuerdosPrevios}{nat} \\\hspace*{2em} } \\
 \\
@@ -13,6 +13,12 @@ Acuerdo \textbf{se representa con} estrA, donde estrA es: \\
 \end{center}
 
 \subsubsection{Descripción de los campos}
+
+	La paritaria a partir de la cual se generó el acuerdo se guarda en el campo homónimo, por si esta llegara a reabrirse.
+
+	El campo porcentaje indica el valor de aumento acordado.
+
+	El campo acuerdosPrevios cuenta la cantidad de acuerdos que realizó previamente el gremio asociado.
 
 \subsubsection{Invariante de Representaci\'on}
 
