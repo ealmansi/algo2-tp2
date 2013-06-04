@@ -18,9 +18,10 @@ SistemaLaboral \textbf{se representa con} estrS, donde estrS es: \\
 \paragraph{Descripción informal}
 
 \begin{enumerate}
-	\item Los gremios no comparten empresas.
-	\item Los vectores \emph{gremios} y \emph{gruposDeAliados} tienen igual longitud (una entrada por cada gremio agregado).
-	\item Los valores del vector \emph{gruposDeAliados} son consecutivos.
+	\item Ninguna empresa aparece en más de un gremio.
+	\item El id de cada gremio es igual a su índice en el vector gremios.
+	\item Los vectores gremios y gruposDeAliados tienen igual longitud.
+	\item Los valores del vector gruposDeAliados son consecutivos, comenzando en 0.
 \end{enumerate}
 
 \paragraph{Expresión formal}
