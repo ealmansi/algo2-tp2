@@ -3,11 +3,11 @@
 	\state res.sistema \asig sl						\inlineC{0}
 	\state res.paritariasAbiertas \asig Vacío()		\inlineC{0}
 	\state res.acuerdosVigentes \asig Vacía()		\inlineC{0}
-	\state res.acuerdosPrevios \asig Vacía()		\inlineC{0}
+	\state res.\#acuerdosPrevios \asig Vacía()		\inlineC{0}
 	\state
 
 	\state InicializarAcuerdosVigentes(res)			\inlineC{0}
-	\state InicializarAperturas(res)				\inlineC{0}
+	\state Inicializar\#AcuerdosPrevios(res)				\inlineC{0}
 }
 {0}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
@@ -111,7 +111,7 @@
 	\state \var{itConj(puntero(paritaria))}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{0}
 	\while{HaySiguiente(itParitarias)}						\inlineC{0}
 		\state
-		\state conj(empresa) empresasParitaria \asig ObtenerEmpresas(*ObtenerGremio(*Siguiente(itParitarias)		\inlineC{0}))
+		\state conj(empresa) empresasParitaria \asig ObtenerEmpresas(*ObtenerGremio(*Siguiente(itParitarias)))		\inlineC{0}
 		\state res \asig Union(res, empresasParitaria)		\inlineC{0}
 
 		\state
@@ -146,18 +146,18 @@
 	\state
 
 	\state \var{puntero(gremio)}{gremioConflictivo} \asig Siguiente(itGremios)				\inlineC{0}
-	\state \var{nat}{maxAperturas} \asig ObtenerAcuerdosPrevios(tmp, gremioConflictivo)		\inlineC{0}
+	\state \var{nat}{maxAperturas} \asig Obtener\#AcuerdosPrevios(tmp, gremioConflictivo)		\inlineC{0}
 	\state Avanzar(itGremios)																\inlineC{0}
 	\state
 
 	\while{HaySiguiente(itGremios)}																\inlineC{0}
 		\state
 
-		\state \var{nat}{acuerdosPrevios} \asig ObtenerAcuerdosPrevios(tmp, Siguiente(itGremios))		\inlineC{0}
+		\state \var{nat}{\#acuerdosPrevios} \asig Obtener\#AcuerdosPrevios(tmp, Siguiente(itGremios))		\inlineC{0}
 
-		\If{maxAperturas \menor acuerdosPrevios}							\inlineC{0}
+		\If{maxAperturas \menor \#acuerdosPrevios}							\inlineC{0}
 
-			\state maxAperturas \asig acuerdosPrevios						\inlineC{0}
+			\state maxAperturas \asig \#acuerdosPrevios						\inlineC{0}
 			\state gremioConflictivo \asig Siguiente(itGremios)			\inlineC{0}
 		\endif
 
@@ -187,13 +187,13 @@
 {0}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
-\algoritmoI{InicializarAperturas}{\param{in/out}{ tmp}{estrT}}{}
+\algoritmoI{Inicializar\#AcuerdosPrevios}{\param{in/out}{ tmp}{estrT}}{}
 {
 	\state \var{nat}{indice} \asig 0					\inlineC{0}
 	\while{indice \menor Cardinal(Gremios(tmp))}		\inlineC{0}
 		\state
 
-		\state tmp.acuerdosPrevios[indice] \asig 0			\inlineC{0}
+		\state tmp.\#acuerdosPrevios[indice] \asig 0			\inlineC{0}
 
 		\state
 		\state indice \asig indice + 1					\inlineC{0}
@@ -250,11 +250,11 @@
 {0}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
-\algoritmoI{ObtenerAcuerdosPrevios}{\param{in}{tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{nat}
+\algoritmoI{Obtener\#AcuerdosPrevios}{\param{in}{tmp}{estrT}, \param{in}{gr}{puntero(gremio)}}{nat}
 {
 	\state \var{idGremio}{id} \asig ObtenerId(*gr)			\inlineC{0}
 
-	\state res \asig tmp.acuerdosPrevios[id]				\inlineC{0}
+	\state res \asig tmp.\#acuerdosPrevios[id]				\inlineC{0}
 }
 {0}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
