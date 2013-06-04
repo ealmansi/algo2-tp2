@@ -37,6 +37,7 @@ Temporada \textbf{se representa con} estrT, donde estrT es: \\
 	\item Todo acuerdo tiene un porcentaje que está entre el piso y el techo de su paritaria.
 	\item \#aperturas tiene una entrada para cada gremio del sistema, y ninguna más.
 	\item Los gremios del sistema que no tienen ni su paritaria abierta ni un acuerdo vigente, tienen asignado el valor 0 en \#aperturas.
+	\item Los gremios del sistema que tengan su paritaria abierta tendrán asignado un valor en \#aperturas de al menos 1.
 	\item Los gremios del sistema que tengan un acuerdo vigente tendrán asignado un valor en \#aperturas igual a acuerdosPrevios + 1.
 
 \end{enumerate}
