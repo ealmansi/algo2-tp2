@@ -2,12 +2,12 @@
 {
 	\state res.sistema \asig sl						\inlineC{0}
 	\state res.paritariasAbiertas \asig Vacío()		\inlineC{0}
-	\state res.acuerdosVigentes \asig Vacía()		\inlineC{0}
+	\state res.acuerdosVigentesPorGrupo \asig Vacía()		\inlineC{0}
 	\state res.\#acuerdosPrevios \asig Vacía()		\inlineC{0}
 	\state
 
-	\state InicializarAcuerdosVigentes(res)			\inlineC{0}
-	\state Inicializar\#AcuerdosPrevios(res)				\inlineC{0}
+	\state InicializarAcuerdosVigentesPorGrupo(res)			\inlineC{0}
+	\state Inicializar\#AcuerdosPrevios(res)		\inlineC{0}
 }
 {0}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
@@ -171,13 +171,13 @@
 {0}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
-\algoritmoI{InicializarAcuerdosVigentes}{\param{in/out}{ tmp}{estrT}}{}
+\algoritmoI{InicializarAcuerdosVigentesPorGrupo}{\param{in/out}{ tmp}{estrT}}{}
 {
 	\state \var{nat}{indice} \asig 0									\inlineC{0}
 	\while{indice \menor Obtener\#GruposDeAliados(tmp.sistema)}			\inlineC{0}
 		\state
 
-		\state tmp.acuerdosVigentes[indice] \asig Vacía()				\inlineC{0}
+		\state tmp.acuerdosVigentesPorGrupo[indice] \asig Vacía()				\inlineC{0}
 
 		\state
 		\state indice \asig indice + 1									\inlineC{0}
@@ -245,7 +245,7 @@
 {
 	\state \var{idGrupo}{id} \asig ObtenerIdGrupoAliados(tmp.sistema, gr)		\inlineC{0}
 
-	\state res \asig tmp.acuerdosVigentes[id]									\inlineC{0}
+	\state res \asig tmp.acuerdosVigentesPorGrupo[id]									\inlineC{0}
 }
 {0}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
