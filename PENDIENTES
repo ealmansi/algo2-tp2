@@ -2,9 +2,6 @@ Gremio
 	.decidir qué hacer con id para el TAD (extender TAD Gremio?)
 	.comentarios donde sea necesario (ir borrando el lipsum donde no lo sea)
 
-Paritaria
-	.eliminar punteros y asteríscos en la interfaz, rep y algoritmos
-
 Acuerdo
 	.pre/post y aliasing
 	.complejidad
