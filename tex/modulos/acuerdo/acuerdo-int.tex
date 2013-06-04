@@ -12,9 +12,9 @@
 
 \end{iparamformales}
 
-\operacion{NuevoAcuerdo}{\param{in}{pa}{puntero(paritaria)}, \param{in}{pcj}{nat}}{acuerdo}{3}{4}{5}{6}
-\operacion{ObtenerParitaria}{\param{in}{ac}{acuerdo}}{puntero(paritaria)}{3}{4}{5}{6}
-\operacion{ObtenerGremio}{\param{in}{ac}{acuerdo}}{puntero(gremio)}{3}{4}{5}{6}
-\operacion{ObtenerPorcentaje}{\param{in}{ac}{acuerdo}}{nat}{3}{4}{5}{6}
+\operacion{NuevoAcuerdo}{\param{in}{pa}{paritaria}, \param{in}{pcj}{nat}}{acuerdo}{true}{esAlias(paritaria(acuerdo), pa)) \land (valor(pa) \igobs pcj)}{1}{La paritaria se guarda por referencia, y el porcentaje por copia}
+\operacion{ObtenerParitaria}{\param{in}{ac}{acuerdo}}{paritaria}{true}{esAlias(res, paritaria(ac))}{1}{Se devuelve la referencia a la paritaria}
+\operacion{ObtenerGremio}{\param{in}{ac}{acuerdo}}{gremio}{true}{esAlias(res, gremio(ac))}{1}{Se devuelve el gremio por referencia}
+\operacion{ObtenerPorcentaje}{\param{in}{ac}{acuerdo}}{nat}{true}{valor(ac) \igobs res}{1}{Se devuelve el porcentaje por valor}
 
 \end{interfaz}

@@ -1,32 +1,32 @@
 \algoritmoI{NuevoAcuerdo}
-{\param{in}{pa}{puntero(paritaria)}, \param{in}{pcj}{nat}}{estrA}
+{\param{in}{pa}{paritaria}, \param{in}{pcj}{nat}}{estrA}
 {
-	\state res.paritaria \asig pa								\inlineC{0}
-	\state res.porcentaje \asig pcj								\inlineC{0}
+	\state res.paritaria \asig pa								\inlineC{1}
+	\state res.porcentaje \asig pcj								\inlineC{1}
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{1}
+{Crea un acuerdo a partir de una paritaria y un porcentaje}
 
 \algoritmoI{ObtenerParitaria}
-{\param{in}{ac}{estrA}}{puntero(paritaria)}
+{\param{in}{ac}{estrA}}{paritaria}
 {
-	\state res \asig ac.paritaria 								\inlineC{0}
+	\state res \asig ac.paritaria 								\inlineC{1}
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{1}
+{Devuelve la paritaria del acuerdo}
 
 \algoritmoI{ObtenerGremio}
-{\param{in}{ac}{estrA}}{puntero(gremio)}
+{\param{in}{ac}{estrA}}{gremio}
 {
-	\state res \asig ObtenerGremio(*ObtenerParitaria(ac)) 		\inlineC{0}
+	\state res \asig ObtenerGremio(ObtenerParitaria(ac)) 		\inlineC{1}
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{1}
+{Devuelve el gremio de la paritaria asociada al acuerdo}
 
 \algoritmoI{ObtenerPorcentaje}
 {\param{in}{ac}{estrA}}{nat}
 {
-	\state res \asig ac.porcentaje 								\inlineC{0}
+	\state res \asig ac.porcentaje		\inlineC{1}
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{1}
+{Devuelve el porcentaje asociado al acuerdo}

@@ -12,10 +12,10 @@
 
 \end{iparamformales}
 
-\operacion{NuevoGremio}{\param{in}{es}{conj(empresa)}, \param{in}{\#as}{nat}}{{gremio}}{true}{(empresas(res) \igobs es) \land (afiliados(res) \igobs as)}{1}{es se guarda como referencia, \#as se guarda por copia}
-\operacion{ObtenerEmpresas}{\param{in}{gr}{gremio}}{{conj(empresa)}}{true}{res \igobs empresas(gr)}{1}{el resultado devuelto es una referencia}
+\operacion{NuevoGremio}{\param{in}{es}{conj(empresa)}, \param{in}{\#as}{nat}}{{gremio}}{true}{(esAlias(empresas(res), es)) \land (afiliados(res) \igobs as)}{1}{es se guarda como referencia, \#as se guarda por copia}
+\operacion{ObtenerEmpresas}{\param{in}{gr}{gremio}}{{conj(empresa)}}{true}{esAlias(res, empresas(gr))}{1}{el resultado devuelto es una referencia}
 \operacion{Obtener\#Afiliados}{\param{in}{gr}{gremio}}{{nat}}{true}{res \igobs afiliados(gr)}{1}{el valor devuelto es una copia}
-\operacion{ObtenerId}{\param{in}{gr}{gremio}}{{nat}}{true}{res \igobs SHAO}{1}{el valor devuelto es una copia}
-\operacion{GuardarId}{\param{in/out}{gr}{gremio}, \param{in}{id}{nat}}{}{true}{SHAO \igobs id}{1}{id se guarda como copia}
+\operacion{ObtenerId}{\param{in}{gr}{gremio}}{{nat}}{true}{res \igobs identificador(gr)}{1}{el valor devuelto es una copia}
+\operacion{GuardarId}{\param{in/out}{gr}{gremio}, \param{in}{id}{nat}}{}{true}{identificador(gr) \igobs id}{1}{id se guarda como copia}
 
 \end{interfaz}
