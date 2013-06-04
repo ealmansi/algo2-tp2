@@ -22,13 +22,12 @@ Paritaria \textbf{se representa con} estrP, donde estrP es: \\
 \end{enumerate}
 
 \paragraph{Expresión formal}
-\begin{Rep}{estrP}{e}
-\repfunc{e.piso \leq e.tope}{}
-\end{Rep}
+\begin{RepFormal}{estrP}{e}
+	\repItem{e.piso \leq e.tope}{}
+\end{RepFormal}
 
 \subsubsection{Funci\'on de Abstracci\'on}
-\begin{ABSEXPLICITO}{e}{estrP}{nuevaParitaria(*e.gremio, e.piso, e.tope)}{paritaria}
-{}
-\end{ABSEXPLICITO}
+\FunAbsExplicita{e}{estrP}{paritaria}
+{nuevaParitaria(*e.gremio, e.piso, e.tope)}
 
 \subsubsection{Funciones auxiliares}

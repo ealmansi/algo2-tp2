@@ -32,3 +32,25 @@
 \newcommand{\distinto}{$\neq$ }
 
 \newcommand{\inlineC}[1]{\hfill \emph{// O(#1)} \vspace{2pt}}
+
+\newcommand\repItem[2]{\item\noindent \ensuremath{#1} #2 \par}
+
+\newcommand{\RepFormalTrivial}[2]{\begin{changemargin}{0em}{4em}Rep: $\widehat{#1}$ $\rightarrow$ boolean\par \end{changemargin}(\paratodo\param{}{#2}{#1}) Rep(#2) $\equiv$ true}
+
+\newenvironment{RepFormal}[2]
+{\begin{changemargin}{0em}{4em}Rep: $\widehat{#1}$ $\rightarrow$ boolean\par \end{changemargin}(\paratodo\param{}{#2}{#1}) Rep(#2) $\equiv$ true $\Longleftrightarrow$\begin{changemargin}{2em}{0em}\begin{enumerate}}
+{\end{enumerate}\end{changemargin}}
+
+\newcommand\absItem[2]{\item\noindent #1 \hfill #2 }
+
+\newcommand{\FunAbsExplicita}[4]{\begin{minipage}{1\textwidth}\begin{changemargin}{0em}{4em}Abs: #1 $\widehat{#2}$ $\rightarrow$ #3 \hfill \{Rep(#1)\} \end{changemargin} (\paratodo\param{}{#1}{#2}) Abs(#1) $\equiv$ #4\end{minipage}}
+
+\newenvironment{FunAbsDescriptiva}[4]
+{\begin{minipage}{1\textwidth}\begin{changemargin}{0em}{4em}Abs: #1 $\widehat{#2}$ $\rightarrow$ #4 \hfill \{Rep(#1)\} \end{changemargin} (\paratodo\param{}{#1}{#2}) Abs(#1) \igobs #3 : #4 | \begin{changemargin}{2em}{4em}\begin {enumerate}}
+{\end{enumerate}\end{changemargin}\end{minipage}}
+
+\newcommand\paratodof[2]{$\forall$ #2 : #1}
+
+\newcommand\en{$\in$ }
+
+\newcommand\entoncesL{$\Rightarrow_L$ }

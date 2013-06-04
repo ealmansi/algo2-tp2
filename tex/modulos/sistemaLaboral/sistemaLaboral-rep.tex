@@ -24,12 +24,18 @@ SistemaLaboral \textbf{se representa con} estrS, donde estrS es: \\
 \end{enumerate}
 
 \paragraph{Expresión formal}
+\begin{RepFormal}{estrP}{e}
+	\repItem{varias cosas}{}
+\end{RepFormal}
 
 \subsubsection{Funci\'on de Abstracci\'on}
 
-\begin{ABS}{e}{estrS}{si}{sistemaLaboral}
-\absfunc{gremios(si) \igobs obtenerConjuntoDeGremios(e)}{\yluego}
-\absfunc{(\forall g: gremio) g \in gremios(si)\,\,\, entoncesLuego\,\,\, aliados(g, si) \igobs obtenerConjuntoDeAliados(e,g)}{}
-\end{ABS}
+\begin{FunAbsDescriptiva}{e}{estrS}{si}{sistemaLaboral}
+
+	\absItem{gremios(si) \igobs obtenerConjuntoDeGremios(e)}{\yluego}
+
+	\absItem{(\paratodof{g}{gremio}) g \en gremios(si) \entoncesL aliados(g, si) \igobs obtenerConjuntoDeAliados(e,g)}{}
+
+\end{FunAbsDescriptiva}
 
 \subsubsection{Funciones auxiliares}
