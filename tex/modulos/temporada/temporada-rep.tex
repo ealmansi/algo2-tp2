@@ -36,7 +36,8 @@ Temporada \textbf{se representa con} estrT, donde estrT es: \\
 	\item Cada lista de acuerdosVigentesPorGrupo está ordenada segun porcentaje.
 	\item Todo acuerdo tiene un porcentaje que está entre el piso y el techo de su paritaria.
 	\item \#aperturas tiene una entrada para cada gremio del sistema, y ninguna más.
-	\item Los valores en el vector \#aperturas son consistentes con los valores de acuerdosPrevios de los acuerdos (es decir, si el acuerdo está vigente, el gremio abrió paritarias una vez más que la cantidad de acuerdos previos).
+	\item Los gremios del sistema que no tienen ni su paritaria abierta ni un acuerdo vigente, tienen asignado el valor 0 en \#aperturas.
+	\item Los gremios del sistema que tengan un acuerdo vigente tendrán asignado un valor en \#aperturas igual a acuerdosPrevios + 1.
 
 \end{enumerate}
 
