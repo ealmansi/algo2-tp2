@@ -24,7 +24,7 @@
 }
 {0}
 
-\algoritmoI{ObtenerGremios}{\param{in}{sl}{estrS}}{\param{}{res}{conj(gremio)}}
+\algoritmoI{ObtenerGremios}{\param{in}{sl}{estrS}}{\param{}{res}{conj(puntero(gremio))}}
 {
 	\state res \asig Vacío()								\inlineC{0}
 
@@ -33,7 +33,7 @@
 	\while{indice \menor Longitud(sl.gremios)}				\inlineC{0}
 		\state
 
-		\state Agregar(res, *sl.gremios[indice])			\inlineC{0}
+		\state Agregar(res, sl.gremios[indice])			\inlineC{0}
 
 		\state
 		\state indice \asig indice + 1						\inlineC{0}

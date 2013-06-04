@@ -53,7 +53,17 @@
 
 \algoritmoI{Gremios}{\param{in}{tmp}{estrT}}{\param{}{res}{conj(gremio)}}
 {
-	\state res \asig ObtenerGremios(tmp.sl)		\inlineC{0}
+	\state res \asig Vacío()								\inlineC{0}
+
+	\state
+	\state \var{itConj(puntero(gremio))}{itGremios} \asig CrearIt(ObtenerGremios(tmp.sl))						\inlineC{0}
+	\while{HaySiguiente(itGremios)}				\inlineC{0}
+		\state
+		\state Agregar(res, *Siguiente(itGremios))			\inlineC{0}
+
+		\state
+		\state Avanzar(itGremios)						\inlineC{0}
+	\endwhile
 }
 {0}
 
@@ -123,7 +133,7 @@
 
 \algoritmoI{GremioConflictivo}{\param{in}{tmp}{estrT}}{\param{}{res}{gremio}}
 {
-	\state \var{itConj(puntero(gremio))}{itGremios} \asig Gremios(tmp)						\inlineC{0}
+	\state \var{itConj(puntero(gremio))}{itGremios} \asig CrearIt(Gremios(tmp))						\inlineC{0}
 	\state
 
 	\state \var{puntero(gremio)}{gremioConflictivo} \asig Siguiente(itGremios)				\inlineC{0}
