@@ -4,7 +4,7 @@
 	\state res.gruposDeAliados \asig Vacía()			\inlineC{0}
 }
 {0}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
+{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{AgregarGremio}{\param{in/out}{sl}{estrS}, \param{in/out}{gr}{gremio}}{}
 {
@@ -15,7 +15,7 @@
 	\state sl.gruposDeAliados[id] \asig ObtenerProximoIdGrupoDeAliados(sl)			\inlineC{0}
 }
 {0}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
+{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{AliarGremios}{\param{in/out}{sl}{estrS}, \param{in}{gr1}{gremio}, \param{in}{gr2}{gremio}}{}
 {
@@ -25,7 +25,7 @@
 	\state UnificarGruposDeAliados(sl, idGrupoG1, idGrupoG2)							\inlineC{0}
 }
 {0}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
+{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{ObtenerGremios}{\param{in}{sl}{estrS}}{conj(puntero(gremio))}
 {
@@ -43,35 +43,35 @@
 	\endwhile
 }
 {0}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
+{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{Obtener\#GruposDeAliados}{\param{in}{sl}{estrS}}{nat}
 {
 	\state res \asig MaximoIdGrupoDeAliados(sl)			\inlineC{0}
 }
 {0}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
+{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{ObtenerIdGrupoDeAliados}{\param{in}{sl}{estrS}, \param{in}{gr}{puntero(gremio)}}{idGrupo}
 {
 	\state res \asig sl.gruposDeAliados[ObtenerId(*gr)]			\inlineC{0}
 }
 {0}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
+{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{GuardarIdGrupoDeAliados}{\param{in/out}{sl}{estrS}, \param{in}{gr}{puntero(gremio)}, \param{in}{id}{idGrupo}}{}
 {
 	\state sl.gruposDeAliados[ObtenerId(*gr)] \asig id			\inlineC{0}
 }
 {0}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
+{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{ObtenerProximoIdGremio}{\param{in}{sl}{estrS}}{idGremio}
 {
 	\state res \asig Longitud(sl.gremios)			\inlineC{0}
 }
 {0}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
+{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{ObtenerProximoIdGrupoDeAliados}{\param{in}{sl}{estrS}}{idGrupo}
 {
@@ -82,7 +82,7 @@
 	\endif
 }
 {0}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
+{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{UnificarGruposDeAliados}
 {\param{in/out}{sl}{estrS}, \param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{}
@@ -112,7 +112,7 @@
 	\endwhile
 }
 {0}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
+{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{MaximoIdGrupoDeAliados}{\param{in}{sl}{estrS}}{nat}
 {
@@ -133,7 +133,7 @@
 	\state res \asig maxId											\inlineC{0}
 }
 {0}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
+{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{Min}{\param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{idGrupo}
 {
@@ -144,7 +144,7 @@
 	\endif
 }
 {0}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
+{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{Max}{\param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{idGrupo}
 {
@@ -155,4 +155,4 @@
 	\endif
 }
 {0}
-{Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed orci arcu, cursus sed consequat et, facilisis ac nunc. Donec posuere bibendum purus nec luctus. Etiam est erat, dictum eget vehicula eget, consectetur a ipsum. Sed non tortor magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ullamcorper lacus ut ante lacinia mattis. Etiam dictum convallis neque, sit amet molestie nisi porta non.}
+{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}

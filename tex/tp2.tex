@@ -15,6 +15,18 @@
 \usepackage{./recursos/algpseudocode}
 \usepackage{./recursos/algorithmicx}
 \usepackage{./recursos/handy}
+\usepackage{lipsum}
+\makeatletter
+\renewcommand\lips@dolipsum{%
+  \ifnum\value{lips@count}<\lips@max\relax
+    \addtocounter{lips@count}{1}%
+    \csname lipsum@\romannumeral\c@lips@count\endcsname
+    \lips@dolipsum
+  \fi
+}
+\makeatother
+\newcounter{lipsumcounter}
+\setcounter{lipsumcounter}{1}
 \usepackage[colorlinks,citecolor=black,filecolor=black,linkcolor=black,    urlcolor=black]{hyperref}
 \setcounter{secnumdepth}{5}
 \setcounter{tocdepth}{5}
