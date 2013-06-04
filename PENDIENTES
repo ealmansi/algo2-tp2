@@ -1,8 +1,6 @@
 Gremio
 	.decidir qué hacer con id para el TAD (extender TAD Gremio?)
 	.Descripción de los campos (o borrar la sección si no hay nada para decir)
-	.invariante informal
-	.eliminar funciones auxiliares
 	.comentarios donde sea necesario (ir borrando el lipsum donde no lo sea)
 
 Paritaria
