@@ -1,20 +1,20 @@
 \algoritmoI{NuevaParitaria}
-{\param{in}{gr}{puntero(gremio)}, \param{in}{ps}{nat}, \param{in}{tp}{nat}}{estrP}
+{\param{in}{gr}{gremio}, \param{in}{ps}{nat}, \param{in}{tp}{nat}}{estrP}
 {
 	\state res.gremio \asig gr										\inlineC{1}
 	\state res.piso \asig ps										\inlineC{1}
 	\state res.tope \asig tp										\inlineC{1}
 }
 {1}
-{Crea una paritaria a partir de un puntero a un gremio, un valor piso y un valor tope.}
+{Crea una paritaria a partir de un gremio, un valor piso y un valor tope.}
 
 \algoritmoI{ObtenerGremio}
-{\param{in}{pa}{estrP}}{puntero(gremio)}
+{\param{in}{pa}{estrP}}{gremio}
 {
 	\state res \asig pa.gremio										\inlineC{1}
 }
 {1}
-{Devuelve el puntero a el gremio de la paritaria.}
+{Devuelve el gremio de la paritaria.}
 
 \algoritmoI{ObtenerPiso}
 {\param{in}{pa}{estrP}}{nat}
