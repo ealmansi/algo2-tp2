@@ -15,11 +15,13 @@ SistemaLaboral \textbf{se representa con} estrS, donde estrS es: \\
 
 	El vector gremios guarda cada gremio agregado al sistema, al cual le asigna un número de id como parte de esa operación. Los id's se asignan de forma tal que sean consecutivos y coincidan con el índice del gremio en el vector.
 
-	Por otro lado, dado que la relación de alianza entre gremios es simétrica y transitiva, se puede dividir al conjunto de gremios del sistema en grupos disjuntos de aliados. Utilizando esta propiedad, se representa la red de alianzas entre gremios etiquetando a cada grupo mediante un id de grupo, de forma tal que dos gremios serán aliados cuando sus números de grupo coincidan. El vector gruposDeAliados agrupa esta información, asignando a cada gremio (de nuevo utilizando su id como índice en el vector) un id de grupo. 
+	Por otro lado, dado que la relación de alianza entre gremios es simétrica y transitiva, se puede dividir al conjunto de gremios del sistema en grupos disjuntos de aliados.
+
+	Utilizando esta propiedad, se representa la red de alianzas entre gremios etiquetando a cada grupo mediante un id de grupo, de forma tal que dos gremios serán aliados cuando sus números de grupo coincidan. El vector gruposDeAliados agrupa esta información, asignando a cada gremio (de nuevo utilizando su id como índice en el vector) un id de grupo. 
 
 \subsubsection{Invariante de Representaci\'on}
 
-\paragraph{Descripción informal \\ \\}
+\paragraph{Descripción informal \\}
 
 \begin{enumerate}
 	\item Ninguna empresa aparece en más de un gremio.
