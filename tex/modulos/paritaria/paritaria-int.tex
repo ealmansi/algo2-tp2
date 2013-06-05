@@ -12,9 +12,9 @@
 
 \end{iparamformales}
 
-\operacion{NuevaParitaria}{\param{in}{gr}{gremio}, \param{in}{ps}{nat}, \param{in}{tp}{nat}}{paritaria}{ps < tp}{res \igobs nuevaParitaria (gr, ps, tp)  \ly esAlias(gremio(res), gr) }{1}{}
-\operacion{ObtenerGremio}{\param{in}{pa}{paritaria}}{gremio)}{true}{esAlias(res, gremio(pa)  }{1}{}
-\operacion{ObtenerPiso}{\param{in}{pa}{paritaria}}{nat}{true}{res \igobs piso (pa)}{1}{}
-\operacion{ObtenerTope}{\param{in}{pa}{paritaria}}{nat}{true}{res \igobs tope (pa)}{1}{}
+\operacion{NuevaParitaria}{\param{in}{gr}{gremio}, \param{in}{ps}{nat}, \param{in}{tp}{nat}}{paritaria}{ps \menorigual tp}{res \igobs nuevaParitaria (gr, ps, tp)  \ly esAlias(gremio(res), gr) }{1}{Crea una paritaria a partir de un gremio, un valor piso y un valor tope.}{}
+\operacion{ObtenerGremio}{\param{in}{pa}{paritaria}}{gremio)}{true}{esAlias(res, gremio(pa)  }{1}{Devuelve el gremio de la paritaria.}{}
+\operacion{ObtenerPiso}{\param{in}{pa}{paritaria}}{nat}{true}{res \igobs piso (pa)}{1}{Devuelve el valor piso de la paritaria.}{}
+\operacion{ObtenerTope}{\param{in}{pa}{paritaria}}{nat}{true}{res \igobs tope (pa)}{1}{Devuelve el valor tope de la paritaria.}{}
 
 \end{interfaz}

@@ -12,9 +12,9 @@
 
 \end{iparamformales}
 
-\operacion{NuevoAcuerdo}{\param{in}{pa}{paritaria}, \param{in}{pcj}{nat}}{acuerdo}{true}{esAlias(paritaria(acuerdo), pa)) \land (valor(pa) \igobs pcj)}{1}{La paritaria se guarda por referencia, y el porcentaje por copia}
-\operacion{ObtenerParitaria}{\param{in}{ac}{acuerdo}}{paritaria}{true}{esAlias(res, paritaria(ac))}{1}{Se devuelve la referencia a la paritaria}
-\operacion{ObtenerGremio}{\param{in}{ac}{acuerdo}}{gremio}{true}{esAlias(res, gremio(ac))}{1}{Se devuelve el gremio por referencia}
-\operacion{ObtenerPorcentaje}{\param{in}{ac}{acuerdo}}{nat}{true}{valor(ac) \igobs res}{1}{Se devuelve el porcentaje por valor}
+\operacion{NuevoAcuerdo}{\param{in}{pa}{paritaria}, \param{in}{pcj}{nat}}{acuerdo}{true}{esAlias(paritaria(acuerdo), pa)) \land (valor(pa) \igobs pcj)}{1}{Crea un acuerdo a partir de una paritaria y un porcentaje}{La paritaria se guarda por referencia, y el porcentaje por copia}
+\operacion{ObtenerParitaria}{\param{in}{ac}{acuerdo}}{paritaria}{true}{esAlias(res, paritaria(ac))}{1}{Devuelve la paritaria del acuerdo}{Se devuelve la referencia a la paritaria}
+\operacion{ObtenerGremio}{\param{in}{ac}{acuerdo}}{gremio}{true}{esAlias(res, gremio(ac))}{1}{Devuelve el gremio de la paritaria asociada al acuerdo}{Se devuelve el gremio por referencia}
+\operacion{ObtenerPorcentaje}{\param{in}{ac}{acuerdo}}{nat}{true}{valor(ac) \igobs res}{1}{Devuelve el porcentaje asociado al acuerdo}{Se devuelve el porcentaje por valor}
 
 \end{interfaz}
