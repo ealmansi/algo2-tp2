@@ -11,8 +11,8 @@
 {true}
 {(esAlias(empresas(res), es)) \land (afiliados(res) \igobs as)}
 {1}
-{Crea un gremio a partir de un conjunto de empresas y un numero de afiliados.}
-{es se guarda como referencia, \#as se guarda por copia}
+{Crea un gremio a partir de las empresas asociadas y la cantidad de afiliados al gremio}
+{El conjunto de empresas se guarda por referencia}
 
 \operacion{ObtenerEmpresas}
 {\param{in}{gr}{gremio}}{conj(empresa)}
@@ -20,30 +20,30 @@
 {esAlias(res, empresas(gr))}
 {1}
 {Devuelve el conjunto de empresas del gremio}
-{el resultado devuelto es una referencia}
+{El resultado se devuelve por referencia}
 
 \operacion{Obtener\#Afiliados}
 {\param{in}{gr}{gremio}}{nat}
 {true}
 {res \igobs afiliados(gr)}
 {1}
-{Devuelve el numero de afiliados del gremio}
-{el valor devuelto es una copia}
+{Devuelve la cantidad de afiliados al gremio}
+{}
 
 \operacion{ObtenerId}
 {\param{in}{gr}{gremio}}{nat}
 {true}
-{res \igobs identificador(gr)}
+{res \igobs id(gr)}
 {1}
-{Devuelve el ID que identifica un\'ivocamente al gremio}
-{el valor devuelto es una copia}
+{Devuelve el número identificador del gremio}
+{}
 
 \operacion{GuardarId}
 {\param{in/out}{gr}{gremio}, \param{in}{id}{nat}}{}
 {true}
-{identificador(gr) \igobs id}
+{id(gr) \igobs id}
 {1}
-{Asigna el ID \'unico al gremio}
-{id se guarda como copia}
+{Asigna el número identificador del gremio}
+{}
 
 \end{interfaz}

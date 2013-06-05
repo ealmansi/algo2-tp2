@@ -37,11 +37,11 @@
 
 \newcommand\repItem[2]{\item\noindent \ensuremath{#1} #2 \par}
 
-\newcommand{\RepFormalTrivial}[2]{\begin{changemargin}{0em}{4em}Rep: $\widehat{#1}$ $\rightarrow$ boolean\par \end{changemargin}(\paratodo\param{}{#2}{#1}) Rep(#2) $\equiv$ true}
+\newcommand{\RepFormalTrivial}[2]{\begin{minipage}{1\textwidth}\begin{changemargin}{0em}{4em}\vspace{3pt}Rep: $\widehat{#1}$ $\rightarrow$ boolean\par \end{changemargin}(\paratodo\param{}{#2}{#1}) Rep(#2) $\equiv$ true\end{minipage}}
 
 \newenvironment{RepFormal}[2]
-{\begin{changemargin}{0em}{4em}Rep: $\widehat{#1}$ $\rightarrow$ boolean\par \end{changemargin}(\paratodo\param{}{#2}{#1}) Rep(#2) $\equiv$ true $\Longleftrightarrow$\begin{changemargin}{2em}{0em}\begin{enumerate}}
-{\end{enumerate}\end{changemargin}}
+{\begin{minipage}{1\textwidth}\begin{changemargin}{0em}{4em}\vspace{3pt}Rep: $\widehat{#1}$ $\rightarrow$ boolean\par \end{changemargin}(\paratodo\param{}{#2}{#1}) Rep(#2) $\equiv$ true $\Longleftrightarrow$\begin{changemargin}{2em}{4em}\begin{enumerate}}
+{\end{enumerate}\end{changemargin}\end{minipage}}
 
 \newcommand\absItem[2]{\item\noindent #1 \hfill #2 }
 
