@@ -1,88 +1,89 @@
-\algoritmoI{NuevoSistemaLaboral}{}{estrS}
+\algoritmoI{NuevoSistemaLaboral}{\param{in}{gs}{conj(gremio)}}{estrS}
 {
-	\state res.gremios \asig Vacía()					\inlineC{0}
-	\state res.gruposDeAliados \asig Vacía()			\inlineC{0}
-}
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
-
-\algoritmoI{AgregarGremio}{\param{in/out}{sl}{estrS}, \param{in/out}{gr}{gremio}}{}
-{
-	\state \var{idGremio}{id} \asig ObtenerProximoIdGremio(sl)			\inlineC{0}
+	\state AsignarIds(gs)
+	\state res.gremios \asig gs 						\inlineC{0}
 	\state
-	\state GuardarId(gr,id)												\inlineC{0}
-	\state sl.gremios[id] \asig gr									\inlineC{0}
-	\state sl.gruposDeAliados[id] \asig ObtenerProximoIdGrupoDeAliados(sl)			\inlineC{0}
+	\state res.gruposDeAliados \asig Vacía()			\inlineC{0}
+	\state InicializarGruposDeAliados(res)
 }
 {0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{Asigna id's consecutivos a los gremios, comenzando en 0, y luego le asigna a cada gremio un id de grupo igual a su id propio (esto garantiza que los gremios no tengan aliados inicialmente, y que sus id's de grupo sean consecutivos, comenzando en 0). }
 
 \algoritmoI{AliarGremios}{\param{in/out}{sl}{estrS}, \param{in}{gr1}{gremio}, \param{in}{gr2}{gremio}}{}
 {
 	\state \var{idGrupo}{idGrupoG1} \asig ObtenerIdGrupoDeAliados(sl, gr1)			\inlineC{0}
 	\state \var{idGrupo}{idGrupoG2} \asig ObtenerIdGrupoDeAliados(sl, gr2)			\inlineC{0}
 	\state 
-	\state UnificarGruposDeAliados(sl, idGrupoG1, idGrupoG2)							\inlineC{0}
+
+	\If{idGrupoG1 \distinto idGrupoG2}												\inlineC{0}
+		\state UnificarGruposDeAliados(sl, idGrupoG1, idGrupoG2)					\inlineC{0}
+	\endif
 }
 {0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{ Asegura que todos los gremios aliados a uno u otro de los gremios que contraen la alianza pasen a tener el mismo id de grupo (manteniendo la propiedad de que los id's de grupo deben ser consecutivos, comenzando en 0) }
 
 \algoritmoI{ObtenerGremios}{\param{in}{sl}{estrS}}{conj(gremio)}
 {
-	\state res \asig Vacío()								\inlineC{0}
-
-	\state
-	\state \var{nat}{indice} \asig 0						\inlineC{0}
-	\while{indice \menor Longitud(sl.gremios)}				\inlineC{0}
-		\state
-
-		\state Agregar(res, sl.gremios[indice])			\inlineC{0}
-
-		\state
-		\state indice \asig indice + 1						\inlineC{0}
-	\endwhile
+	\state res \asig sl.gremios								\inlineC{0}
 }
 {0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{}
 
 \algoritmoI{Obtener\#GruposDeAliados}{\param{in}{sl}{estrS}}{nat}
 {
 	\state res \asig MaximoIdGrupoDeAliados(sl)			\inlineC{0}
 }
 {0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{}
 
 \algoritmoI{ObtenerIdGrupoDeAliados}{\param{in}{sl}{estrS}, \param{in}{gr}{gremio}}{idGrupo}
 {
 	\state res \asig sl.gruposDeAliados[ObtenerId(gr)]			\inlineC{0}
 }
 {0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{}
 
 \algoritmoI{GuardarIdGrupoDeAliados}{\param{in/out}{sl}{estrS}, \param{in}{gr}{gremio}, \param{in}{id}{idGrupo}}{}
 {
 	\state sl.gruposDeAliados[ObtenerId(gr)] \asig id			\inlineC{0}
 }
 {0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{}
 
-\algoritmoI{ObtenerProximoIdGremio}{\param{in}{sl}{estrS}}{idGremio}
+\algoritmoI{AsignarIds}{\param{in}{gs}{conj(gremio)}}{}
 {
-	\state res \asig Longitud(sl.gremios)			\inlineC{0}
+	\state \var{nat}{id} \asig 0											\inlineC{0}
+	\state
+
+	\state \var{itConj(gremio)}{itGremios} \asig CrearIt(res.gremios)		\inlineC{0}
+	\while{ HaySiguiente(itGremios) }
+		\state
+		
+		\state GuardarId(Siguiente(itGremios), id)							\inlineC{0}
+		\state id \asig id + 1												\inlineC{0}
+		
+		\state
+		\state Avanzar(itGremios)											\inlineC{0}
+	\endwhile
 }
 {0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{ Asigna un id a cada gremio, comenzando en 0 y de forma consecutiva. }
 
-\algoritmoI{ObtenerProximoIdGrupoDeAliados}{\param{in}{sl}{estrS}}{idGrupo}
+\algoritmoI{InicializarGruposDeAliados}{\param{in/out}{sl}{estrS}}{}
 {
-	\If{Longitud(sl.gruposDeAliados) \igual 0}					\inlineC{0}
-		\state res \asig 0										\inlineC{0}
-	\Else
-		\state res \asig MaximoIdGrupoDeAliados(sl) + 1			\inlineC{0}
-	\endif
+	\state \var{itConj(gremio)}{itGremios} \asig CrearIt(sl.gremios)		\inlineC{0}
+	\while{ HaySiguiente(itGremios) }
+		\state
+		
+		\state \var{gremio}{gr} \asig Siguiente(itGremios)					\inlineC{0}		
+		\state GuardarIdGrupoDeAliados(sl, gr, ObtenerId(gr))				\inlineC{0}
+
+		\state
+		\state Avanzar(itGremios)											\inlineC{0}
+	\endwhile
 }
 {0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{ Asigna un id de grupo a cada gremio del sistema, igual a su id propio. }
 
 \algoritmoI{UnificarGruposDeAliados}
 {\param{in/out}{sl}{estrS}, \param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{}
@@ -96,7 +97,7 @@
 	\while{indice \menor Longitud(sl.gremios)}								\inlineC{0}
 		\state
 
-		\state \var{gremio}{gr} \asig sl.gremios[indice]			\inlineC{0}
+		\state \var{gremio}{gr} \asig sl.gremios[indice]					\inlineC{0}
 		\state \var{idGrupo}{idG} \asig ObtenerIdGrupoDeAliados(sl, gr)		\inlineC{0}
 		\state
 
@@ -112,7 +113,7 @@
 	\endwhile
 }
 {0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{ Dados dos id's de grupo, a todos los gremios que pertenezcan al grupo de id mayor, se les asigna el menor. A la vez, todos los id's de grupo que sean mayores que ambos se decrementan en 1, garantizando que los id's de grupo sigan siendo consecutivos. }
 
 \algoritmoI{MaximoIdGrupoDeAliados}{\param{in}{sl}{estrS}}{nat}
 {
@@ -133,7 +134,7 @@
 	\state res \asig maxId											\inlineC{0}
 }
 {0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{}
 
 \algoritmoI{Min}{\param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{idGrupo}
 {
@@ -144,7 +145,7 @@
 	\endif
 }
 {0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{}
 
 \algoritmoI{Max}{\param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{idGrupo}
 {
@@ -155,4 +156,4 @@
 	\endif
 }
 {0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{}

@@ -6,24 +6,16 @@
 \end{iparamformales}
 
 \operacion{NuevoSistemaLaboral}
-{}{sistemaLaboral}
+{\param{in/out}{gs}{conj(gremio)}}{sistemaLaboral}
 {true}
-{res = nuevo(\emptyset)}
+{res = nuevo(gs)}
 {1}
-{6}
-{7}
-
-\operacion{AgregarGremio}
-{\param{in/out}{sl}{sistemaLaboral}, \param{in/out}{gr}{gremio}}{}
-{ \lnot (gr \in gremios(sl)) \ly sl \igobs s0 }
-{ sl = agregarGremio(gr,s0) (hacer funcion de tad) }
-{5}
 {6}
 {7}
 
 \operacion{AliarGremios}
 {\param{in/out}{sl}{sistemaLaboral}, \param{in}{gr1}{gremio}, \param{in}{gr2}{gremio}}{}
-{gr1 \in gremios(sl) \ly gr2 \in gremios(sl) }
+{gr1 \in gremios(sl) \ly gr2 \in gremios(sl) \ly gr1 \distinto gr2 }
 {}
 {5}
 {6}
