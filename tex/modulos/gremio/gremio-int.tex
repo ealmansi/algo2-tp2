@@ -1,21 +1,49 @@
 \begin{interfaz}{Gremio}
-\begin{iparamformales}{gremio}
 
-\comment{\funcion{Copiar}{\param{in}{m}{$\alpha$}}{$\alpha$}
-{true}
-{\igres m}
-{copy(m)}
-{}
-}
+\begin{iparamformales}{gremio}
 
 \textbf{\large se explica con:} Gremio
 
 \end{iparamformales}
 
-\operacion{NuevoGremio}{\param{in}{es}{conj(empresa)}, \param{in}{\#as}{nat}}{{gremio}}{true}{(esAlias(empresas(res), es)) \land (afiliados(res) \igobs as)}{1}{Crea un gremio a partir de un conjunto de empresas y un numero de afiliados.}{es se guarda como referencia, \#as se guarda por copia}
-\operacion{ObtenerEmpresas}{\param{in}{gr}{gremio}}{{conj(empresa)}}{true}{esAlias(res, empresas(gr))}{1}{Devuelve el conjunto de empresas del gremio}{el resultado devuelto es una referencia}
-\operacion{Obtener\#Afiliados}{\param{in}{gr}{gremio}}{{nat}}{true}{res \igobs afiliados(gr)}{1}{Devuelve el numero de afiliados del gremio}{el valor devuelto es una copia}
-\operacion{ObtenerId}{\param{in}{gr}{gremio}}{{nat}}{true}{res \igobs identificador(gr)}{1}{Devuelve el ID que identifica un\'ivocamente al gremio}{el valor devuelto es una copia}
-\operacion{GuardarId}{\param{in/out}{gr}{gremio}, \param{in}{id}{nat}}{}{true}{identificador(gr) \igobs id}{1}{Asigna el ID \'unico al gremio}{id se guarda como copia}
+\operacion{NuevoGremio}
+{\param{in}{es}{conj(empresa)}, \param{in}{\#as}{nat}}{gremio}
+{true}
+{(esAlias(empresas(res), es)) \land (afiliados(res) \igobs as)}
+{1}
+{Crea un gremio a partir de un conjunto de empresas y un numero de afiliados.}
+{es se guarda como referencia, \#as se guarda por copia}
+
+\operacion{ObtenerEmpresas}
+{\param{in}{gr}{gremio}}{conj(empresa)}
+{true}
+{esAlias(res, empresas(gr))}
+{1}
+{Devuelve el conjunto de empresas del gremio}
+{el resultado devuelto es una referencia}
+
+\operacion{Obtener\#Afiliados}
+{\param{in}{gr}{gremio}}{nat}
+{true}
+{res \igobs afiliados(gr)}
+{1}
+{Devuelve el numero de afiliados del gremio}
+{el valor devuelto es una copia}
+
+\operacion{ObtenerId}
+{\param{in}{gr}{gremio}}{nat}
+{true}
+{res \igobs identificador(gr)}
+{1}
+{Devuelve el ID que identifica un\'ivocamente al gremio}
+{el valor devuelto es una copia}
+
+\operacion{GuardarId}
+{\param{in/out}{gr}{gremio}, \param{in}{id}{nat}}{}
+{true}
+{identificador(gr) \igobs id}
+{1}
+{Asigna el ID \'unico al gremio}
+{id se guarda como copia}
 
 \end{interfaz}
