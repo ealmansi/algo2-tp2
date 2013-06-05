@@ -7,12 +7,12 @@
 \end{iparamformales}
 
 \operacion{NuevoAcuerdo}
-{\param{in}{pa}{paritaria}, \param{in}{pcj}{nat}}{acuerdo}
+{\param{in}{pa}{paritaria}, \param{in}{pcj}{nat}, \param{in}{ap}{nat}}{acuerdo}
 {true}
-{esAlias(paritaria(acuerdo), pa)) \land (valor(pa) \igobs pcj)}
+{esAlias(paritaria(acuerdo), pa)) \land (valor(pa) \igobs pcj) \land (acuerdosPrevios(pa) \igobs ap)}
 {1}
-{Crea un acuerdo a partir de una paritaria y un porcentaje}
-{La paritaria se guarda por referencia, y el porcentaje por copia}
+{Crea un acuerdo a partir de una paritaria, un porcentaje de aumento y un número indicando la cantidad de acuerdos previos}
+{La paritaria se guarda por referencia}
 
 \operacion{ObtenerParitaria}
 {\param{in}{ac}{acuerdo}}{paritaria}
@@ -20,21 +20,21 @@
 {esAlias(res, paritaria(ac))}
 {1}
 {Devuelve la paritaria del acuerdo}
-{Se devuelve la referencia a la paritaria}
+{El resultado se devuelve por referencia}
 
 \operacion{ObtenerGremio}{\param{in}{ac}{acuerdo}}{gremio}
 {true}
 {esAlias(res, gremio(ac))}
 {1}
-{Devuelve el gremio de la paritaria asociada al acuerdo}
-{Se devuelve el gremio por referencia}
+{Devuelve el gremio asociada a la paritaria del acuerdo}
+{El resultado se devuelve por referencia}
 
 \operacion{ObtenerPorcentaje}
 {\param{in}{ac}{acuerdo}}{nat}
 {true}
 {valor(ac) \igobs res}
 {1}
-{Devuelve el porcentaje asociado al acuerdo}
-{Se devuelve el porcentaje por valor}
+{Devuelve el porcentaje de aumento acordado}
+{}
 
 \end{interfaz}
