@@ -8,83 +8,83 @@
 
 \operacion{Iniciar}
 {\param{in}{sl}{sistemaLaboral}}{temporada}
-{3}
-{4}
-{5}
-{6}
-{7}
+{true}
+{res \igobs iniciar(sl)}
+{1}
+{Inicia una nueva temporada a partir de un sistema.}
+{El sistema se guarda por referencia}
 
 \operacion{AbrirParitaria}
 {\param{in/out}{tmp}{temporada}, \param{in}{gr}{gremio}, \param{in}{p}{nat}, \param{in}{t}{nat}, \param{in}{es}{conj(empresa)}}{}
-{3}
-{4}
-{5}
-{6}
-{7}
+{gr \in gremios(tmp)\ly \neg enParitarias?(tpm, gr) \ly p \leq t \ly |es|*2 \leq |empresas(gr)| \ly es \subseteq empresas(gr)\ly tmp \igobs t0 }
+{tmp \igobs abrirParitaria(t0, gr, p, t, es)  }
+{1 si es la primera vez, de otra forma \# paritarias}
+{Abre la paritaria de un gremio a partir de un piso, techo y un conjunto de empresas}
+{La paritaria se agrega por copia}
 
 \operacion{CerrarAcuerdo}
 {\param{in/out}{tmp}{temporada}, \param{in}{gr}{gremio} , \param{in}{pcj}{nat} }{}
-{3}
-{4}
-{5}
-{6}
-{7}
+{enParitarias?(tmp, gr) \ly piso(paritaria(gr, tmp)) \leq pcj \leq tope(paritaria(gr, tmp) \ly tmp \igobs t0 }
+{tmp = cerrarAcuerdo(t0, gr, pcj)}
+{ \# acuerdosMenores + \# paritarias}
+{Cierra un nuevo acuerdo y elimina la paritaria de ese gremio}
+{El acuerdo se agrega por copia}
 
 \operacion{Reabrir}
 {\param{in/out}{tmp}{temporada}, \param{in}{gr}{gremio}}{}
-{3}
-{4}
-{5}
-{6}
-{7}
+{gr \in gremios(tmp)\ly \neg enParitarias?(tpm, gr) \ly \emptyset \neq  juntar(acuerdos(tmp, gr)) \ly tmp = t0 }
+{tmp \igobs reabrir(t0, gr) }
+{\# acuerdos}
+{Reabre la paritaria de un gremio, eliminando su último acuerdo y agregando la paritaria}
+{La paritaria se agrega por copia}
 
 \operacion{Gremios}
 {\param{in/out}{tmp}{temporada}}{conj(gremio)}
-{3}
-{4}
-{5}
-{6}
-{7}
+{true}
+{res \igobs gremios(tmp) }
+{ \# gremios }
+{Devuelve un conjunto con los gremios del sistema de la temporada}
+{Devuelve una referencia a el conjunto, que contiene copias de los gremios}
 
 \operacion{EnParitarias}
 {\param{in/out}{tmp}{temporada}, \param{in}{gr}{gremio}}{bool}
-{3}
-{4}
-{5}
-{6}
-{7}
+{true}
+{ res \igobs enParitarias(tmp, gr) }
+{\# paritarias}
+{Indica si el gremio tiene su paritaria abierta en el momento}
+{}
 
 \operacion{GremiosNegociando}
 {\param{in/out}{tmp}{temporada}}{conj(gremio)}
-{3}
-{4}
-{5}
-{6}
-{7}
+{true}
+{res \igobs gremiosNegociando(tmp)}
+{\# paritarias}
+{Devuelve el conjunto de gremios que tienen su paritaria abierta }
+{Devuelve una referencia a el conjunto, que contiene copias de los gremios}
 
 \operacion{EmpresasNegociando}
 {\param{in/out}{tmp}{temporada}}{conj(empresa)}
-{3}
-{4}
-{5}
-{6}
-{7}
+{true}
+{res \igobs empresasNegociando(tmp)}
+{falta implementar union}
+{Devuelve el conjunto de empresas cuyos gremios tienen su paritaria abierta}
+{falta implementar union}
 
 \operacion{TrabajadoresNegociando}
 {\param{in/out}{tmp}{temporada}}{nat}
-{3}
-{4}
-{5}
-{6}
-{7}
+{true}
+{res \igobs trabajadoresNegociando(tmp)}
+{\# paritarias}
+{Devuelve el número de trabajadores cuyos gremios tienen su paritaria abierta}
+{Se devuelve por copia}
 
 \operacion{GremioConflictivo}
 {\param{in/out}{tmp}{temporada}}{gremio}
-{3}
-{4}
-{5}
-{6}
-{7}
+{\emptyset \neq acuerdos(tmp)}
+{res \igobs gremioConflictivo(tmp)}
+{\# gremios}
+{Devuelve el gremio que más veces reabrió su paritaria? creo que en la especificación devuelve el que más acuerdos anteriores tuvo, REVISAR }
+{Devuelve una referencia al gremio}
 
 
 \end{interfaz}
