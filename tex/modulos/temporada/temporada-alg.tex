@@ -19,7 +19,7 @@
 	\endif
 	\state
 
-	\state AgregarParitaria(tmp, NuevaParitaria(gr, p, t))		\inlineC{0}
+	\state AgregarParitaria(tmp, NuevaParitaria(gr, p, t))		\inlineC{1}
 }
 {0}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
@@ -194,10 +194,10 @@
 
 \algoritmoI{AgregarParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{pa}{paritaria}}{}
 {
-	\state Agregar(tmp.paritariasAbiertas, pa)		\inlineC{0}
+	\state AgregarRapido(tmp.paritariasAbiertas, pa)		\inlineC{1}
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{1}
+{ La función debe utilizarse con la certeza de que la paritaria que se va a agregar no se encuentra abierta, para no degenerar el conjunto paritariasAbiertas. La paritaria se agrega al conjunto por copia, la cual se realiza en O(copy(pa)), pero esto es O(1) ya que solo requiere copiar la referencia al gremio, y dos valores de tipo nat. }
 
 \algoritmoI{RemoverParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio}}{paritaria}
 {
@@ -233,12 +233,12 @@
 
 \algoritmoI{ObtenerAcuerdosDeAliados}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{lista(acuerdo)}
 {
-	\state \var{idGrupo}{id} \asig ObtenerIdGrupoAliados(tmp.sistema, gr)		\inlineC{0}
+	\state \var{idGrupo}{id} \asig ObtenerIdGrupoAliados(tmp.sistema, gr)		\inlineC{1}
 
-	\state res \asig tmp.acuerdosVigentesPorGrupo[id]							\inlineC{0}
+	\state res \asig tmp.acuerdosVigentesPorGrupo[id]							\inlineC{1}
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{1}
+{ El módulo SistemaLaboral permite obtener el id de grupo de un gremio en tiempo constante, y luego solo es necesario leer la posición correspondiente en el vector acuerdosVigentesPorGrupo. }
 
 \algoritmoI{Obtener\#Aperturas}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{nat}
 {
