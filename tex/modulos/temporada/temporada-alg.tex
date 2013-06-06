@@ -87,13 +87,13 @@
 	\state res \asig Vacío()		\inlineC{0}
 	\state
 
-	\state \var{itConj(paritaria)}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{0}
-	\while{HaySiguiente(itParitarias)}										\inlineC{0}
+	\state \var{itConj(paritaria)}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{1}
+	\while{HaySiguiente(itParitarias)}										\inlineC{1}
 		\state
-		\state Agregar(res, ObtenerGremio(Siguiente(itParitarias)))		\inlineC{0}
+		\state Agregar(res, ObtenerGremio(Siguiente(itParitarias)))			\inlineC{0}
 		
 		\state
-		\state Avanzar(itParitarias)										\inlineC{0}
+		\state Avanzar(itParitarias)										\inlineC{1}
 	\endwhile
 }
 {0}
@@ -101,17 +101,17 @@
 
 \algoritmoI{EmpresasNegociando}{\param{in}{tmp}{estrT}}{conj(empresa)}
 {
-	\state res \asig Vacío()		\inlineC{0}
+	\state res \asig Vacío()		\inlineC{1}
 	\state
 
-	\state \var{itConj(paritaria)}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{0}
-	\while{HaySiguiente(itParitarias)}						\inlineC{0}
+	\state \var{itConj(paritaria)}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{1}
+	\while{HaySiguiente(itParitarias)}						\inlineC{1}
 		\state
 		\state conj(empresa) empresasParitaria \asig ObtenerEmpresas(ObtenerGremio(Siguiente(itParitarias)))		\inlineC{0}
 		\state res \asig Union(res, empresasParitaria)		\inlineC{0}
 
 		\state
-		\state Avanzar(itParitarias)						\inlineC{0}
+		\state Avanzar(itParitarias)						\inlineC{1}
 	\endwhile
 }
 {0}
@@ -119,22 +119,22 @@
 
 \algoritmoI{TrabajadoresNegociando}{\param{in}{tmp}{estrT}}{nat}
 {
-	\state res \asig 0		\inlineC{0}
+	\state res \asig 0		\inlineC{1}
 	\state
 
-	\state \var{itConj(paritaria)}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{0}
-	\while{HaySiguiente(itParitarias)}					\inlineC{0}
+	\state \var{itConj(paritaria)}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{1}
+	\while{HaySiguiente(itParitarias)}					\inlineC{1}
 		\state
 
-		\state \var{nat}{\#afiliadosParitaria} \asig Obtener\#Afiliados(ObtenerGremio(Siguiente(itParitarias)))		\inlineC{0}
-		\state res \asig res + \#afiliadosParitaria		\inlineC{0}
+		\state \var{nat}{\#afiliadosParitaria} \asig Obtener\#Afiliados(ObtenerGremio(Siguiente(itParitarias)))		\inlineC{1}
+		\state res \asig res + \#afiliadosParitaria		\inlineC{1}
 
 		\state
-		\state Avanzar(itParitarias)					\inlineC{0}
+		\state Avanzar(itParitarias)					\inlineC{1}
 	\endwhile
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{ \#paritarias\_abiertas }
+{ Todas las operaciones se realizan en tiempo constante; como se realiza una iteración por cada paritaria abierta, la función es O(\#paritarias\_abiertas). }
 
 \algoritmoI{GremioConflictivo}{\param{in}{tmp}{estrT}}{gremio}
 {
