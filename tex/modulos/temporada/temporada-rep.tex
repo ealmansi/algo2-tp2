@@ -44,7 +44,12 @@ Temporada \textbf{se representa con} estrT, donde estrT es: \\
 
 \paragraph{Expresión formal \\}
 \begin{RepFormal}{estrT}{e}
-	\repItem{muchas cosas}{}
+	\repItem{(\paratodof{gremio}{gr})\, gr \in gremios (e.sistema) \entoncesL \\
+	(\# paritarias(gr, e) = 1 \ly \# acuerdos(gr, e.) = 0)  \orr \\
+	(\# paritarias(gr, e) = 0 \ly \# acuerdos(gr, e) = 1) \orr \\
+	(\# paritarias(gr, e) = 0 \ly \# acuerdos(gr, e) = 0) }{\lyl}
+	\repItem{(\paratodof{paritaria}{pa})\, pa \in e.paritariasAbiertas \entoncesL gremio(pa) \in gremios(e.sistema) }{\lyl}
+	\repItem{(\paratodof{acuerdo}{ac}) ac \in e.acuerdosVigentesPorGrupo \entoncesL gremio(ac) \in gremios(e.sistema) \ly \# gruposAliados(e.sistema) =  }{\lyl}
 \end{RepFormal}
 
 \subsubsection{Funci\'on de Abstracci\'on}

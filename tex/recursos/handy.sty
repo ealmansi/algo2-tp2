@@ -51,8 +51,12 @@
 {\begin{minipage}{1\textwidth}\begin{changemargin}{0em}{4em}Abs: #1 $\widehat{#2}$ $\rightarrow$ #4 \hfill \{Rep(#1)\} \end{changemargin} (\paratodo\param{}{#1}{#2}) Abs(#1) \igobs #3 : #4 | \begin{changemargin}{2em}{4em}\begin {enumerate}}
 {\end{enumerate}\end{changemargin}\end{minipage}}
 
-\newcommand\paratodof[2]{$\forall$ #2 : #1}
+\newcommand\paratodof[2]{\ensuremath{\forall} #2 : #1}
 
 \newcommand\en{$\in$ }
 
-\newcommand\entoncesL{$\Rightarrow_L$ }
+\newcommand\entoncesL{\ensuremath{\Rightarrow_L} }
+
+\newcommand\xor{\ensuremath{\oplus} }
+
+\newcommand\orr{\ensuremath{\lor} }
