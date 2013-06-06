@@ -56,17 +56,17 @@
 {
 	\state \var{paritaria}{pa} \asig RemoverAcuerdo(tmp, gr)			\inlineC{0}
 
-	\state AgregarParitaria(tmp, pa)									\inlineC{0}
+	\state AgregarParitaria(tmp, pa)									\inlineC{1}
 }
 {0}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{Gremios}{\param{in}{tmp}{estrT}}{conj(gremio)}
 {
-	\state res \asig ObtenerGremios(tmp.sl)
+	\state res \asig ObtenerGremios(tmp.sl)								\inlineC{1}
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{1}
+{ Se devuelve por referencia el conjunto de gremios del sistema, lo cual toma tiempo constante. }
 
 \algoritmoI{EnParitarias}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{bool}
 {
