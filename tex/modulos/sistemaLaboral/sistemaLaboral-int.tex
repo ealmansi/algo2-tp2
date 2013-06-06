@@ -9,39 +9,39 @@
 {\param{in/out}{gs}{conj(gremio)}}{sistemaLaboral}
 {true}
 {res = nuevo(gs) \ly esAlias(gremios(res), gs)}
-{1}
-{6}
-{7}
+{\#gremios}
+{Crea un sistema laboral a partir de un conjunto de gremios}
+{El conjunto de gremios se guarda por referencia}
 
 \operacion{AliarGremios}
 {\param{in/out}{sl}{sistemaLaboral}, \param{in}{gr1}{gremio}, \param{in}{gr2}{gremio}}{}
 {gr1 \in gremios(sl) \ly gr2 \in gremios(sl) \ly gr1 \distinto gr2 }
 {}
-{5}
-{6}
-{7}
+{\#gremios}
+{Forma una alianza entre dos gremios (y entre sus aliados precedentes)}
+{}
 
 \operacion{ObtenerGremios}{\param{in}{sl}{sistemaLaboral}}{conj(gremio)}
 {true}
 {esAlias(res, gremios(sl))}
-{5}
-{6}
-{7}
+{1}
+{Devuelve los gremios del sistema}
+{El resultado se devuelve por referencia}
 
 \operacion{Obtener\#GruposDeAliados}
 {\param{in}{sl}{sistemaLaboral}}{nat}
-{3}
+{true}
 {4}
-{5}
-{6}
-{7}
+{\#gremios}
+{Cuenta la cantidad de grupos de aliados que existen en el sistema}
+{}
 
 \operacion{ObtenerIdGrupoDeAliados}
 {\param{in}{sl}{sistemaLaboral}, \param{in}{gr}{gremio}}{idGrupo}
-{3}
+{gr \in gremios(sl)}
 {4}
-{5}
-{6}
-{7}
+{1}
+{Devuelve el id del grupo de aliados al que pertenece el gremio}
+{}
 
 \end{interfaz}

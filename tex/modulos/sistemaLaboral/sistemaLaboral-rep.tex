@@ -13,11 +13,11 @@ SistemaLaboral \textbf{se representa con} estrS, donde estrS es: \\
 
 \subsubsection{Descripción de los campos}
 
-	El vector gremios guarda cada gremio agregado al sistema, al cual le asigna un número de id como parte de esa operación. Los id's se asignan de forma tal que sean consecutivos y coincidan con el índice del gremio en el vector.
+	El conjunto gremios guarda los gremios del sistema. A cada uno se le asigna durante la inicialización un id, tomando nat's consecutivos comenzando en 0.
 
 	Por otro lado, dado que la relación de alianza entre gremios es simétrica y transitiva, se puede dividir al conjunto de gremios del sistema en grupos disjuntos de aliados.
 
-	Utilizando esta propiedad, se representa la red de alianzas entre gremios etiquetando a cada grupo mediante un id de grupo, de forma tal que dos gremios serán aliados cuando sus números de grupo coincidan. El vector gruposDeAliados agrupa esta información, asignando a cada gremio (de nuevo utilizando su id como índice en el vector) un id de grupo. 
+	Utilizando esta propiedad, se representa la red de alianzas entre gremios etiquetando a cada grupo mediante un id de grupo, de forma tal que dos gremios serán aliados cuando sus números de grupo coincidan. El vector gruposDeAliados agrupa esta información, asignando a cada gremio un id de grupo, utilizando su id como índice en el vector. 
 
 \subsubsection{Invariante de Representaci\'on}
 
@@ -25,8 +25,8 @@ SistemaLaboral \textbf{se representa con} estrS, donde estrS es: \\
 
 \begin{enumerate}
 	\item Ninguna empresa aparece en más de un gremio.
-	\item El id de cada gremio es igual a su índice en el vector gremios.
-	\item Los vectores gremios y gruposDeAliados tienen igual longitud.
+	\item Los ids de los gremios del conjunto son naturales consecutivos comenzando en 0.
+	\item El cardinal del conjunto gremios y la longitud del vector gruposDeAliados coinciden.
 	\item Los valores del vector gruposDeAliados son consecutivos, comenzando en 0.
 \end{enumerate}
 
