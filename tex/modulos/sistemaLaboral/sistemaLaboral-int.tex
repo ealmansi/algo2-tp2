@@ -8,7 +8,7 @@
 \operacion{NuevoSistemaLaboral}
 {\param{in/out}{gs}{conj(gremio)}}{sistemaLaboral}
 {true}
-{res = nuevo(gs)}
+{res = nuevo(gs) \ly esAlias(gremios(res), gs)}
 {1}
 {6}
 {7}
@@ -22,8 +22,8 @@
 {7}
 
 \operacion{ObtenerGremios}{\param{in}{sl}{sistemaLaboral}}{conj(gremio)}
-{3}
-{4}
+{true}
+{esAlias(res, gremios(sl))}
 {5}
 {6}
 {7}

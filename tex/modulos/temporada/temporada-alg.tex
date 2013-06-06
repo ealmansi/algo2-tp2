@@ -1,20 +1,20 @@
 \algoritmoI{Iniciar}{\param{in}{sl}{sistemaLaboral}}{estrT}
 {
-	\state res.sistema \asig sl								\inlineC{0}
-	\state res.paritariasAbiertas \asig Vacío()				\inlineC{0}
-	\state res.acuerdosVigentesPorGrupo \asig Vacía()		\inlineC{0}
-	\state res.\#aperturas \asig Vacía()					\inlineC{0}
+	\state res.sistema \asig sl								\inlineC{1}
+	\state res.paritariasAbiertas \asig Vacío()				\inlineC{1}
+	\state res.acuerdosVigentesPorGrupo \asig Vacía()		\inlineC{1}
+	\state res.\#aperturas \asig Vacía()					\inlineC{1}
 	\state
 
-	\state InicializarAcuerdosVigentesPorGrupo(res)			\inlineC{0}
-	\state Inicializar\#Aperturas(res)						\inlineC{0}
+	\state InicializarAcuerdosVigentesPorGrupo(res)			\inlineC{\#gremios}
+	\state Inicializar\#Aperturas(res)						\inlineC{\#gremios}
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{\#gremios}
+{ Se guarda el sistema laboral, y se inicializan los contenedores de paritarias y acuerdos y los contadores de aperturas. Las asignaciones se realizan en tiempo constante y las inicializaciones en O(\#gremios), entonces la función es O(\#gremios). }
 
 \algoritmoI{AbrirParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio}, \param{in}{p}{nat}, \param{in}{t}{nat}, \param{in}{es}{conj(empresa)}}{}
 {
-	\If{0 \menor Obtener\#Aperturas(tmp, gr)}					\inlineC{0}
+	\If{0 \menor Obtener\#Aperturas(tmp, gr)}					\inlineC{1}
 		\state RemoverAcuerdo(tmp, gr)							\inlineC{0}
 	\endif
 	\state
@@ -163,34 +163,34 @@
 
 \algoritmoI{InicializarAcuerdosVigentesPorGrupo}{\param{in/out}{ tmp}{estrT}}{}
 {
-	\state \var{nat}{indice} \asig 0									\inlineC{0}
-	\while{indice \menor Obtener\#GruposDeAliados(tmp.sistema)}			\inlineC{0}
+	\state \var{nat}{indice} \asig 0									\inlineC{1}
+	\while{indice \menor Obtener\#GruposDeAliados(tmp.sistema)}			\inlineC{1}
 		\state
 
-		\state tmp.acuerdosVigentesPorGrupo[indice] \asig Vacía()				\inlineC{0}
+		\state tmp.acuerdosVigentesPorGrupo[indice] \asig Vacía()		\inlineC{1}
 
 		\state
-		\state indice \asig indice + 1									\inlineC{0}
+		\state indice \asig indice + 1									\inlineC{1}
 	\endwhile
 
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{\#gremios}
+{ La operación inicial, la evaluación de la guarda, y el cuerpo del ciclo se realizan en tiempo constante. Como el ciclo se repite tantas veces como \#grupos\_de\_aliados, la función es O(\#grupos\_de\_aliados). Pero a su vez, la cantidad de grupos de aliados es igual a la cantidad de gremios en el peor caso, entonces la función es O(\#gremios). }
 
 \algoritmoI{Inicializar\#Aperturas}{\param{in/out}{ tmp}{estrT}}{}
 {
-	\state \var{nat}{indice} \asig 0					\inlineC{0}
-	\while{indice \menor Cardinal(Gremios(tmp))}		\inlineC{0}
+	\state \var{nat}{indice} \asig 0					\inlineC{1}
+	\while{indice \menor Cardinal(Gremios(tmp))}		\inlineC{1}
 		\state
 
-		\state tmp.\#aperturas[indice] \asig 0			\inlineC{0}
+		\state tmp.\#aperturas[indice] \asig 0			\inlineC{1}
 
 		\state
-		\state indice \asig indice + 1					\inlineC{0}
+		\state indice \asig indice + 1					\inlineC{1}
 	\endwhile
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{\#gremios}
+{ La operación inicial, la evaluación de la guarda, y el cuerpo del ciclo se realizan en tiempo constante. Como el ciclo se repite tantas veces como \#gremios, la función es O(\#gremios). }
 
 \algoritmoI{AgregarParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{pa}{paritaria}}{}
 {
@@ -217,16 +217,16 @@
 
 \algoritmoI{RemoverAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio}}{paritaria}
 {
-	\state \var{itLista(acuerdo)}{itAcuerdos} \asig CrearIt(ObtenerAcuerdosDeAliados(tmp, gr))		\inlineC{0}
+	\state \var{itLista(acuerdo)}{itAcuerdos} \asig CrearIt(ObtenerAcuerdosDeAliados(tmp, gr))		\inlineC{1}
 	\while{ObtenerGremio(Siguiente(itAcuerdos)) \distinto gr}		\inlineC{0}
 		\state
-		\state Avanzar(itAcuerdos)  								\inlineC{0}
+		\state Avanzar(itAcuerdos)  								\inlineC{1}
 	\endwhile
 	\state
 
-	\state res \asig ObtenerParitaria(Siguiente(itAcuerdos))		\inlineC{0}
+	\state res \asig ObtenerParitaria(Siguiente(itAcuerdos))		\inlineC{1}
 
-	\state EliminarSiguiente(itAcuerdos)							\inlineC{0}
+	\state EliminarSiguiente(itAcuerdos)							\inlineC{1}
 }
 {0}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
@@ -242,9 +242,9 @@
 
 \algoritmoI{Obtener\#Aperturas}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{nat}
 {
-	\state \var{idGremio}{id} \asig ObtenerId(gr)			\inlineC{0}
+	\state \var{idGremio}{id} \asig ObtenerId(gr)			\inlineC{1}
 
-	\state res \asig tmp.\#aperturas[id]				\inlineC{0}
+	\state res \asig tmp.\#aperturas[id]					\inlineC{1}
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{1}
+{ El tiempo de lectura de la i-ésima posición de un vector es constante, entonces la función permite conocer la cantidad de aperturas de un gremio en O(1). }

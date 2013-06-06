@@ -10,13 +10,13 @@
 {\param{in}{sl}{sistemaLaboral}}{temporada}
 {true}
 {res \igobs iniciar(sl)}
-{1}
+{\#gremios}
 {Inicia una nueva temporada a partir de un sistema.}
 {El sistema se guarda por referencia}
 
 \operacion{AbrirParitaria}
 {\param{in/out}{tmp}{temporada}, \param{in}{gr}{gremio}, \param{in}{p}{nat}, \param{in}{t}{nat}, \param{in}{es}{conj(empresa)}}{}
-{gr \in gremios(tmp)\ly \neg enParitarias?(tpm, gr) \ly p \leq t \ly |es|*2 \leq |empresas(gr)| \ly es \subseteq empresas(gr)\ly tmp \igobs t0 }
+{gr \in gremios(tmp)\ly \neg enParitarias?(tmp, gr) \ly p \leq t \ly |es|*2 \leq |empresas(gr)| \ly es \subseteq empresas(gr)\ly tmp \igobs t0 }
 {tmp \igobs abrirParitaria(t0, gr, p, t, es)  }
 {1 si es la primera vez, de otra forma \# paritarias}
 {Abre la paritaria de un gremio a partir de un piso, techo y un conjunto de empresas}
@@ -32,7 +32,7 @@
 
 \operacion{Reabrir}
 {\param{in/out}{tmp}{temporada}, \param{in}{gr}{gremio}}{}
-{gr \in gremios(tmp)\ly \neg enParitarias?(tpm, gr) \ly \emptyset \neq  juntar(acuerdos(tmp, gr)) \ly tmp = t0 }
+{gr \in gremios(tmp)\ly \neg enParitarias?(tmp, gr) \ly \emptyset \neq  juntar(acuerdos(tmp, gr)) \ly tmp = t0 }
 {tmp \igobs reabrir(t0, gr) }
 {\# acuerdos}
 {Reabre la paritaria de un gremio, eliminando su último acuerdo y agregando la paritaria}
