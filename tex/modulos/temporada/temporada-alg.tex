@@ -15,13 +15,13 @@
 \algoritmoI{AbrirParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio}, \param{in}{p}{nat}, \param{in}{t}{nat}, \param{in}{es}{conj(empresa)}}{}
 {
 	\If{0 \menor Obtener\#Aperturas(tmp, gr)}					\inlineC{1}
-		\state RemoverAcuerdo(tmp, gr)							\inlineC{0}
+		\state RemoverAcuerdo(tmp, gr)							\inlineC{\#acuerdos\_menores}
 	\endif
 	\state
 
 	\state AgregarParitaria(tmp, NuevaParitaria(gr, p, t))		\inlineC{1}
 }
-{0}
+{\#acuerdos\_menores}
 { Cuando la paritaria de un gremio abre por primera vez, no existe acuerdo previo en el sistema y su contador de aperturas es nulo; en ese caso, la operación se realiza en O(1). Para el caso general, la complejidad temporal de la operación queda determinada por la función RemoverAcuerdo. }
 
 \algoritmoI{CerrarAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio} , \param{in}{pcj}{nat}}{}
@@ -54,12 +54,12 @@
 
 \algoritmoI{Reabrir}{\param{in/out}{ tmp}{estrT},  \param{in}{gr}{gremio}}{}
 {
-	\state \var{paritaria}{pa} \asig RemoverAcuerdo(tmp, gr)			\inlineC{0}
+	\state \var{paritaria}{pa} \asig RemoverAcuerdo(tmp, gr)			\inlineC{\#acuerdos\_menores}
 
 	\state AgregarParitaria(tmp, pa)									\inlineC{1}
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{\#acuerdos\_menores}
+{ Elimina el acuerdo vigente del gremio en cuesti\'on, y agrega la paritaria que estaba guardada ah\'i. La segunda operaci\'on se realiza en tiempo constante, por lo que RemoverAcuerdo marca el costo temporal de la funci\'on.}
 
 \algoritmoI{Gremios}{\param{in}{tmp}{estrT}}{conj(gremio)}
 {
@@ -70,34 +70,34 @@
 
 \algoritmoI{EnParitarias}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{bool}
 {
-	\state \var{itConj(paritaria)}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{0}
-	\while{HaySiguiente(itParitarias) \lyl ObtenerGremio(Siguiente(itParitarias)) \distinto gr}		\inlineC{0}
+	\state \var{itConj(paritaria)}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{1}
+	\while{HaySiguiente(itParitarias) \lyl \\ \hspace{20pt} ObtenerId(ObtenerGremio(Siguiente(itParitarias))) \distinto ObtenerId(gr)}		\inlineC{1}
 		\state
-		\state Avanzar(itParitarias)				\inlineC{0}
+		\state Avanzar(itParitarias)				\inlineC{1}
 	\endwhile
 	\state
 
-	\state res \asig HaySiguiente(itParitarias)		\inlineC{0}
+	\state res \asig HaySiguiente(itParitarias)		\inlineC{1}
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{\#paritarias\_abiertas}
+{ Itera sobre todas las paritarias abiertas hasta encontrar la del gremio, por lo que en el peor caso repite el ciclo \emph{\#paritarias\_abiertas} veces. }
 
 \algoritmoI{GremiosNegociando}{\param{in}{tmp}{estrT}}{conj(gremio)}
 {
-	\state res \asig Vacío()		\inlineC{0}
+	\state res \asig Vacío()		\inlineC{1}
 	\state
 
 	\state \var{itConj(paritaria)}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{1}
 	\while{HaySiguiente(itParitarias)}										\inlineC{1}
 		\state
-		\state Agregar(res, ObtenerGremio(Siguiente(itParitarias)))			\inlineC{0}
+		\state AgregarRapido(res, ObtenerGremio(Siguiente(itParitarias)))			\inlineC{1}
 		
 		\state
 		\state Avanzar(itParitarias)										\inlineC{1}
 	\endwhile
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{\#paritarias\_abiertas}
+{ Para cada paritaria abierta, agrega el gremio asociado al resultado. Como la operaci\'on de agregado en el conjunto se realiza por copia, la complejidad temporal es de O(\#paritarias\_abiertas * costo de copiar un gremio). Como el gremio guarda el conjunto de empresas por referencia, la copia del gremio consiste en copiar una referencia y copiar un nat (la cantidad de afiliados), por lo que se puede realizar en tiempo constante. }
 
 \algoritmoI{EmpresasNegociando}{\param{in}{tmp}{estrT}}{conj(empresa)}
 {
@@ -107,15 +107,23 @@
 	\state \var{itConj(paritaria)}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{1}
 	\while{HaySiguiente(itParitarias)}						\inlineC{1}
 		\state
-		\state conj(empresa) empresasParitaria \asig ObtenerEmpresas(ObtenerGremio(Siguiente(itParitarias)))		\inlineC{0}
-		\state res \asig Union(res, empresasParitaria)		\inlineC{0}
+		\state conj(empresa) empresasParitaria \asig ObtenerEmpresas(ObtenerGremio(Siguiente(itParitarias)))		\inlineC{1}
+		\state
+		\state \var{itConj(empresa)}{itEmpresas} \asig CrearIt(empresasParitaria)	\inlineC{1}
+		\while{HaySiguiente(itEmpresas)}	\inlineC{1}
+			\state
+			\state AgregarRapido(res, empresasParitaria)	\inlineC{1}
+			
+			\state
+			\state Avanzar(itEmpresas)	\inlineC{1}
+		\endwhile
 
 		\state
 		\state Avanzar(itParitarias)						\inlineC{1}
 	\endwhile
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{ \ensuremath{\sum_{p \in paritariasAbiertas} (\sum_{e \in empresas(gremio(p)))} copy(e)} }
+{ Dado que el m\'odulo conjunto agrega los elementos por copia, el costo de la funci\'on es el costo de copiar cada empresa de cada gremio con una paritaria abierta. }
 
 \algoritmoI{TrabajadoresNegociando}{\param{in}{tmp}{estrT}}{nat}
 {
@@ -138,34 +146,34 @@
 
 \algoritmoI{GremioConflictivo}{\param{in}{tmp}{estrT}}{gremio}
 {
-	\state \var{itConj(gremio)}{itGremios} \asig CrearIt(Gremios(tmp))						\inlineC{0}
+	\state \var{itConj(gremio)}{itGremios} \asig CrearIt(Gremios(tmp))							\inlineC{1}
 	\state
 
-	\state \var{gremio}{gremioConflictivo} \asig Siguiente(itGremios)				\inlineC{0}
-	\state \var{nat}{maxAperturas} \asig Obtener\#Aperturas(tmp, gremioConflictivo)		\inlineC{0}
-	\state Avanzar(itGremios)																\inlineC{0}
+	\state \var{gremio}{gremioConflictivo} \asig Siguiente(itGremios)							\inlineC{1}
+	\state \var{nat}{maxAperturas} \asig Obtener\#Aperturas(tmp, gremioConflictivo)				\inlineC{1}
+	\state Avanzar(itGremios)																	\inlineC{1}
 	\state
 
-	\while{HaySiguiente(itGremios)}																\inlineC{0}
+	\while{HaySiguiente(itGremios)}																\inlineC{1}
 		\state
 
-		\state \var{nat}{\#aperturas} \asig Obtener\#Aperturas(tmp, Siguiente(itGremios))		\inlineC{0}
+		\state \var{nat}{\#aperturas} \asig Obtener\#Aperturas(tmp, Siguiente(itGremios))		\inlineC{1}
 
-		\If{maxAperturas \menor \#aperturas}							\inlineC{0}
+		\If{maxAperturas \menor \#aperturas}							\inlineC{1}
 
-			\state maxAperturas \asig \#aperturas						\inlineC{0}
-			\state gremioConflictivo \asig Siguiente(itGremios)			\inlineC{0}
+			\state maxAperturas \asig \#aperturas						\inlineC{1}
+			\state gremioConflictivo \asig Siguiente(itGremios)			\inlineC{1}
 		\endif
 
 		\state
-		\state Avanzar(itGremios)										\inlineC{0}
+		\state Avanzar(itGremios)										\inlineC{1}
 	\endwhile
 	\state
 
-	\state res \asig gremioConflictivo									\inlineC{0}
+	\state res \asig gremioConflictivo									\inlineC{1}
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{\#gremios}
+{Obtiene el gremio con cantidad m\'axima de aperturas. Para esto se efectua una busqueda lineal sobre el conjunto de gremios, por lo que esta funci\'on posee un costo temporal O(\#gremios).}
 
 \algoritmoI{InicializarAcuerdosVigentesPorGrupo}{\param{in/out}{ tmp}{estrT}}{}
 {
@@ -207,24 +215,24 @@
 
 \algoritmoI{RemoverParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio}}{paritaria}
 {
-	\state \var{itConj(paritaria)}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{0}
-	\while{ObtenerGremio(Siguiente(itParitarias)) \distinto gr}		\inlineC{0}
+	\state \var{itConj(paritaria)}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{1}
+	\while{ObtenerId(ObtenerGremio(Siguiente(itParitarias))) \distinto ObtenerId(gr)}		\inlineC{1}
 		\state
-		\state Avanzar(itParitarias)								\inlineC{0}
+		\state Avanzar(itParitarias)								\inlineC{1}
 	\endwhile
 	\state
 
-	\state res \asig Siguiente(itParitarias)						\inlineC{0}
+	\state res \asig Siguiente(itParitarias)						\inlineC{1}
 
-	\state EliminarSiguiente(itParitarias)							\inlineC{0}
+	\state EliminarSiguiente(itParitarias)							\inlineC{1}
 }
-{0}
+{\#paritarias\_abiertas}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{RemoverAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio}}{paritaria}
 {
 	\state \var{itLista(acuerdo)}{itAcuerdos} \asig CrearIt(ObtenerAcuerdosDeAliados(tmp, gr))		\inlineC{1}
-	\while{ObtenerGremio(Siguiente(itAcuerdos)) \distinto gr}		\inlineC{0}
+	\while{ObtenerId(ObtenerGremio(Siguiente(itAcuerdos))) \distinto ObtenerId(gr)}		\inlineC{1}
 		\state
 		\state Avanzar(itAcuerdos)  								\inlineC{1}
 	\endwhile
@@ -234,7 +242,7 @@
 
 	\state EliminarSiguiente(itAcuerdos)							\inlineC{1}
 }
-{0}
+{\#acuerdos\_menores}
 {\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
 
 \algoritmoI{ObtenerAcuerdosDeAliados}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{lista(acuerdo)}
