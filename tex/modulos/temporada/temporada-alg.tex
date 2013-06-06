@@ -22,29 +22,35 @@
 	\state AgregarParitaria(tmp, NuevaParitaria(gr, p, t))		\inlineC{1}
 }
 {0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{ Cuando la paritaria de un gremio abre por primera vez, no existe acuerdo previo en el sistema y su contador de aperturas es nulo; en ese caso, la operación se realiza en O(1). Para el caso general, la complejidad temporal de la operación queda determinada por la función RemoverAcuerdo. }
 
 \algoritmoI{CerrarAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio} , \param{in}{pcj}{nat}}{}
 {
 
-	\state \var{itLista(acuerdo)}{itAcuerdos} \asig CrearIt(ObtenerAcuerdosDeAliados(tmp, gr))		\inlineC{0}
-	\while{HaySiguiente(itAcuerdos) \lyl ObtenerPorcentaje(Siguiente(itAcuerdos)) \menor pcj}		\inlineC{0}
+	\state \var{itLista(acuerdo)}{itAcuerdos} \asig CrearIt(ObtenerAcuerdosDeAliados(tmp, gr))		\inlineC{1}
+	\while{HaySiguiente(itAcuerdos) \lyl ObtenerPorcentaje(Siguiente(itAcuerdos)) \menor pcj}		\inlineC{1}
 		\state
 
-		\state AgregarParitaria(tmp, ObtenerParitaria(Siguiente(itAcuerdos)))		\inlineC{0}
+		\state AgregarParitaria(tmp, ObtenerParitaria(Siguiente(itAcuerdos)))		\inlineC{1}
 
-		\state EliminarSiguiente(itAcuerdos)										\inlineC{0}
+		\state EliminarSiguiente(itAcuerdos)										\inlineC{1}
 
 		\state
-		\state Avanzar(itAcuerdos)													\inlineC{0}
+		\state Avanzar(itAcuerdos)													\inlineC{1}
 	\endwhile
 	\state
 
-	\state \var{paritaria}{pa} \asig RemoverParitaria(tmp, gr)				\inlineC{0}
-	\state AgregarComoSiguiente(itAcuerdos, NuevoAcuerdo(pa, pcj))			\inlineC{0}
+	\state \var{paritaria}{pa} \asig RemoverParitaria(tmp, gr)				\inlineC{\#paritarias\_abiertas}
+	\state AgregarComoSiguiente(itAcuerdos, NuevoAcuerdo(pa, pcj))			\inlineC{1}
 }
-{0}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{\#acuerdos\_menores + \#paritarias\_abiertas}
+{La función ObtenerAcuerdosDeAliados devuelve la lista de los aliados del gremio afectado en tiempo constante; luego, la creación del iterador para esta lista también se realiza en O(1). 
+
+\hspace{10pt} La evaluación de la guarda y el cuerpo del ciclo se realizan en tiempo constante, ya que todas estas funciones se realizan en O(1): HaySiguiente, ObtenerPorcentaje, Siguiente, AgregarParitaria, ObtenerParitaria, EliminarSiguiente, Avanzar, \lyl, \menor.
+
+\hspace{10pt} La lista de acuerdos de aliados se itera secuencialmente hasta encontrar un acuerdo con un porcentaje de aumento mayor o igual al logrado en el nuevo acuerdo. Como la lista se encuentra ordenada de menor a mayor según el valor del aumento, esto significa que se realizarán exactamente \#acuerdos\_menores iteraciones. En cada una de ellas, se reabre la paritaria de un acuerdo de menor aumento, efectivizando el comportamiento automático.
+
+\hspace{10pt} La operación RemoverParitaria es lineal en la cantidad de paritarias abiertas, y por último, agregar un acuerdo a la lista mediante el iterador se realiza en tiempo constante. Por lo tanto, la función tiene una complejidad temporal de O(\#acuerdos\_menores + \#paritarias\_abiertas).  }
 
 \algoritmoI{Reabrir}{\param{in/out}{ tmp}{estrT},  \param{in}{gr}{gremio}}{}
 {
