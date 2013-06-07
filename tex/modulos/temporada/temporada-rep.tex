@@ -46,36 +46,69 @@ Temporada \textbf{se representa con} estrT, donde estrT es: \\
 \begin{RepFormal}{estrT}{e}
 	
 	\repItem{(\paratodof{gremio}{gr})\, gr \in gremios (e.sistema) \entoncesL \\
-	(\# paritarias(gr, e) = 1 \ly \# acuerdos(gr, e) = 0)  \orr \\
-	(\# paritarias(gr, e) = 0 \ly \# acuerdos(gr, e) = 1) \orr \\
-	(\# paritarias(gr, e) = 0 \ly \# acuerdos(gr, e) = 0) }{\lyl}
+	(\#paritarias(gr, e) = 1 \ly \#acuerdos(gr, e) = 0)  \orr \\
+	(\#paritarias(gr, e) = 0 \ly \#acuerdos(gr, e) = 1) \orr \\
+	(\#paritarias(gr, e) = 0 \ly \#acuerdos(gr, e) = 0) }{\ly}
 	
-	\repItem{(\paratodof{paritaria}{pa})\, pa \in e.paritariasAbiertas \entoncesL gremio(pa) \in gremios(e.sistema) }{\lyl}
+	\repItem{(\paratodof{paritaria}{pa})\, pa \in e.paritariasAbiertas \entoncesL gremio(pa) \in gremios(e.sistema) }{\ly}
 	
-	\repItem{(\paratodof{acuerdo}{ac})\, ac \in e.acuerdosVigentesPorGrupo \entoncesL gremio(ac) \in gremios(e.sistema)}{\lyl}
+	\repItem{(\paratodof{acuerdo}{ac})\, ac \in e.acuerdosVigentesPorGrupo \entoncesL gremio(ac) \in gremios(e.sistema)}{\ly}
 	
-	\repItem{ \# gruposAliados(e.sistema) = longitud(e.acuerdosVigentesPorGrupo) }{\lyl}
+	\repItem{ \# gruposAliados(e.sistema) = long(e.acuerdosVigentesPorGrupo) }{\ly}
 	
-	\repItem{ (\paratodof{gremio}{gr1,gr2}) (\, gr1 \in gremios(e.sistema) \ly gr2 \in gremios(e.sistema) \lyl  \\ \# acuerdos(gr1, e) = 1 \ly \# acuerdos(gr2, e) = 1) \entoncesL aliado?(e.sistema,gr1,gr2) \siii  \\ ((\exists \, ! i : nat) (0 \leq i \menor longitud(e.acuerdosVigentesPorGrupo)) \lyl \\ esta?(acuerdo(gr1,e.sistema), e.acuerdosVigentesPorGrupo[i]) \ly \\ esta?(acuerdo(gr2,e.sistema), e.acuerdosVigentesPorGrupo[i]))  }{\lyl}
+	\repItem{ (\paratodof{gremio}{gr1,gr2}) (\, gr1 \in gremios(e.sistema) \ly gr2 \in gremios(e.sistema) \lyl  \\ \#acuerdos(gr1, e) = 1 \ly \#acuerdos(gr2, e) = 1) \entoncesL aliado?(e.sistema,gr1,gr2) \siii  \\ ((\exists \, ! i : nat) (0 \leq i \menor long(e.acuerdosVigentesPorGrupo)) \lyl \\ esta?(acuerdo(gr1,e.sistema), e.acuerdosVigentesPorGrupo[i]) \ly \\ esta?(acuerdo(gr2,e.sistema), e.acuerdosVigentesPorGrupo[i]))  }{\ly}
 	
-	\repItem{(\paratodof{nat}{i})\, 0 \leq i \menor longitud(e.acuerdosVigentesPorGrupo) \entoncesL \\ estaOrdenadaPorPorcentaje(e.acuerdosVigentesPorGrupo[i]) }{\lyl}
+	\repItem{(\paratodof{nat}{i})\, 0 \leq i \menor long(e.acuerdosVigentesPorGrupo) \entoncesL \\ estaOrdenadaPorPorcentaje(e.acuerdosVigentesPorGrupo[i]) }{\ly}
 	
-	\repItem{(\paratodof{nat}{i})\, 0 \leq i \menor longitud(e.acuerdosVigentesPorGrupo) \entoncesL \\ ((\paratodof{acuerdo}{ac}) estáta?(ac, e.acuerdosVigentesPorGrupo[i]) \entoncesL \\ piso(paritaria(ac)) \leq porcentaje(ac) \leq tope(paritaria(ac))) }{\lyl}
+	\repItem{(\paratodof{acuerdo}{ac})\, ac \in obtenerAcuerdos(e) \entonces \\ piso(paritaria(ac)) \leq porcentaje(ac) \leq tope(paritaria(ac))) }{\ly}
 	
-	\repItem{longitud(e.\#acuerdosPrevios) = \#gremios(e.sistema) }{\lyl}
+	\repItem{long(e.\#acuerdosPrevios) = \#(gremios(e.sistema)) }{\ly}
 	
-	\repItem{(\paratodof{gremio}{gr}) \, gr \in gremios(e.sistema) \lyl \# paritarias(gr, e) = 0 \ly \#acuerdos(gr, e) = 0 \entoncesL \# acuerdosPrevios[id(gr)] = 0 }{\lyl}
+	\repItem{(\paratodof{gremio}{gr}) \, gr \in gremios(e.sistema) \lyl \# paritarias(gr, e) = 0 \ly \#acuerdos(gr, e) = 0 \entoncesL \#acuerdosPrevios[id(gr)] = 0 }{\ly}
 	
-	\repItem{(\paratodof{gremio}{gr}) \, gr \in gremios(e.sistema) \lyl \# acuerdos(gr, e) = 1 \entoncesL \\ e.\#acuerdosPrevios[id(gr)] = acuerdosPrevios(ac) \ly acuerdosPrevios(ac) \geq 1 }{}
+	\repItem{(\paratodof{gremio}{gr}) \, gr \in gremios(e.sistema) \lyl \#acuerdos(gr, e) = 1 \entoncesL \\ e.\#acuerdosPrevios[id(gr)] = acuerdosPrevios(ac) \ly acuerdosPrevios(ac) \geq 1 }{}
 
 \end{RepFormal}
 
 \subsubsection{Funci\'on de Abstracci\'on}
 
-\begin{FunAbsDescriptiva}{e}{estrS}{si}{sistemaLaboral}
+\begin{FunAbsDescriptiva}{e}{estrT}{tmp}{temporada}
 
-	\absItem{the great choclo}{\yluego}
+	\absItem{sistema(tmp) \igobs e.sistema}{\ly}
+
+	\absItem{paritarias(tmp) \igobs e.paritariasAbiertas}{\ly}
+
+	\absItem{acuerdos(tmp) \igobs obtenerAcuerdos(e)}{}
 
 \end{FunAbsDescriptiva}
 
 \subsubsection{Funciones auxiliares}
+
+\tadOperacion{\#paritarias}{gr/gremio, e/estrT}{nat}{}
+\tadAxioma{\#paritarias(gr, e)}{contarParitarias(gr, e.paritariasAbiertas)}
+\vspace{5pt}
+
+\tadOperacion{contarParitarias}{gr/gremio, ps/conj(paritaria)}{nat}{}
+\tadAxioma{contarParitarias(gr, ps)}{ \textbf{if} $\emptyset$?(ps) \textbf{then}\\ \hspace*{10pt} 0 \\ \textbf{else}\\ \hspace*{10pt} \textbf{if} gr = gremio(dameUno(ps)) \textbf{then}\\ \hspace*{10pt} \hspace*{10pt} 1 \\ \hspace*{10pt} \textbf{else}\\ \hspace*{10pt} \hspace*{10pt} 0 \\ \hspace*{10pt} \textbf{fi} + contarParitarias(gr, sinUno(ps)) \\ \textbf{fi} }
+\vspace{5pt}
+
+\tadOperacion{\#acuerdos}{gr/gremio, e/estrT}{nat}{}
+\tadAxioma{\#acuerdos(gr, e)}{contarAcuerdos(gr, obtenerAcuerdos(e))}
+\vspace{5pt}
+
+\tadOperacion{contarAcuerdos}{gr/gremio, as/conj(acuerdo)}{nat}{}
+\tadAxioma{contarAcuerdos(gr, as)}{ \textbf{if} $\emptyset$?(as) \textbf{then}\\ \hspace*{10pt} 0 \\ \textbf{else}\\ \hspace*{10pt} \textbf{if} gr = gremio(dameUno(as)) \textbf{then}\\ \hspace*{10pt} \hspace*{10pt} 1 \\ \hspace*{10pt} \textbf{else}\\ \hspace*{10pt} \hspace*{10pt} 0 \\ \hspace*{10pt} \textbf{fi} + contarAcuerdos(gr, sinUno(as)) \\ \textbf{fi} }
+\vspace{5pt}
+
+\tadOperacion{\#gruposAliados}{e/estrT}{nat}{}
+\tadAxioma{\#gruposAliados(e)}{}
+\vspace{5pt}
+
+\tadOperacion{estaOrdenadaPorPorcentaje}{as/lista(acuerdo)}{bool}{}
+\tadAxioma{estaOrdenadaPorPorcentaje(as)}{\textbf{if} long(as) \menor 2 \textbf{then}\\ \hspace*{10pt} true \\ \textbf{else}\\ \hspace*{10pt} aumento(as) \menorigual aumento(prim(fin(as))) \lyl \\ \hspace*{20pt} estaOrdenadaPorPorcentaje(fin(as)) \\ \textbf{fi}}
+\vspace{5pt}
+
+\tadOperacion{obtenerAcuerdos}{e/estrT}{conj(acuerdo)}{}
+\tadAxioma{obtenerAcuerdos(e)}{}
+\vspace{5pt}
+

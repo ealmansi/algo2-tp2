@@ -33,7 +33,7 @@
 \operacion{ObtenerId}
 {\param{in}{gr}{gremio}}{nat}
 {true}
-{res \igobs id(gr)}
+{true}
 {1}
 {Devuelve el número identificador del gremio}
 {}
@@ -41,9 +41,9 @@
 \operacion{GuardarId}
 {\param{in/out}{gr}{gremio}, \param{in}{id}{nat}}{}
 {true}
-{id(gr) \igobs id}
+{true}
 {1}
-{Asigna el número identificador del gremio}
+{Asigna el número identificador del gremio (no debe ser utilizada una vez que el gremio se ingresa en el sistema laboral)}
 {}
 
 \end{interfaz}

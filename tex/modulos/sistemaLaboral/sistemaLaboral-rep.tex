@@ -39,10 +39,10 @@ SistemaLaboral \textbf{se representa con} estrS, donde estrS es: \\
 		(\paratodof{nat}{n})\, n \menor \#(e.gremios) \entonces ((\exists ! g : gremio)\, g \in e.gremios \land id(g) = n)
 	}{\ly}
 	\repItem{
-		\#(e.gremios) = longuitud(e.gruposDeAliados)
+		\#(e.gremios) = long(e.gruposDeAliados)
 	}{\ly}
 	\repItem{
-		longuitud(e.gruposDeAliados) > 0 \entonces esta?(0,e.gruposDeAliados) \ly ((\paratodof{nat}{n})\, (0 < n \ly esta?(n,e.gruposDeAliados)) \entonces esta?(n-1,e.gruposDeAliados))
+		long(e.gruposDeAliados) > 0 \entonces esta?(0,e.gruposDeAliados) \ly ((\paratodof{nat}{n})\, (0 < n \ly esta?(n,e.gruposDeAliados)) \entonces esta?(n-1,e.gruposDeAliados))
 	}{}
 \end{RepFormal}
 
@@ -50,9 +50,9 @@ SistemaLaboral \textbf{se representa con} estrS, donde estrS es: \\
 
 \begin{FunAbsDescriptiva}{e}{estrS}{si}{sistemaLaboral}
 
-	\absItem{gremios(si) \igobs ObtenerGremios(e)}{\yluego}
+	\absItem{gremios(si) \igobs e.gremios}{\yluego}
 
-	\absItem{(\paratodof{g}{gremio}) g \en gremios(si) \entoncesL aliados(g, si) \igobs obtenerConjuntoDeAliados(e.gruposDeAliados, e.gremios,g)}{}
+	\absItem{(\paratodof{gremio}{g}) g \en gremios(si) \entoncesL aliados(g, si) \igobs obtenerConjuntoDeAliados(e.gruposDeAliados, e.gremios,g)}{}
 
 \end{FunAbsDescriptiva}
 
@@ -60,13 +60,13 @@ SistemaLaboral \textbf{se representa con} estrS, donde estrS es: \\
 \tadOperacion{obtenerConjuntoDeAliados}{indiceAliados/secu(nat), gremios/conj(gremio), g/gremio}{conj(gremio)}{}
 \tadAxioma{obtenerConjuntoDeAliados}
 {
-	if(vacio?(gremios)) then \\
-	\hspace*{10pt}$\emptyset$	\\
-	else \\
-		\hspace*{10pt}if(iesimo(id(dameUno(gremios), indiceAliados) \igobs iesimo(id(g), indiceAliados) then \\
-			\hspace*{20pt}dameUno(gremios) $\cup$ obtenerConjuntoDeAliados(sinUno(gremios), g) \\
-		\hspace*{10pt}else \\
-			\hspace*{20pt}obtenerConjuntoDeAliados(sinUno(gremios), g) \\
-		\hspace*{10pt}fi \\
-	fi \\
+	\textbf{if} $\emptyset$?(gremios) \textbf{then} \\
+	\hspace*{20pt}$\emptyset$	\\
+	\textbf{else} \\
+		\hspace*{20pt}\textbf{if}(iesimo(id(dameUno(gremios), indiceAliados) \igobs iesimo(id(g), indiceAliados) \\
+			\hspace*{40pt}dameUno(gremios) $\cup$ obtenerConjuntoDeAliados(sinUno(gremios), g) \\
+		\hspace*{20pt}\textbf{else} \\
+			\hspace*{40pt}obtenerConjuntoDeAliados(sinUno(gremios), g) \\
+		\hspace*{20pt}\textbf{fi} \\
+	\textbf{fi} - \{g\} \\
 }

@@ -68,7 +68,7 @@
 {res \igobs empresasNegociando(tmp)}
 {falta implementar union}
 {Devuelve el conjunto de empresas cuyos gremios tienen su paritaria abierta}
-{falta implementar union}
+{}
 
 \operacion{TrabajadoresNegociando}
 {\param{in/out}{tmp}{temporada}}{nat}
@@ -76,14 +76,14 @@
 {res \igobs trabajadoresNegociando(tmp)}
 {\# paritarias}
 {Devuelve el número de trabajadores cuyos gremios tienen su paritaria abierta}
-{Se devuelve por copia}
+{}
 
 \operacion{GremioConflictivo}
 {\param{in/out}{tmp}{temporada}}{gremio}
 {\emptyset \neq acuerdos(tmp)}
 {res \igobs gremioConflictivo(tmp)}
 {\# gremios}
-{Devuelve el gremio que más veces reabrió su paritaria? creo que en la especificación devuelve el que más acuerdos anteriores tuvo, REVISAR }
+{Devuelve el gremio que más acuerdos tuvo desde que se creó la temporada }
 {Devuelve una referencia al gremio}
 
 
