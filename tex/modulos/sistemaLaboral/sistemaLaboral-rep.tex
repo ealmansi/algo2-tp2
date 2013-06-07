@@ -52,8 +52,21 @@ SistemaLaboral \textbf{se representa con} estrS, donde estrS es: \\
 
 	\absItem{gremios(si) \igobs ObtenerGremios(e)}{\yluego}
 
-	\absItem{(\paratodof{g}{gremio}) g \en gremios(si) \entoncesL aliados(g, si) \igobs obtenerConjuntoDeAliados(e,g)}{}
+	\absItem{(\paratodof{g}{gremio}) g \en gremios(si) \entoncesL aliados(g, si) \igobs obtenerConjuntoDeAliados(e.gruposDeAliados, e.gremios,g)}{}
 
 \end{FunAbsDescriptiva}
 
 \subsubsection{Funciones auxiliares}
+\tadOperacion{obtenerConjuntoDeAliados}{indiceAliados/secu(nat), gremios/conj(gremio), g/gremio}{conj(gremio)}{}
+\tadAxioma{obtenerConjuntoDeAliados}
+{
+	if(vacio?(gremios)) then \\
+	\hspace*{10pt}$\emptyset$	\\
+	else \\
+		\hspace*{10pt}if(iesimo(id(dameUno(gremios), indiceAliados) \igobs iesimo(id(g), indiceAliados) then \\
+			\hspace*{20pt}dameUno(gremios) $\cup$ obtenerConjuntoDeAliados(sinUno(gremios), g) \\
+		\hspace*{10pt}else \\
+			\hspace*{20pt}obtenerConjuntoDeAliados(sinUno(gremios), g) \\
+		\hspace*{10pt}fi \\
+	fi \\
+}
