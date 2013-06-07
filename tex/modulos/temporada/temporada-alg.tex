@@ -228,7 +228,9 @@
 	\state EliminarSiguiente(itParitarias)							\inlineC{1}
 }
 {\#paritarias\_abiertas}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{Se iteran secuencialmente las paritarias abiertas hasta encontrar la requerida,tomando tiempo lineal en el peor caso cuando la paritaria esta al final en el orden del iterador
+. Las operaciones con el iterador toman todas un costo temporal constante. Por lo tanto la funci\'on tiene un costo temporal tiempo lineal
+}
 
 \algoritmoI{RemoverAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio}}{paritaria}
 {
@@ -244,7 +246,7 @@
 	\state EliminarSiguiente(itAcuerdos)							\inlineC{1}
 }
 {\#acuerdos\_menores}
-{\lipsum[\arabic{lipsumcounter}]\addtocounter{lipsumcounter}{1}}
+{Se iteran secuencialmente los acuerdos de los aliados del gremio hasta encontrar el propio. Como los acuerdos se encuentran ordenados por porcentaje, se realizar\'an \emph{\#acuerdos\_menores} iteraciones hasta encontrar el acuerdo buscado, por lo cual la funci\'on tiene un costo de O(\#acuerdos\_menores). }
 
 \algoritmoI{ObtenerAcuerdosDeAliados}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{lista(acuerdo)}
 {
