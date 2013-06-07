@@ -5,8 +5,8 @@
 SistemaLaboral \textbf{se representa con} estrS, donde estrS es: \\
 \tupla{\\
 \hspace*{4em}\param{}{gremios}{conj(gremio)},\hspace*{2em} \\
-\hspace*{4em}\param{}{gruposDeAliados}{vector(idGrupo)} \\\hspace*{2em} } \\
-\\
+\hspace*{4em}\param{}{gruposDeAliados}{vector(idGrupo)} \\\hspace*{2em} } \\ \\
+y donde idGrupo es: nat \\\\
 \hline
 \end{tabular}
 \end{center}
@@ -17,7 +17,9 @@ SistemaLaboral \textbf{se representa con} estrS, donde estrS es: \\
 
 	Por otro lado, dado que la relación de alianza entre gremios es simétrica y transitiva, se puede dividir al conjunto de gremios del sistema en grupos disjuntos de aliados.
 
-	Utilizando esta propiedad, se representa la red de alianzas entre gremios etiquetando a cada grupo mediante un id de grupo, de forma tal que dos gremios serán aliados cuando sus números de grupo coincidan. El vector gruposDeAliados agrupa esta información, asignando a cada gremio un id de grupo, utilizando su id como índice en el vector. 
+	Utilizando esta propiedad, se representa la red de alianzas entre gremios etiquetando a cada grupo de aliados mediante un id de grupo, de forma tal que dos gremios distintos serán aliados cuando sus números de grupo coincidan. El vector gruposDeAliados agrupa esta información, asignando a cada gremio un id de grupo, utilizando su id como índice en el vector. 
+
+	Adicionalmente, los ids de grupo se asignan de forma consecutiva comenzando en 0, lo cual permite que sean utilizados para indexar un vector.
 
 \subsubsection{Invariante de Representaci\'on}
 
@@ -27,7 +29,7 @@ SistemaLaboral \textbf{se representa con} estrS, donde estrS es: \\
 	\item Ninguna empresa aparece en más de un gremio.
 	\item Los id's de los gremios del conjunto son naturales consecutivos no repetidos, comenzando en 0.
 	\item El vector gruposDeAliados tiene una entrada para cada gremio, y ninguna m\'as.
-	\item Los valores del vector gruposDeAliados son consecutivos, comenzando en 0.
+	\item Los valores del vector gruposDeAliados son naturales consecutivos, comenzando en 0.
 \end{enumerate}
 
 \paragraph{Expresión formal \\}
@@ -36,7 +38,7 @@ SistemaLaboral \textbf{se representa con} estrS, donde estrS es: \\
 		(\paratodof{empresa}{\,em})\,((\lnot \exists \,g1,g2:gremio\, ) \, (g1 , g2 \in e.gremios \land em \in empresas(g1) \land em \in empresas(g2) )
 	}{\ly}
 	\repItem{
-		(\paratodof{nat}{n})\, n \menor \#(e.gremios) \entonces ((\exists ! g : gremio)\, g \in e.gremios \land id(g) = n)
+		(\paratodof{nat}{n})\, n \menor \#(e.gremios) \entonces ((\exists ! g : gremio)\, g \in e.gremios \land ObtenerId(g) = n)
 	}{\ly}
 	\repItem{
 		\#(e.gremios) = long(e.gruposDeAliados)
@@ -52,21 +54,21 @@ SistemaLaboral \textbf{se representa con} estrS, donde estrS es: \\
 
 	\absItem{gremios(si) \igobs e.gremios}{\yluego}
 
-	\absItem{(\paratodof{gremio}{g}) g \en gremios(si) \entoncesL aliados(g, si) \igobs obtenerConjuntoDeAliados(e.gruposDeAliados, e.gremios,g)}{}
+	\absItem{(\paratodof{gremio}{g}) g \en gremios(si) \entoncesL aliados(g, si) \igobs obtenerConjuntoDeAliados(e, e.gremios,g)}{}
 
 \end{FunAbsDescriptiva}
 
 \subsubsection{Funciones auxiliares}
-\tadOperacion{obtenerConjuntoDeAliados}{indiceAliados/secu(nat), gremios/conj(gremio), g/gremio}{conj(gremio)}{}
+\tadOperacion{obtenerConjuntoDeAliados}{e/\widehat{estrS}, gs/conj(gremio), g/gremio}{conj(gremio)}{}
 \tadAxioma{obtenerConjuntoDeAliados}
 {
-	\textbf{if} $\emptyset$?(gremios) \textbf{then} \\
+	\textbf{if} $\emptyset$?(gs) \textbf{then} \\
 	\hspace*{20pt}$\emptyset$	\\
 	\textbf{else} \\
-		\hspace*{20pt}\textbf{if}(iesimo(id(dameUno(gremios), indiceAliados) \igobs iesimo(id(g), indiceAliados) \\
-			\hspace*{40pt}dameUno(gremios) $\cup$ obtenerConjuntoDeAliados(sinUno(gremios), g) \\
+		\hspace*{20pt}\textbf{if} e.gruposDeAliados[ObtenerId(dameUno(gs))] \igobs \\ \hspace*{110pt} e.gruposDeAliados[ObtenerId(g)] \textbf{then} \\
+			\hspace*{40pt}dameUno(gs) $\cup$ obtenerConjuntoDeAliados(sinUno(gs), g) \\
 		\hspace*{20pt}\textbf{else} \\
-			\hspace*{40pt}obtenerConjuntoDeAliados(sinUno(gremios), g) \\
+			\hspace*{40pt}obtenerConjuntoDeAliados(sinUno(gs), g) \\
 		\hspace*{20pt}\textbf{fi} \\
 	\textbf{fi} - \{g\} \\
 }

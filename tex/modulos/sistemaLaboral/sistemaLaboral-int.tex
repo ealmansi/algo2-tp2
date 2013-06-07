@@ -7,10 +7,10 @@
 
 \operacion{NuevoSistemaLaboral}
 {\param{in/out}{gs}{conj(gremio)}}{sistemaLaboral}
-{true}
+{(\paratodof {gremio}{g1 ,g2} \in  gs) \, g1 \distinto g2 \entonces (empresas(g1) \cap empresas(g2)) = \emptyset}
 {res = nuevo(gs) \ly esAlias(gremios(res), gs)}
 {\#gremios}
-{Crea un sistema laboral a partir de un conjunto de gremios}
+{Crea un sistema laboral a partir de un conjunto de gremios. No se deben modificar los ids de los gremios una vez ingresados en el sistema laboral}
 {El conjunto de gremios se guarda por referencia}
 
 \operacion{AliarGremios}
@@ -31,17 +31,21 @@
 \operacion{Obtener\#GruposDeAliados}
 {\param{in}{sl}{sistemaLaboral}}{nat}
 {true}
-{true}
+{*^1}
 {\#gremios}
-{Cuenta la cantidad de grupos de aliados que existen en el sistema}
+{Cuenta la cantidad de grupos de aliados que existen en el sistema.\\
+$*^1$ Esta operación afecta únicamente a la estructura del módulo Sistema Laboral, y no se pueden expresar sus efectos en la postcondición ya que esta función no tiene contraparte en el TAD Sistema Laboral.
+}
 {}
 
 \operacion{ObtenerIdGrupoDeAliados}
 {\param{in}{sl}{sistemaLaboral}, \param{in}{gr}{gremio}}{idGrupo}
 {gr \in gremios(sl)}
-{true}
+{*^2}
 {1}
-{Devuelve el id del grupo de aliados al que pertenece el gremio}
+{Devuelve el id del grupo de aliados al que pertenece el gremio.\\
+$*^2$ Esta operación afecta únicamente a la estructura del módulo Sistema Laboral, y no se pueden expresar sus efectos en la postcondición ya que esta función no tiene contraparte en el TAD Sistema Laboral.
+}
 {}
 
 \end{interfaz}

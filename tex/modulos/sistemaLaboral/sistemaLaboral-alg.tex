@@ -1,4 +1,4 @@
-\algoritmoI{NuevoSistemaLaboral}{\param{in}{gs}{conj(gremio)}}{estrS}
+\algoritmoI{NuevoSistemaLaboral}{\param{in/out}{gs}{conj(gremio)}}{estrS}
 {
 	\state AsignarIds(gs)								\inlineC{\#gremios}
 	\state res.gremios \asig gs 						\inlineC{1}
@@ -36,7 +36,7 @@
 	\state res \asig MaximoIdGrupoDeAliados(sl)			\inlineC{\#gremios}
 }
 {\#gremios}
-{}
+{La cantidad de grupos de aliados en el sistema queda determinado por el máximo id de grupo.}
 
 \algoritmoI{ObtenerIdGrupoDeAliados}{\param{in}{sl}{estrS}, \param{in}{gr}{gremio}}{idGrupo}
 {
@@ -87,7 +87,7 @@
 	\endwhile
 }
 { \#gremios }
-{ Asigna a cada gremio del sistema un id de grupo igual a su id propio; esto significa asignar el valor id-del-gremio a la posición id-del-gremio del vector gruposDeAliados. Como los id's de los gremios son consecutivos y comienzan en 0 (según el órden provisto por su iterador), la función Agregar se llama con índices consecutivos y no se indefine.
+{ Asigna a cada gremio del sistema un id de grupo igual a su id propio; esto significa asignar el valor id-del-gremio a la posición id-del-gremio del vector gruposDeAliados. Como los id's de los gremios son consecutivos y comienzan en 0 (según el órden provisto por su iterador), la función Agregar del módulo Vector se llama con índices consecutivos y no se indefine.
 
 \hspace{10pt} El costo de esta operación es el costo de agregar \emph{\#gremios} elementos al vector. Esta operación puede ser no constante si es necesario duplicar el tamaño del vector; sin embargo, el costo amortizado de insertar \emph{n} elementos al final de un arreglo dinámico es O(n), por lo que la operación es O(\#gremios). }
 

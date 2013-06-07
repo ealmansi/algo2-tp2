@@ -33,17 +33,20 @@
 \operacion{ObtenerId}
 {\param{in}{gr}{gremio}}{nat}
 {true}
-{true}
+{*^1}
 {1}
-{Devuelve el número identificador del gremio}
+{Devuelve el id del gremio.\\
+$*^1$ Esta operación afecta únicamente a la estructura del módulo Gremio, y no se pueden expresar sus efectos en la postcondición ya que esta función no tiene contraparte en el TAD Gremio. }
 {}
 
 \operacion{GuardarId}
 {\param{in/out}{gr}{gremio}, \param{in}{id}{nat}}{}
 {true}
-{true}
+{*^2}
 {1}
-{Asigna el número identificador del gremio (no debe ser utilizada una vez que el gremio se ingresa en el sistema laboral)}
+{Asigna el número identificador del gremio \\
+$*^2$ Esta operación afecta únicamente a la estructura del módulo Gremio, y no se pueden expresar sus efectos en la postcondición ya que esta función no tiene contraparte en el TAD Gremio.
+}
 {}
 
 \end{interfaz}
