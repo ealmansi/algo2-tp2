@@ -25,14 +25,25 @@ SistemaLaboral \textbf{se representa con} estrS, donde estrS es: \\
 
 \begin{enumerate}
 	\item Ninguna empresa aparece en más de un gremio.
-	\item Los ids de los gremios del conjunto son naturales consecutivos comenzando en 0.
-	\item El cardinal del conjunto gremios y la longitud del vector gruposDeAliados coinciden.
+	\item Los id's de los gremios del conjunto son naturales consecutivos no repetidos, comenzando en 0.
+	\item El vector gruposDeAliados tiene una entrada para cada gremio, y ninguna m\'as.
 	\item Los valores del vector gruposDeAliados son consecutivos, comenzando en 0.
 \end{enumerate}
 
 \paragraph{Expresión formal \\}
 \begin{RepFormal}{estrP}{e}
-	\repItem{varias cosas}{}
+	\repItem{
+		(\paratodof{empresa}{\,em})\,((\lnot \exists \,g1,g2:gremio\, ) \, (g1 , g2 \in e.gremios \land em \in empresas(g1) \land em \in empresas(g2) )
+	}{\ly}
+	\repItem{
+		(\paratodof{nat}{n})\, n \menor \#(e.gremios) \entonces ((\exists ! g : gremio)\, g \in e.gremios \land id(g) = n)
+	}{\ly}
+	\repItem{
+		\#(e.gremios) = longuitud(e.gruposDeAliados)
+	}{\ly}
+	\repItem{
+		longuitud(e.gruposDeAliados) > 0 \entonces esta?(0,e.gruposDeAliados) \ly ((\paratodof{nat}{n})\, (0 < n \ly esta?(n,e.gruposDeAliados)) \entonces esta?(n-1,e.gruposDeAliados))
+	}{}
 \end{RepFormal}
 
 \subsubsection{Funci\'on de Abstracci\'on}
