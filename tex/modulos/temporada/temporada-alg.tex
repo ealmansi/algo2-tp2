@@ -1,16 +1,16 @@
 \algoritmoI{Iniciar}{\param{in}{sl}{sistemaLaboral}}{estrT}
 {
 	\state res.sistema \asig sl								\inlineC{1}
-	\state res.paritariasAbiertas \asig Vacío()				\inlineC{1}
-	\state res.acuerdosVigentesPorGrupo \asig Vacía()		\inlineC{1}
-	\state res.\#acuerdosPrevios \asig Vacía()					\inlineC{1}
+	\state res.paritariasAbiertas \asig Vac\'io()				\inlineC{1}
+	\state res.acuerdosVigentesPorGrupo \asig Vac\'ia()		\inlineC{1}
+	\state res.\#acuerdosPrevios \asig Vac\'ia()					\inlineC{1}
 	\state
 
 	\state InicializarAcuerdosVigentesPorGrupo(res)			\inlineC{\#gremios}
 	\state Inicializar\#AcuerdosPrevios(res)						\inlineC{\#gremios}
 }
 {\#gremios}
-{ Se guarda el sistema laboral, y se inicializan los contenedores de paritarias y acuerdos y los contadores de acuerdos previos. Las asignaciones se realizan en tiempo constante y las inicializaciones en O(\#gremios), entonces la función es O(\#gremios). }
+{ Se guarda el sistema laboral, y se inicializan los contenedores de paritarias y acuerdos y los contadores de acuerdos previos. Las asignaciones se realizan en tiempo constante y las inicializaciones en O(\#gremios), entonces la funci\'on es O(\#gremios). }
 
 \algoritmoI{AbrirParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio}, \param{in}{p}{nat}, \param{in}{t}{nat}, \param{in}{es}{conj(empresa)}}{}
 {
@@ -22,7 +22,7 @@
 	\state AgregarParitaria(tmp, NuevaParitaria(gr, p, t))		\inlineC{1}
 }
 {\#acuerdos\_menores}
-{ Cuando la paritaria de un gremio abre por primera vez, no existe acuerdo previo en el sistema y su contador de acuerdos previos es nulo; en ese caso, la operación se realiza en O(1). Para el caso general, la complejidad temporal de la operación queda determinada por la función RemoverAcuerdo. }
+{ Cuando la paritaria de un gremio abre por primera vez, no existe acuerdo previo en el sistema y su contador de acuerdos previos es nulo; en ese caso, la operaci\'on se realiza en O(1). Para el caso general, la complejidad temporal de la operaci\'on queda determinada por la funci\'on RemoverAcuerdo. }
 
 \algoritmoI{CerrarAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio} , \param{in}{pcj}{nat}}{}
 {
@@ -45,13 +45,13 @@
 	\state AgregarComoSiguiente(itAcuerdos, NuevoAcuerdo(pa, pcj, Obtener\#AcuerdosPrevios(tmp, gr)))	\inlineC{1}
 }
 {\#acuerdos\_menores + \#paritarias\_abiertas}
-{La función ObtenerAcuerdosDeAliados devuelve la lista de los aliados del gremio afectado en tiempo constante; luego, la creación del iterador para esta lista también se realiza en O(1). 
+{La funci\'on ObtenerAcuerdosDeAliados devuelve la lista de los aliados del gremio afectado en tiempo constante; luego, la creaci\'on del iterador para esta lista tambi\'en se realiza en O(1). 
 
-\hspace{10pt} La evaluación de la guarda y el cuerpo del ciclo se realizan en tiempo constante, ya que todas estas funciones se realizan en O(1): HaySiguiente, ObtenerPorcentaje, Siguiente, AgregarParitaria, ObtenerParitaria, EliminarSiguiente, Avanzar, \lyl, \menor.
+\hspace{10pt} La evaluaci\'on de la guarda y el cuerpo del ciclo se realizan en tiempo constante, ya que todas estas funciones se realizan en O(1): HaySiguiente, ObtenerPorcentaje, Siguiente, AgregarParitaria, ObtenerParitaria, EliminarSiguiente, Avanzar, \lyl, \menor.
 
-\hspace{10pt} La lista de acuerdos de aliados se itera secuencialmente hasta encontrar un acuerdo con un porcentaje de aumento mayor o igual al logrado en el nuevo acuerdo. Como la lista se encuentra ordenada de menor a mayor según el valor del aumento, esto significa que se realizarán exactamente \#acuerdos\_menores iteraciones. En cada una de ellas, se reabre la paritaria de un acuerdo de menor aumento, efectivizando el comportamiento automático.
+\hspace{10pt} La lista de acuerdos de aliados se itera secuencialmente hasta encontrar un acuerdo con un porcentaje de aumento mayor o igual al logrado en el nuevo acuerdo. Como la lista se encuentra ordenada de menor a mayor seg\'un el valor del aumento, esto significa que se realizar\'an exactamente \#acuerdos\_menores iteraciones. En cada una de ellas, se reabre la paritaria de un acuerdo de menor aumento, efectivizando el comportamiento autom\'atico.
 
-\hspace{10pt} La operación RemoverParitaria es lineal en la cantidad de paritarias abiertas, y por último, agregar un acuerdo a la lista mediante el iterador se realiza en tiempo constante. Por lo tanto, la función tiene una complejidad temporal de O(\#acuerdos\_menores + \#paritarias\_abiertas).  }
+\hspace{10pt} La operaci\'on RemoverParitaria es lineal en la cantidad de paritarias abiertas, y por \'ultimo, agregar un acuerdo a la lista mediante el iterador se realiza en tiempo constante. Por lo tanto, la funci\'on tiene una complejidad temporal de O(\#acuerdos\_menores + \#paritarias\_abiertas).  }
 
 \algoritmoI{Reabrir}{\param{in/out}{ tmp}{estrT},  \param{in}{gr}{gremio}}{}
 {
@@ -85,7 +85,7 @@
 
 \algoritmoI{GremiosNegociando}{\param{in}{tmp}{estrT}}{conj(gremio)}
 {
-	\state res \asig Vacío()		\inlineC{1}
+	\state res \asig Vac\'io()		\inlineC{1}
 	\state
 
 	\state \var{itConj(paritaria)}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{1}
@@ -102,7 +102,7 @@
 
 \algoritmoI{EmpresasNegociando}{\param{in}{tmp}{estrT}}{conj(empresa)}
 {
-	\state res \asig Vacío()		\inlineC{1}
+	\state res \asig Vac\'io()		\inlineC{1}
 	\state
 
 	\state \var{itConj(paritaria)}{itParitarias} \asig CrearIt(tmp.paritariasAbiertas)		\inlineC{1}
@@ -143,7 +143,7 @@
 	\endwhile
 }
 { \#paritarias\_abiertas }
-{ Todas las operaciones se realizan en tiempo constante; como se realiza una iteración por cada paritaria abierta, la función es O(\#paritarias\_abiertas). }
+{ Todas las operaciones se realizan en tiempo constante; como se realiza una iteraci\'on por cada paritaria abierta, la funci\'on es O(\#paritarias\_abiertas). }
 
 \algoritmoI{GremioConflictivo}{\param{in}{tmp}{estrT}}{gremio}
 {
@@ -182,7 +182,7 @@
 	\while{indice \menor Obtener\#GruposDeAliados(tmp.sistema)}			\inlineC{1}
 		\state
 
-		\state tmp.acuerdosVigentesPorGrupo[indice] \asig Vacía()		\inlineC{1}
+		\state tmp.acuerdosVigentesPorGrupo[indice] \asig Vac\'ia()		\inlineC{1}
 
 		\state
 		\state indice \asig indice + 1									\inlineC{1}
@@ -190,7 +190,7 @@
 
 }
 {\#gremios}
-{ La operación inicial, la evaluación de la guarda, y el cuerpo del ciclo se realizan en tiempo constante. Como el ciclo se repite tantas veces como \#grupos\_de\_aliados, la función es O(\#grupos\_de\_aliados). Pero a su vez, la cantidad de grupos de aliados es igual a la cantidad de gremios en el peor caso, entonces la función es O(\#gremios). }
+{ La operaci\'on inicial, la evaluaci\'on de la guarda, y el cuerpo del ciclo se realizan en tiempo constante. Como el ciclo se repite tantas veces como \#grupos\_de\_aliados, la funci\'on es O(\#grupos\_de\_aliados). Pero a su vez, la cantidad de grupos de aliados es igual a la cantidad de gremios en el peor caso, entonces la funci\'on es O(\#gremios). }
 
 \algoritmoI{Inicializar\#AcuerdosPrevios}{\param{in/out}{ tmp}{estrT}}{}
 {
@@ -205,14 +205,14 @@
 	\endwhile
 }
 {\#gremios}
-{ La operación inicial, la evaluación de la guarda, y el cuerpo del ciclo se realizan en tiempo constante. Como el ciclo se repite tantas veces como \#gremios, la función es O(\#gremios). }
+{ La operaci\'on inicial, la evaluaci\'on de la guarda, y el cuerpo del ciclo se realizan en tiempo constante. Como el ciclo se repite tantas veces como \#gremios, la funci\'on es O(\#gremios). }
 
 \algoritmoI{AgregarParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{pa}{paritaria}}{}
 {
 	\state AgregarRapido(tmp.paritariasAbiertas, pa)		\inlineC{1}
 }
 {1}
-{ La función debe utilizarse con la certeza de que la paritaria que se va a agregar no se encuentra abierta, para no degenerar el conjunto paritariasAbiertas. La paritaria se agrega al conjunto por copia, la cual se realiza en O(copy(pa)), pero esto es O(1) ya que solo requiere copiar la referencia al gremio, y dos valores de tipo nat. }
+{ La funci\'on debe utilizarse con la certeza de que la paritaria que se va a agregar no se encuentra abierta, para no degenerar el conjunto paritariasAbiertas. La paritaria se agrega al conjunto por copia, la cual se realiza en O(copy(pa)), pero esto es O(1) ya que solo requiere copiar la referencia al gremio, y dos valores de tipo nat. }
 
 \algoritmoI{RemoverParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio}}{paritaria}
 {
@@ -255,7 +255,7 @@
 	\state res \asig tmp.acuerdosVigentesPorGrupo[id]							\inlineC{1}
 }
 {1}
-{ El módulo SistemaLaboral permite obtener el id de grupo de un gremio en tiempo constante, y luego solo es necesario leer la posición correspondiente en el vector acuerdosVigentesPorGrupo. }
+{ El m\'odulo SistemaLaboral permite obtener el id de grupo de un gremio en tiempo constante, y luego solo es necesario leer la posici\'on correspondiente en el vector acuerdosVigentesPorGrupo. }
 
 \algoritmoI{Incrementar\#AcuerdosPrevios}{\param{in/out}{tmp}{estrT}, \param{in}{gr}{gremio}}{}
 {
@@ -264,7 +264,7 @@
 	\state tmp.\#acuerdosPrevios[id] \asig tmp.\#acuerdosPrevios[id] + 1					\inlineC{1}
 }
 {1}
-{ El tiempo de lectura de la i-ésima posición de un vector es constante, entonces la función incrementa la cantidad de acuerdos previos de un gremio en O(1). }
+{ El tiempo de lectura de la i-\'esima posici\'on de un vector es constante, entonces la funci\'on incrementa la cantidad de acuerdos previos de un gremio en O(1). }
 
 \algoritmoI{Obtener\#AcuerdosPrevios}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{nat}
 {
@@ -273,4 +273,4 @@
 	\state res \asig tmp.\#acuerdosPrevios[id]					\inlineC{1}
 }
 {1}
-{ El tiempo de lectura de la i-ésima posición de un vector es constante, entonces la función permite conocer la cantidad de acuerdos previos de un gremio en O(1). }
+{ El tiempo de lectura de la i-\'esima posici\'on de un vector es constante, entonces la funci\'on permite conocer la cantidad de acuerdos previos de un gremio en O(1). }

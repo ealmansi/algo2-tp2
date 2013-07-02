@@ -24,18 +24,34 @@
 {1}
 {}
 
-\algoritmoI{ObtenerId}
+\algoritmoI{ObtenerIdGremio}
 {\param{in}{gr}{estrG}}{nat}
 {
-	\state res \asig gr.id 									\inlineC{1}
+	\state res \asig gr.idGremio 									\inlineC{1}
 }
 {1}
 {}
 
-\algoritmoI{GuardarId}
+\algoritmoI{GuardarIdGremio}
 {\param{in/out}{gr}{estrG}, \param{in}{id}{nat}}{}
 {
-	\state gr.id \asig id 									\inlineC{1}
+	\state gr.idGremio \asig id 									\inlineC{1}
+}
+{1}
+{}
+
+\algoritmoI{ObtenerIdGrupo}
+{\param{in}{gr}{estrG}}{nat}
+{
+	\state res \asig gr.idGrupo 									\inlineC{1}
+}
+{1}
+{}
+
+\algoritmoI{GuardarIdGrupo}
+{\param{in/out}{gr}{estrG}, \param{in}{id}{nat}}{}
+{
+	\state gr.idGrupo \asig id 									\inlineC{1}
 }
 {1}
 {}

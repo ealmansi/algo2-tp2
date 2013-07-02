@@ -30,23 +30,36 @@
 {Devuelve la cantidad de afiliados al gremio}
 {}
 
-\operacion{ObtenerId}
+\operacion{ObtenerIdGremio}
 {\param{in}{gr}{gremio}}{nat}
 {true}
-{*^1}
+{res $\igobs$ idGremio(gr)}
 {1}
-{Devuelve el id del gremio.\\
-$*^1$ Esta operación afecta únicamente a la estructura del módulo Gremio, y no se pueden expresar sus efectos en la postcondición ya que esta función no tiene contraparte en el TAD Gremio. }
+{Devuelve el id del gremio.}
 {}
 
-\operacion{GuardarId}
+\operacion{GuardarIdGremio}
 {\param{in/out}{gr}{gremio}, \param{in}{id}{nat}}{}
-{true}
-{*^2}
+{gr_0 \igobs gr}
+{gr \igobs asignarIdGremio(gr_0, id)}
 {1}
-{Asigna el número identificador del gremio \\
-$*^2$ Esta operación afecta únicamente a la estructura del módulo Gremio, y no se pueden expresar sus efectos en la postcondición ya que esta función no tiene contraparte en el TAD Gremio.
-}
+{Asigna el id del gremio}
+{}
+
+\operacion{ObtenerIdGrupo}
+{\param{in}{gr}{gremio}}{nat}
+{true}
+{res $\igobs$ idGrupo(gr)}
+{1}
+{Devuelve el id del grupo de aliados al que pertenece el gremio.}
+{}
+
+\operacion{GuardarIdGrupo}
+{\param{in/out}{gr}{gremio}, \param{in}{id}{nat}}{}
+{gr_0 \igobs gr}
+{gr \igobs asignarIdGrupo(gr_0, id)}
+{1}
+{Asigna el id del grupo de aliados al que pertenece el gremio.}
 {}
 
 \end{interfaz}

@@ -1,0 +1,30 @@
+SL es: vector(gremio)
+
+Temp es:
+< sistema			:	sl
+paritarias			:	conj(paritaria)
+acuerdos 			:	arreglo_dimensionable(acuerdo)
+acuerdosPorGrupo	:	arreglo_dimensionable(lista(acuerdo)) >
+
+.abrirParitaria
+
+	AgregarRapido(paritarias, NuevaParitaria(...))
+	if( Definido?(acuerdos, idGremio) )
+		EliminarAcuerdo(acuerdosPorGrupo, idGremio)
+	end
+
+.cerrarAcuerdo
+
+	p <- EliminarParitaria(paritarias, idGremio)
+	a <- NuevoAcuerdo(...)
+	acuerdos[idGremio] <- a
+	acuerdosDeAliados <- CrearIt(Obtener(acuerdosPorGrupo, idGrupo))
+	while HaySiguiente y pcj(Siguiente) < pcj(a)
+		if gremio(Siguiente) != idGremio
+			AgregarParitarias(paritaria(Siguiente))
+		end
+		EliminarSiguiente
+	end
+	AgregarSiguiente(acuerdosDeAliados, a)
+
+	

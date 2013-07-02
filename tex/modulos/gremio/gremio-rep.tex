@@ -6,21 +6,24 @@ Gremio \textbf{se representa con} estrG, donde estrG es: \\
 \tupla{\\
 \hspace*{4em}\param{}{empresas}{conj(empresa)},\hspace*{2em} \\
 \hspace*{4em}\param{}{\#afiliados}{nat},\hspace*{2em} \\
-\hspace*{4em}\param{}{id}{nat} \\\hspace*{2em} } \\
+\hspace*{4em}\param{}{idGremio}{nat},\hspace*{2em} \\
+\hspace*{4em}\param{}{idGrupo}{nat} \\\hspace*{2em} } \\
 \\
 \hline
 \end{tabular}
 \end{center}
 
+\subsubsection{Descripci\'on de los campos}
+
+Los campos idGremio e idGrupo incorporan la información que permiten identificar al gremio y a sus aliados una vez que este se incorporó a un sistema laboral.
+
 \subsubsection{Invariante de Representaci\'on}
 
-\paragraph{Descripción informal}
+\paragraph{Descripci\'on informal} Cualquier combinaci\'on de empresas, cantidad de afiliados, id de gremio e id de grupo de aliados representa una instancia v\'alida del tipo gremio.
 
-El generador del TAD Gremio no provee restricciones, por lo cual cualquier combinación de empresas y cantidad de afiliados representa una instancia válida del tipo.
-
-\paragraph{Expresión formal \\}
+\paragraph{Expresi\'on formal \\}
 \RepFormalTrivial{estrG}{e}
 
 \subsubsection{Funci\'on de Abstracci\'on}
 \FunAbsExplicita{e}{estrG}{gremio}
-{nuevoGremio(e.empresas,e.\#afiliados)}
+{\\asignarIdGrupo(asignarIdGremio(nuevoGremio(e.empresas,e.\#afiliados), e.idGremio), e.idGrupo)}

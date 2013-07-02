@@ -1,0 +1,35 @@
+\begin{tad}{\tadNombre{GremioExtendido}}
+
+\tadExtiende{Gremio}
+
+\tadGeneradores
+\tadOperacion{asignarIdGremio}{Gremio/g, nat/idGremio}{Gremio}{}
+\tadOperacion{asignarIdGrupo}{Gremio/g, nat/idGrupo}{Gremio}{}
+
+\tadObservadores
+\tadOperacion{idGremio}{Gremio/g}{nat}{}
+\tadOperacion{idGrupo}{Gremio/g}{nat}{}
+
+\tadAxiomas[\vars{conj(Gremio)}{gs}, \vars{Empresas}{es}, \vars{\#Personas}{n}, \vars{Gremio}{g}, \vars{nat}{id}]
+
+\tadAxioma{idGremio( nuevo( es, n ) )}{0}
+\tadAxioma{idGremio( asignarIdGremio( g, id ) )}{id}
+\tadAxioma{idGremio( asignarIdGrupo( g, id ) )}{idGremio(g)}
+
+\vspace{3 mm}
+
+\tadAxioma{idGrupo( nuevo( es, n ) )}{0}
+\tadAxioma{idGrupo( asignarIdGremio( g, id ) )}{idGrupo(g)}
+\tadAxioma{idGrupo( asignarIdGrupo( g, id ) )}{id}
+
+\vspace{3 mm}
+
+\tadAxioma{empresas( asignarIdGremio( g, id ) ) }{empresas(g)}
+\tadAxioma{empresas( asignarIdGrupo( g, id ) ) }{empresas(g)}
+
+\vspace{3 mm}
+
+\tadAxioma{afiliados( asignarIdGremio( g, id ) ) }{afiliados(g)}
+\tadAxioma{afiliados( asignarIdGrupo( g, id ) ) }{afiliados(g)}
+
+\end{tad}

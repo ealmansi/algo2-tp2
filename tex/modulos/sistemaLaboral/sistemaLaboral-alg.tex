@@ -3,7 +3,7 @@
 	\state AsignarIds(gs)								\inlineC{\#gremios}
 	\state res.gremios \asig gs 						\inlineC{1}
 	\state
-	\state res.gruposDeAliados \asig Vacía()			\inlineC{1}
+	\state res.gruposDeAliados \asig Vac\'ia()			\inlineC{1}
 	\state InicializarGruposDeAliados(res)				\inlineC{\#gremios}
 }
 {\#gremios}
@@ -22,7 +22,7 @@
 {\#gremios}
 { Asegura que todos los gremios aliados a uno u otro de los gremios que contraen la alianza pasen a tener el mismo id de grupo (manteniendo la propiedad de que los id's de grupo deben ser consecutivos, comenzando en 0).
 
-\hspace{10pt} Si la operación es no redundante (los gremios no eran aliados aún), el costo de esta operación queda determinado por la función UnificarGruposDeAliados. }
+\hspace{10pt} Si la operaci\'on es no redundante (los gremios no eran aliados a\'un), el costo de esta operaci\'on queda determinado por la funci\'on UnificarGruposDeAliados. }
 
 \algoritmoI{ObtenerGremios}{\param{in}{sl}{estrS}}{conj(gremio)}
 {
@@ -36,7 +36,7 @@
 	\state res \asig MaximoIdGrupoDeAliados(sl)			\inlineC{\#gremios}
 }
 {\#gremios}
-{La cantidad de grupos de aliados en el sistema queda determinado por el máximo id de grupo.}
+{La cantidad de grupos de aliados en el sistema queda determinado por el m\'aximo id de grupo.}
 
 \algoritmoI{ObtenerIdGrupoDeAliados}{\param{in}{sl}{estrS}, \param{in}{gr}{gremio}}{idGrupo}
 {
@@ -71,7 +71,7 @@
 { \#gremios }
 { Asigna un id a cada gremio, comenzando en 0 y de forma consecutiva.
 
-\hspace{10pt} Como esta operación se puede realizar en tiempo constante (notar que Siguiente devuelve una referencia y por lo tanto no se realiza una copia del gremio), la función es O(\#gremios). }
+\hspace{10pt} Como esta operaci\'on se puede realizar en tiempo constante (notar que Siguiente devuelve una referencia y por lo tanto no se realiza una copia del gremio), la funci\'on es O(\#gremios). }
 
 \algoritmoI{InicializarGruposDeAliados}{\param{in/out}{sl}{estrS}}{}
 {
@@ -87,9 +87,9 @@
 	\endwhile
 }
 { \#gremios }
-{ Asigna a cada gremio del sistema un id de grupo igual a su id propio; esto significa asignar el valor id-del-gremio a la posición id-del-gremio del vector gruposDeAliados. Como los id's de los gremios son consecutivos y comienzan en 0 (según el órden provisto por su iterador), la función Agregar del módulo Vector se llama con índices consecutivos y no se indefine.
+{ Asigna a cada gremio del sistema un id de grupo igual a su id propio; esto significa asignar el valor id-del-gremio a la posici\'on id-del-gremio del vector gruposDeAliados. Como los id's de los gremios son consecutivos y comienzan en 0 (seg\'un el \'orden provisto por su iterador), la funci\'on Agregar del m\'odulo Vector se llama con \'indices consecutivos y no se indefine.
 
-\hspace{10pt} El costo de esta operación es el costo de agregar \emph{\#gremios} elementos al vector. Esta operación puede ser no constante si es necesario duplicar el tamaño del vector; sin embargo, el costo amortizado de insertar \emph{n} elementos al final de un arreglo dinámico es O(n), por lo que la operación es O(\#gremios). }
+\hspace{10pt} El costo de esta operaci\'on es el costo de agregar \emph{\#gremios} elementos al vector. Esta operaci\'on puede ser no constante si es necesario duplicar el tamaño del vector; sin embargo, el costo amortizado de insertar \emph{n} elementos al final de un arreglo din\'amico es O(n), por lo que la operaci\'on es O(\#gremios). }
 
 \algoritmoI{UnificarGruposDeAliados}
 {\param{in/out}{sl}{estrS}, \param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{}
@@ -121,7 +121,7 @@
 {\#gremios}
 { Dados dos id's de grupo, a todos los gremios que pertenezcan al grupo de id mayor, se les asigna el menor. A la vez, todos los id's de grupo que sean mayores que ambos se decrementan en 1, garantizando que los id's de grupo sigan siendo consecutivos.
 
-\hspace{10pt} Por otro lado, como las operaciones previas al ciclo, la evaluación de la guarda y su cuerpo se realizan en tiempo constante, y además el ciclo se ejecuta una vez por cada gremio del sistema, la función toma tiempo proporcional a \#gremios. }
+\hspace{10pt} Por otro lado, como las operaciones previas al ciclo, la evaluaci\'on de la guarda y su cuerpo se realizan en tiempo constante, y adem\'as el ciclo se ejecuta una vez por cada gremio del sistema, la funci\'on toma tiempo proporcional a \#gremios. }
 
 \algoritmoI{MaximoIdGrupoDeAliados}{\param{in}{sl}{estrS}}{nat}
 {
@@ -142,7 +142,7 @@
 	\state res \asig maxId											\inlineC{1}
 }
 { \#gremios }
-{ Las operaciones previas, la evaluación de la guarda y el cuerpo del ciclo se realizan en tiempo constante. Como se realiza un total de Longitud(sl.gruposDeAliados) == \#gremios iteraciones, la función lleva tiempo lineal en función de \#gremios. }
+{ Las operaciones previas, la evaluaci\'on de la guarda y el cuerpo del ciclo se realizan en tiempo constante. Como se realiza un total de Longitud(sl.gruposDeAliados) == \#gremios iteraciones, la funci\'on lleva tiempo lineal en funci\'on de \#gremios. }
 
 \algoritmoI{Min}{\param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{idGrupo}
 {

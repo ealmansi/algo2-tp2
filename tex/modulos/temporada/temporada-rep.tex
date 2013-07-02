@@ -13,36 +13,36 @@ Temporada \textbf{se representa con} estrT, donde estrT es: \\
 \end{tabular}
 \end{center}
 
-\subsubsection{Descripción de los campos}
+\subsubsection{Descripci\'on de los campos}
 
-	El campo sistema agrupa toda la información acerca de los gremios de la temporada, y las relaciones de alianza entre ellos. En particular, permite conocer a qué grupo de aliados (ver Sistema Laboral) pertenece cada gremio en tiempo constante.
+	El campo sistema agrupa toda la informaci\'on acerca de los gremios de la temporada, y las relaciones de alianza entre ellos. En particular, permite conocer a qu\'e grupo de aliados (ver Sistema Laboral) pertenece cada gremio en tiempo constante.
 
 	El conjunto lineal paritariasAbiertas contiene aquellas paritarias que se encuentran abiertas (el contexto de uso permite verificar pertenencia en tiempo lineal, por lo que no es necesario mantenerlas ordenadas de ninguna forma).
 
-	Los acuerdos vigentes de la temporada se agrupan por separado para cada grupo de aliados en el vector acuerdosVigentesPorGrupo. Este contiene múltiples listas de acuerdos, una por cada grupo de aliados, donde cada una de ellas se encuentra ordenada de menor a mayor según el porcentaje de los acuerdos que contiene. 
+	Los acuerdos vigentes de la temporada se agrupan por separado para cada grupo de aliados en el vector acuerdosVigentesPorGrupo. Este contiene m\'ultiples listas de acuerdos, una por cada grupo de aliados, donde cada una de ellas se encuentra ordenada de menor a mayor seg\'un el porcentaje de los acuerdos que contiene. 
 
-	Como el módulo SistemaLaboral garantiza que los id's de los distintos grupos son consecutivos y comienzan en 0, cada lista se indexa a partir del id de grupo de aliados correspondiente, permitiendo obtener a partir de un gremio la lista ordenada de acuerdos de sus aliados en tiempo constante.
+	Como el m\'odulo SistemaLaboral garantiza que los id's de los distintos grupos son consecutivos y comienzan en 0, cada lista se indexa a partir del id de grupo de aliados correspondiente, permitiendo obtener a partir de un gremio la lista ordenada de acuerdos de sus aliados en tiempo constante.
 
 \subsubsection{Invariante de Representaci\'on}
 
-\paragraph{Descripción informal}
+\paragraph{Descripci\'on informal}
 \begin{enumerate}
 
 	\item Todo gremio del sistema tiene una (y solo una) paritaria abierta, o un (y solo un) acuerdo vigente, o ninguna de las dos cosas.
 	\item Toda paritaria en paritariasAbiertas pertence a algun gremio del sistema.
 	\item Todo acuerdo en acuerdosVigentesPorGrupo pertence a algun gremio del sistema.
-	\item AcuerdosVigentesPorGrupo tiene una lista para cada grupo de aliados del sistema, y ninguna más.
+	\item AcuerdosVigentesPorGrupo tiene una lista para cada grupo de aliados del sistema, y ninguna m\'as.
 	\item Dos gremios alojan sus acuerdos en la misma lista de acuerdosVigentesPorGrupo si, y solo si, son aliados.
-	\item Cada lista de acuerdosVigentesPorGrupo está ordenada segun porcentaje.
-	\item Todo acuerdo tiene un porcentaje que está entre el piso y el techo de su paritaria.
-	\item \#acuerdosPrevios tiene una entrada para cada gremio del sistema, y ninguna más.
+	\item Cada lista de acuerdosVigentesPorGrupo est\'a ordenada segun porcentaje.
+	\item Todo acuerdo tiene un porcentaje que est\'a entre el piso y el techo de su paritaria.
+	\item \#acuerdosPrevios tiene una entrada para cada gremio del sistema, y ninguna m\'as.
 	\item Los gremios del sistema que no tienen ni su paritaria abierta ni un acuerdo vigente, tienen asignado el valor 0 en \#acuerdosPrevios.
-	\item Los gremios del sistema que tengan un acuerdo vigente tendrán asignado un valor en \#acuerdosPrevios igual a el campo acuerdosPrevios de su acuerdo y  ese valor es al menos uno
+	\item Los gremios del sistema que tengan un acuerdo vigente tendr\'an asignado un valor en \#acuerdosPrevios igual a el campo acuerdosPrevios de su acuerdo y  ese valor es al menos uno
 
 
 \end{enumerate}
 
-\paragraph{Expresión formal \\}
+\paragraph{Expresi\'on formal \\}
 \begin{RepFormal}{estrT}{e}
 	
 	\repItem{(\paratodof{gremio}{gr})\, gr \in gremios (e.sistema) \entoncesL \\

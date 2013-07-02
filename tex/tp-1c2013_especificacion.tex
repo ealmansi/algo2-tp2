@@ -1,0 +1,264 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Renombres
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\noindent \textbf{TAD} \tadNombre{gremio} es string
+
+\begin{tabular}{l l l}
+
+\noindent \textbf{TAD} \tadNombre{empresa} es string & \phantom{hola loco} & \noindent $e \bullet\ set \equiv Ag( e, set )$ \\
+
+\noindent \textbf{TAD} \tadNombre{empresas} es conj( Empresa ) &&  \noindent $set - e \equiv set \setminus \{ e \}$ \\
+
+\noindent \textbf{TAD} \tadNombre{\#personas} es nat 										&&  \noindent $\emptyset = set \equiv \emptyset?set$ \\
+
+\noindent \textbf{TAD} \tadNombre{piso} es nat 																&&  \noindent $\emptyset \neq set \equiv \neg \emptyset?set$ \\
+
+\noindent \textbf{TAD} \tadNombre{techo} es nat &&  \\
+
+\noindent \textbf{TAD} \tadNombre{porc} es nat &&  \\
+
+
+\end{tabular}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{3 mm}
+
+\break
+\begin{tad}{\tadNombre{Gremio}} %  ----------------  GREMIO --------------
+
+
+\tadGeneros{Gremio}
+
+\tadGeneradores
+\tadOperacion{nuevo}{Empresas/es, \#Personas/n}{Gremio}{}
+
+\tadObservadores
+\tadOperacion{empresas}{Gremio/g}{Empresas}{}
+\tadOperacion{afiliados}{Gremio/g}{\#Personas}{}
+
+\tadOtrasOperaciones
+
+\tadOperacion{empresas}{conj( Gremio )/gs}{Empresas}{}
+\tadOperacion{afiliados}{ conj( Gremio )/gs}{\#Personas}{}
+
+\tadAxiomas[\vars{conj(Gremio)}{gs},\vars{Empresas}{es},\vars{\#Personas}{n}]
+
+\tadAxioma{empresas( nuevo( es, n ) )}{es}
+\tadAxioma{afiliados( nuevo( es, n ) )}{n}
+
+\vspace{3 mm}
+
+\tadAxioma{empresas( gs )}{ \IF $\emptyset = gs$ THEN $\emptyset$  ELSE $empresas( dameUno( gs ) ) \cup empresas( sinUno( gs ) )$  FI }
+\tadAxioma{afiliados( gs )}{  \IF $\emptyset = gs$ THEN $\emptyset$  ELSE $afiliados( dameUno( gs ) ) + afiliados( sinUno( gs ) )$ FI }
+
+\end{tad}%  ----------------  GREMIO --------------
+
+%\break
+
+\begin{tad}{\tadNombre{Sistema Laboral}} %  ----------------  SISTEMA LABORAL --------------
+\tadGeneros{SL}
+
+\tadGeneradores
+
+\tadOperacion{nuevo}{conj( Gremio)/gs }{SL}{ ($\forall g_1, g_2 \in gs$) $g_1 \neq g_2 \Rightarrow empresas( g_1 )  \skew{8}\not\cap\  empresas( g_2 ) $}
+\tadOperacion{aliar}{SL/sl, Gremio/{g_1}, Gremio/{g_2}}{SL}{$g_1 \in gremios(sl) \land g_2 \in gremios(sl) \land g_1 \ne g_2$}
+
+\tadObservadores
+\tadOperacion{gremios}{SL/sl}{conj(gremio)}{}
+\tadOperacion{aliados}{SL/sl,Gremio/g}{conj( Gremio )}{$g \in gremios(sl)$}
+
+\tadOtrasOperaciones
+\tadOperacion{aliado?}{SL/sl,Gremio/g, Gremio/amigo}{bool}{$g \in gremios(sl)$}
+\tadOperacion{superaliados}{SL/sl,Gremio/g}{conj( Gremio )}{$g \in gremios(sl)$}
+\tadOperacion{clausura}{SL/sl,conj( Gremio )/cs,conj( Gremio )/gs}{conj( Gremio )}{$cs \subseteq gremios(sl) \land gs \subseteq gremios(sl)$}
+
+
+\tadAxiomas[\vars{Gremio}{g, amigo, g_1, g_2},\vars{conj(Gremio)}{gs, cs},\vars{SL}{sl},\vars{\#Personas}{n}]
+\tadAxioma{gremios( nuevo( gs ) )}{ gs }
+\tadAxioma{gremios( aliar( sl, {$g_1$}, {$g_2$}))}{ $ gremios( sl ) $}
+\vspace{3 mm}
+
+\tadAxioma{aliados( nuevo( gs ), g )}{$ \emptyset$ }
+\tadAxioma{aliados(  aliar( sl, {$g_1$}, {$g_2$}), g )}{ \IF $g \in \{ g_1, g_2 \}$ THEN  $\{ g_1, g_2 \} - g $ ELSE  $\emptyset$ FI \\
+$\cup \ aliados( sl, g ) $}
+\vspace{3 mm}
+
+\tadAxioma{aliado?( sl, g, amigo )}{$amigo \in superaliados(sl, g)$}
+\tadAxioma{superaliados( sl, g  )}{$clausura( sl, \emptyset, aliados( sl, g )  ) - g$ }
+\tadAxioma{clausura( sl, cs, gs  )}{ \IF $ \emptyset = gs $ THEN  cs  ELSE $clausura${\large{(}}$\;  sl, \\
+\hphantom{clausura(} \;  dameUno( gs ) \bullet  cs, \\
+\hphantom{clausura(} \;  sinUno( gs ) \cup aliados( dameUno( gs ) )  \setminus cs  $ \large{)} FI}
+\end{tad} %  ----------------  SISTEMA LABORAL --------------
+
+\break
+
+
+\begin{tad}{\tadNombre{Paritaria}} %  ---------------- PARITARIA --------------
+
+\tadGeneradores
+\tadOperacion{nuevaParitaria}{Gremio/g, Piso/p, Tope/t}{Paritaria}{$p \leq t$}
+
+\tadObservadores
+\tadOperacion{gremio}{Paritaria/p}{Gremio}{}
+\tadOperacion{piso}{Paritaria/p}{Piso}{}
+\tadOperacion{tope}{Paritaria/p}{Tope}{}
+
+\tadOtrasOperaciones
+\tadOperacion{acepta?}{Paritaria/p, Porc/p}{bool}{}
+\tadOperacion{gremiosNegociando}{ conj( Paritaria)/ps}{conj( Gremio )}{}
+\tadOperacion{buscar}{ conj( Paritaria)/ps,Gremio/g}{ Paritaria }{$g \in gremiosNegociando(ps)$}
+
+\tadAxiomas[\vars{Gremio}{g},\vars{conj(Paritaria)}{ps},\vars{Paritaria}{p},\vars{Tope}{t}]
+
+\tadAxioma{gremio( nuevaParitaria( g, p, t ) )}{g}
+\tadAxioma{piso( nuevaParitaria( g, p, t ) )}{p}
+\tadAxioma{tope( nuevaParitaria( g, p, t ) )}{t}
+\vspace{3 mm}
+
+\tadAxioma{acepta?( p, t )}{$piso( p ) \leq t \leq tope( p )$}
+\tadAxioma{gremiosNegociando( ps )}{  \IF $\emptyset = ps$ THEN $\emptyset$  ELSE $gremio( dameUno( ps ) ) \bullet gremiosNegociando( sinUno( ps ) )$ FI}
+\tadAxioma{buscar( ps, g )}{ \IF $gremio( dameUno( ps ) ) = g$ THEN $dameUno( ps )$ ELSE $buscar( sinUno( ps ), g )$ FI}
+
+
+\end{tad} %  ----------------  PARITARIA --------------
+
+\break
+
+\begin{tad}{\tadNombre{Acuerdo}} %  ---------------- ACUERDO --------------
+\tadGeneradores
+\tadOperacion{nuevoAcuerdo}{ Paritaria/p, Porc/n, Nat/d }{Acuerdo}{}
+
+\tadObservadores
+\tadOperacion{id}{Acuerdo/a}{Nat}{}
+\tadOperacion{paritaria}{Acuerdo/a}{Paritaria}{}
+\tadOperacion{valor}{Acuerdo/a}{Porc}{}
+\tadOperacion{acuerdosPrevios}{Acuerdo/a}{Nat}{}
+
+\tadOtrasOperaciones
+\tadOperacion{gremio}{Acuerdo/a}{Gremio}{}
+\tadOperacion{mejor}{Acuerdo/a, Acuerdo/b}{bool}{}
+\tadOperacion{masDiscutido}{conj( Acuerdo )/as}{Acuerdo}{$\emptyset \neq as$}
+\tadOperacion{juntar}{ conj( Acuerdo )/ps,Gremio/g}{ conj( Acuerdo )}{}
+
+\tadAxiomas[\vars{Acuerdo}{a, b},\vars{conj(Acuerdo)}{as},\vars{Paritaria}{p},\vars{Porc}{n},\vars{Nat}{d}]
+
+\tadAxioma{paritaria( nuevoAcuerdo( p, n, d ) )}{p}
+\tadAxioma{valor( nuevoAcuerdo( p, n, d ) )}{n}
+\tadAxioma{acuerdosPrevios( nuevoAcuerdo( p, n, d ) )}{d}
+
+\vspace{3 mm}
+\tadAxioma{gremio( a )}{gremio( paritaria( a ) )}
+\tadAxioma{mejor( a, b )}{ $valor( a ) < valor( b) $ }
+
+\tadAxioma{masDiscutido( as ) }{
+\IF $\emptyset = sinUno( as ) \lor \\
+\phantom{ if\, } acuerdosPrevios( dameUno( as ) ) > \\
+\phantom{ if\, } acuerdosPrevios( masDiscutido( sinUno( as ) ) )$
+THEN $ dameuno( as ) $
+ELSE $masDiscutido( sinUno( as ) )$ FI }
+
+\tadAxioma{juntar( as, g )}{
+\IF $\emptyset = as$ THEN $\emptyset$ ELSE {
+\IF $gremio( dameUno( as ) ) = g$ THEN $\{dameUno( as )\}$ ELSE $\emptyset$ FI }\\
+\phantom{ if\; } $\cup\ juntar( sinUno( as ), g )$ FI}
+
+
+\end{tad} %  ----------------  ACUERDO --------------
+
+
+%\vspace*{1cm}
+\break
+
+\begin{tad}{\tadNombre{Temporada}} %  ---------------- TEMPORADA --------------
+
+\tadGeneradores
+\tadOperacion{iniciar}{SL/sl }{Temporada}{}
+\tadOperacion{abrir}{ Temporada/t, Paritaria/p }{Temporada}{$\neg enParitarias?( t, gremio( p ) ) \land gremio( p ) \in gremios( t )$}
+\tadOperacion{acordar}{ Temporada/t, Acuerdo/a }{Temporada}{$enParitarias?( t, gremio(a) ) \land  acepta?( paritaria( t, gremio(a) ), valor(a) )$}
+
+
+\tadObservadores
+\tadOperacion{sistema}{Temporada/t}{SL }{}
+\tadOperacion{paritarias}{Temporada/t}{conj( Paritaria) }{}
+\tadOperacion{acuerdos}{Temporada/t}{conj( Acuerdo ) }{}
+
+\tadOtrasOperaciones
+
+\tadOperacion{abrirParitaria}{Temporada/t,Gremio/g, Piso/p, Techo/te, Empresas/es}{Temporada}{
+$|es| * 2 > | empresas( g )  |  \land   es  \subseteq empresas( g ) \land g \in gremios( t ) \land \neg  enParitarias?( t, g ) \land p \leq te$
+ }
+\tadOperacion{cerrarAcuerdo}{ Temporada/t, Gremio/g, Porc/c }{Temporada}{ enParitarias?( t, g ) $\land$  acepta?( paritaria( t, g ), c )}
+\tadOperacion{reabrir}{Temporada/t,Gremio/g }{Temporada}{
+$\neg enParitarias?( t, g ) \land \emptyset \neq juntar( acuerdos( t ), g )$ }
+\vspace{3 mm}
+
+\tadOperacion{gremios}{Temporada/t}{conj( Gremio ) }{}
+\tadOperacion{enParitarias?}{Temporada/t,Gremio/g}{bool}{}
+\tadOperacion{paritaria}{Temporada/t,Gremio/g}{Paritaria}{$enParitarias?( t, g )$}
+\tadOperacion{acuerdo}{Temporada/t,Gremio/g}{Acuerdo}{$\emptyset \neq juntar( acuerdos( t ), g )$}
+\tadOperacion{discusiones}{Temporada/t,Gremio/g}{Nat}{}
+\tadOperacion{aReabrir}{SL/sl,Acuerdo/a,conj( Acuerdo )/as,conj( Gremio )/gs}{conj(Paritaria)}{$gremio(a) \in gremios(sl)$}
+\vspace{3 mm}
+
+
+\tadOperacion{gremiosNegociando}{Temporada/t }{conj( Gremio )}{}
+\tadOperacion{empresasNegociando}{Temporada/t }{Empresas )}{}
+\tadOperacion{trabajadoresNegociando}{Temporada/t }{\#Persona}{}
+\tadOperacion{gremioConflictivo}{Temporada/t }{Gremio}{$\emptyset \neq acuerdos( t )$}
+
+
+\break
+
+\tadAxiomas[\vars{SL}{sl},\vars{Temporada}{t},\vars{Acuerdo}{a,na},\vars{conj(Acuerdo)}{sa},\vars{Paritaria}{p},\vars{Empresas}{es},\\
+\vars{Porc}{n},\vars{Techo}{te},\vars{Gremio}{g}]
+\vspace{3 mm}
+
+\tadAxioma{sistema( iniciar( sl ) )}{ sl }
+\tadAxioma{sistema(  abrir( t, p ) )}{ sistema( t ) }
+\tadAxioma{sistema(  acordar( t, a ) )}{ sistema( t ) }
+\vspace{3 mm}
+
+\tadAxioma{paritarias( iniciar( sl ) )}{$\emptyset$}
+\tadAxioma{paritarias( abrir( t, p ) )}{$ p \bullet paritarias( t )$ }
+\tadAxioma{paritarias( acordar( t, a ) )}{ $ ( paritarias( t ) - paritaria( a ) )  \cup \\
+																														aReabrir( sistema( t ), a, acuerdos( t ), gremiosNegociando( paritarias( t ) ) ) $}
+\vspace{3 mm}
+
+\tadAxioma{acuerdos( iniciar( sl ) )}{$\emptyset$}
+\tadAxioma{acuerdos( abrir( t, p ) )}{ acuerdos( t ) }
+\tadAxioma{acuerdos( acordar( t, a ) )}{ $a \bullet acuerdos( t ) \setminus juntar( acuerdos( t ), gremio( a ) ) $}
+\vspace{3 mm}
+
+
+\tadAxioma{abrirParitaria( t, g, p, to, es )}{ abrir( t, nuevaParitaria( g, p, to )  ) }
+\tadAxioma{cerrarAcuerdo( t, g, n )}{  acordar( t, nuevoAcuerdo( paritaria( t, g ), n, discusiones( t, g ) + 1 ) ) }
+\tadAxioma{reabrir( t, g )}{ abrir( t, paritaria( acuerdo( t, g  ) ) )}
+\vspace{3 mm}
+
+\tadAxioma{gremios( t )}{ gremios( sistema( t  )  ) }
+\tadAxioma{discusiones( t, g )}{\IF $\emptyset \neq juntar( acuerdos( t ), g )$ THEN acuerdosPrevios( acuerdo( t, g ) ) ELSE 0 FI }
+\tadAxioma{paritaria( t, g ) }{ $buscar( paritarias( t ), g )$ }
+\tadAxioma{acuerdo( t, g ) }{ $dameUno( juntar( acuerdos( t ), g ) )$ }
+\tadAxioma{enParitarias?( t, g )}{ $g \in gremiosNegociando( paritarias( t ) ) $ }
+\vspace{3 mm}
+
+\tadAxioma{aReabrir( sl, a, as, gs )}{
+\IF $\emptyset = as$ THEN
+$\emptyset$
+ELSE {
+\IF $aliado?( sl, gremio( a ), gremio( dameUno( as ) ) ) \land \\
+	\phantom{ if \; } gremio( dameUno( as ) ) \notin gs \land \\
+	\phantom{ if \; } mejor( dameUno( as ), a )$
+THEN $\{ paritaria( dameUno( as ) ) \}$ ELSE $\emptyset$ FI $\cup\ aReabrir( sl, a, sinUno( as ), gs ) $}
+FI}
+
+\vspace{3 mm}
+
+\tadAxioma{gremiosNegociando( t )}{ gremiosNegociando( paritarias( t ) }
+\tadAxioma{empresasNegociando( t )}{ empresas( gremiosNegociando( paritarias( t ) ) }
+\tadAxioma{trabajadoresNegociando( t )}{ afiliados( gremiosNegociando( paritarias( t ) ) }
+\tadAxioma{gremioConflictivo( t ) }{ gremio( masDiscutido( acuerdos( t )  ) ) }
+
+
+\end{tad} %  ----------------  TEMPORADA --------------
