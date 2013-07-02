@@ -67,7 +67,7 @@ $*^1$ En caso de no tener acuerdo previo es O(1)}
 {\param{in/out}{tmp}{temporada}}{conj(empresa)}
 {true}
 {res \igobs empresasNegociando(tmp)}
-{\ensuremath{\sum_{p \in paritariasAbiertas} (\sum_{e \in empresas(gremio(p)))} copy(e)}}
+{ \ensuremath{\#paritarias\_abiertas * max\_cant\_empresas * max\_long\_empresa }}
 {Devuelve el conjunto de empresas cuyos gremios tienen su paritaria abierta}
 {}
 
@@ -80,12 +80,101 @@ $*^1$ En caso de no tener acuerdo previo es O(1)}
 {}
 
 \operacion{GremioConflictivo}
-{\param{in/out}{tmp}{temporada}}{gremio}
+{\param{in/out}{tmp}{temporada}}
+{gremio}
 {\emptyset \neq acuerdos(tmp)}
 { esAlias(res, gremioConflictivo(tmp))}
 {\# gremios}
 {Devuelve el gremio que m\'as acuerdos tuvo desde que se cre\'o la temporada }
 {Devuelve una referencia al gremio}
 
+\subsection{Funciones Auxiliares}
+
+\operacion
+{InicializarAcuerdosVigentesPorGrupo}
+{\param{in/out}{tmp}{temporada}}
+{devuelve}
+{pre}
+{post}
+{complejidad}
+{desc}
+{aliasing}
+
+
+\operacion
+{Inicializar\#AcuerdosPrevios}
+{\param{in/out}{ tmp}{temporada}}
+{devuelve}
+{pre}
+{post}
+{complejidad}
+{desc}
+{aliasing}
+
+
+\operacion
+{AgregarParitaria}
+{\param{in/out}
+{tmp}
+{temporada}, \param{in}{pa}{paritaria}}
+{}
+{pre}
+{post}
+{complejidad}
+{desc}
+{aliasing}
+
+
+\operacion
+{RemoverParitaria}
+{\param{in/out}{ tmp}{temporada}, \param{in}{gr}{gremio}}
+{paritaria}
+{pre}
+{post}
+{complejidad}
+{desc}
+{aliasing}
+
+
+\operacion
+{RemoverAcuerdo}
+{\param{in/out}{ tmp}{temporada}, \param{in}{gr}{gremio}}
+{paritaria}
+{pre}
+{post}
+{complejidad}
+{desc}
+{aliasing}
+
+
+\operacion
+{ObtenerAcuerdosDeAliados}
+{\param{in}{tmp}{temporada}, \param{in}{gr}{gremio}}
+{lista(acuerdo)}
+{pre}
+{post}
+{complejidad}
+{desc}
+{aliasing}
+
+\operacion
+{Incrementar\#AcuerdosPrevios}
+{\param{in/out}{tmp}{temporada}, \param{in}{gr}{gremio}}
+{}
+{pre}
+{post}
+{complejidad}
+{desc}
+{aliasing}
+
+\operacion
+{Obtener\#AcuerdosPrevios}
+{\param{in}{tmp}{temporada}, \param{in}{gr}{gremio}}
+{nat}
+{pre}
+{post}
+{complejidad}
+{desc}
+{aliasing}
 
 \end{interfaz}
