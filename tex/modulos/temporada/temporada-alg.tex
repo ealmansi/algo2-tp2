@@ -2,19 +2,19 @@
 {
 	\state res.sistema \asig sl								\inlineC{1}
 	\state res.paritariasAbiertas \asig Vac\'io()				\inlineC{1}
-	\state res.acuerdosVigentesPorGrupo \asig Vac\'ia()		\inlineC{1}
-	\state res.\#acuerdosPrevios \asig Vac\'ia()					\inlineC{1}
+	\state res.acuerdosPorGrupo \asig Vac\'ia()		\inlineC{1}
+	\state res.cantAcuerdosPrevios \asig Vac\'ia()					\inlineC{1}
 	\state
 
-	\state InicializarAcuerdosVigentesPorGrupo(res)			\inlineC{\#gremios}
-	\state Inicializar\#AcuerdosPrevios(res)						\inlineC{\#gremios}
+	\state InicializarAcuerdosPorGrupo(res)			\inlineC{\#gremios}
+	\state InicializarCantAcuerdosPrevios(res)						\inlineC{\#gremios}
 }
 {\#gremios}
 { Se guarda el sistema laboral, y se inicializan los contenedores de paritarias y acuerdos y los contadores de acuerdos previos. Las asignaciones se realizan en tiempo constante y las inicializaciones en O(\#gremios), entonces la funci\'on es O(\#gremios). }
 
 \algoritmoI{AbrirParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio}, \param{in}{p}{nat}, \param{in}{t}{nat}, \param{in}{es}{conj(empresa)}}{}
 {
-	\If{0 \menor Obtener\#AcuerdosPrevios(tmp, gr)}				\inlineC{1}
+	\If{0 \menor ObtenerCantAcuerdosPrevios(tmp, gr)}				\inlineC{1}
 		\state RemoverAcuerdo(tmp, gr)							\inlineC{\#acuerdos\_menores}
 	\endif
 	\state
@@ -41,8 +41,8 @@
 	\state
 
 	\state \var{paritaria}{pa} \asig RemoverParitaria(tmp, gr)											\inlineC{\#paritarias\_abiertas}
-	\state Incrementar\#AcuerdosPrevios(tmp, gr)														\inlineC{1}
-	\state AgregarComoSiguiente(itAcuerdos, NuevoAcuerdo(pa, pcj, Obtener\#AcuerdosPrevios(tmp, gr)))	\inlineC{1}
+	\state IncrementarCantAcuerdosPrevios(tmp, gr)														\inlineC{1}
+	\state AgregarComoSiguiente(itAcuerdos, NuevoAcuerdo(pa, pcj, ObtenerCantAcuerdosPrevios(tmp, gr)))	\inlineC{1}
 }
 {\#acuerdos\_menores + \#paritarias\_abiertas}
 {La funci\'on ObtenerAcuerdosDeAliados devuelve la lista de los aliados del gremio afectado en tiempo constante; luego, la creaci\'on del iterador para esta lista tambi\'en se realiza en O(1). 
@@ -123,8 +123,8 @@
 		\state Avanzar(itParitarias)						\inlineC{1}
 	\endwhile
 }
-{ \ensuremath{\sum_{p \in paritariasAbiertas} (\sum_{e \in empresas(gremio(p)))} copy(e)} }
-{ Dado que el m\'odulo conjunto agrega los elementos por copia, el costo de la funci\'on es el costo de copiar cada empresa de cada gremio con una paritaria abierta. }
+{ \ensuremath{\#paritarias\_abiertas * max\_cant\_empresas * max\_long\_empresa }}
+{ \#paritarias\_abiertas es la cantidad de paritarias abiertas de la temporada, max\_cant\_empresas es la m\'axima cantidad de empresas que tiene un gremio (entre aquellos con paritarias abiertas), y max\_long\_empresa es el nombre de empresa m\'as largo de todas ellas. Dado que el m\'odulo conjunto agrega los elementos por copia, el costo de la funci\'on es el costo de copiar cada empresa de cada gremio con una paritaria abierta. }
 
 \algoritmoI{TrabajadoresNegociando}{\param{in}{tmp}{estrT}}{nat}
 {
@@ -151,18 +151,18 @@
 	\state
 
 	\state \var{gremio}{gremioConflictivo} \asig Siguiente(itGremios)							\inlineC{1}
-	\state \var{nat}{maxAcuerdosPrevios} \asig Obtener\#AcuerdosPrevios(tmp, gremioConflictivo)				\inlineC{1}
+	\state \var{nat}{mCantAcuerdosPrevios} \asig ObtenerCantAcuerdosPrevios(tmp, gremioConflictivo)				\inlineC{1}
 	\state Avanzar(itGremios)																	\inlineC{1}
 	\state
 
 	\while{HaySiguiente(itGremios)}																\inlineC{1}
 		\state
 
-		\state \var{nat}{\#acuerdosPrevios} \asig Obtener\#AcuerdosPrevios(tmp, Siguiente(itGremios))		\inlineC{1}
+		\state \var{nat}{cantAcuerdosPrevios} \asig ObtenerCantAcuerdosPrevios(tmp, Siguiente(itGremios))		\inlineC{1}
 
-		\If{maxAcuerdosPrevios \menor \#acuerdosPrevios}							\inlineC{1}
+		\If{mCantAcuerdosPrevios \menor cantAcuerdosPrevios}							\inlineC{1}
 
-			\state maxAcuerdosPrevios \asig \#acuerdosPrevios						\inlineC{1}
+			\state mCantAcuerdosPrevios \asig cantAcuerdosPrevios						\inlineC{1}
 			\state gremioConflictivo \asig Siguiente(itGremios)			\inlineC{1}
 		\endif
 
@@ -176,13 +176,13 @@
 {\#gremios}
 {Obtiene el gremio con cantidad m\'axima de acuerdos previos. Para esto se efectua una busqueda lineal sobre el conjunto de gremios, por lo que esta funci\'on posee un costo temporal O(\#gremios).}
 
-\algoritmoI{InicializarAcuerdosVigentesPorGrupo}{\param{in/out}{ tmp}{estrT}}{}
+\algoritmoI{InicializarAcuerdosPorGrupo}{\param{in/out}{ tmp}{estrT}}{}
 {
 	\state \var{nat}{indice} \asig 0									\inlineC{1}
 	\while{indice \menor Obtener\#GruposDeAliados(tmp.sistema)}			\inlineC{1}
 		\state
 
-		\state tmp.acuerdosVigentesPorGrupo[indice] \asig Vac\'ia()		\inlineC{1}
+		\state tmp.acuerdosPorGrupo[indice] \asig Vac\'ia()		\inlineC{1}
 
 		\state
 		\state indice \asig indice + 1									\inlineC{1}
@@ -192,13 +192,13 @@
 {\#gremios}
 { La operaci\'on inicial, la evaluaci\'on de la guarda, y el cuerpo del ciclo se realizan en tiempo constante. Como el ciclo se repite tantas veces como \#grupos\_de\_aliados, la funci\'on es O(\#grupos\_de\_aliados). Pero a su vez, la cantidad de grupos de aliados es igual a la cantidad de gremios en el peor caso, entonces la funci\'on es O(\#gremios). }
 
-\algoritmoI{Inicializar\#AcuerdosPrevios}{\param{in/out}{ tmp}{estrT}}{}
+\algoritmoI{InicializarCantAcuerdosPrevios}{\param{in/out}{ tmp}{estrT}}{}
 {
 	\state \var{nat}{indice} \asig 0					\inlineC{1}
 	\while{indice \menor Cardinal(Gremios(tmp))}		\inlineC{1}
 		\state
 
-		\state tmp.\#acuerdosPrevios[indice] \asig 0			\inlineC{1}
+		\state tmp.cantAcuerdosPrevios[indice] \asig 0			\inlineC{1}
 
 		\state
 		\state indice \asig indice + 1					\inlineC{1}
@@ -252,25 +252,25 @@
 {
 	\state \var{idGrupo}{id} \asig ObtenerIdGrupoAliados(tmp.sistema, gr)		\inlineC{1}
 
-	\state res \asig tmp.acuerdosVigentesPorGrupo[id]							\inlineC{1}
+	\state res \asig tmp.acuerdosPorGrupo[id]							\inlineC{1}
 }
 {1}
-{ El m\'odulo SistemaLaboral permite obtener el id de grupo de un gremio en tiempo constante, y luego solo es necesario leer la posici\'on correspondiente en el vector acuerdosVigentesPorGrupo. }
+{ El m\'odulo SistemaLaboral permite obtener el id de grupo de un gremio en tiempo constante, y luego solo es necesario leer la posici\'on correspondiente en el vector acuerdosPorGrupo. }
 
-\algoritmoI{Incrementar\#AcuerdosPrevios}{\param{in/out}{tmp}{estrT}, \param{in}{gr}{gremio}}{}
+\algoritmoI{IncrementarCantAcuerdosPrevios}{\param{in/out}{tmp}{estrT}, \param{in}{gr}{gremio}}{}
 {
 	\state \var{idGremio}{id} \asig ObtenerId(gr)											\inlineC{1}
 
-	\state tmp.\#acuerdosPrevios[id] \asig tmp.\#acuerdosPrevios[id] + 1					\inlineC{1}
+	\state tmp.cantAcuerdosPrevios[id] \asig tmp.cantAcuerdosPrevios[id] + 1					\inlineC{1}
 }
 {1}
 { El tiempo de lectura de la i-\'esima posici\'on de un vector es constante, entonces la funci\'on incrementa la cantidad de acuerdos previos de un gremio en O(1). }
 
-\algoritmoI{Obtener\#AcuerdosPrevios}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{nat}
+\algoritmoI{ObtenerCantAcuerdosPrevios}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{nat}
 {
 	\state \var{idGremio}{id} \asig ObtenerId(gr)			\inlineC{1}
 
-	\state res \asig tmp.\#acuerdosPrevios[id]					\inlineC{1}
+	\state res \asig tmp.cantAcuerdosPrevios[id]					\inlineC{1}
 }
 {1}
 { El tiempo de lectura de la i-\'esima posici\'on de un vector es constante, entonces la funci\'on permite conocer la cantidad de acuerdos previos de un gremio en O(1). }

@@ -6,8 +6,8 @@ Temporada \textbf{se representa con} estrT, donde estrT es: \\
 \tupla{\\
 \hspace*{4em}\param{}{sistema}{sistemaLaboral},\hspace*{2em} \\
 \hspace*{4em}\param{}{paritariasAbiertas}{conj(paritaria)},\hspace*{2em} \\
-\hspace*{4em}\param{}{acuerdosVigentesPorGrupo}{vector(lista(acuerdo))},\hspace*{2em} \\
-\hspace*{4em}\param{}{\#acuerdosPrevios}{vector(nat)} \\\hspace*{2em} } \\
+\hspace*{4em}\param{}{acuerdosPorGrupo}{vector(lista(acuerdo))},\hspace*{2em} \\
+\hspace*{4em}\param{}{cantAcuerdosPrevios}{vector(bool)} \\\hspace*{2em} } \\
 \\
 \hline
 \end{tabular}
@@ -19,7 +19,7 @@ Temporada \textbf{se representa con} estrT, donde estrT es: \\
 
 	El conjunto lineal paritariasAbiertas contiene aquellas paritarias que se encuentran abiertas (el contexto de uso permite verificar pertenencia en tiempo lineal, por lo que no es necesario mantenerlas ordenadas de ninguna forma).
 
-	Los acuerdos vigentes de la temporada se agrupan por separado para cada grupo de aliados en el vector acuerdosVigentesPorGrupo. Este contiene m\'ultiples listas de acuerdos, una por cada grupo de aliados, donde cada una de ellas se encuentra ordenada de menor a mayor seg\'un el porcentaje de los acuerdos que contiene. 
+	Los acuerdos vigentes de la temporada se agrupan por separado para cada grupo de aliados en el vector acuerdosPorGrupo. Este contiene m\'ultiples listas de acuerdos, una por cada grupo de aliados, donde cada una de ellas se encuentra ordenada de menor a mayor seg\'un el porcentaje de los acuerdos que contiene. 
 
 	Como el m\'odulo SistemaLaboral garantiza que los id's de los distintos grupos son consecutivos y comienzan en 0, cada lista se indexa a partir del id de grupo de aliados correspondiente, permitiendo obtener a partir de un gremio la lista ordenada de acuerdos de sus aliados en tiempo constante.
 
@@ -30,14 +30,14 @@ Temporada \textbf{se representa con} estrT, donde estrT es: \\
 
 	\item Todo gremio del sistema tiene una (y solo una) paritaria abierta, o un (y solo un) acuerdo vigente, o ninguna de las dos cosas.
 	\item Toda paritaria en paritariasAbiertas pertence a algun gremio del sistema.
-	\item Todo acuerdo en acuerdosVigentesPorGrupo pertence a algun gremio del sistema.
-	\item AcuerdosVigentesPorGrupo tiene una lista para cada grupo de aliados del sistema, y ninguna m\'as.
-	\item Dos gremios alojan sus acuerdos en la misma lista de acuerdosVigentesPorGrupo si, y solo si, son aliados.
-	\item Cada lista de acuerdosVigentesPorGrupo est\'a ordenada segun porcentaje.
+	\item Todo acuerdo en acuerdosPorGrupo pertence a algun gremio del sistema.
+	\item acuerdosPorGrupo tiene una lista para cada grupo de aliados del sistema, y ninguna m\'as.
+	\item Dos gremios alojan sus acuerdos en la misma lista de acuerdosPorGrupo si, y solo si, son aliados.
+	\item Cada lista de acuerdosPorGrupo est\'a ordenada segun porcentaje.
 	\item Todo acuerdo tiene un porcentaje que est\'a entre el piso y el techo de su paritaria.
-	\item \#acuerdosPrevios tiene una entrada para cada gremio del sistema, y ninguna m\'as.
-	\item Los gremios del sistema que no tienen ni su paritaria abierta ni un acuerdo vigente, tienen asignado el valor 0 en \#acuerdosPrevios.
-	\item Los gremios del sistema que tengan un acuerdo vigente tendr\'an asignado un valor en \#acuerdosPrevios igual a el campo acuerdosPrevios de su acuerdo y  ese valor es al menos uno
+	\item cantAcuerdosPrevios tiene una entrada para cada gremio del sistema, y ninguna m\'as.
+	\item Los gremios del sistema que no tienen ni su paritaria abierta ni un acuerdo vigente, tienen asignado el valor 0 en cantAcuerdosPrevios.
+	\item Los gremios del sistema que tengan un acuerdo vigente tendr\'an asignado un valor en cantAcuerdosPrevios igual a el campo acuerdosPrevios de su acuerdo y  ese valor es al menos uno
 
 
 \end{enumerate}
@@ -52,21 +52,21 @@ Temporada \textbf{se representa con} estrT, donde estrT es: \\
 	
 	\repItem{(\paratodof{paritaria}{pa})\, pa \in e.paritariasAbiertas \entoncesL gremio(pa) \in gremios(e.sistema) }{\ly}
 	
-	\repItem{(\paratodof{acuerdo}{ac})\, ac \in obtenerAcuerdos(e.acuerdosVigentesPorGrupo) \entoncesL \\ gremio(ac) \in gremios(e.sistema)}{\ly}
+	\repItem{(\paratodof{acuerdo}{ac})\, ac \in obtenerAcuerdos(e.acuerdosPorGrupo) \entoncesL \\ gremio(ac) \in gremios(e.sistema)}{\ly}
 	
-	\repItem{ \# gruposAliados(e) = long(e.acuerdosVigentesPorGrupo) }{\ly}
+	\repItem{ \# gruposAliados(e) = long(e.acuerdosPorGrupo) }{\ly}
 	
-	\repItem{ (\paratodof{gremio}{gr1,gr2}) (\, gr1 \in gremios(e.sistema) \ly gr2 \in gremios(e.sistema) \ly  \\ \#acuerdos(gr1, e) = 1 \ly \#acuerdos(gr2, e) = 1) \entoncesL aliado?(e.sistema,gr1,gr2) \siii  \\ ((\exists \, ! i : nat) (0 \leq i \menor long(e.acuerdosVigentesPorGrupo) \lyl \\ ((\exists ac1:acuerdo)\, esta?(ac1, e.acuerdosVigentesPorGrupo[i]) \ly gremio(ac1) = gr1 \ly \\ (\exists ac2:acuerdo)\, esta?(ac2, e.acuerdosVigentesPorGrupo[i]) \ly gremio(ac2) = gr2)) }{\ly}
+	\repItem{ (\paratodof{gremio}{gr1,gr2}) (\, gr1 \in gremios(e.sistema) \ly gr2 \in gremios(e.sistema) \ly  \\ \#acuerdos(gr1, e) = 1 \ly \#acuerdos(gr2, e) = 1) \entoncesL aliado?(e.sistema,gr1,gr2) \siii  \\ ((\exists \, ! i : nat) (0 \leq i \menor long(e.acuerdosPorGrupo) \lyl \\ ((\exists ac1:acuerdo)\, esta?(ac1, e.acuerdosPorGrupo[i]) \ly gremio(ac1) = gr1 \ly \\ (\exists ac2:acuerdo)\, esta?(ac2, e.acuerdosPorGrupo[i]) \ly gremio(ac2) = gr2)) }{\ly}
 	
-	\repItem{(\paratodof{nat}{i})\, 0 \leq i \menor long(e.acuerdosVigentesPorGrupo) \entoncesL \\ estaOrdenadaPorPorcentaje(e.acuerdosVigentesPorGrupo[i]) }{\ly}
+	\repItem{(\paratodof{nat}{i})\, 0 \leq i \menor long(e.acuerdosPorGrupo) \entoncesL \\ estaOrdenadaPorPorcentaje(e.acuerdosPorGrupo[i]) }{\ly}
 	
-	\repItem{(\paratodof{acuerdo}{ac})\, ac \in obtenerAcuerdos(e.acuerdosVigentesPorGrupo) \entonces \\ piso(paritaria(ac)) \leq porcentaje(ac) \leq tope(paritaria(ac)) }{\ly}
+	\repItem{(\paratodof{acuerdo}{ac})\, ac \in obtenerAcuerdos(e.acuerdosPorGrupo) \entonces \\ piso(paritaria(ac)) \leq porcentaje(ac) \leq tope(paritaria(ac)) }{\ly}
 	
-	\repItem{long(e.\#acuerdosPrevios) = \#(gremios(e.sistema)) }{\ly}
+	\repItem{long(e.cantAcuerdosPrevios) = \#(gremios(e.sistema)) }{\ly}
 	
-	\repItem{(\paratodof{gremio}{gr}) \, (gr \in gremios(e.sistema) \ly \# paritarias(gr, e) = 0 \ly \#acuerdos(gr, e) = 0) \entoncesL \#acuerdosPrevios[ObtenerId(gr)] = 0 }{\ly}
+	\repItem{(\paratodof{gremio}{gr}) \, (gr \in gremios(e.sistema) \ly \# paritarias(gr, e) = 0 \ly \#acuerdos(gr, e) = 0) \entoncesL cantAcuerdosPrevios[ObtenerId(gr)] = 0 }{\ly}
 	
-	\repItem{(\paratodof{gremio}{gr}) \, (gr \in gremios(e.sistema) \ly \#acuerdos(gr, e) = 1) \entoncesL \\ e.\#acuerdosPrevios[ObtenerId(gr)] = acuerdosPrevios(ac) \ly acuerdosPrevios(ac) \geq 1 }{}
+	\repItem{(\paratodof{gremio}{gr}) \, (gr \in gremios(e.sistema) \ly \#acuerdos(gr, e) = 1) \entoncesL \\ e.cantAcuerdosPrevios[ObtenerId(gr)] = acuerdosPrevios(ac) \ly acuerdosPrevios(ac) \geq 1 }{}
 
 \end{RepFormal}
 
@@ -78,7 +78,7 @@ Temporada \textbf{se representa con} estrT, donde estrT es: \\
 
 	\absItem{paritarias(tmp) \igobs e.paritariasAbiertas}{\ly}
 
-	\absItem{acuerdos(tmp) \igobs obtenerAcuerdos(e.acuerdosVigentesPorGrupo)}{}
+	\absItem{acuerdos(tmp) \igobs obtenerAcuerdos(e.acuerdosPorGrupo)}{}
 
 \end{FunAbsDescriptiva}
 
@@ -93,7 +93,7 @@ Temporada \textbf{se representa con} estrT, donde estrT es: \\
 \vspace{5pt}
 
 \tadOperacion{\#acuerdos}{gr/gremio, e/\widehat{estrT}}{nat}{}
-\tadAxioma{\#acuerdos(gr, e)}{contarAcuerdos(gr, obtenerAcuerdos(e.acuerdosVigentesPorGrupo))}
+\tadAxioma{\#acuerdos(gr, e)}{contarAcuerdos(gr, obtenerAcuerdos(e.acuerdosPorGrupo))}
 \vspace{5pt}
 
 \tadOperacion{contarAcuerdos}{gr/gremio, as/conj(acuerdo)}{nat}{}

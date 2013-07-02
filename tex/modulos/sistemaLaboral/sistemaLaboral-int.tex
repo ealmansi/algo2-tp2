@@ -7,16 +7,16 @@
 
 \operacion{NuevoSistemaLaboral}
 {\param{in/out}{gs}{conj(gremio)}}{sistemaLaboral}
-{(\paratodof {gremio}{g1 ,g2} \in  gs) \, g1 \distinto g2 \entonces (empresas(g1) \cap empresas(g2)) = \emptyset}
-{res = nuevo(gs) \ly esAlias(gremios(res), gs)}
+{((\paratodof {gremio}{g1 ,g2} \in  gs) \, g1 \distinto g2 \entonces (empresas(g1) \cap empresas(g2)) = \emptyset) \ly \\ gsConsec = asignarIdsConsecutivos(gs)}
+{res = nuevo(gsConsec) \ly esAlias(gremios(res), gsConsec)}
 {\#gremios}
 {Crea un sistema laboral a partir de un conjunto de gremios. No se deben modificar los ids de los gremios una vez ingresados en el sistema laboral}
 {El conjunto de gremios se guarda por referencia}
 
 \operacion{AliarGremios}
 {\param{in/out}{sl}{sistemaLaboral}, \param{in}{gr1}{gremio}, \param{in}{gr2}{gremio}}{}
-{gr1 \in gremios(sl) \ly gr2 \in gremios(sl) \ly gr1 \distinto gr2 }
-{}
+{gr1 \in gremios(sl) \ly gr2 \in gremios(sl) \ly gr1 \distinto gr2 \ly sl_0 = sl}
+{idsGrupoActualizados(sl_0, sl, gr1, gr2)}
 {\#gremios}
 {Forma una alianza entre dos gremios (y entre sus aliados precedentes)}
 {}
@@ -28,23 +28,13 @@
 {Devuelve los gremios del sistema}
 {El resultado se devuelve por referencia}
 
-\operacion{Obtener\#GruposDeAliados}
+\operacion{Obtener\#Grupos}
 {\param{in}{sl}{sistemaLaboral}}{nat}
 {true}
 {*^1}
 {\#gremios}
 {Cuenta la cantidad de grupos de aliados que existen en el sistema.\\
 $*^1$ Esta operaci\'on afecta \'unicamente a la estructura del m\'odulo Sistema Laboral, y no se pueden expresar sus efectos en la postcondici\'on ya que esta funci\'on no tiene contraparte en el TAD Sistema Laboral.
-}
-{}
-
-\operacion{ObtenerIdGrupoDeAliados}
-{\param{in}{sl}{sistemaLaboral}, \param{in}{gr}{gremio}}{idGrupo}
-{gr \in gremios(sl)}
-{*^2}
-{1}
-{Devuelve el id del grupo de aliados al que pertenece el gremio.\\
-$*^2$ Esta operaci\'on afecta \'unicamente a la estructura del m\'odulo Sistema Laboral, y no se pueden expresar sus efectos en la postcondici\'on ya que esta funci\'on no tiene contraparte en el TAD Sistema Laboral.
 }
 {}
 

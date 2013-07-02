@@ -31,19 +31,12 @@
 {1}
 { Se devuelve el conjunto de gremios por referencia, lo cual toma tiempo constante. }
 
-\algoritmoI{Obtener\#GruposDeAliados}{\param{in}{sl}{estrS}}{nat}
+\algoritmoI{Obtener\#Grupos}{\param{in}{sl}{estrS}}{nat}
 {
 	\state res \asig MaximoIdGrupoDeAliados(sl)			\inlineC{\#gremios}
 }
 {\#gremios}
 {La cantidad de grupos de aliados en el sistema queda determinado por el m\'aximo id de grupo.}
-
-\algoritmoI{ObtenerIdGrupoDeAliados}{\param{in}{sl}{estrS}, \param{in}{gr}{gremio}}{idGrupo}
-{
-	\state res \asig sl.gruposDeAliados[ObtenerId(gr)]			\inlineC{1}
-}
-{1}
-{}
 
 \algoritmoI{ModificarIdGrupoDeAliados}{\param{in/out}{sl}{estrS}, \param{in}{gr}{gremio}, \param{in}{id}{idGrupo}}{}
 {
@@ -104,13 +97,13 @@
 		\state
 
 		\state \var{gremio}{gr} \asig sl.gremios[indice]					\inlineC{1}
-		\state \var{idGrupo}{idG} \asig ObtenerIdGrupoDeAliados(sl, gr)		\inlineC{1}
+		\state \var{idGrupo}{idG} \asig ObtenerIdGrupo(gr)		\inlineC{1}
 		\state
 
 		\If{idMayor \igual idG}												\inlineC{1}
-			\state ModificarIdGrupoDeAliados(sl, gr, idMenor)					\inlineC{1}
+			\state GuardarIdGrupo(gr, idMenor)								\inlineC{1}
 		\Else \If{idMayor \menor idG}										\inlineC{1}
-				\state ModificarIdGrupoDeAliados(sl, gr, idG - 1)				\inlineC{1}
+				\state GuardarIdGrupo(gr, idG - 1)							\inlineC{1}
 			\endif
 		\endif
 		\state
