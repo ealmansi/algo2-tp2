@@ -2,17 +2,14 @@
 {
 	\state AsignarIds(gs)								\inlineC{\#gremios}
 	\state res.gremios \asig gs 						\inlineC{1}
-	\state
-	\state res.gruposDeAliados \asig Vac\'ia()			\inlineC{1}
-	\state InicializarGruposDeAliados(res)				\inlineC{\#gremios}
 }
 {\#gremios}
 {Asigna id's consecutivos a los gremios, comenzando en 0, y luego le asigna a cada gremio un id de grupo igual a su id propio (esto garantiza que los gremios no tengan aliados inicialmente, y que sus id's de grupo sean consecutivos, comenzando en 0). }
 
 \algoritmoI{AliarGremios}{\param{in/out}{sl}{estrS}, \param{in}{gr1}{gremio}, \param{in}{gr2}{gremio}}{}
 {
-	\state \var{idGrupo}{idGrupoG1} \asig ObtenerIdGrupoDeAliados(sl, gr1)			\inlineC{1}
-	\state \var{idGrupo}{idGrupoG2} \asig ObtenerIdGrupoDeAliados(sl, gr2)			\inlineC{1}
+	\state \var{idGrupo}{idGrupoG1} \asig ObtenerIdGrupo(gr1)						\inlineC{1}
+	\state \var{idGrupo}{idGrupoG2} \asig ObtenerIdGrupo(gr2)						\inlineC{1}
 	\state 
 
 	\If{idGrupoG1 \distinto idGrupoG2}												\inlineC{1}
@@ -33,7 +30,7 @@
 
 \algoritmoI{Obtener\#Grupos}{\param{in}{sl}{estrS}}{nat}
 {
-	\state res \asig MaximoIdGrupoDeAliados(sl)			\inlineC{\#gremios}
+	\state res \asig MaximoIdGrupo(sl)						\inlineC{\#gremios}
 }
 {\#gremios}
 {La cantidad de grupos de aliados en el sistema queda determinado por el m\'aximo id de grupo.}
@@ -54,7 +51,8 @@
 	\while{ HaySiguiente(itGremios) }
 		\state
 		
-		\state GuardarId(Siguiente(itGremios), id)							\inlineC{1}
+		\state GuardarIdGremio(Siguiente(itGremios), id)					\inlineC{1}
+		\state GuardarIdGrupo(Siguiente(itGremios), id)						\inlineC{1}
 		\state id \asig id + 1												\inlineC{1}
 		
 		\state
@@ -62,7 +60,7 @@
 	\endwhile
 }
 { \#gremios }
-{ Asigna un id a cada gremio, comenzando en 0 y de forma consecutiva.
+{ Asigna un id de gremio y un id de grupo a cada gremio, comenzando en 0 y de forma consecutiva.
 
 \hspace{10pt} Como esta operaci\'on se puede realizar en tiempo constante (notar que Siguiente devuelve una referencia y por lo tanto no se realiza una copia del gremio), la funci\'on es O(\#gremios). }
 
@@ -97,7 +95,7 @@
 		\state
 
 		\state \var{gremio}{gr} \asig sl.gremios[indice]					\inlineC{1}
-		\state \var{idGrupo}{idG} \asig ObtenerIdGrupo(gr)		\inlineC{1}
+		\state \var{idGrupo}{idG} \asig ObtenerIdGrupo(gr)					\inlineC{1}
 		\state
 
 		\If{idMayor \igual idG}												\inlineC{1}
@@ -116,16 +114,16 @@
 
 \hspace{10pt} Por otro lado, como las operaciones previas al ciclo, la evaluaci\'on de la guarda y su cuerpo se realizan en tiempo constante, y adem\'as el ciclo se ejecuta una vez por cada gremio del sistema, la funci\'on toma tiempo proporcional a \#gremios. }
 
-\algoritmoI{MaximoIdGrupoDeAliados}{\param{in}{sl}{estrS}}{nat}
+\algoritmoI{MaximoIdGrupo}{\param{in}{sl}{estrS}}{nat}
 {
 	\state \var{nat}{maxId} \asig 0									\inlineC{1}
 
 	\state
 	\state \var{nat}{indice} \asig 0								\inlineC{1}
-	\while{indice \menor Longitud(sl.gruposDeAliados)}				\inlineC{1}
+	\while{indice \menor Longitud(sl.gremios)}						\inlineC{1}
 		\state
 		
-		\state maxId \asig Max(maxId, sl.gruposDeAliados[indice])	\inlineC{1}
+		\state maxId \asig Max(maxId, ObtenerIdGrupo(sl.gremios[indice]))			\inlineC{1}
 
 		\state
 		\state indice \asig indice + 1								\inlineC{1}
@@ -135,7 +133,7 @@
 	\state res \asig maxId											\inlineC{1}
 }
 { \#gremios }
-{ Las operaciones previas, la evaluaci\'on de la guarda y el cuerpo del ciclo se realizan en tiempo constante. Como se realiza un total de Longitud(sl.gruposDeAliados) == \#gremios iteraciones, la funci\'on lleva tiempo lineal en funci\'on de \#gremios. }
+{ Las operaciones previas, la evaluaci\'on de la guarda y el cuerpo del ciclo se realizan en tiempo constante. Como se realiza un total de Longitud(sl.gremios) == \#gremios iteraciones, la funci\'on lleva tiempo lineal en funci\'on de \#gremios. }
 
 \algoritmoI{Min}{\param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{idGrupo}
 {
