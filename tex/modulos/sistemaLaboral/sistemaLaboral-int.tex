@@ -6,20 +6,36 @@
 \end{iparamformales}
 
 \operacion{NuevoSistemaLaboral}
-{\param{in/out}{gs}{conj(gremio)}}{sistemaLaboral}
-{((\paratodof {gremio}{g1 ,g2} \in  gs) \, g1 \distinto g2 \entonces (empresas(g1) \cap empresas(g2)) = \emptyset) \ly \\ gsConsec = asignarIdsConsecutivos(gs)}
-{res = nuevo(gsConsec) \ly esAlias(gremios(res), gsConsec)}
-{\#gremios}
-{Crea un sistema laboral a partir de un conjunto de gremios. No se deben modificar los ids de los gremios una vez ingresados en el sistema laboral}
-{Los gremios se guardan por referencia}
+{}{sistemaLaboral}
+{true}
+{res = nuevo}
+{1}
+{Crea un sistema laboral}
+{}
+
+\operacion{AgregarGremio}
+{\param{in/out}{sl}{sistemaLaboral}, \param{in}{conj(empresa)}{es},\param{in}{nat}{\#as}}{nat}
+{sl0=sl}
+{sl=agregargremio(sl0, es, \#as) \land res = idUltimoGremioAgregado(sl)}
+{complejidad}
+{Agrega un gremio al sistema laboral}
+{el conjunto de empresas es pasado por referencia}
 
 \operacion{AliarGremios}
-{\param{in/out}{sl}{sistemaLaboral}, \param{in}{gr1}{gremio}, \param{in}{gr2}{gremio}}{}
-{gr1 \in gremios(sl) \ly gr2 \in gremios(sl) \ly gr1 \distinto gr2 \ly sl_0 = sl}
-{idsGrupoActualizados(sl_0, sl, gr1, gr2)}
-{\#gremios}
+{\param{in/out}{sl}{sistemaLaboral}, \param{in}{nat}{idGremio1}, \param{in}{nat}{idGremio2}}{}
+{sl0=sl}
+{sl \igobs aliar(sl, idGremio1, idGremio2)}
+{complejidad}
 {Forma una alianza entre dos gremios (y entre sus aliados precedentes)}
 {}
+
+\operacion{ObtenerAliados}
+{\param{in}{sl}{sistemaLaboral}, \param{in}{nat}{idGremio}}{conj(gremio)}
+{true}
+{res \igobs aliados(sl, idGremio)}
+{complejidad}
+{Descripcion}
+{Aliasing}
 
 \operacion{ObtenerGremios}{\param{in}{sl}{sistemaLaboral}}{conj(gremio)}
 {true}
