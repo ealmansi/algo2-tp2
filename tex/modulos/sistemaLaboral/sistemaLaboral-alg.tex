@@ -67,6 +67,11 @@
 
 \hspace{10pt} El ciclo agrega \emph{\#gremios} elementos a un vector, lo cual puede no ser constante (la funci\'on \emph{f} del m\'odulo vector caracteriza el costo de la operación en función de la longitud del vector). Sin embargo, la operaci\'on tiene un costo amortizado de O(n) para n inserciones, por lo cual la funci\'on tiene un costo O(\#gremios). Los gremios se agregan por referencia en el vector, de forma tal que las sucesivas modificaciones en el id de grupo se realicen sobre los gremios originales. }
 
+Pre : \ensuremath{true}
+\\
+Post : \ensuremath{ res \igobs pasarAVectorConIdIndices(gs, 0) }
+
+
 \algoritmoI{UnificarGruposDeAliados}
 {\param{in/out}{sl}{vector(gremio)}, \param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{}
 {
@@ -99,6 +104,11 @@
 
 \hspace{10pt} Por otro lado, como las operaciones previas al ciclo, la evaluaci\'on de la guarda y su cuerpo se realizan en tiempo constante, y adem\'as el ciclo se ejecuta una vez por cada gremio del sistema, la funci\'on toma tiempo proporcional a \#gremios. }
 
+Pre : \ensuremath{(0 \leq idgremio(gr) < long(tmp.\#acuerdosPrevios))}
+\\
+Post : \ensuremath{ res \igobs tmp.\#acuerdosPrevios_{idgremio(gr)}}
+
+
 \algoritmoI{MaximoIdGrupo}{\param{in}{sl}{vector(gremio)}}{nat}
 {
 	\state \var{nat}{maxId} \asig 0									\inlineC{1}
@@ -120,6 +130,11 @@
 { \#gremios }
 { Las operaciones previas, la evaluaci\'on de la guarda y el cuerpo del ciclo se realizan en tiempo constante. Como se realiza un total de Longitud(sl) == \#gremios iteraciones, la funci\'on lleva tiempo lineal en funci\'on de \#gremios. }
 
+Pre : \ensuremath{true}
+\\
+Post : \ensuremath{(\forall j : nat) (0 \leq j < long(sl)) \entoncesL idgrupo(sl_{j}) \leq res}
+
+
 \algoritmoI{Min}{\param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{idGrupo}
 {
 	\If{id1 \menor id2}					\inlineC{1}
@@ -131,6 +146,11 @@
 {1}
 {}
 
+Pre : \ensuremath{true}
+\\
+Post : \ensuremath{res \igobs min(id1, id2)}
+
+
 \algoritmoI{Max}{\param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{idGrupo}
 {
 	\If{id1 \menor id2}					\inlineC{1}
@@ -141,3 +161,20 @@
 }
 {1}
 {}
+
+Pre : \ensuremath{true}
+\\
+Post : \ensuremath{res \igobs max(id1, id2)}
+
+\subsection{Funciones Auxiliares de Pre-Post}
+
+\tadOperacion{pasarAVectorConIdIndices}{conj(gremio)/s, nat/idActual}{secu(gremio)}{}
+
+\vspace{20px}
+\tadAxioma{pasarAVectorConIdIndices(cg, idActual)}{
+   if($\emptyset$ ?(cg)) then
+    <>
+  else
+    asignarIdGremio(dameUno(cg), idActual) \puntito pasarAVectorConIdIndices(sinUno(cg), idActual + 1)
+  fi
+}
