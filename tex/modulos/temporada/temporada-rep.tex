@@ -64,7 +64,7 @@ Temporada \textbf{se representa con} estrT, donde estrT es: \\
 	
 	\repItem{(\paratodof{nat}{i})\, 0 \leq i \menor long(e.acuerdosPorGrupo) \entoncesL \\ estaOrdenadaPorPorcentaje(e.acuerdosPorGrupo[i]) }{\ly}
 	
-	\repItem{(\paratodof{acuerdo}{ac})\, ac \in obtenerAcuerdos(e.acuerdosPorGrupo) \entonces \\ piso(paritaria(ac)) \leq porcentaje(ac) \leq tope(paritaria(ac)) }{\ly}
+	\repItem{(\paratodof{acuerdo}{acprim(})as), ac \in obtenerAcuerdos(e.acuerdosPorGrupo) \entonces \\ piso(paritaria(ac)) \leq porcentaje(ac) \leq tope(paritaria(ac)) }{\ly}
 	
 	\repItem{long(e.cantAcuerdosPrevios) = \#(gremios(e.sistema)) }{\ly}
 	
@@ -88,16 +88,16 @@ Temporada \textbf{se representa con} estrT, donde estrT es: \\
 
 \subsubsection{Funciones auxiliares}
 
-\tadOperacion{\#paritarias}{gr/gremio, e/\widehat{estrT}}{nat}{}
-\tadAxioma{\#paritarias(gr, e)}{contarParitarias(gr, e.paritariasAbiertas)}
+\tadOperacion{tieneUnaParitaria}{gr/gremio, e/\widehat{estrT}}{nat}{}
+\tadAxioma{tieneUnaParitaria(gr, e)}{contarParitarias(gr, e.paritariasAbiertas) = 1 }
 \vspace{5pt}
 
 \tadOperacion{contarParitarias}{gr/gremio, ps/conj(paritaria)}{nat}{}
 \tadAxioma{contarParitarias(gr, ps)}{ \textbf{if} $\emptyset$?(ps) \textbf{then}\\ \hspace*{10pt} 0 \\ \textbf{else}\\ \hspace*{10pt} \textbf{if} gr = gremio(dameUno(ps)) \textbf{then}\\ \hspace*{10pt} \hspace*{10pt} 1 \\ \hspace*{10pt} \textbf{else}\\ \hspace*{10pt} \hspace*{10pt} 0 \\ \hspace*{10pt} \textbf{fi} + contarParitarias(gr, sinUno(ps)) \\ \textbf{fi} }
 \vspace{5pt}
 
-\tadOperacion{\#acuerdos}{gr/gremio, e/\widehat{estrT}}{nat}{}
-\tadAxioma{\#acuerdos(gr, e)}{contarAcuerdos(gr, obtenerAcuerdos(e.acuerdosPorGrupo))}
+\tadOperacion{tieneUnAcuerdo}{gr/gremio, e/\widehat{estrT}}{nat}{}
+\tadAxioma{tieneUnAcuerdo(gr, e)}{contarAcuerdos(gr, obtenerAcuerdos(e.acuerdosPorGrupo)) = 1}
 \vspace{5pt}
 
 \tadOperacion{contarAcuerdos}{gr/gremio, as/conj(acuerdo)}{nat}{}
@@ -137,7 +137,7 @@ Temporada \textbf{se representa con} estrT, donde estrT es: \\
 \vspace{5pt}
 
 \tadOperacion{estaOrdenadaPorPorcentaje}{as/lista(acuerdo)}{bool}{}
-\tadAxioma{estaOrdenadaPorPorcentaje(as)}{\textbf{if} long(as) \menor 2 \textbf{then}\\ \hspace*{10pt} true \\ \textbf{else}\\ \hspace*{10pt} aumento(as) \menorigual aumento(prim(fin(as))) \lyl \\ \hspace*{20pt} estaOrdenadaPorPorcentaje(fin(as)) \\ \textbf{fi}}
+\tadAxioma{estaOrdenadaPorPorcentaje(as)}{\textbf{if} long(as) \menor 2 \textbf{then}\\ \hspace*{10pt} true \\ \textbf{else}\\ \hspace*{10pt} aumento(prim(aas)) \menorigual aumento(prim(fin(as))) \lyl \\ \hspace*{20pt} estaOrdenadaPorPorcentaje(fin(as)) \\ \textbf{fi}}
 \vspace{5pt}
 
 \tadOperacion{obtenerAcuerdos}{ acs/secu(secu(acuerdo))}{conj(acuerdo)}{}
@@ -158,3 +158,23 @@ Temporada \textbf{se representa con} estrT, donde estrT es: \\
 \hspace*{20pt}	Ag(prim(s),secuAconj(fin(s))) \\
 \hspace*{10pt} \textbf{fi}
 }
+
+\vspace{5pt}
+
+
+\tadOperacion{acuerdo}{gr/gremio, e/\widehat{estrT}}{acuerdo}{ tieneUnAcuerdo(gr, e) }
+\tadAxioma{acuerdo(gr, e)}{obtenerAcuerdo(obtenerAcuerdos(e.acuerdosPorGrupo), gr)}
+
+\vspace{5pt}
+
+\tadOperacion{obtenerAcuerdo}{as/conj(acuerdo), gr/gremio}{acuerdo}{$ (\exists ac:acuerdo) ac \in as \ly gremio(ac) = gr$ }
+\tadAxioma{obtenerAcuerdo(as, gr)}{
+	
+\hspace*{10pt} \textbf{if} gremio(dameUno(as)) = gr \textbf{then} \\
+\hspace*{20pt}	dameUno(as) \\
+\hspace*{10pt} \textbf{else} \\
+\hspace*{20pt}	obtenerAcuerdo(sinUno(as), gr) \\
+\hspace*{10pt} \textbf{fi}
+}
+
+\vspace{5pt}

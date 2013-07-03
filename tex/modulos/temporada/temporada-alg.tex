@@ -41,7 +41,7 @@
 	\state
 
 	\state \var{paritaria}{pa} \asig RemoverParitaria(tmp, gr)											\inlineC{\#paritarias\_abiertas}
-	\state IncrementarCantAcuerdosPrevios(tmp, gr)														\inlineC{1}
+	\state tmp.cantAcuerdosPrevios[ObtenerId(gr)] \asig tmp.cantAcuerdosPrevios[ObtenerId(gr)] + 1		\inlineC{1}
 	\state AgregarComoSiguiente(itAcuerdos, NuevoAcuerdo(pa, pcj, ObtenerCantAcuerdosPrevios(tmp, gr)))	\inlineC{1}
 }
 {\#acuerdos\_menores + \#paritarias\_abiertas}
@@ -192,9 +192,8 @@
 {\#gremios}
 { La operaci\'on inicial, la evaluaci\'on de la guarda, y el cuerpo del ciclo se realizan en tiempo constante. Como el ciclo se repite tantas veces como \#grupos\_de\_aliados, la funci\'on es O(\#grupos\_de\_aliados). Pero a su vez, la cantidad de grupos de aliados es igual a la cantidad de gremios en el peor caso, entonces la funci\'on es O(\#gremios). }
 
-Pre : \ensuremath{tmp0=tmp}
-\\
-Post : \ensuremath{ tienenListasVacias(tmp.acuerdosPorGrupo) \land (tmp.sistema \igobs tmp0.sistema) \land (tmp.paritariasAbiertas \igobs tmp0.paritariasAbiertas) \land (tmp.\#acuerdosPrevios \igobs tmp0.\#acuerdosPrevios)}
+\preAux{tmp0=tmp}
+\postAux{ tienenListasVacias(tmp.acuerdosPorGrupo) \land (tmp.sistema \igobs tmp0.sistema) \land \\ (tmp.paritariasAbiertas \igobs tmp0.paritariasAbiertas) \land (tmp.cantAcuerdosPrevios \igobs tmp0.cantAcuerdosPrevios)}
 
 \algoritmoI{InicializarCantAcuerdosPrevios}{\param{in/out}{ tmp}{estrT}}{}
 {
@@ -211,9 +210,8 @@ Post : \ensuremath{ tienenListasVacias(tmp.acuerdosPorGrupo) \land (tmp.sistema 
 {\#gremios}
 { La operaci\'on inicial, la evaluaci\'on de la guarda, y el cuerpo del ciclo se realizan en tiempo constante. Como el ciclo se repite tantas veces como \#gremios, la funci\'on es O(\#gremios). }
 
-Pre : \ensuremath{tmp0=tmp}
-\\
-Post : \ensuremath{ tieneTodoCero(tmp.\#acuerdosPrevios) \land (tmp.sistema \igobs tmp0.sistema) \land (tmp.paritariasAbiertas \igobs tmp0.paritariasAbiertas) \land (tmp.acuerdosPorGrupo \igobs tmp0.acuerdosPorGrupo)}
+\preAux{tmp0=tmp}
+\postAux{ tieneTodoCero(tmp.cantAcuerdosPrevios) \land (tmp.sistema \igobs tmp0.sistema) \land \\ (tmp.paritariasAbiertas \igobs tmp0.paritariasAbiertas) \land (tmp.acuerdosPorGrupo \igobs tmp0.acuerdosPorGrupo)}
 
 \algoritmoI{AgregarParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{pa}{paritaria}}{}
 {
@@ -222,9 +220,8 @@ Post : \ensuremath{ tieneTodoCero(tmp.\#acuerdosPrevios) \land (tmp.sistema \igo
 {1}
 { La funci\'on debe utilizarse con la certeza de que la paritaria que se va a agregar no se encuentra abierta, para no degenerar el conjunto paritariasAbiertas. La paritaria se agrega al conjunto por copia, la cual se realiza en O(copy(pa)), pero esto es O(1) ya que solo requiere copiar la referencia al gremio, y dos valores de tipo nat. }
 
-Pre : \ensuremath{tmp0=tmp}
-\\
-Post : \ensuremath{ (tmp.paritariasAbiertas=Ag(pa, tmp0.paritariasAbiertas)) \land (tmp.sistema \igobs tmp0.sistema) \land (tmp.\#acuerdosPrevios \igobs tmp0.\#acuerdosPrevios) \land (tmp.acuerdosPorGrupo \igobs tmp0.acuerdosPorGrupo)}
+\preAux{tmp0=tmp}
+\postAux{ (tmp.paritariasAbiertas=Ag(tmp0.paritariasAbiertas, pa)) \land (tmp.sistema \igobs tmp0.sistema) \land \\ (tmp.cantAcuerdosPrevios \igobs tmp0.\#acuerdosPrevios) \land (tmp.acuerdosPorGrupo \igobs tmp0.acuerdosPorGrupo)}
 
 \algoritmoI{RemoverParitaria}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio}}{paritaria}
 {
@@ -244,9 +241,8 @@ Post : \ensuremath{ (tmp.paritariasAbiertas=Ag(pa, tmp0.paritariasAbiertas)) \la
 . Las operaciones con el iterador toman todas un costo temporal constante. Por lo tanto la funci\'on tiene un costo temporal tiempo lineal
 }
 
-Pre : \ensuremath{tmp0=tmp \land (0 \leq idgremio(gr) < long(tmp.paritariasAbiertas)) \yluego buscarParitaria(idgremio(gr), tmp.paritariasAbiertas) \neq \emptyset}
-\\
-Post : \ensuremath{ (res \igobs buscarParitaria(idgremio(gr), tmp0.paritariasAbiertas)) \land (tmp.paritariasAbiertas=tmp0.paritariasAbiertas - \{ res \}) \land (tmp.sistema \igobs tmp0.sistema) \land (tmp.\#acuerdosPrevios \igobs tmp0.\#acuerdosPrevios) \land (tmp.acuerdosPorGrupo \igobs tmp0.acuerdosPorGrupo)}
+\preAux{tmp0=tmp \land (idGremio(gr) < long(tmp.paritariasAbiertas)) \yluego \\ buscarParitaria(idGremio(gr), tmp.paritariasAbiertas) \neq \emptyset}
+\postAux{ (res \igobs buscarParitaria(idGremio(gr), tmp0.paritariasAbiertas)) \land \\ (tmp.paritariasAbiertas=tmp0.paritariasAbiertas - \{ res \}) \land (tmp.sistema \igobs tmp0.sistema) \land \\ (tmp.cantAcuerdosPrevios \igobs tmp0.\#acuerdosPrevios) \land (tmp.acuerdosPorGrupo \igobs tmp0.acuerdosPorGrupo)}
 
 \algoritmoI{RemoverAcuerdo}{\param{in/out}{ tmp}{estrT}, \param{in}{gr}{gremio}}{paritaria}
 {
@@ -264,9 +260,8 @@ Post : \ensuremath{ (res \igobs buscarParitaria(idgremio(gr), tmp0.paritariasAbi
 {\#acuerdos\_menores}
 {Se iteran secuencialmente los acuerdos de los aliados del gremio hasta encontrar el propio. Como los acuerdos se encuentran ordenados por porcentaje, se realizar\'an \emph{\#acuerdos\_menores} iteraciones hasta encontrar el acuerdo buscado, por lo cual la funci\'on tiene un costo de O(\#acuerdos\_menores). }
 
-Pre : \ensuremath{ (tmp0 \igobs tmp) \land (gr \in gremios(tmp)) \yluego tieneAcuerdo(tmp, gr))}
-\\
-Post : \ensuremath{ (tmp \igobs removerAcuerdo(tmp0)) \land (res \igobs paritaria(acuerdo(gr, tmp0))) }
+\preAux{ (tmp0 \igobs tmp) \land (gr \in gremios(tmp)) \yluego tieneUnAcuerdo(tmp, gr))}
+\postAux{ (tmp \igobs removerAcuerdo(tmp0)) \land (res \igobs paritaria(acuerdo(gr, tmp0))) }
 
 \algoritmoI{ObtenerAcuerdosDeAliados}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{lista(acuerdo)}
 {
@@ -277,22 +272,8 @@ Post : \ensuremath{ (tmp \igobs removerAcuerdo(tmp0)) \land (res \igobs paritari
 {1}
 { El m\'odulo SistemaLaboral permite obtener el id de grupo de un gremio en tiempo constante, y luego solo es necesario leer la posici\'on correspondiente en el vector acuerdosPorGrupo. }
 
-Pre : \ensuremath{tmp0=tmp \land (0 \leq idgrupo(gr) < long(tmp.acuerdosPorGrupo))}
-\\
-Post : \ensuremath{ (res \igobs tmp.acuerdosPorGrupo_{idgrupo(gr)})}
-
-\algoritmoI{IncrementarCantAcuerdosPrevios}{\param{in/out}{tmp}{estrT}, \param{in}{gr}{gremio}}{}
-{
-	\state \var{idGremio}{id} \asig ObtenerId(gr)											\inlineC{1}
-
-	\state tmp.cantAcuerdosPrevios[id] \asig tmp.cantAcuerdosPrevios[id] + 1					\inlineC{1}
-}
-{1}
-{ El tiempo de lectura de la i-\'esima posici\'on de un vector es constante, entonces la funci\'on incrementa la cantidad de acuerdos previos de un gremio en O(1). }
-
-Pre : \ensuremath{tmp0=tmp \land (0 \leq idgremio(gr) < long(tmp.\#acuerdosPrevios))}
-\\
-Post : \ensuremath{ (tmp.\#acuerdosPrevios_{idgremio(gr)} \igobs tmp0.\#acuerdosPrevios_{idgremio(gr)}-1) \land ((\forall i:nat) (0 \leq idgremio(gr) < long(tmp.\#acuerdosPrevios) \land i \neq idgremio(gr)) \entoncesL tmp0.\#acuerdosPrevios_i) \land (tmp.sistema \igobs tmp0.sistema) \land (tmp.paritariasAbiertas \igobs tmp0.paritariasAbiertas) \land (tmp.acuerdosPorGrupo \igobs tmp0.acuerdosPorGrupo)}
+\preAux{tmp0=tmp \land (idGrupo(gr) < long(tmp.acuerdosPorGrupo))}
+\postAux{ (res \igobs tmp.acuerdosPorGrupo[idGrupo(gr)])}
 
 \algoritmoI{ObtenerCantAcuerdosPrevios}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{nat}
 {
@@ -303,42 +284,57 @@ Post : \ensuremath{ (tmp.\#acuerdosPrevios_{idgremio(gr)} \igobs tmp0.\#acuerdos
 {1}
 { El tiempo de lectura de la i-\'esima posici\'on de un vector es constante, entonces la funci\'on permite conocer la cantidad de acuerdos previos de un gremio en O(1). }
 
-Pre : \ensuremath{(0 \leq idgremio(gr) < long(tmp.\#acuerdosPrevios))}
-\\
-Post : \ensuremath{ res \igobs tmp.\#acuerdosPrevios_{idgremio(gr)}}
+\preAux{(idGremio(gr) < long(tmp.cantAcuerdosPrevios))}
+\postAux{ res \igobs tmp.cantAcuerdosPrevios[idGremio(gr)]}
 
-\subsection{Funciones Auxiliares de Pre-Post}
+\subsection{Funciones Auxiliares}
 
 \tadOperacion{tienenListasVacias}{secu(secu(acuerdo))/s}{bool}{}
-\tadOperacion{tieneTodoCero}{secu(nat)/s}{bool}{}
-\tadOperacion{buscarParitaria}{nat/idGremio, conj(paritaria) cp}{paritaria}{}
-\tadOperacion{obtenerAcuerdoDeAliados}{secu(secu(acuerdo))/s, nat idGr}{secu(acuerdo)}{}
-\tadOperacion{removerAcuerdo}{Acuerdo ac, secu(secu(acuerdo))/ss}{secu(acuerdo)}{}
+\tadAxioma{tienenListasVacias(s)}{\textbf{if} (vacia?(s)) \textbf{then} true \textbf{else} (prim(s) \igobs <>) \ly tienenListasVacias(fin(s)) \textbf{fi}}
+
 \vspace{20px}
-\tadAxioma{tienenListasVacias(s)}{if (vacia?(s)) then true else (prim(s) \igobs <>) \ly tienenListasVacias(fin(s)) fi}
-\tadAxioma{tieneTodoCero(s)}{if (vacia?(s)) then true else (prim(s) \igobs 0) \ly tieneTodoCero(fin(s) fi)}
-\tadAxioma{buscarParitaria(idG, cp)}{if (idgremio(gremio(dameUno(cp))) \igobs idG) then dameUno(cp) else buscarParitaria(idGr, sinUno(cp)) fi)}
-\tadAxioma{obtenerAcuerdoDeAliados(s, idGr)}{if (idGr \igobs 1) then prim(s) else obtenerAcuerdoDeAliados(fin(s), idGr-1) fi}
+
+
+\tadOperacion{tieneTodoCero}{secu(nat)/s}{bool}{}
+\tadAxioma{tieneTodoCero(s)}{\textbf{if} (vacia?(s)) \textbf{then} true \textbf{else} (prim(s) \igobs 0) \ly tieneTodoCero(fin(s)) \textbf{fi}}
+
+\vspace{20px}
+
+
+\tadOperacion{buscarParitaria}{nat/idGremio, conj(paritaria)/cp}{paritaria}{}
+\tadAxioma{buscarParitaria(idG, cp)}{
+\textbf{if} (idGremio(gremio(dameUno(cp))) \igobs idG) \textbf{then} \\
+\hspace*{20pt} dameUno(cp) \\
+\textbf{else} \\
+\hspace*{20pt} buscarParitaria(idGr, sinUno(cp)) ) \\
+\textbf{fi} \\}
+
+\vspace{20px}
+
+
+\tadOperacion{removerAcuerdo}{Acuerdo ac, secu(secu(acuerdo))/ss}{secu(acuerdo)}{}
 \tadAxioma{removerAcuerdo(ac, ss)}{
-if(vacia?(ss)) then
-  <> 
-else
-  if(!esta(ac, prim(ss))) then
-    prim(ss) \puntito removerAcuerdo(ac, fin(ss))
-  else
-    sacar(ac,prim(ss)) \puntito removerAcuerdo(ac, fin(ss))
-  fi
-fi
+\textbf{if}(vacia?(ss)) \textbf{then} \\
+\hspace*{20pt}  <> \\
+\textbf{else} \\
+\hspace*{20pt}  if($\lnot$ esta(ac, prim(ss))) \textbf{then} \\
+\hspace*{40pt}    prim(ss) \puntito removerAcuerdo(ac, fin(ss)) \\
+\hspace*{20pt}  \textbf{else} \\
+\hspace*{40pt}    sacar(ac,prim(ss)) \puntito removerAcuerdo(ac, fin(ss)) \\
+\hspace*{20pt}  \textbf{fi} \\
+\textbf{fi}
 }
 
+\vspace{20px}
+
 \tadAxioma{sacar(ac, s)}{
-if(vacia?(s)) then
-  <> 
-else
-  if(prim(s) \igobs ac) then
-    sacar(ac, fin(s))
-  else
-    prim(s) \puntito sacar(ac, fin(s))
-  fi
-fi
+\textbf{if}(vacia?(s)) \textbf{then} \\
+\hspace*{20pt}  <> \\
+\textbf{else} \\
+\hspace*{20pt}  if(prim(s) \igobs ac) \textbf{then} \\
+\hspace*{40pt}    sacar(ac, fin(s)) \\
+\hspace*{20pt}  \textbf{else} \\
+\hspace*{40pt}    prim(s) \puntito sacar(ac, fin(s)) \\
+\hspace*{20pt}  \textbf{fi} \\
+\textbf{fi} \\
 }

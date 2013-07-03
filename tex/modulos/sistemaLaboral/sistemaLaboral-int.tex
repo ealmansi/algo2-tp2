@@ -1,14 +1,14 @@
 \begin{interfaz}{SistemaLaboral}
 \begin{iparamformales}{sistemaLaboral}
 
-\textbf{\large se explica con:} SistemaLaboral
+\textbf{\large se explica con:} SistemaLaboralModificado
 
 \end{iparamformales}
 
 \operacion{NuevoSistemaLaboral}
 {}{sistemaLaboral}
 {true}
-{res = nuevo}
+{res = nuevo()}
 {1}
 {Crea un sistema laboral}
 {}
@@ -18,15 +18,15 @@
 {sl0=sl}
 {sl=agregarGremio(sl0, es, \#as) \land res = idUltimoGremioAgregado(sl)}
 {\#gremios}
-{Agrega un gremio al sistema laboral}
-{el conjunto de empresas es pasado por referencia}
+{Registra un nuevo gremio en el sistema laboral, y devuelve el id de gremio que le fue asignado.}
+{El conjunto de empresas se copia por referencia}
 
 \operacion{AliarGremios}
-{\param{in/out}{sl}{sistemaLaboral}, \param{in}{nat}{idGremio1}, \param{in}{nat}{idGremio2}}{}
-{sl0=sl}
-{sl \igobs aliar(sl, idGremio1, idGremio2)}
+{\param{in/out}{sl}{sistemaLaboral}, \param{in}{nat}{idGr1}, \param{in}{nat}{idGr2}}{}
+{sl0=sl \ly idGr1 \ne idGr2 \ly ((\exists g1, g2: gremio)\, g_1 \in gremios(sl) \land g_2 \in gremios(sl) \land $ \\ $idGremio(g_1) = idGr1 \land idGremio(g_2) = idGr2 \land idGr1 \not \in aliados(sl, idGr2))}
+{sl \igobs aliar(sl, idGr1, idGr2)}
 {\#gremios}
-{Forma una alianza entre dos gremios (y entre sus aliados precedentes)}
+{Forma una alianza entre dos gremios (y entre sus aliados precedentes), identificados a partir de sus id de gremio.}
 {}
 
 \operacion{ObtenerAliados}
@@ -34,7 +34,7 @@
 {true}
 {res \igobs aliados(sl, idGremio)}
 {\#gremios}
-{Se devuelven los ids de los gremios aliados filtrando por el id de grupo requerido}
+{Se devuelven los ids de gremio de los gremios aliados al requerido.}
 {}
 
 \operacion{ObtenerGremios}{\param{in}{sl}{sistemaLaboral}}{conj(gremio)}

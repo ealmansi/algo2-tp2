@@ -1,6 +1,4 @@
-\begin{tad}{\tadNombre{SistemaLaboralExtendido}}
-
-\tadExtiende{SistemaLaboral}
+\begin{tad}{\tadNombre{SistemaLaboralModificado}}
 
 \tadGeneradores
 \tadOperacion{nuevo}{}{SL}{}
@@ -9,15 +7,20 @@
 
 \tadObservadores
 \tadOperacion{gremios}{SL/sl}{conj(Gremio)}{}
-\tadOperacion{aliados}{SL/sl,nat/idGr}{conj(nat)}{}
+
 
 \vspace{3 mm}
 
 \tadOtrasOperaciones
 
+\tadOperacion{aliados}{SL/sl,nat/idGr}{conj(nat)}{}
+\tadOperacion{obtenerAliados}{conj(gremio)/gs, nat/idGrupo}{conj(nat)}{}
 \tadOperacion{idUltimoGremioAgregado}{SL/sl}{nat}{$\lnot \emptyset?(gremios(sl))$}
-\tadOperacion{obtenerGremiosSegunGrupo}{conj(Gremio)/gs, nat/idGrupo}{conj(Gremio)}{}
+\tadOperacion{maxIdGrupo}{SL/sl}{nat}{}
+\tadOperacion{obtenerMaxIdGrupo}{conj(gremio)/gs}{nat}{}
 \tadOperacion{actualizarIdGrupos}{conj(Gremio)/gs, nat/idGrupoMin, nat/idGrupoMax}{conj(Gremio)}{}
+\tadOperacion{gremio}{SL/sl, nat/idGremio}{gremio}{ $(\exists g:gremio) g \in gremios(sl) \ly idGremio(g) = idGremio $}
+\tadOperacion{obtenerGremio}{conj(gremio)/gs, nat/idGremio}{gremio}{  $(\exists g:gremio) g \in gs \ly idGremio(g) = idGremio $ }
 
 \vspace{3 mm}
 
@@ -26,25 +29,30 @@
 \vspace{3 mm}
 
 \tadAxioma{gremios(nuevo)}{$\emptyset$}
-\tadAxioma{gremios(agregarGremio(sl, es, \#as))}{asignarIdGrupo(asignarIdGremio(nuevoGremio(es,\#as), \#(gremios(sl))), \#(gremios(sl))) $\cup$ gremios(sl)}
+\tadAxioma{gremios(agregarGremio(sl, es, \#as))}{ $ $ \\ \hspace*{-40mm}asignarIdGrupo(asignarIdGremio(nuevoGremio(es,\#as), \#(gremios(sl))), maxIdGrupo(sl)) $\cup$ gremios(sl)}
+
+\vspace{1.5 mm}
+
 \tadAxioma{gremios(aliar(sl, idGr1, idGr2))}{actualizarIdGrupos(gremios(sl),min(idGr1,idGr2),max(idGr1,idGr2))}
 
 \vspace{3 mm}
 
-\tadAxioma{aliados(nuevo)}{$\emptyset$}
-\tadAxioma{aliados(agregarGremio(sl, es, \#as), idGr)}{aliados(sl, idGr)}
-\tadAxioma{aliados(aliar(sl, idGr1, idGr2), idGr)}
-{
-	\textbf{if} idGr = idGr1 $\lor$ idGr = idGr2 \textbf{then} \\
-		\hspace*{20pt}\textbf{if} idGr = idGr1 \textbf{then} \\
-			\hspace*{40pt}\hspace*{20pt}aliados(sl, idGr1) $\cup$ aliados(sl, idGr2) $\cup$ \{idGr2\}\\
-		\hspace*{20pt}\textbf{else} \\
-			\hspace*{40pt}\hspace*{20pt}aliados(sl, idGr1) $\cup$ aliados(sl, idGr2) $\cup$ \{idGr1\}\\
-		\hspace*{20pt}\textbf{fi}\\
+\tadAxioma{aliados(sl, idGr)}{obtenerAliados(gremios(sl), idGrupo(gremio(sl, idGr)))}
+
+\tadAxioma{obtenerAliados(gs, idGrupo)}{ 
+
+	\textbf{if} $ \emptyset $?(gs) \textbf{then} \\
+		\hspace*{20pt}$ \emptyset $	\\
 	\textbf{else} \\
-		\hspace*{20pt}aliados(sl,idGr)\\
+		\hspace*{20pt}\textbf{if} idGrupo(dameUno(gs)) = idGrupo \textbf{then} \\
+			\hspace*{40pt} \{ idGrupo(dameUno(gs)) \}	\\
+		\hspace*{20pt}\textbf{else} \\
+			\hspace*{40pt} $ \emptyset $ \\
+		\hspace*{20pt}\textbf{fi} $\cup$ obtenerAliados(sinUno(gs), idGrupo)  \\
 	\textbf{fi} \\
-}
+
+
+ }
 
 \vspace{3 mm}
 
@@ -52,16 +60,13 @@
 
 \vspace{3 mm}
 
-\tadAxioma{obtenerGremiosSegunGrupo(gs,idGrupo)}
+\tadAxioma{maxIdGrupo(sl)}{obtenerMaxIdGrupo(gremios(sl))}
+\tadAxioma{obtenerMaxIdGrupo(gs)}
 {
-	\textbf{if} $\emptyset$?(gs) \textbf{then} \\
-		\hspace*{20pt}$\emptyset$	\\
+	\textbf{if} $\emptyset$?(gs) \\
+	\hspace*{20pt} 0\\
 	\textbf{else} \\
-		\hspace*{20pt}\textbf{if} idGrupo(dameUno(gs)) = idGrupo \textbf{then} \\
-			\hspace*{40pt}Ag(dameUno(gs), $\emptyset$) \\
-		\hspace*{20pt}\textbf{else} \\
-			\hspace*{40pt}$\emptyset$\\
-		\hspace*{20pt}\textbf{fi} $\cup$ obtenerGremiosSegunGrupo(sinUno(gs), idGrupo)\\
+	\hspace*{20pt}	max(idGrupo(dameUno(gs)), obtenerMaxIdGrupo(sinUno(gs))) \\
 	\textbf{fi} \\
 }
 
@@ -69,16 +74,34 @@
 
 \tadAxioma{actualizarIdGrupos(gs, idMin, idMax)}
 {
-	\textbf{if} idGrupo(dameUno(gs)) = idMax \textbf{then} \\
-		\hspace*{20pt}\{asignarIdGrupo(dameUno(gs), idMin)\}	\\
+	\textbf{if} $ \emptyset $?(gs) \textbf{then} \\
+		\hspace*{20pt} $ \emptyset $ \\
 	\textbf{else} \\
-		\hspace*{20pt}\textbf{if} idGrupo(dameUno(gs)) $>$ idMax \textbf{then} \\
-			\hspace*{40pt} \{asignarIdGrupo(dameUno(gs), idGrupo(dameUno(gs)) - 1)\}	\\
+		\hspace*{20pt}\textbf{if} idGrupo(dameUno(gs)) = idMax \textbf{then} \\
+		\hspace*{20pt}	\hspace*{20pt}\{asignarIdGrupo(dameUno(gs), idMin)\}	\\
 		\hspace*{20pt}\textbf{else} \\
-			\hspace*{40pt} \{dameUno(gs)\} \\
-		\hspace*{20pt}\textbf{fi} $\cup$ actualizarIdGrupos(sinUno(gs), idMin, idMax)\\
+		\hspace*{20pt}	\hspace*{20pt}\textbf{if} idGrupo(dameUno(gs)) $>$ idMax \textbf{then} \\
+		\hspace*{20pt}		\hspace*{40pt} \{asignarIdGrupo(dameUno(gs), idGrupo(dameUno(gs)) - 1)\}	\\
+		\hspace*{20pt}	\hspace*{20pt}\textbf{else} \\
+		\hspace*{20pt}		\hspace*{40pt} \{dameUno(gs)\} \\
+		\hspace*{20pt}	\hspace*{20pt}\textbf{fi} \\
+		\hspace*{20pt}\textbf{fi} $\cup$ actualizarIdGrupos(sinUno(gs), idMin, idMax) \\
 	\textbf{fi} \\
 }
+
+\vspace{3 mm}
+
+\tadAxioma{gremio(sl, idGr)}{obtenerGremio(gremios(sl), idGr)}
+\tadAxioma{obtenerGremio(gs, idGr)}{
+	
+		\hspace*{20pt}\textbf{if} idGremio(dameUno(gs)) = idGr \textbf{then} \\
+			\hspace*{40pt} dameUno(gs)	\\
+		\hspace*{20pt}\textbf{else} \\
+			\hspace*{40pt} obtenerGremio(sinUno(gs), idGr) \\
+		\hspace*{20pt}\textbf{fi} \\
+}
+
+
 
 \end{tad}
 

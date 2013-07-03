@@ -13,7 +13,7 @@ SistemaLaboral \textbf{se representa con} vector(gremio) \\
 
 	Por otro lado, dado que la relaci\'on de alianza entre gremios es sim\'etrica y transitiva, se puede dividir al conjunto de gremios del sistema en grupos disjuntos de aliados.
 
-	Utilizando esta propiedad, se representa la red de alianzas entre gremios etiquetando a cada grupo de aliados mediante un id de grupo, de forma tal que dos gremios distintos ser\'an aliados cuando sus n\'umeros de grupo coincidan. El vector gruposDeAliados agrupa esta informaci\'on, asignando a cada gremio un id de grupo, utilizando su id como \'indice en el vector. 
+	Utilizando esta propiedad, se representa la red de alianzas entre gremios etiquetando a cada grupo de aliados mediante un id de grupo, de forma tal que dos gremios distintos ser\'an aliados cuando sus n\'umeros de grupo coincidan.
 
 	Adicionalmente, los ids de grupo se asignan de forma consecutiva comenzando en 0, lo cual permite que sean utilizados para indexar un vector.
 
@@ -36,7 +36,7 @@ SistemaLaboral \textbf{se representa con} vector(gremio) \\
 		(\paratodof{nat}{i})\,\, i \menor Longitud(sl) \entoncesL i = ObtenerIdGremio(sl[i])
 	}{\ly}
 	\repItem{
-		sonConsecutivos(obtenerIdsGrupo(sl))
+		(\forall i:nat)\,\, (i \leq maxIdGrupo(sl) \siii (\exists gr:gremio) esta?(sl, g) \ly idGrupo(gr) = i)
 	}{}
 \end{RepFormal}
 
@@ -44,74 +44,22 @@ SistemaLaboral \textbf{se representa con} vector(gremio) \\
 
 \begin{FunAbsDescriptiva}{e}{vector(gremio)}{si}{sistemaLaboral}
 
-	\absItem{gremios(si) \igobs e}{\yluego}
-
-	\absItem{(\paratodof{gremio}{g}) g \en gremios(si) \entoncesL aliados(g, si) \igobs obtenerConjuntoDeAliados(e, g)}{}
+	\absItem{gremios(si) \igobs secuAConj(e)}{}
 
 \end{FunAbsDescriptiva}
 
-\subsubsection{Funciones auxiliares}
+\subsubsection{Funciones Auxiliares}
 
-\tadOperacion{obtenerConjuntoDeAliados}{secu(gremio)/gs, g/gremio}{conj(gremio)}{}
-\tadAxioma{obtenerConjuntoDeAliados}
-{
-	\textbf{if} vac\'ia?(gs) \textbf{then} \\
-	\hspace*{20pt}$\emptyset$	\\
-	\textbf{else} \\
-		\hspace*{20pt}\textbf{if} prim(gs) \distinto g \ly idGrupo(prim(gs)) = idGrupo(g) \textbf{then} \\
-			\hspace*{40pt}prim(gs) $\cup$ obtenerConjuntoDeAliados(fin(gs), g) \\
-		\hspace*{20pt}\textbf{else} \\
-			\hspace*{40pt}obtenerConjuntoDeAliados(fin(gs), g) \\
-		\hspace*{20pt}\textbf{fi} \\
-	\textbf{fi} \\
+\tadOperacion{secuAconj}{s/secu(gremio)}{conj(gremio)}{}
+\tadAxioma{secuAconj(s)}{
+\hspace*{10pt} \textbf{if} vacia?(s) \textbf{then} \\
+\hspace*{20pt}	$\emptyset$ \\
+\hspace*{10pt} \textbf{else} \\
+\hspace*{20pt}	Ag(prim(s),secuAconj(fin(s))) \\
+\hspace*{10pt} \textbf{fi}
 }
+
+
+
 \vspace{5pt}
 
-\tadOperacion{asignarIdsConsecutivos}{conj(gremio)/gs}{conj(gremio)}{}
-\tadAxioma{asignarIdsConsecutivos(gs)}{asignarIdsConsecutivosDesde(gs, 0)}
-\vspace{5pt}
-
-\tadOperacion{asignarIdsConsecutivosDesde}{conj(gremio)/gs, nat/n}{conj(gremio)}{}
-\tadAxioma{asignarIdsConsecutivosDesde(gs, n)}
-{
-	\textbf{if} $\emptyset$?(gs) \textbf{then} \\
-		\hspace*{20pt}$\emptyset$	\\
-	\textbf{else} \\
-		\hspace*{20pt}asignarIdGrupo(asignarIdGremio(dameUno(gs),n),n) $\cup$ \\
-		asignarIdsConsecutivosDesde(sinUno(gs), n+1) \\
-	\textbf{fi} \\
-}
-\vspace{5pt}
-
-\tadOperacion{idsGrupoActualizados}{sistemaLaboral/sl0, sistemaLaboral/sl, gremio/g1, gremio/g2}{bool}{}
-\tadAxioma{idsGrupoActualizados(sl0,sl,g1,g2)}{}
-\vspace{5pt}
-
-\tadOperacion{todosActualizados}{sistemaLaboral/sl0, sistemaLaboral/sl, gremio/g1, gremio/g2, conj(gremios)/gs}{bool}{}
-\tadAxioma{todosActualizados(sl0,sl,g1,g2,gs)}
-{
-	\textbf{if} $\emptyset$?(gs) \textbf{then} \\
-		\hspace*{20pt}true	\\
-	\textbf{else} \\
-		\hspace*{20pt}\textbf{if} idGremio(dameUno(gs)) = max(idGremio(g1),idGremio(g2)) \textbf{then} \\
-			\hspace*{40pt}prim(gs) $\cup$ obtenerConjuntoDeAliados(fin(gs), g) \\
-		\hspace*{20pt}\textbf{else} \\
-			\hspace*{40pt}obtenerConjuntoDeAliados(fin(gs), g) \\
-		\hspace*{20pt}\textbf{fi} \\
-	\textbf{fi} \\
-
-	\textbf{fi} \\
-}
-\vspace{5pt}
-
-\tadOperacion{maxIdGrupo}{}{}{}
-\tadAxioma{}{}
-\vspace{5pt}
-
-\tadOperacion{sonConsecutivos}{}{}{}
-\tadAxioma{}{}
-\vspace{5pt}
-
-\tadOperacion{obtenerIdsGrupo}{}{}{}
-\tadAxioma{}{}
-\vspace{5pt}

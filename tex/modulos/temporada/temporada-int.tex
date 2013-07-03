@@ -45,7 +45,7 @@ $*^1$ En caso de no tener acuerdo previo es O(1), como se pide en el enunciado}
 {res \igobs gremios(tmp) }
 {\#gremios }
 {Devuelve un conjunto con los gremios del sistema}
-{Se devuelven copias de los gremios}
+{}
 
 \operacion{EnParitarias}
 {\param{in}{tmp}{temporada}, \param{in}{gr}{gremio}}{bool}
@@ -89,94 +89,5 @@ $*^1$ En caso de no tener acuerdo previo es O(1), como se pide en el enunciado}
 {\#gremios}
 {Devuelve el gremio que m\'as acuerdos tuvo desde que se cre\'o la temporada }
 {Devuelve una referencia al gremio}
-
-\subsection{Funciones Auxiliares}
-
-\operacion
-{InicializarAcuerdosVigentesPorGrupo}
-{\param{in/out}{tmp}{temporada}}
-{devuelve}
-{pre}
-{post}
-{complejidad}
-{desc}
-{aliasing}
-
-
-\operacion
-{Inicializar\#AcuerdosPrevios}
-{\param{in/out}{ tmp}{temporada}}
-{devuelve}
-{pre}
-{post}
-{complejidad}
-{desc}
-{aliasing}
-
-
-\operacion
-{AgregarParitaria}
-{\param{in/out}
-{tmp}
-{temporada}, \param{in}{pa}{paritaria}}
-{}
-{pre}
-{post}
-{complejidad}
-{desc}
-{aliasing}
-
-
-\operacion
-{RemoverParitaria}
-{\param{in/out}{ tmp}{temporada}, \param{in}{gr}{gremio}}
-{paritaria}
-{pre}
-{post}
-{complejidad}
-{desc}
-{aliasing}
-
-
-\operacion
-{RemoverAcuerdo}
-{\param{in/out}{ tmp}{temporada}, \param{in}{gr}{gremio}}
-{paritaria}
-{pre}
-{post}
-{complejidad}
-{desc}
-{aliasing}
-
-
-\operacion
-{ObtenerAcuerdosDeAliados}
-{\param{in}{tmp}{temporada}, \param{in}{gr}{gremio}}
-{lista(acuerdo)}
-{pre}
-{post}
-{complejidad}
-{desc}
-{aliasing}
-
-\operacion
-{Incrementar\#AcuerdosPrevios}
-{\param{in/out}{tmp}{temporada}, \param{in}{gr}{gremio}}
-{}
-{pre}
-{post}
-{complejidad}
-{desc}
-{aliasing}
-
-\operacion
-{Obtener\#AcuerdosPrevios}
-{\param{in}{tmp}{temporada}, \param{in}{gr}{gremio}}
-{nat}
-{pre}
-{post}
-{complejidad}
-{desc}
-{aliasing}
 
 \end{interfaz}
