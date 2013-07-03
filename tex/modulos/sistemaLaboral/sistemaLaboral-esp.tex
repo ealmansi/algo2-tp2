@@ -5,11 +5,11 @@
 \tadGeneradores
 \tadOperacion{nuevo}{}{SL}{}
 \tadOperacion{agregarGremio}{SL/sl, conj(empresa)/es, nat/\#as}{SL}{}
-\tadOperacion{aliar}{SL/sl, nat/idGr1, nat/idGr2}{SL}{$idGr1 \ne idGr2 \ly ((\exists g1, g2: gremio)\, g_1 \in gremios(sl) \land g_2 \in gremios(sl) \land $ \\ $idGremio(g_1) = idGr1 \land idGremio(g_2) = idGr2)$}
+\tadOperacion{aliar}{SL/sl, nat/idGr1, nat/idGr2}{SL}{$idGr1 \ne idGr2 \ly ((\exists g1, g2: gremio)\, g_1 \in gremios(sl) \land g_2 \in gremios(sl) \land $ \\ $idGremio(g_1) = idGr1 \land idGremio(g_2) = idGr2 \land idGr1 \not \in aliados(sl, idGr2))$}
 
 \tadObservadores
 \tadOperacion{gremios}{SL/sl}{conj(Gremio)}{}
-\tadOperacion{aliados}{SL/sl,nat/idGr}{conj(Gremio)}{}
+\tadOperacion{aliados}{SL/sl,nat/idGr}{conj(nat)}{}
 
 \vspace{3 mm}
 
@@ -17,21 +17,34 @@
 
 \tadOperacion{idUltimoGremioAgregado}{SL/sl}{nat}{$\lnot \emptyset?(gremios(sl))$}
 \tadOperacion{obtenerGremiosSegunGrupo}{conj(Gremio)/gs, nat/idGrupo}{conj(Gremio)}{}
+\tadOperacion{actualizarIdGrupos}{conj(Gremio)/gs, nat/idGrupoMin, nat/idGrupoMax}{conj(Gremio)}{}
 
 \vspace{3 mm}
 
-\tadAxiomas[\vars{conj(Gremio)}{gs}, \vars{Empresas}{es}, \vars{\#Personas}{n}, \vars{Gremio}{g}, \vars{nat}{id}]
+\tadAxiomas[]
 
 \vspace{3 mm}
 
 \tadAxioma{gremios(nuevo)}{$\emptyset$}
-\tadAxioma{gremios(agregarGremio(sl, es, \#as))}{asignarIdGrupo(asignarIdGremio(nuevoGremio(es,\#as), \\ \#(gremios(sl))),\#(gremios(sl))) $\cup$ gremios(sl)}
-\tadAxioma{gremios(aliar(sl, idGr1, idGr2))}{}
+\tadAxioma{gremios(agregarGremio(sl, es, \#as))}{asignarIdGrupo(asignarIdGremio(nuevoGremio(es,\#as), \#(gremios(sl))), \#(gremios(sl))) $\cup$ gremios(sl)}
+\tadAxioma{gremios(aliar(sl, idGr1, idGr2))}{actualizarIdGrupos(gremios(sl),min(idGr1,idGr2),max(idGr1,idGr2))}
 
 \vspace{3 mm}
 
-\tadAxioma{aliados(agregarGremio(sl, es, \#as), g)}{\IF $g \not \in gremios(sl)$ THEN $\emptyset$ ELSE $aliados(sl, g)$ FI}
-\tadAxioma{aliados(aliar(sl, idGr1, idGr2), g)}{}
+\tadAxioma{aliados(nuevo)}{$\emptyset$}
+\tadAxioma{aliados(agregarGremio(sl, es, \#as), idGr)}{aliados(sl, idGr)}
+\tadAxioma{aliados(aliar(sl, idGr1, idGr2), idGr)}
+{
+	\textbf{if} idGr = idGr1 $\lor$ idGr = idGr2 \textbf{then} \\
+		\hspace*{20pt}\textbf{if} idGr = idGr1 \textbf{then} \\
+			\hspace*{40pt}\hspace*{20pt}aliados(sl, idGr1) $\cup$ aliados(sl, idGr2) $\cup$ \{idGr2\}\\
+		\hspace*{20pt}\textbf{else} \\
+			\hspace*{40pt}\hspace*{20pt}aliados(sl, idGr1) $\cup$ aliados(sl, idGr2) $\cup$ \{idGr1\}\\
+		\hspace*{20pt}\textbf{fi}\\
+	\textbf{else} \\
+		\hspace*{20pt}aliados(sl,idGr)\\
+	\textbf{fi} \\
+}
 
 \vspace{3 mm}
 
@@ -41,42 +54,32 @@
 
 \tadAxioma{obtenerGremiosSegunGrupo(gs,idGrupo)}
 {
-a
+	\textbf{if} $\emptyset$?(gs) \textbf{then} \\
+		\hspace*{20pt}$\emptyset$	\\
+	\textbf{else} \\
+		\hspace*{20pt}\textbf{if} idGrupo(dameUno(gs)) = idGrupo \textbf{then} \\
+			\hspace*{40pt}Ag(dameUno(gs), $\emptyset$) \\
+		\hspace*{20pt}\textbf{else} \\
+			\hspace*{40pt}$\emptyset$\\
+		\hspace*{20pt}\textbf{fi} $\cup$ obtenerGremiosSegunGrupo(sinUno(gs), idGrupo)\\
+	\textbf{fi} \\
+}
+
+\vspace{3 mm}
+
+\tadAxioma{actualizarIdGrupos(gs, idMin, idMax)}
+{
+	\textbf{if} idGrupo(dameUno(gs)) = idMax \textbf{then} \\
+		\hspace*{20pt}\{asignarIdGrupo(dameUno(gs), idMin)\}	\\
+	\textbf{else} \\
+		\hspace*{20pt}\textbf{if} idGrupo(dameUno(gs)) $>$ idMax \textbf{then} \\
+			\hspace*{40pt} \{asignarIdGrupo(dameUno(gs), idGrupo(dameUno(gs)) - 1)\}	\\
+		\hspace*{20pt}\textbf{else} \\
+			\hspace*{40pt} \{dameUno(gs)\} \\
+		\hspace*{20pt}\textbf{fi} $\cup$ actualizarIdGrupos(sinUno(gs), idMin, idMax)\\
+	\textbf{fi} \\
 }
 
 \end{tad}
 
-\begin{tad}{\tadNombre{Sistema Laboral}} %  ----------------  SISTEMA LABORAL --------------
-\tadGeneros{SL}
-
-\tadGeneradores
-
-\tadOperacion{nuevo}{conj( Gremio)/gs }{SL}{ ($\forall g_1, g_2 \in gs$) $g_1 \neq g_2 \Rightarrow empresas( g_1 )  \skew{8}\not\cap\  empresas( g_2 ) $}
-\tadOperacion{aliar}{SL/sl, Gremio/{g_1}, Gremio/{g_2}}{SL}{$g_1 \in gremios(sl) \land g_2 \in gremios(sl) \land g_1 \ne g_2$}
-
-\tadObservadores
-\tadOperacion{gremios}{SL/sl}{conj(gremio)}{}
-\tadOperacion{aliados}{SL/sl,Gremio/g}{conj( Gremio )}{$g \in gremios(sl)$}
-
-\tadOtrasOperaciones
-\tadOperacion{aliado?}{SL/sl,Gremio/g, Gremio/amigo}{bool}{$g \in gremios(sl)$}
-\tadOperacion{superaliados}{SL/sl,Gremio/g}{conj( Gremio )}{$g \in gremios(sl)$}
-\tadOperacion{clausura}{SL/sl,conj( Gremio )/cs,conj( Gremio )/gs}{conj( Gremio )}{$cs \subseteq gremios(sl) \land gs \subseteq gremios(sl)$}
-
-
-\tadAxiomas[\vars{Gremio}{g, amigo, g_1, g_2},\vars{conj(Gremio)}{gs, cs},\vars{SL}{sl},\vars{\#Personas}{n}]
-\tadAxioma{gremios( nuevo( gs ) )}{ gs }
-\tadAxioma{gremios( aliar( sl, {$g_1$}, {$g_2$}))}{ $ gremios( sl ) $}
-\vspace{3 mm}
-
-\tadAxioma{aliados( nuevo( gs ), g )}{$ \emptyset$ }
-\tadAxioma{aliados(  aliar( sl, {$g_1$}, {$g_2$}), g )}{ \IF $g \in \{ g_1, g_2 \}$ THEN  $\{ g_1, g_2 \} - g $ ELSE  $\emptyset$ FI \\
-$\cup \ aliados( sl, g ) $}
-\vspace{3 mm}
-
-\tadAxioma{aliado?( sl, g, amigo )}{$amigo \in superaliados(sl, g)$}
-\tadAxioma{superaliados( sl, g  )}{$clausura( sl, \emptyset, aliados( sl, g )  ) - g$ }
-\tadAxioma{clausura( sl, cs, gs  )}{ \IF $ \emptyset = gs $ THEN  cs  ELSE $clausura${\large{(}}$\;  sl, \\
-\hphantom{clausura(} \;  dameUno( gs ) \bullet  cs, \\
-\hphantom{clausura(} \;  sinUno( gs ) \cup aliados( dameUno( gs ) )  \setminus cs  $ \large{)} FI}
-\end{tad} %  ----------------  SISTEMA LABORAL --------------
+\newpage
