@@ -42,28 +42,28 @@ SistemaLaboral \textbf{se representa con} vector(gremio) \\
 
 \subsubsection{Funci\'on de Abstracci\'on}
 
-\begin{FunAbsDescriptiva}{e}{estrS}{si}{sistemaLaboral}
+\begin{FunAbsDescriptiva}{e}{vector(gremio)}{si}{sistemaLaboral}
 
 	\absItem{gremios(si) \igobs e}{\yluego}
 
-	\absItem{(\paratodof{gremio}{g}) g \en gremios(si) \entoncesL aliados(g, si) \igobs obtenerConjuntoDeAliados(e, e.gremios,g)}{}
+	\absItem{(\paratodof{gremio}{g}) g \en gremios(si) \entoncesL aliados(g, si) \igobs obtenerConjuntoDeAliados(e, g)}{}
 
 \end{FunAbsDescriptiva}
 
 \subsubsection{Funciones auxiliares}
 
-\tadOperacion{obtenerConjuntoDeAliados}{e/\widehat{estrS}, gs/conj(gremio), g/gremio}{conj(gremio)}{}
+\tadOperacion{obtenerConjuntoDeAliados}{secu(gremio)/gs, g/gremio}{conj(gremio)}{}
 \tadAxioma{obtenerConjuntoDeAliados}
 {
-	\textbf{if} $\emptyset$?(gs) \textbf{then} \\
+	\textbf{if} vac\'ia?(gs) \textbf{then} \\
 	\hspace*{20pt}$\emptyset$	\\
 	\textbf{else} \\
-		\hspace*{20pt}\textbf{if} e.gruposDeAliados[ObtenerId(dameUno(gs))] \igobs \\ \hspace*{110pt} e.gruposDeAliados[ObtenerId(g)] \textbf{then} \\
-			\hspace*{40pt}dameUno(gs) $\cup$ obtenerConjuntoDeAliados(sinUno(gs), g) \\
+		\hspace*{20pt}\textbf{if} prim(gs) \distinto g \ly idGrupo(prim(gs)) = idGrupo(g) \textbf{then} \\
+			\hspace*{40pt}prim(gs) $\cup$ obtenerConjuntoDeAliados(fin(gs), g) \\
 		\hspace*{20pt}\textbf{else} \\
-			\hspace*{40pt}obtenerConjuntoDeAliados(sinUno(gs), g) \\
+			\hspace*{40pt}obtenerConjuntoDeAliados(fin(gs), g) \\
 		\hspace*{20pt}\textbf{fi} \\
-	\textbf{fi} - \{g\} \\
+	\textbf{fi} \\
 }
 \vspace{5pt}
 
@@ -72,7 +72,7 @@ SistemaLaboral \textbf{se representa con} vector(gremio) \\
 \vspace{5pt}
 
 \tadOperacion{asignarIdsConsecutivosDesde}{conj(gremio)/gs, nat/n}{conj(gremio)}{}
-\tadAxioma{asignarIdsConsecutivosDesde(gs,n)}
+\tadAxioma{asignarIdsConsecutivosDesde(gs, n)}
 {
 	\textbf{if} $\emptyset$?(gs) \textbf{then} \\
 		\hspace*{20pt}$\emptyset$	\\
@@ -83,10 +83,35 @@ SistemaLaboral \textbf{se representa con} vector(gremio) \\
 }
 \vspace{5pt}
 
-\tadOperacion{idsGrupoActualizados}{}{}{}
-\tadAxioma{}{}
+\tadOperacion{idsGrupoActualizados}{sistemaLaboral/sl0, sistemaLaboral/sl, gremio/g1, gremio/g2}{bool}{}
+\tadAxioma{idsGrupoActualizados(sl0,sl,g1,g2)}{}
+\vspace{5pt}
+
+\tadOperacion{todosActualizados}{sistemaLaboral/sl0, sistemaLaboral/sl, gremio/g1, gremio/g2, conj(gremios)/gs}{bool}{}
+\tadAxioma{todosActualizados(sl0,sl,g1,g2,gs)}
+{
+	\textbf{if} $\emptyset$?(gs) \textbf{then} \\
+		\hspace*{20pt}true	\\
+	\textbf{else} \\
+		\hspace*{20pt}\textbf{if} idGremio(dameUno(gs)) = max(idGremio(g1),idGremio(g2)) \textbf{then} \\
+			\hspace*{40pt}prim(gs) $\cup$ obtenerConjuntoDeAliados(fin(gs), g) \\
+		\hspace*{20pt}\textbf{else} \\
+			\hspace*{40pt}obtenerConjuntoDeAliados(fin(gs), g) \\
+		\hspace*{20pt}\textbf{fi} \\
+	\textbf{fi} \\
+
+	\textbf{fi} \\
+}
 \vspace{5pt}
 
 \tadOperacion{maxIdGrupo}{}{}{}
+\tadAxioma{}{}
+\vspace{5pt}
+
+\tadOperacion{sonConsecutivos}{}{}{}
+\tadAxioma{}{}
+\vspace{5pt}
+
+\tadOperacion{obtenerIdsGrupo}{}{}{}
 \tadAxioma{}{}
 \vspace{5pt}
