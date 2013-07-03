@@ -292,7 +292,7 @@ Post : \ensuremath{ (res \igobs tmp.acuerdosPorGrupo_{idgrupo(gr)})}
 
 Pre : \ensuremath{tmp0=tmp \land (0 \leq idgremio(gr) < long(tmp.\#acuerdosPrevios))}
 \\
-Post : \ensuremath{ (tmp.\#acuerdosPrevios_{idgremio(gr)} \igobs tmp0.\#acuerdosPrevios_{idgremio(gr)}-1) \land ((\forall i:nat) (0 \leq idgremio(gr) < long(tmp.\#acuerdosPrevios) \land i \neq idgremio(gr)) \implies_L tmp0.\#acuerdosPrevios_i) \land (tmp.sistema \igobs tmp0.sistema) \land (tmp.paritariasAbiertas \igobs tmp0.paritariasAbiertas) \land (tmp.acuerdosPorGrupo \igobs tmp0.acuerdosPorGrupo)}
+Post : \ensuremath{ (tmp.\#acuerdosPrevios_{idgremio(gr)} \igobs tmp0.\#acuerdosPrevios_{idgremio(gr)}-1) \land ((\forall i:nat) (0 \leq idgremio(gr) < long(tmp.\#acuerdosPrevios) \land i \neq idgremio(gr)) \entoncesL tmp0.\#acuerdosPrevios_i) \land (tmp.sistema \igobs tmp0.sistema) \land (tmp.paritariasAbiertas \igobs tmp0.paritariasAbiertas) \land (tmp.acuerdosPorGrupo \igobs tmp0.acuerdosPorGrupo)}
 
 \algoritmoI{ObtenerCantAcuerdosPrevios}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{nat}
 {
