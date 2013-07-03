@@ -1,40 +1,100 @@
-\algoritmoI{NuevoSistemaLaboral}{\param{in/out}{gs}{conj(gremio)}}{vector(gremio)}
+\algoritmoI{NuevoSistemaLaboral}{}{vector(gremio)}
 {
-	\state res \asig AsignarIds(gs)								\inlineC{\#gremios}
+	\state res \asig Vacia()								\inlineC{1}
+}
+{1}
+{Inicializa la estructura}
+
+\algoritmoI{AgregarGremio}{\param{in/out}{sl}{vector(gremio)}, \param{in}{conj(empresa)}{es},\param{in}{nat}{\#as}}{nat}
+{	
+	\state \var{Gremio}{gremioNuevo} \asig NuevoGremio(es, \#as) 								\inlineC{1}
+	\state \var{nat}{id} \asig Longitud(sl) 								\inlineC{1}
+	\state GuardarIdGremio(gremioNuevo, id) 								\inlineC{1}
+	\state GuardarIdGrupo(gremioNuevo, id) 								\inlineC{1}
+	\state AgregarAtras(sl, gremioNuevo) 								\inlineC{\#gremios}
+	\state res \asig id 								\inlineC{1}
 }
 {\#gremios}
-{Asigna id's consecutivos a los gremios, comenzando en 0, y luego le asigna a cada gremio un id de grupo igual a su id propio (esto garantiza que los gremios no tengan aliados inicialmente, y que sus id's de grupo sean consecutivos, comenzando en 0). }
+{Agrega un gremio al sistema laboral}
 
-\algoritmoI{AliarGremios}{\param{in/out}{sl}{vector(gremio)}, \param{in}{gr1}{gremio}, \param{in}{gr2}{gremio}}{}
+% \\hspace{10pt} El ciclo agrega \emph{\#gremios} elementos a un vector, lo cual puede no ser constante (la funci\'on \emph{f} del m\'odulo vector caracteriza el costo de la operación en función de la longitud del vector). Sin embargo, la operaci\'on tiene un costo amortizado de O(n) para n inserciones, por lo cual la funci\'on tiene un costo O(\#gremios). Los gremios se agregan por referencia en el vector, de forma tal que las sucesivas modificaciones en el id de grupo se realicen sobre los gremios originales. }
+
+\algoritmoI{AliarGremios}{\param{in/out}{sl}{vector(gremio)}, \param{in}{idGr1}{nat}, \param{in}{idGr2}{nat}}{}
 {
-	\state \var{idGrupo}{idGrupoG1} \asig ObtenerIdGrupo(gr1)						\inlineC{1}
-	\state \var{idGrupo}{idGrupoG2} \asig ObtenerIdGrupo(gr2)						\inlineC{1}
+	\state \var{idGrupo}{id1} \asig ObtenerIdGrupo(sl[idGr1])						\inlineC{1}
+	\state \var{idGrupo}{id2} \asig ObtenerIdGrupo(sl[idGr2])						\inlineC{1}
 	\state 
 
-	\If{idGrupoG1 \distinto idGrupoG2}												\inlineC{1}
-		\state UnificarGruposDeAliados(sl, idGrupoG1, idGrupoG2)					\inlineC{\#gremios}
+	\If{id1 \distinto id2}												\inlineC{1}
+% 		\state UnificarGruposDeAliados(sl, idGrupoG1, idGrupoG2)					\inlineC{\#gremios}
+		
+		\state \var{idGrupo}{idMenor} \asig Min(id1, id2)						\inlineC{1}
+		\state \var{idGrupo}{idMayor} \asig Max(id1, id2)						\inlineC{1}
+		\state
+
+		\state \var{nat}{indice} \asig 0										\inlineC{1}
+
+		\while{indice \menor Longitud(sl)}								\inlineC{1}
+			\state
+
+			\state \var{gremio}{gr} \asig sl[indice]					\inlineC{1}
+			\state \var{idGrupo}{idG} \asig ObtenerIdGrupo(gr)					\inlineC{1}
+			\state
+
+			\If{idMayor \igual idG}												\inlineC{1}
+				\state GuardarIdGrupo(gr, idMenor)								\inlineC{1}
+			\Else \If{idMayor \menor idG}										\inlineC{1}
+					\state GuardarIdGrupo(gr, idG - 1)							\inlineC{1}
+				\endif
+			\endif
+			\state
+
+			\state indice \asig indice + 1										\inlineC{1}
+		\endwhile
+	
+		
 	\endif
 }
 {\#gremios}
-{ Asegura que todos los gremios aliados a uno u otro de los gremios que contraen la alianza pasen a tener el mismo id de grupo (manteniendo la propiedad de que los id's de grupo deben ser consecutivos, comenzando en 0).
-
-\hspace{10pt} Si la operaci\'on es no redundante (los gremios no eran aliados a\'un), el costo de esta operaci\'on queda determinado por la funci\'on UnificarGruposDeAliados. }
+{ Asegura que todos los gremios aliados a uno u otro de los gremios que contraen la alianza pasen a tener el mismo id de grupo (manteniendo la propiedad de que los id's de grupo deben ser consecutivos, comenzando en 0).}
+{ Dados dos id's de grupo, a todos los gremios que pertenezcan al grupo de id mayor, se les asigna el menor. A la vez, todos los id's de grupo que sean mayores que ambos se decrementan en 1, garantizando que los id's de grupo sigan siendo consecutivos.
+\hspace{10pt} Por otro lado, como las operaciones previas al ciclo, la evaluaci\'on de la guarda y su cuerpo se realizan en tiempo constante, y adem\'as el ciclo se ejecuta una vez por cada gremio del sistema, la funci\'on toma tiempo proporcional a \#gremios. }
+% \hspace{10pt} Si la operaci\'on es no redundante (los gremios no eran aliados a\'un), el costo de esta operaci\'on queda determinado por la funci\'on UnificarGruposDeAliados. }
 
 \algoritmoI{ObtenerGremios}{\param{in}{sl}{vector(gremio)}}{conj(gremio)}
 {
 	\state res \asig Vac\'io() \inlineC{1}
-	\state \var{nat}{indice} \asig 0
+	\state \var{nat}{indice} \asig 0					\inlineC{1}
 	\state 	
-	\while{indice < \, Longitud(sl)}
+	\while{indice < \, Longitud(sl)}					\inlineC{1}
 		\state 
-		\state AgregarRapido(res, sl[indice])
+		\state AgregarRapido(res, sl[indice])				\inlineC{1}
 		\state
-		\state indice \asig indice + 1
+		\state indice \asig indice + 1					\inlineC{1}
 	\endwhile
 
 }
 {\#gremios}
 { Se devuelve un conjunto con una copia de los gremios del sistema, lo cual toma tiempo lineal en la cantidad de gremios . }
+
+\algoritmoI{ObtenerAliados}{\param{in}{sl}{vector(gremio)}, \param{in}{idGremio}{nat}}{conj(nat)}
+{
+ 	\state res \asig Vac\'io() \inlineC{1}
+ 	\state \var{nat}{indice} \asig 0					\inlineC{1}
+ 	\state 	\var{nat}{idGrupoTarget} \asig ObtenerIdGrupo(sl[idGremio])					\inlineC{1}
+ 	\state 	
+ 	\while{(indice < \, Longitud(sl)) \yluego (indice $\neq$ idGremio)}					\inlineC{1}
+ 		\state \If{ObtenerIdGrupo(sl[indice]) = idGrupoTarget}					\inlineC{1}
+		  \state AgregarRapido(res, indice)					\inlineC{1}
+		\endif
+ 		\state
+ 		\state indice \asig indice + 1					\inlineC{1}
+ 	\endwhile
+
+}
+{\#gremios}
+{ Se devuelven los ids de los gremios aliados filtrando por el id de grupo requerido}
+
 
 \algoritmoI{Obtener\#Grupos}{\param{in}{sl}{vector(gremio)}}{nat}
 {
@@ -43,70 +103,70 @@
 {\#gremios}
 {La cantidad de grupos de aliados en el sistema queda determinado por el m\'aximo id de grupo.}
 
-\algoritmoI{AsignarIds}{\param{in}{gs}{conj(gremio)}}{vector(gremio)}
-{
-	\state \var{nat}{id} \asig 0											\inlineC{1}
-	\state res \asig 	Vac\'ia()											\inlineC{1}
-	\state 
+% \algoritmoI{AsignarIds}{\param{in}{gs}{conj(gremio)}}{vector(gremio)}
+% {
+% 	\state \var{nat}{id} \asig 0											\inlineC{1}
+% 	\state res \asig 	Vac\'ia()											\inlineC{1}
+% 	\state 
+% 
+% 	\state \var{itConj(gremio)}{itGremios} \asig CrearIt(res.gremios)		\inlineC{1}
+% 	\while{ HaySiguiente(itGremios) }
+% 		\state
+% 		
+% 		\state GuardarIdGremio(Siguiente(itGremios), id)					\inlineC{1}
+% 		\state GuardarIdGrupo(Siguiente(itGremios), id)						\inlineC{1}
+% 		\state AgregarAtras(res, Siguiente(itGremios))						\inlineC{f(long(res))}
+% 		\state id \asig id + 1												\inlineC{1}
+% 		
+% 		\state
+% 		\state Avanzar(itGremios)											\inlineC{1}
+% 	\endwhile
+% }
+% { \#gremios }
+% { Asigna un id de gremio y un id de grupo a cada gremio, comenzando en 0 y de forma consecutiva.
+% 
+% \hspace{10pt} El ciclo agrega \emph{\#gremios} elementos a un vector, lo cual puede no ser constante (la funci\'on \emph{f} del m\'odulo vector caracteriza el costo de la operación en función de la longitud del vector). Sin embargo, la operaci\'on tiene un costo amortizado de O(n) para n inserciones, por lo cual la funci\'on tiene un costo O(\#gremios). Los gremios se agregan por referencia en el vector, de forma tal que las sucesivas modificaciones en el id de grupo se realicen sobre los gremios originales. }
+% 
+% Pre : \ensuremath{true}
+% \\
+% Post : \ensuremath{ res \igobs pasarAVectorConIdIndices(gs, 0) }
 
-	\state \var{itConj(gremio)}{itGremios} \asig CrearIt(res.gremios)		\inlineC{1}
-	\while{ HaySiguiente(itGremios) }
-		\state
-		
-		\state GuardarIdGremio(Siguiente(itGremios), id)					\inlineC{1}
-		\state GuardarIdGrupo(Siguiente(itGremios), id)						\inlineC{1}
-		\state AgregarAtras(res, Siguiente(itGremios))						\inlineC{f(long(res))}
-		\state id \asig id + 1												\inlineC{1}
-		
-		\state
-		\state Avanzar(itGremios)											\inlineC{1}
-	\endwhile
-}
-{ \#gremios }
-{ Asigna un id de gremio y un id de grupo a cada gremio, comenzando en 0 y de forma consecutiva.
 
-\hspace{10pt} El ciclo agrega \emph{\#gremios} elementos a un vector, lo cual puede no ser constante (la funci\'on \emph{f} del m\'odulo vector caracteriza el costo de la operación en función de la longitud del vector). Sin embargo, la operaci\'on tiene un costo amortizado de O(n) para n inserciones, por lo cual la funci\'on tiene un costo O(\#gremios). Los gremios se agregan por referencia en el vector, de forma tal que las sucesivas modificaciones en el id de grupo se realicen sobre los gremios originales. }
-
-Pre : \ensuremath{true}
-\\
-Post : \ensuremath{ res \igobs pasarAVectorConIdIndices(gs, 0) }
-
-
-\algoritmoI{UnificarGruposDeAliados}
-{\param{in/out}{sl}{vector(gremio)}, \param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{}
-{
-	\state \var{idGrupo}{idMenor} \asig Min(id1, id2)						\inlineC{1}
-	\state \var{idGrupo}{idMayor} \asig Max(id1, id2)						\inlineC{1}
-	\state
-
-	\state \var{nat}{indice} \asig 0										\inlineC{1}
-
-	\while{indice \menor Longitud(sl)}								\inlineC{1}
-		\state
-
-		\state \var{gremio}{gr} \asig sl[indice]					\inlineC{1}
-		\state \var{idGrupo}{idG} \asig ObtenerIdGrupo(gr)					\inlineC{1}
-		\state
-
-		\If{idMayor \igual idG}												\inlineC{1}
-			\state GuardarIdGrupo(gr, idMenor)								\inlineC{1}
-		\Else \If{idMayor \menor idG}										\inlineC{1}
-				\state GuardarIdGrupo(gr, idG - 1)							\inlineC{1}
-			\endif
-		\endif
-		\state
-
-		\state indice \asig indice + 1										\inlineC{1}
-	\endwhile
-}
-{\#gremios}
-{ Dados dos id's de grupo, a todos los gremios que pertenezcan al grupo de id mayor, se les asigna el menor. A la vez, todos los id's de grupo que sean mayores que ambos se decrementan en 1, garantizando que los id's de grupo sigan siendo consecutivos.
-
-\hspace{10pt} Por otro lado, como las operaciones previas al ciclo, la evaluaci\'on de la guarda y su cuerpo se realizan en tiempo constante, y adem\'as el ciclo se ejecuta una vez por cada gremio del sistema, la funci\'on toma tiempo proporcional a \#gremios. }
-
-Pre : \ensuremath{(0 \leq idgremio(gr) < long(tmp.\#acuerdosPrevios))}
-\\
-Post : \ensuremath{ res \igobs tmp.\#acuerdosPrevios_{idgremio(gr)}}
+% \algoritmoI{UnificarGruposDeAliados}
+% {\param{in/out}{sl}{vector(gremio)}, \param{in}{id1}{idGrupo}, \param{in}{id2}{idGrupo}}{}
+% {
+% 	\state \var{idGrupo}{idMenor} \asig Min(id1, id2)						\inlineC{1}
+% 	\state \var{idGrupo}{idMayor} \asig Max(id1, id2)						\inlineC{1}
+% 	\state
+% 
+% 	\state \var{nat}{indice} \asig 0										\inlineC{1}
+% 
+% 	\while{indice \menor Longitud(sl)}								\inlineC{1}
+% 		\state
+% 
+% 		\state \var{gremio}{gr} \asig sl[indice]					\inlineC{1}
+% 		\state \var{idGrupo}{idG} \asig ObtenerIdGrupo(gr)					\inlineC{1}
+% 		\state
+% 
+% 		\If{idMayor \igual idG}												\inlineC{1}
+% 			\state GuardarIdGrupo(gr, idMenor)								\inlineC{1}
+% 		\Else \If{idMayor \menor idG}										\inlineC{1}
+% 				\state GuardarIdGrupo(gr, idG - 1)							\inlineC{1}
+% 			\endif
+% 		\endif
+% 		\state
+% 
+% 		\state indice \asig indice + 1										\inlineC{1}
+% 	\endwhile
+% }
+% {\#gremios}
+% { Dados dos id's de grupo, a todos los gremios que pertenezcan al grupo de id mayor, se les asigna el menor. A la vez, todos los id's de grupo que sean mayores que ambos se decrementan en 1, garantizando que los id's de grupo sigan siendo consecutivos.
+% 
+% \hspace{10pt} Por otro lado, como las operaciones previas al ciclo, la evaluaci\'on de la guarda y su cuerpo se realizan en tiempo constante, y adem\'as el ciclo se ejecuta una vez por cada gremio del sistema, la funci\'on toma tiempo proporcional a \#gremios. }
+% 
+% Pre : \ensuremath{(0 \leq idgremio(gr) < long(tmp.\#acuerdosPrevios))}
+% \\
+% Post : \ensuremath{ res \igobs tmp.\#acuerdosPrevios_{idgremio(gr)}}
 
 
 \algoritmoI{MaximoIdGrupo}{\param{in}{sl}{vector(gremio)}}{nat}
@@ -166,15 +226,15 @@ Pre : \ensuremath{true}
 \\
 Post : \ensuremath{res \igobs max(id1, id2)}
 
-\subsection{Funciones Auxiliares de Pre-Post}
-
-\tadOperacion{pasarAVectorConIdIndices}{conj(gremio)/s, nat/idActual}{secu(gremio)}{}
-
-\vspace{20px}
-\tadAxioma{pasarAVectorConIdIndices(cg, idActual)}{
-   if($\emptyset$ ?(cg)) then
-    <>
-  else
-    asignarIdGremio(dameUno(cg), idActual) \puntito pasarAVectorConIdIndices(sinUno(cg), idActual + 1)
-  fi
-}
+% \subsection{Funciones Auxiliares de Pre-Post}
+% 
+% \tadOperacion{pasarAVectorConIdIndices}{conj(gremio)/s, nat/idActual}{secu(gremio)}{}
+% 
+% \vspace{20px}
+% \tadAxioma{pasarAVectorConIdIndices(cg, idActual)}{
+%    if($\emptyset$ ?(cg)) then
+%     <>
+%   else
+%     asignarIdGremio(dameUno(cg), idActual) \puntito pasarAVectorConIdIndices(sinUno(cg), idActual + 1)
+%   fi
+% }
