@@ -42,10 +42,10 @@ $*^1$ En caso de no tener acuerdo previo es O(1), como se pide en el enunciado}
 \operacion{Gremios}
 {\param{in}{tmp}{temporada}}{conj(gremio)}
 {true}
-{ esAlias(res, gremios(tmp)) }
+{res \igobs gremios(tmp) }
 {\#gremios }
-{Devuelve un conjunto con los gremios del sistema de la temporada}
-{Devuelve una referencia al conjunto, que contiene copias de los gremios}
+{Devuelve un conjunto con los gremios del sistema}
+{Se devuelven copias de los gremios}
 
 \operacion{EnParitarias}
 {\param{in}{tmp}{temporada}, \param{in}{gr}{gremio}}{bool}
@@ -68,7 +68,9 @@ $*^1$ En caso de no tener acuerdo previo es O(1), como se pide en el enunciado}
 {true}
 {res \igobs empresasNegociando(tmp)}
 {\ensuremath{\#paritarias\_abiertas * max\_cant\_empresas * max\_long\_empresa }}
-{Devuelve el conjunto de empresas cuyos gremios tienen su paritaria abierta}
+{Devuelve el conjunto de empresas cuyos gremios tienen su paritaria abierta. \\
+
+\hspace{3pt} \#paritarias\_abiertas es la cantidad de paritarias abiertas de la temporada, max\_cant\_empresas es la m\'axima cantidad de empresas que tiene un gremio (entre aquellos con paritarias abiertas), y max\_long\_empresa es el nombre de empresa m\'as largo de todas ellas}
 {}
 
 \operacion{TrabajadoresNegociando}

@@ -64,10 +64,10 @@
 
 \algoritmoI{Gremios}{\param{in}{tmp}{estrT}}{conj(gremio)}
 {
-	\state res \asig ObtenerGremios(tmp.sl)								\inlineC{1}
+	\state res \asig ObtenerGremios(tmp.sl) \inlineC{\#gremios}
 }
-{1}
-{ Se devuelve por referencia el conjunto de gremios del sistema, lo cual toma tiempo constante. }
+{\#gremios}
+{ Se devuelve un conjunto con una copia de los gremios de la temporada, lo cual toma tiempo lineal en la cantidad de gremios . }
 
 \algoritmoI{EnParitarias}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{bool}
 {
@@ -113,7 +113,7 @@
 		\state \var{itConj(empresa)}{itEmpresas} \asig CrearIt(empresasParitaria)	\inlineC{1}
 		\while{HaySiguiente(itEmpresas)}	\inlineC{1}
 			\state
-			\state AgregarRapido(res, empresasParitaria)	\inlineC{1}
+			\state AgregarRapido(res, Siguiente(itEmpresas))	\inlineC{1}
 			
 			\state
 			\state Avanzar(itEmpresas)	\inlineC{1}
@@ -250,7 +250,7 @@
 
 \algoritmoI{ObtenerAcuerdosDeAliados}{\param{in}{tmp}{estrT}, \param{in}{gr}{gremio}}{lista(acuerdo)}
 {
-	\state \var{idGrupo}{id} \asig ObtenerIdGrupoAliados(tmp.sistema, gr)		\inlineC{1}
+	\state \var{idGrupo}{id} \asig ObtenerIdGrupo(gr)		\inlineC{1}
 
 	\state res \asig tmp.acuerdosPorGrupo[id]							\inlineC{1}
 }

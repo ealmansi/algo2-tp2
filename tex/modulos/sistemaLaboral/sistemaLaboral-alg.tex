@@ -22,10 +22,19 @@
 
 \algoritmoI{ObtenerGremios}{\param{in}{sl}{vector(gremio)}}{conj(gremio)}
 {
-	\state res \asig sl								\inlineC{1}
+	\state res \asig Vac\'io() \inlineC{1}
+	\state \var{nat}{indice} \asig 0
+	\state 	
+	\while{indice < \, Longitud(sl)}
+		\state 
+		\state AgregarRapido(res, sl[indice])
+		\state
+		\state indice \asig indice + 1
+	\endwhile
+
 }
-{1}
-{ Se devuelve el conjunto de gremios por referencia, lo cual toma tiempo constante. }
+{\#gremios}
+{ Se devuelve un conjunto con una copia de los gremios del sistema, lo cual toma tiempo lineal en la cantidad de gremios . }
 
 \algoritmoI{Obtener\#Grupos}{\param{in}{sl}{vector(gremio)}}{nat}
 {

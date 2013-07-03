@@ -23,10 +23,10 @@
 
 \operacion{ObtenerGremios}{\param{in}{sl}{sistemaLaboral}}{conj(gremio)}
 {true}
-{esAlias(res, gremios(sl))}
-{1}
+{res = gremios(sl)}
+{\#gremios}
 {Devuelve los gremios del sistema}
-{El resultado se devuelve por referencia}
+{Los gremios se devuelven por copia}
 
 \operacion{Obtener\#Grupos}
 {\param{in}{sl}{sistemaLaboral}}{nat}

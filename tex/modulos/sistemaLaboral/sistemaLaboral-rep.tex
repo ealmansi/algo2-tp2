@@ -51,6 +51,7 @@ SistemaLaboral \textbf{se representa con} vector(gremio) \\
 \end{FunAbsDescriptiva}
 
 \subsubsection{Funciones auxiliares}
+
 \tadOperacion{obtenerConjuntoDeAliados}{e/\widehat{estrS}, gs/conj(gremio), g/gremio}{conj(gremio)}{}
 \tadAxioma{obtenerConjuntoDeAliados}
 {
@@ -64,3 +65,28 @@ SistemaLaboral \textbf{se representa con} vector(gremio) \\
 		\hspace*{20pt}\textbf{fi} \\
 	\textbf{fi} - \{g\} \\
 }
+\vspace{5pt}
+
+\tadOperacion{asignarIdsConsecutivos}{conj(gremio)/gs}{conj(gremio)}{}
+\tadAxioma{asignarIdsConsecutivos(gs)}{asignarIdsConsecutivosDesde(gs, 0)}
+\vspace{5pt}
+
+\tadOperacion{asignarIdsConsecutivosDesde}{conj(gremio)/gs, nat/n}{conj(gremio)}{}
+\tadAxioma{asignarIdsConsecutivosDesde(gs,n)}
+{
+	\textbf{if} $\emptyset$?(gs) \textbf{then} \\
+		\hspace*{20pt}$\emptyset$	\\
+	\textbf{else} \\
+		\hspace*{20pt}asignarIdGrupo(asignarIdGremio(dameUno(gs),n),n) $\cup$ \\
+		asignarIdsConsecutivosDesde(sinUno(gs), n+1) \\
+	\textbf{fi} \\
+}
+\vspace{5pt}
+
+\tadOperacion{idsGrupoActualizados}{}{}{}
+\tadAxioma{}{}
+\vspace{5pt}
+
+\tadOperacion{maxIdGrupo}{}{}{}
+\tadAxioma{}{}
+\vspace{5pt}
