@@ -18,18 +18,18 @@
 {\param{in/out}{tmp}{temporada}, \param{in}{gr}{gremio}, \param{in}{p}{nat}, \param{in}{t}{nat}, \param{in}{es}{conj(empresa)}}{}
 {gr \in gremios(tmp)\ly \neg enParitarias?(tmp, gr) \ly p \leq t \ly |es|*2 \leq |empresas(gr)| \ly es \subseteq empresas(gr)\ly tmp \igobs t0 }
 {tmp \igobs abrirParitaria(t0, gr, p, t, es)  }
-{\# acuerdos\_menores$*^1$}
-{Abre la paritaria de un gremio a partir de un piso, techo y un conjunto de empresas}
-{La paritaria se agrega por copia \\
-$*^1$ En caso de no tener acuerdo previo es O(1)}
+{\#acuerdos\_menores $*^1$}
+{Abre la paritaria de un gremio a partir de un piso, techo y un conjunto de empresas \\
+$*^1$ En caso de no tener acuerdo previo es O(1), como se pide en el enunciado}
+{}
 
 \operacion{CerrarAcuerdo}
 {\param{in/out}{tmp}{temporada}, \param{in}{gr}{gremio} , \param{in}{pcj}{nat} }{}
 { gr \in gremios(tmp)\lyl enParitarias?(tmp, gr) \ly piso(paritaria(gr, tmp)) \leq pcj \leq tope(paritaria(gr, tmp) \ly tmp \igobs t0 }
 {tmp = cerrarAcuerdo(t0, gr, pcj)}
-{ \# acuerdos\_menores + \# paritarias\_abiertas}
+{\#acuerdos\_menores + \#paritarias\_abiertas}
 {Cierra un nuevo acuerdo y elimina la paritaria de ese gremio}
-{El acuerdo se agrega por copia}
+{}
 
 \operacion{Reabrir}
 {\param{in/out}{tmp}{temporada}, \param{in}{gr}{gremio}}{}
@@ -37,54 +37,54 @@ $*^1$ En caso de no tener acuerdo previo es O(1)}
 {tmp \igobs reabrir(t0, gr) }
 {\#acuerdos\_menores}
 {Reabre la paritaria de un gremio, eliminando su \'ultimo acuerdo y agregando la paritaria}
-{La paritaria se agrega por copia}
+{}
 
 \operacion{Gremios}
-{\param{in/out}{tmp}{temporada}}{conj(gremio)}
+{\param{in}{tmp}{temporada}}{conj(gremio)}
 {true}
 { esAlias(res, gremios(tmp)) }
-{ \# gremios }
+{\#gremios }
 {Devuelve un conjunto con los gremios del sistema de la temporada}
 {Devuelve una referencia al conjunto, que contiene copias de los gremios}
 
 \operacion{EnParitarias}
-{\param{in/out}{tmp}{temporada}, \param{in}{gr}{gremio}}{bool}
+{\param{in}{tmp}{temporada}, \param{in}{gr}{gremio}}{bool}
 {true}
 { res \igobs enParitarias(tmp, gr) }
-{\# paritarias\_abiertas}
+{\#paritarias\_abiertas}
 {Indica si el gremio tiene su paritaria abierta en el momento}
 {}
 
 \operacion{GremiosNegociando}
-{\param{in/out}{tmp}{temporada}}{conj(gremio)}
+{\param{in}{tmp}{temporada}}{conj(gremio)}
 {true}
 {res \igobs gremiosNegociando(tmp)}
-{\# paritarias\_abiertas}
+{\#paritarias\_abiertas}
 {Devuelve el conjunto de gremios que tienen su paritaria abierta }
 {}
 
 \operacion{EmpresasNegociando}
-{\param{in/out}{tmp}{temporada}}{conj(empresa)}
+{\param{in}{tmp}{temporada}}{conj(empresa)}
 {true}
 {res \igobs empresasNegociando(tmp)}
-{ \ensuremath{\#paritarias\_abiertas * max\_cant\_empresas * max\_long\_empresa }}
+{\ensuremath{\#paritarias\_abiertas * max\_cant\_empresas * max\_long\_empresa }}
 {Devuelve el conjunto de empresas cuyos gremios tienen su paritaria abierta}
 {}
 
 \operacion{TrabajadoresNegociando}
-{\param{in/out}{tmp}{temporada}}{nat}
+{\param{in}{tmp}{temporada}}{nat}
 {true}
 {res \igobs trabajadoresNegociando(tmp)}
-{\# paritarias\_abiertas}
+{\#paritarias\_abiertas}
 {Devuelve el n\'umero de trabajadores cuyos gremios tienen su paritaria abierta}
 {}
 
 \operacion{GremioConflictivo}
-{\param{in/out}{tmp}{temporada}}
+{\param{in}{tmp}{temporada}}
 {gremio}
 {\emptyset \neq acuerdos(tmp)}
 { esAlias(res, gremioConflictivo(tmp))}
-{\# gremios}
+{\#gremios}
 {Devuelve el gremio que m\'as acuerdos tuvo desde que se cre\'o la temporada }
 {Devuelve una referencia al gremio}
 

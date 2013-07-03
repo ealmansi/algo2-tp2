@@ -9,7 +9,7 @@ SistemaLaboral \textbf{se representa con} vector(gremio) \\
 
 \subsubsection{Descripci\'on de los campos}
 
-	El conjunto gremios guarda los gremios del sistema. A cada uno se le asigna durante la inicializaci\'on un id, tomando nat's consecutivos comenzando en 0.
+	El vector gremios guarda los gremios del sistema. A cada uno se le asigna durante la inicializaci\'on un id de gremio y un id de grupo, tomando nat's consecutivos comenzando en 0 (en particular, el id de gremio de cada gremio coincide con su \'indice en el vector).
 
 	Por otro lado, dado que la relaci\'on de alianza entre gremios es sim\'etrica y transitiva, se puede dividir al conjunto de gremios del sistema en grupos disjuntos de aliados.
 
@@ -23,24 +23,20 @@ SistemaLaboral \textbf{se representa con} vector(gremio) \\
 
 \begin{enumerate}
 	\item Ninguna empresa aparece en m\'as de un gremio.
-	\item Los id's de los gremios del conjunto son naturales consecutivos no repetidos, comenzando en 0.
-	\item El vector gruposDeAliados tiene una entrada para cada gremio, y ninguna m\'as.
-	\item Los valores del vector gruposDeAliados son naturales consecutivos, comenzando en 0.
+	\item El id de gremio de cada gremio en el vector coincide con su \'indice.
+	\item Los id's de grupo de los gremios son naturales consecutivos, comenzando en 0 (no hay 'agujeros' en la secuencia de id's de grupo).
 \end{enumerate}
 
 \paragraph{Expresi\'on formal \\}
-\begin{RepFormal}{estrP}{e}
+\begin{RepFormal}{vector(gremio)}{sl}
 	\repItem{
-		(\paratodof{empresa}{\,em})\,((\lnot \exists \,g1,g2:gremio\, ) \, (g1 , g2 \in e.gremios \land em \in empresas(g1) \land em \in empresas(g2) )
+		(\paratodof{empresa}{\,em})\,((\lnot \exists \,g1,g2:gremio\, ) \, (g1 \distinto g2 \ly esta?(sl, g1) \ly esta?(sl, g2) \land \\ em \in empresas(g1) \land em \in empresas(g2) )
 	}{\ly}
 	\repItem{
-		(\paratodof{nat}{n})\, n \menor \#(e.gremios) \entonces ((\exists ! g : gremio)\, g \in e.gremios \land ObtenerId(g) = n)
+		(\paratodof{nat}{i})\,\, i \menor Longitud(sl) \entoncesL i = ObtenerIdGremio(sl[i])
 	}{\ly}
 	\repItem{
-		\#(e.gremios) = long(e.gruposDeAliados)
-	}{\ly}
-	\repItem{
-		long(e.gruposDeAliados) > 0 \entonces esta?(0,e.gruposDeAliados) \ly ((\paratodof{nat}{n})\, (0 < n \ly esta?(n,e.gruposDeAliados)) \entonces esta?(n-1,e.gruposDeAliados))
+		sonConsecutivos(obtenerIdsGrupo(sl))
 	}{}
 \end{RepFormal}
 
@@ -48,7 +44,7 @@ SistemaLaboral \textbf{se representa con} vector(gremio) \\
 
 \begin{FunAbsDescriptiva}{e}{estrS}{si}{sistemaLaboral}
 
-	\absItem{gremios(si) \igobs e.gremios}{\yluego}
+	\absItem{gremios(si) \igobs e}{\yluego}
 
 	\absItem{(\paratodof{gremio}{g}) g \en gremios(si) \entoncesL aliados(g, si) \igobs obtenerConjuntoDeAliados(e, e.gremios,g)}{}
 
